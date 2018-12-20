@@ -1,0 +1,19 @@
+
+<div class="ui-g" *ngIf="mostrarMenu" >
+    <br><br><br>
+    <div class="ui-g-12 header" [ngStyle]="{'z-index': '1'}">
+        <app-menu-bar></app-menu-bar>
+    </div>
+    <div class="ui-g-12 center">
+        <div >
+            <app-main></app-main>
+        </div >
+    </div>
+    <div class="ui-g-12 footers">
+        <div >
+            <app-footer></app-footer>
+        </div>
+    </div>
+</div>
+
+<app-login  *ngIf="!mostrarMenu" ></app-login>

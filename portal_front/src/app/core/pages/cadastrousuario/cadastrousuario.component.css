@@ -1,0 +1,88 @@
+body {
+    height: 100%;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.container{
+    width: 800px;
+    height: 600px;
+    border-radius: 5px;
+    padding: 0px;
+    box-shadow:0 5px 5px rgba(0,0,0,.175);
+}
+
+@media (max-width: 991px){
+    .container{
+        height: 800px;
+    }
+}
+
+#card{
+    border-radius: 5px 5px 0px 0px;
+    text-align: left;
+    color: black;
+}
+
+.col{
+    padding: 15px 0px 0px 15px;
+}
+
+.form-control{
+    width: 90%;
+    margin: 20px 10px 20px 10px;
+}
+
+#tipodeusuario{
+    float: left;
+    width: 95%;
+    margin: 0px 10px 0px 10px;
+}
+
+@media (max-width: 991px){
+    #tipodeusuario{
+        width: 90%;
+        margin: 0px 10px 0px 10px;
+    }
+}
+
+#email{
+    margin: 20px 20px 20px 0px;
+}
+
+@media (max-width: 991px){
+    #email{
+        margin: 20px 50px 20px 0px;
+    }
+}
+
+#addon1{
+    height: 38px;
+    margin: 20px 0px 0px 10px;
+}
+
+#buttonsalvar{
+    width: 20%;
+    float: right;
+    margin: 0px 20px 10px 0px;
+}
+
+@media (max-width: 991px){
+    #buttonsalvar{
+        margin: 0px 50px 10px 0px;
+    }
+}
+
+@media (max-width: 767px){
+    #buttonsalvar{
+        margin: 0px 45px 10px 0px;
+    }
+}
+

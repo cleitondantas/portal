@@ -1,0 +1,176 @@
+<div class="ui-g">
+  <div class="ui-md-6">
+
+    <div class="ui-g">
+      <div class="ui-md-3">
+        <label class="ajusteLabel" for="faturarContrato">A faturar contrato: </label>
+      </div>
+      <div class="ui-md-9">
+        <input type="text" class="ajusteInput" pInputText id="faturarContrato">
+      </div>
+    </div>
+
+  </div>
+  <div class="ui-md-6">
+
+    <div class="ui-g">
+      <div class="ui-md-2">
+        <label class="ajusteLabel" for="cpf">CPF/CNPJ: </label>
+      </div>
+      <div class="ui-md-10">
+        <input type="text" class="ajusteInput" pInputText id="cpf">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<p-fieldset legend="Faturamento">
+  <div class="ui-g">
+    <div class="ui-md-4">
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="primeiraParcela">1° Parcela: </label>
+        </div>
+        <div class="ui-md-9">
+          <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="primeiraParcela"
+          mask="R$ 999.999,99?" slotChar=" "></p-inputMask>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="segundaParcela">2° Parcela: </label>
+        </div>
+        <div class="ui-md-9">
+          <p-inputMask  [style]="{'width': '100%', 'margin-left': '5px'}" id="segundaParcela"
+          mask="R$ 999.999,99?" slotChar=" "></p-inputMask>
+        </div>
+      </div>
+
+    </div>
+    <div class="ui-md-4">
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="primeiraNotaFiscal">Nota fiscal: </label>
+        </div>
+        <div class="ui-md-9">
+          <input type="text" class="ajusteInput" pInputText id="primeiraNotaFiscal">
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="segundaNotaFiscal">Nota fiscal: </label>
+        </div>
+        <div class="ui-md-9">
+          <input type="text" class="ajusteInput" pInputText id="segundaNotaFiscal">
+        </div>
+      </div>
+
+    </div>
+    <div class="ui-md-4">
+
+      <div class="ui-g">
+        <div class="ui-md-4">
+          <label class="ajusteLabel" for="primeiroMesFatu">Mês faturamento: </label>
+        </div>
+        <div class="ui-md-8">
+          <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2018" [monthNavigator]="true" 
+          class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
+          id="primeiroMesFatu" dateFormat="dd/mm/yy"></p-calendar>       
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-md-4">
+          <label class="ajusteLabel" for="segundoMesFatu">Mês faturamento: </label>
+        </div>
+        <div class="ui-md-8">
+          <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2018" [monthNavigator]="true" 
+          class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
+          id="segundoMesFatu" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <br><br><br>
+
+  <div class="ui-g">
+    <div class="ui-md-6">
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="recebIncorp">TT RECEBE INCORP: </label>
+        </div>
+        <div class="ui-md-9">
+          <input type="text" class="ajusteInput" pInputText id="recebIncorp">
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="prevReceb">RECEBIMENTO PREVISTO: </label>
+        </div>
+        <div class="ui-md-9">
+          <input type="text" class="ajusteInput" pInputText id="prevReceb">
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="notaFiscal">NOTA FISCAL: </label>
+        </div>
+        <div class="ui-md-9">
+          <input type="text" class="ajusteInput" pInputText id="notaFiscal">
+        </div>
+      </div>
+
+    </div>
+    <div class="ui-md-6">
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="recebTeorico">RECEB TEÓRICO BCO: </label>
+        </div>
+        <div class="ui-md-9">
+          <input type="text" class="ajusteInput" pInputText id="recebTeorico">
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="mesFaturado">MÊS FATURADO: </label>
+        </div>
+        <div class="ui-md-9">
+          <input type="text" class="ajusteInput" pInputText id="mesFaturado">
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-md-3">
+          <label class="ajusteLabel" for="totalReceb">TOTAL RECEBIDO: </label>
+        </div>
+        <div class="ui-md-9">
+          <input type="text" class="ajusteInput" pInputText id="totalReceb">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <br><br><br>
+
+  <div class="ui-g">
+    <label class="ajusteLabel" for="observacao" [ngStyle]="{'padding-left': '14px'}">Observação:</label>
+    <textarea pInputTextarea [rows]="4" id="observacao" [ngStyle]="{'margin': '0px 14px 14px 14px'}" style="width: 100%"></textarea>
+    <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-info" 
+    [ngStyle]="{'width': '100px', 'margin-left': '14px'}"></button>
+  </div>
+
+</p-fieldset>
+<br><br>

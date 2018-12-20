@@ -1,0 +1,17 @@
+
+    <p-panel>
+        <p-header>
+        <h5 class="first">UPLOAD DE ARQUIVOS</h5>
+    </p-header>
+<div class="upload">
+<p-fileUpload name="file" url="{{urls}}/api" (onUpload)="inputFileChange($event)"
+        multiple="multiple" uploadLabel="Upload" chooseLabel="Adicionar" cancelLabel="Cancelar" accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+        maxFileSize="10485760" >
+    <ng-template pTemplate="content"  >
+        <ul *ngIf="uploadedFiles.length" >
+            <li style="text-align: left" *ngFor="let file of uploadedFiles">ARQUIVO: {{file.FILENAME}} --- SHA256: {{file.SHA256}}</li>
+        </ul>
+    </ng-template>
+</p-fileUpload>
+</div>
+</p-panel>

@@ -1,0 +1,58 @@
+<div class="container">
+  <form id="form" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+
+      <div class="card" id="card">
+          <div class="card-header" id="card">Cadastro de usuário</div>
+      </div>
+
+      <div class="form-row">
+            <div  id="div1" class="col-lg-6 needs-validation" >
+                  <input type="text" class="form-control" placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuario.nome" required>
+            </div>    
+            <div class="col-lg-6 needs-validation">  
+                    <input type="text" class="form-control" placeholder="Sobrenome"  id="sobrenome" name="sobrenome"  #sobrenome="ngModel" [(ngModel)]="usuario.sobrenome" required>
+            </div>
+            <div class="col-lg-6 needs-validation">
+                  <input type="text" class="form-control" placeholder="Telefone ou Ramal" id="contato" pattern="\d+" ngModel name="telefone"  #telefone="ngModel" [(ngModel)]="usuario.telefone"  required>
+            </div>
+            <div class="col-lg-6 needs-validation">
+                    <input type="text" class="form-control" id="cpf" placeholder="CPF" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" name="cpf"  #cpf="ngModel" [(ngModel)]="usuario.cpf"   required>
+            </div>  
+            <div id="div2" class="col-lg-6 needs-validation">
+                    <input type="text" class="form-control" placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuario.login"  pattern="\w{1,}" required>
+            </div>
+            <div class="col-lg-6 needs-validation">
+                    <input type="text" class="form-control" placeholder="Repita o nickname" id="cnickname" pattern="\w{1,}" required >
+            </div>
+            <div class="col-lg-6 needs-validation">
+                    <input type="password" class="form-control" placeholder="Senha" id="senha" ngModel name="senha"  #senha="ngModel" [(ngModel)]="usuario.password" required>
+            </div>
+            <div class="col-lg-6 needs-validation" >
+                <input type="password" class="form-control" placeholder="Confirme a senha" id="csenha" required >
+            </div>             
+       </div>
+
+      <div class="form-row">
+          <div class="ui-g-12">
+              <div class="ui-inputgroup" style="margin-left:8%;margin-right:8%;">
+                  <span class="ui-inputgroup-addon">
+                      <i >@</i>
+                  </span>
+                  <input id="idemail" type="email" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuario.email"  class="ui-inputtext ui-corner-all ui-state-default ui-widget col-lg-11" >
+              </div>
+          </div>
+      </div>
+
+      <div class="form-row">
+          <div class="ui-g-12">
+                <div class="ui-inputgroup" style="margin-left:8%;margin-right:8%;">
+                        <p-multiSelect [options]="selectRoles" optionLabel="profile" [(ngModel)]="usuario.perfis" defaultLabel="Selecione o perfil.."  [ngModelOptions]="{standalone:true}" [panelStyle]="{minWidth:'25em'}" ></p-multiSelect>
+                </div>
+         </div>
+         
+      </div>
+
+            <button type="submit" class="btn btn-primary" id="buttonsalvar" >Salvar</button>
+
+    </form>
+</div>

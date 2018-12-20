@@ -1,0 +1,83 @@
+<form  >
+    <p-panel header="Busca "  [style]="{'margin-bottom':'20px'}">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-4 ui-md-4">
+                <div class="ui-inputgroup">
+                     <span class="ui-inputgroup-addon">Número Proposta</span>
+                    <input type="text" (input)="proposta = $event.target.value"   >         
+                    <p-button label="Buscar"  (onClick)="buscarHistoricoPorProposta()" ></p-button>
+                </div>
+            </div>
+            <div class="ui-g-4 ui-md-4">
+                    <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">Número Contrato</span>
+                        <input type="text" (input)="proposta = $event.target.value">         
+                        <p-button label="Buscar"  (onClick)="buscarHistoricoPorContrato()" ></p-button>
+                        
+                    </div>
+                </div>
+                <div class="ui-g-4 ui-md-4">
+                        <div class="ui-inputgroup">
+                           <span class="ui-inputgroup-addon">Número CPF/CNPJ</span>
+                            <input type="text" (input)="proposta = $event.target.value">         
+                            <p-button label="Buscar"  (onClick)="buscarHistoricoPorDocumento()" ></p-button>
+                            
+                        </div>
+                    </div>
+           </div> 
+    </p-panel>
+
+    <p-panel  header="Relatório Agrupado"  [style]="{'margin-bottom':'20px'}">
+            <div   class="ui-g ui-fluid ">
+                <div  class="ui-g-12 ui-md-12">
+                    <div  class="ui-inputgroup">
+                            <div  class="container" style="z-index:99">
+                              <ul class="progressbar">
+                                    <li id="1">Malote</li>
+                                    <li id="2">Conferência</li>
+                                    <li id="3">Liberação</li>
+                              </ul>
+                           </div>
+                    </div>
+                </div>
+               </div> 
+        </p-panel  >
+        <div >
+            <p-table #dt [columns]="cols" [value]="historicoSimples" >
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                                <input *ngSwitchCase="'atividade'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)"> 
+                                <input *ngSwitchCase="'nomeCliente'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input *ngSwitchCase="'codCadastro'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input *ngSwitchCase="'nContrato'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input *ngSwitchCase="'numProposta'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <p-dropdown *ngSwitchCase="'area'"  [options]="brands" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+                                <input *ngSwitchCase="'status'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input *ngSwitchCase="'subStatus'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input *ngSwitchCase="'obs'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-historico let-columns="columns">
+                            <tr  >
+                                <td >{{historico.atividade | date:'short'}}</td>
+                                <td >{{historico.nomeCliente}}</td>
+                                <td >{{historico.codCadastro}}</td>
+                                <td >{{historico.nContrato}}</td>
+                                <td >{{historico.numProposta}}</td>
+                                <td >{{historico.area}}</td>
+                                <td >{{historico.status}}</td>
+                                <td >{{historico.subStatus}}</td>
+                                <td >{{historico.obs}}</td>
+                            </tr>
+
+                </ng-template>
+            </p-table>
+        </div>
+ </form>

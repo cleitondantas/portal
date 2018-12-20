@@ -1,0 +1,8 @@
+
+.pag-grafc{
+    width: calc(100% - 100px);
+}
+.grafc{
+    width: 50%;
+    height: 50%;
+}
