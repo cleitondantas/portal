@@ -98,6 +98,9 @@ public class Cadastro implements Serializable{
 	@Column(name="uf")
 	private String uf;
 	
+	@Column(name="data_entrada")
+	private Date dataentrada;
+	
     @ManyToMany(cascade={CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_cliente_cadastro", 
 	joinColumns = @JoinColumn(name = "cod_cadastro", referencedColumnName = "cod_cadastro"),
@@ -271,6 +274,14 @@ public class Cadastro implements Serializable{
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
+	}
+
+	public Date getDataentrada() {
+		return dataentrada;
+	}
+
+	public void setDataentrada(Date dataentrada) {
+		this.dataentrada = dataentrada;
 	}
 
 	public String getCpfcnpj() {

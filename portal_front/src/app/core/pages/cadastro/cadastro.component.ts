@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Compradores } from 'src/app/models/compradores';
 import { Contatos } from 'src/app/models/contatos';
+import { copyStyles } from '@angular/animations/browser/src/util';
 
 @Component({
   selector: 'app-cadastro',
@@ -24,7 +25,7 @@ export class CadastroComponent implements OnInit {
   formulario: FormGroup;
   contatoSelecionado: any;
   estado: any[];
-
+  novocontato: Contatos;
   comprador: Compradores[] = [];
   cliente: FormArray;
 
@@ -256,15 +257,6 @@ export class CadastroComponent implements OnInit {
 
   }
 
-  adicionarContato () {
-    let tipoC = this.formulario.controls.clientes['controls'].contatos.controls.codtipocontato.value.name;
-    let contatoC = this.formulario.controls.clientes['controls'].contatos.controls.desccontato.value;
-
-    this.contato.push({tipo: tipoC, contato: contatoC})
-
-    this.formulario.controls.clientes['controls'].contatos.reset();
-  }
-
   adicionarCompradorLista () {
     let nomeComprador = this.formulario.controls.clientes['controls'].nomecliente.value;
     let cpfComprador = this.formulario.controls.clientes['controls'].cpfcnpj.value;
@@ -273,7 +265,26 @@ export class CadastroComponent implements OnInit {
     this.compradores.push({nome: nomeComprador, cpf: cpfComprador, renda: rendaComprador});
 
   }
- 
+
+  
+  adicionarContato () {
+    //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.desccontato.value)
+    //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.name)
+    //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.value)
+    this.novocontato = new Contatos();
+    this.novocontato.codtipocontato =''+this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.value;
+    this.novocontato.desccontato = this.formulario.controls.clientes['controls'][0].controls.contatos.controls.desccontato.value;
+    console.log(this.novocontato);
+    this.contato.push(this.novocontato);
+    
+    //let tipoC = this.formulario.controls.clientes['controls'].contatos.controls.codtipocontato.value.name;
+    //let contatoC = this.formulario.controls.clientes['controls'].contatos.controls.desccontato.value;
+
+    //this.contato.push({tipo: tipoC, contato: contatoC})
+
+    //this.formulario.controls.clientes['controls'].contatos.reset();
+  }
+
   removerContato (contatoC) {
     console.log(contatoC);
 
