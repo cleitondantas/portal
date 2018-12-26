@@ -703,6 +703,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var src_app_models_cadastro_informacao__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/models/cadastro-informacao */ "./src/app/models/cadastro-informacao.ts");
+/* harmony import */ var src_app_models_contatos__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/models/contatos */ "./src/app/models/contatos.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -712,6 +713,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -931,18 +933,26 @@ var CadastroComponent = /** @class */ (function () {
     CadastroComponent.prototype.createOrUpdateUsuer = function (comprador) {
         this.http.put('http://10.6.5.99:8100/api/cliente', comprador);
     };
-    CadastroComponent.prototype.adicionarContato = function () {
-        var tipoC = this.formulario.controls.clientes['controls'].contatos.controls.codtipocontato.value.name;
-        var contatoC = this.formulario.controls.clientes['controls'].contatos.controls.desccontato.value;
-        this.contato.push({ tipo: tipoC, contato: contatoC });
-        this.formulario.controls.clientes['controls'].contatos.reset();
-    };
     CadastroComponent.prototype.adicionarCompradorLista = function () {
         var nomeComprador = this.formulario.controls.clientes['controls'].nomecliente.value;
         var cpfComprador = this.formulario.controls.clientes['controls'].cpfcnpj.value;
         var rendaComprador = this.formulario.controls.clientes['controls'].valorrenda.value;
         ;
         this.compradores.push({ nome: nomeComprador, cpf: cpfComprador, renda: rendaComprador });
+    };
+    CadastroComponent.prototype.adicionarContato = function () {
+        //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.desccontato.value)
+        //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.name)
+        //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.value)
+        this.novocontato = new src_app_models_contatos__WEBPACK_IMPORTED_MODULE_5__["Contatos"]();
+        this.novocontato.codtipocontato = '' + this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.value;
+        this.novocontato.desccontato = this.formulario.controls.clientes['controls'][0].controls.contatos.controls.desccontato.value;
+        console.log(this.novocontato);
+        this.contato.push(this.novocontato);
+        //let tipoC = this.formulario.controls.clientes['controls'].contatos.controls.codtipocontato.value.name;
+        //let contatoC = this.formulario.controls.clientes['controls'].contatos.controls.desccontato.value;
+        //this.contato.push({tipo: tipoC, contato: contatoC})
+        //this.formulario.controls.clientes['controls'].contatos.reset();
     };
     CadastroComponent.prototype.removerContato = function (contatoC) {
         console.log(contatoC);
@@ -2044,6 +2054,26 @@ var CadastroInformacao = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/models/contatos.ts":
+/*!************************************!*\
+  !*** ./src/app/models/contatos.ts ***!
+  \************************************/
+/*! exports provided: Contatos */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Contatos", function() { return Contatos; });
+var Contatos = /** @class */ (function () {
+    function Contatos() {
+    }
+    return Contatos;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/models/role.ts":
 /*!********************************!*\
   !*** ./src/app/models/role.ts ***!
@@ -2284,6 +2314,7 @@ var MenuBarComponent = /** @class */ (function () {
         this.profileUser = localStorage.getItem('profile');
     }
     MenuBarComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.itemsmenu = [{
                 label: 'File',
                 items: [
@@ -2346,11 +2377,16 @@ var MenuBarComponent = /** @class */ (function () {
                         ]
                     }
                 ]
+            }, {
+                label: 'Exit',
+                command: function (event) { _this.logOut(); },
+                icon: 'pi pi-fw pi-home',
+                visible: true
             }
         ];
     };
     MenuBarComponent.prototype.logOut = function () {
-        this.doIt();
+        //this.doIt();
         this.authService.fazerLogout();
     };
     MenuBarComponent.prototype.doIt = function () {
@@ -2921,7 +2957,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\ARQUIVOS E PROGRAMAS\NOVOS_PROJETOS\portal\portal_front\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\GIT\portal\portal_front\src\main.ts */"./src/main.ts");
 
 
 /***/ })

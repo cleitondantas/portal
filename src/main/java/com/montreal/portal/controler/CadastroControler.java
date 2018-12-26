@@ -32,8 +32,7 @@ public class CadastroControler {
 	private CasdastroRepository casdastroRepository;
 
 	@PostMapping(value = "/cadastro")
-	public ResponseEntity<Response<Cadastro>> create(HttpServletRequest request, @RequestBody Cadastro cadastro,
-			BindingResult result) {
+	public ResponseEntity<Response<Cadastro>> create(HttpServletRequest request, @RequestBody Cadastro cadastro, BindingResult result) {
 		Response<Cadastro> response = new Response<Cadastro>();
 		try {
 			if (result.hasErrors()) {

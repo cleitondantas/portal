@@ -24,6 +24,6 @@ public class PortalApplication  implements CommandLineRunner {
     @Transactional
     public void run(String... strings) throws Exception {
 	System.out.println("CRIANDO NOVO USUARIO");
-	System.out.println(passwordEncoder.encode("montreal"));
+	System.out.println(passwordEncoder.encode("Pedepano10!"));
     }
 }

@@ -15186,12 +15186,12 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\ARQUIVOS E PROGRAMAS\NOVOS_PROJETOS\portal\portal_front\node_modules\primeicons\primeicons.css */"./node_modules/primeicons/primeicons.css");
-__webpack_require__(/*! C:\ARQUIVOS E PROGRAMAS\NOVOS_PROJETOS\portal\portal_front\node_modules\primeng\resources\themes\nova-light\theme.css */"./node_modules/primeng/resources/themes/nova-light/theme.css");
-__webpack_require__(/*! C:\ARQUIVOS E PROGRAMAS\NOVOS_PROJETOS\portal\portal_front\node_modules\primeng\resources\primeng.min.css */"./node_modules/primeng/resources/primeng.min.css");
-__webpack_require__(/*! C:\ARQUIVOS E PROGRAMAS\NOVOS_PROJETOS\portal\portal_front\node_modules\chart.js\dist\Chart.js */"./node_modules/chart.js/dist/Chart.js");
-__webpack_require__(/*! C:\ARQUIVOS E PROGRAMAS\NOVOS_PROJETOS\portal\portal_front\node_modules\primeflex\primeflex.css */"./node_modules/primeflex/primeflex.css");
-module.exports = __webpack_require__(/*! C:\ARQUIVOS E PROGRAMAS\NOVOS_PROJETOS\portal\portal_front\src\styles.css */"./src/styles.css");
+__webpack_require__(/*! C:\GIT\portal\portal_front\node_modules\primeicons\primeicons.css */"./node_modules/primeicons/primeicons.css");
+__webpack_require__(/*! C:\GIT\portal\portal_front\node_modules\primeng\resources\themes\nova-light\theme.css */"./node_modules/primeng/resources/themes/nova-light/theme.css");
+__webpack_require__(/*! C:\GIT\portal\portal_front\node_modules\primeng\resources\primeng.min.css */"./node_modules/primeng/resources/primeng.min.css");
+__webpack_require__(/*! C:\GIT\portal\portal_front\node_modules\chart.js\dist\Chart.js */"./node_modules/chart.js/dist/Chart.js");
+__webpack_require__(/*! C:\GIT\portal\portal_front\node_modules\primeflex\primeflex.css */"./node_modules/primeflex/primeflex.css");
+module.exports = __webpack_require__(/*! C:\GIT\portal\portal_front\src\styles.css */"./src/styles.css");
 
 
 /***/ })

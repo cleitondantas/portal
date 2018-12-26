@@ -5,16 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "TB_ANALISE")
 public class Analise  implements Serializable{
-
-	
 	/**
 	 * 
 	 */
@@ -24,7 +20,7 @@ public class Analise  implements Serializable{
 	@Column(name="COD_ANALISE")	
 	private Integer codAnalise;
 	
-	@Column(name="COD_CADASTRO")	
+	@Column(name="COD_CADASTRO")
 	private Integer codCadastro;
 	
 	@Column(name="data_pasta_mae")
