@@ -98,18 +98,13 @@ export class MenuBarComponent implements OnInit {
                       ]
                   }
               ]
-          },  {
-            label: 'Exit',
-            command: (event) => { this.logOut()},
-            icon: 'pi pi-fw pi-home',
-            visible: true
-        }
+          }
       ];
   }
 
 
 logOut(){
-    //this.doIt();
+    this.doIt();
     this.authService.fazerLogout();
 }
 

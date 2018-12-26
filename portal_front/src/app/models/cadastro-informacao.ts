@@ -1,7 +1,6 @@
 import { Compradores } from "./compradores";
 
 export class CadastroInformacao {
-    comprador: Compradores[];
     codoriginacao: number;
     codcadastroincorporadora: string;
     codempreendimento: number;
@@ -20,5 +19,7 @@ export class CadastroInformacao {
     cidade: string;
     endereco: string;
     complemento: string;
-    uf: string;
+    uf: any;
+    clientes: Compradores[];
+
 }
