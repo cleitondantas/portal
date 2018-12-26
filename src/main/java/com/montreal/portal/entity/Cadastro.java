@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -39,8 +40,9 @@ public class Cadastro implements Serializable{
 	private Integer  codoriginacao;
 	
 	
-	@Column(name="cod_cadastro_incorporadora")
-	private String codcadastroincorporadora;
+	@ManyToOne
+	@JoinColumn(name="cod_cadastro_incorporadora", referencedColumnName="cod_incorporadora")
+	private Incorporadora incorporadora;
 
 	@Column(name="cpf_cnpj")
 	private String cpfcnpj;
@@ -124,13 +126,6 @@ public class Cadastro implements Serializable{
 		this.codoriginacao = codoriginacao;
 	}
 
-	public String getCodcadastroincorporadora() {
-		return codcadastroincorporadora;
-	}
-
-	public void setCodcadastroincorporadora(String codcadastroincorporadora) {
-		this.codcadastroincorporadora = codcadastroincorporadora;
-	}
 
 	public Integer getCodempreendimento() {
 		return codempreendimento;
@@ -291,8 +286,16 @@ public class Cadastro implements Serializable{
 	public void setCpfcnpj(String cpfcnpj) {
 		this.cpfcnpj = cpfcnpj;
 	}
-	
-	
+
+	public Incorporadora getIncorporadora() {
+		return incorporadora;
+	}
+
+	public void setIncorporadora(Incorporadora incorporadora) {
+		this.incorporadora = incorporadora;
+	}
+
+
 	
 	
 }

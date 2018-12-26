@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TB_INCORPORADORAS")
-public class Incorporadoras implements Serializable{
+public class Incorporadora implements Serializable{
 
 	
 	/**
@@ -23,32 +23,33 @@ public class Incorporadoras implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod_incorporadora")
-	private Integer codIncorporadora;
+	private Integer codincorporadora;
 	
 	
 	@Column(name="desc_incorporadora")
-	private String descIncorporadora;
+	private String descincorporadora;
 
 
-	public Integer getCodIncorporadora() {
-		return codIncorporadora;
+	public Integer getCodincorporadora() {
+		return codincorporadora;
 	}
 
 
-	public void setCodIncorporadora(Integer codIncorporadora) {
-		this.codIncorporadora = codIncorporadora;
+	public void setCodincorporadora(Integer codincorporadora) {
+		this.codincorporadora = codincorporadora;
 	}
 
 
-	public String getDescIncorporadora() {
-		return descIncorporadora;
+	public String getDescincorporadora() {
+		return descincorporadora;
 	}
 
 
-	public void setDescIncorporadora(String descIncorporadora) {
-		this.descIncorporadora = descIncorporadora;
+	public void setDescincorporadora(String descincorporadora) {
+		this.descincorporadora = descincorporadora;
 	}
-	
+
+
 	
 	
 }
