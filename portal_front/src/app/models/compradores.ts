@@ -12,7 +12,7 @@ export class Compradores {
     nacionalidade: string;
     profissao: string;
     cepresidencial: string;
-    uf: string;
+    uf: any;
     cidade: string;
     bairro: string;
     endereco: string;
