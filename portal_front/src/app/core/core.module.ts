@@ -4,22 +4,22 @@ import { HomeComponent } from './pages/home/home.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
-import {FieldsetModule} from 'primeng/fieldset';
-import {ButtonModule} from 'primeng/button';
-import {PanelModule} from 'primeng/panel';
-import {CalendarModule} from 'primeng/calendar';
-import {DropdownModule} from 'primeng/dropdown';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {InputMaskModule} from 'primeng/inputmask';
-import {TableModule} from 'primeng/table';
-import {PasswordModule} from 'primeng/password';
+import { InputMaskModule } from 'primeng/inputmask';
+import { TableModule } from 'primeng/table';
+import { PasswordModule } from 'primeng/password';
 import { CadastrousuarioComponent } from './pages/cadastrousuario/cadastrousuario.component';
-import {CheckboxModule} from 'primeng/checkbox';
-import {MultiSelectModule} from 'primeng/multiselect';
+import { CheckboxModule } from 'primeng/checkbox';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { RelatorioListaComponent } from './pages/relatorio-lista/relatorio-lista.component';
-import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { GraficComponent } from './pages/grafic/grafic.component';
-import {ChartModule} from 'primeng/primeng';
+import { ChartModule } from 'primeng/primeng';
 import { ImportComponent } from './pages/import/import.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InformacoesComponent } from './pages/informacoes/informacoes.component';
@@ -29,8 +29,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import {TabViewModule} from 'primeng/tabview';
-import {InputTextareaModule} from 'primeng/inputtextarea';
+import { TabViewModule } from 'primeng/tabview';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+
 
 import { DadosCadastraisComponent } from './pages/informacoes/dados-cadastrais/dados-cadastrais.component';
 import { HistoricoComponent } from './pages/informacoes/historico/historico.component';
@@ -63,8 +65,8 @@ import { AnaliseComponent } from './pages/analise-credito/analise/analise.compon
     MenuModule,
     TabViewModule,
     InputTextareaModule,
-    FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CurrencyMaskModule
 
   ],
   declarations: [

@@ -3,6 +3,10 @@ import { Compradores } from "./compradores";
 export class CadastroInformacao {
     codoriginacao: number;
     codcadastroincorporadora: string;
+    incorporadora: {
+        codincorporadora: number;
+        descincorporadora: string;
+    }
     codempreendimento: number;
     blocotorre: string;
     unidade: string;
