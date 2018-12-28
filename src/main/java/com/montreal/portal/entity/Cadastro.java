@@ -39,16 +39,20 @@ public class Cadastro implements Serializable{
 	@Column(name="cod_originacao")
 	private Integer  codoriginacao;
 	
+	@Column(name="numero_cadastro_incorporadora_fid")
+	private  Integer numerocadastroincorporadorafid;
 	
 	@ManyToOne
-	@JoinColumn(name="cod_cadastro_incorporadora", referencedColumnName="cod_incorporadora")
+	@JoinColumn(name="cod_incorporadora", referencedColumnName="cod_incorporadora")
 	private Incorporadora incorporadora;
 
 	@Column(name="cpf_cnpj")
 	private String cpfcnpj;
 
-	@Column(name="cod_empreendimento")
-	private Integer codempreendimento;
+	
+	@ManyToOne
+	@JoinColumn(name="cod_empreendimento", referencedColumnName="cod_empreendimento")
+	private Empreendimento empreendimento;
 	
 	
 	@Column(name="bloco_torre")
@@ -64,7 +68,7 @@ public class Cadastro implements Serializable{
 	private BigDecimal saldodevedor;
 	
 	@Column(name="cod_usuario")
-	private Integer codusuario;
+	private Long codusuario;
 	
 	
 	@Column(name="data_cadastro")
@@ -127,13 +131,7 @@ public class Cadastro implements Serializable{
 	}
 
 
-	public Integer getCodempreendimento() {
-		return codempreendimento;
-	}
 
-	public void setCodempreendimento(Integer codempreendimento) {
-		this.codempreendimento = codempreendimento;
-	}
 
 	public String getBlocotorre() {
 		return blocotorre;
@@ -167,11 +165,12 @@ public class Cadastro implements Serializable{
 		this.saldodevedor = saldodevedor;
 	}
 
-	public Integer getCodusuario() {
+
+	public Long getCodusuario() {
 		return codusuario;
 	}
 
-	public void setCodusuario(Integer codusuario) {
+	public void setCodusuario(Long codusuario) {
 		this.codusuario = codusuario;
 	}
 
@@ -295,7 +294,23 @@ public class Cadastro implements Serializable{
 		this.incorporadora = incorporadora;
 	}
 
+	public Integer getNumerocadastroincorporadorafid() {
+		return numerocadastroincorporadorafid;
+	}
+
+	public void setNumerocadastroincorporadorafid(Integer numerocadastroincorporadorafid) {
+		this.numerocadastroincorporadorafid = numerocadastroincorporadorafid;
+	}
+
+	public Empreendimento getEmpreendimento() {
+		return empreendimento;
+	}
+
+	public void setEmpreendimento(Empreendimento empreendimento) {
+		this.empreendimento = empreendimento;
+	}
 
 	
+
 	
 }

@@ -243,7 +243,7 @@
               <ng-template pTemplate="body" let-rowData let-cont>
                 <tr [pSelectableRow]="rowData">
                   <td> <button pButton icon="pi pi-trash" (click)="removerContato(rowData)"></button> </td>
-                  <td> {{cont.codtipocontato.name}} </td>
+                  <td> {{cont.tipocontato}} </td>
                   <td> {{cont.desccontato}} </td>
                 </tr>
               </ng-template>

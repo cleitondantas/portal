@@ -13,7 +13,7 @@ import { Contatos } from 'src/app/models/contatos';
 export class CadastroComponent implements OnInit {
 
   contato: any = {};
-  compradores: any[];
+  compradores: Compradores[];
   listaContato: any[] = [];
   estadoCivil: any[];
   tipoContato: any[];
@@ -42,8 +42,10 @@ export class CadastroComponent implements OnInit {
       this.formulario.reset();
     },
     (error: any) => alert('erro'));*/
-
-    console.log(this.cadInfo, this.contatos, Compradores)
+    this.cadInfo.clientes = this.compradores;
+    console.log('--')
+    console.log(JSON.stringify(this.cadInfo));
+    console.log('--')
   }
 
   ngOnInit() {
@@ -130,10 +132,11 @@ export class CadastroComponent implements OnInit {
     }];
 
     this.contato = [
-      {codtipocontato: {
-        name: 'Telefone',
-        value: 2
-      }, desccontato: '1195442443'}
+      {
+        codtipocontato:1,
+        tipocontato: 'Telefone',
+         desccontato: '1195442443'
+        }
     ];
 
     this.compradores = [];
@@ -151,10 +154,12 @@ export class CadastroComponent implements OnInit {
       {name: 'Telefone', value: 3}
     ]
   }
-
+  contAny: any;
   adicionarContato (contato: Contatos) {
     var contato2: Contatos = new Contatos();
-    contato2.codtipocontato = contato.codtipocontato;
+    this.contAny = contato.codtipocontato as any;
+    contato2.tipocontato  = this.contAny.name;
+    contato2.codtipocontato = this.contAny.value;
     contato2.desccontato = contato.desccontato;
     this.contato.push(contato2);
     this.contatos.codtipocontato = null;
@@ -186,7 +191,7 @@ export class CadastroComponent implements OnInit {
     comprador2.datacadastro = comprador.datacadastro;
     comprador2.valorrenda = comprador.valorrenda;
     comprador2.principal = comprador.principal;
-
+    comprador2.contatos = this.contato;
     this.compradores.push(comprador2);
 
     console.log(JSON.stringify(this.compradores));
