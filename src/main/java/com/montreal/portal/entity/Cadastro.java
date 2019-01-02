@@ -41,10 +41,8 @@ public class Cadastro implements Serializable{
 	
 	@Column(name="numero_cadastro_incorporadora_fid")
 	private  Integer numerocadastroincorporadorafid;
-	
-	@ManyToOne
-	@JoinColumn(name="cod_incorporadora", referencedColumnName="cod_incorporadora")
-	private Incorporadora incorporadora;
+	@Column(name="cod_incorporadora")
+	private Integer codincorporadora;
 
 	@Column(name="cpf_cnpj")
 	private String cpfcnpj;
@@ -286,12 +284,13 @@ public class Cadastro implements Serializable{
 		this.cpfcnpj = cpfcnpj;
 	}
 
-	public Incorporadora getIncorporadora() {
-		return incorporadora;
+
+	public Integer getCodincorporadora() {
+		return codincorporadora;
 	}
 
-	public void setIncorporadora(Incorporadora incorporadora) {
-		this.incorporadora = incorporadora;
+	public void setCodincorporadora(Integer codincorporadora) {
+		this.codincorporadora = codincorporadora;
 	}
 
 	public Integer getNumerocadastroincorporadorafid() {

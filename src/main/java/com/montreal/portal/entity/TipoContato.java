@@ -21,26 +21,27 @@ public class TipoContato  implements Serializable{
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name="cod_tipo_contato")
-		private Integer codTipoContato;
+		private Integer codtipocontato;
 		
 		@Column(name="desc_tipo_contato")
-		private String descTipoContato;
+		private String desctipocontato;
 
-		public Integer getCodTipoContato() {
-			return codTipoContato;
+		public Integer getCodtipocontato() {
+			return codtipocontato;
 		}
 
-		public void setCodTipoContato(Integer codTipoContato) {
-			this.codTipoContato = codTipoContato;
+		public void setCodtipocontato(Integer codtipocontato) {
+			this.codtipocontato = codtipocontato;
 		}
 
-		public String getDescTipoContato() {
-			return descTipoContato;
+		public String getDesctipocontato() {
+			return desctipocontato;
 		}
 
-		public void setDescTipoContato(String descTipoContato) {
-			this.descTipoContato = descTipoContato;
+		public void setDesctipocontato(String desctipocontato) {
+			this.desctipocontato = desctipocontato;
 		}
+
 		
 		
 		

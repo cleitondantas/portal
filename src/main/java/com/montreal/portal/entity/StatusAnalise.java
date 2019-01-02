@@ -20,28 +20,28 @@ public class StatusAnalise implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="COD_STATUS_ANALISE")
-	private Integer codStatusAnalise;
+	private Integer codstatusanalise;
 	
 	@Column(name="DESC_STATUS_ANALISE")
-	private String descStatusAnalise;
+	private String descstatusanalise;
 
-	public Integer getCodStatusAnalise() {
-		return codStatusAnalise;
+	public Integer getCodstatusanalise() {
+		return codstatusanalise;
 	}
 
-	public void setCodStatusAnalise(Integer codStatusAnalise) {
-		this.codStatusAnalise = codStatusAnalise;
+	public void setCodstatusanalise(Integer codstatusanalise) {
+		this.codstatusanalise = codstatusanalise;
 	}
 
-	public String getDescStatusAnalise() {
-		return descStatusAnalise;
+	public String getDescstatusanalise() {
+		return descstatusanalise;
 	}
 
-	public void setDescStatusAnalise(String descStatusAnalise) {
-		this.descStatusAnalise = descStatusAnalise;
+	public void setDescstatusanalise(String descstatusanalise) {
+		this.descstatusanalise = descstatusanalise;
 	}
-	
-	
+
+
 	
 	
 }

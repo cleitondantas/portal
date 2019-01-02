@@ -23,19 +23,19 @@ public class Historico implements Serializable{
 	private Integer id;
 
 	@Column(name="COD_CADASTRO")	
-	private Integer codCadastro;
+	private Integer codcadastro;
 	
 	@Column(name="DESC_ATIVIDADE")	
-	private String descAtividade;
+	private String descatividade;
 	
 	@Column(name="desc_sub_atividade")	
-	private String descSubAtividade;
+	private String descsubatividade;
 	
 	@Column(name="cod_usuario")
-	private Long codUsuario;
+	private Long codusuario;
 	
 	@Column(name="data_historico")
-	private Date dataHistorico;
+	private Date datahistorico;
 
 	public Integer getId() {
 		return id;
@@ -45,46 +45,45 @@ public class Historico implements Serializable{
 		this.id = id;
 	}
 
-	public Integer getCodCadastro() {
-		return codCadastro;
+	public Integer getCodcadastro() {
+		return codcadastro;
 	}
 
-	public void setCodCadastro(Integer codCadastro) {
-		this.codCadastro = codCadastro;
+	public void setCodcadastro(Integer codcadastro) {
+		this.codcadastro = codcadastro;
 	}
 
-	public String getDescAtividade() {
-		return descAtividade;
+	public String getDescatividade() {
+		return descatividade;
 	}
 
-	public void setDescAtividade(String descAtividade) {
-		this.descAtividade = descAtividade;
+	public void setDescatividade(String descatividade) {
+		this.descatividade = descatividade;
 	}
 
-	public String getDescSubAtividade() {
-		return descSubAtividade;
+	public String getDescsubatividade() {
+		return descsubatividade;
 	}
 
-	public void setDescSubAtividade(String descSubAtividade) {
-		this.descSubAtividade = descSubAtividade;
+	public void setDescsubatividade(String descsubatividade) {
+		this.descsubatividade = descsubatividade;
 	}
 
-	public Long getCodUsuario() {
-		return codUsuario;
+	public Long getCodusuario() {
+		return codusuario;
 	}
 
-	public void setCodUsuario(Long codUsuario) {
-		this.codUsuario = codUsuario;
+	public void setCodusuario(Long codusuario) {
+		this.codusuario = codusuario;
 	}
 
-	public Date getDataHistorico() {
-		return dataHistorico;
+	public Date getDatahistorico() {
+		return datahistorico;
 	}
 
-	public void setDataHistorico(Date dataHistorico) {
-		this.dataHistorico = dataHistorico;
+	public void setDatahistorico(Date datahistorico) {
+		this.datahistorico = datahistorico;
 	}
-	
-	
+
 	
 }

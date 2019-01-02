@@ -24,27 +24,27 @@ public class Sicaq implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="COD_SICAQ")
-	private Integer codSicaq;
+	private Integer codsicaq;
 	
 	@Column(name="DESC_SICAQ")
-	private String descSicaq;
+	private String descsicaq;
 
-	public Integer getCodSicaq() {
-		return codSicaq;
+	public Integer getCodsicaq() {
+		return codsicaq;
 	}
 
-	public void setCodSicaq(Integer codSicaq) {
-		this.codSicaq = codSicaq;
+	public void setCodsicaq(Integer codsicaq) {
+		this.codsicaq = codsicaq;
 	}
 
-	public String getDescSicaq() {
-		return descSicaq;
+	public String getDescsicaq() {
+		return descsicaq;
 	}
 
-	public void setDescSicaq(String descSicaq) {
-		this.descSicaq = descSicaq;
+	public void setDescsicaq(String descsicaq) {
+		this.descsicaq = descsicaq;
 	}
-	
+
 	
 	
 }

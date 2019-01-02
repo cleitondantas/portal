@@ -21,29 +21,29 @@ public class StatusSimulacao implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="COD_STATUS_SIMULACAO")
-	private Integer codStatusSimulacao;
+	private Integer codstatussimulacao;
 	
 	@Column(name="DESC_STATUS_SIMULACAO")
-	private String descStatusSimulacao;
+	private String descstatussimulacao;
+
+	public Integer getCodstatussimulacao() {
+		return codstatussimulacao;
+	}
+
+	public void setCodstatussimulacao(Integer codstatussimulacao) {
+		this.codstatussimulacao = codstatussimulacao;
+	}
+
+	public String getDescstatussimulacao() {
+		return descstatussimulacao;
+	}
+
+	public void setDescstatussimulacao(String descstatussimulacao) {
+		this.descstatussimulacao = descstatussimulacao;
+	}
 
 	
 	
-	
-	public Integer getCodStatusSimulacao() {
-		return codStatusSimulacao;
-	}
-
-	public void setCodStatusSimulacao(Integer codStatusSimulacao) {
-		this.codStatusSimulacao = codStatusSimulacao;
-	}
-
-	public String getDescStatusSimulacao() {
-		return descStatusSimulacao;
-	}
-
-	public void setDescStatusSimulacao(String descStatusSimulacao) {
-		this.descStatusSimulacao = descStatusSimulacao;
-	}
 	
 	
 	
