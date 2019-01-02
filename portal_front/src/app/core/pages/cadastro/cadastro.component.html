@@ -1,10 +1,10 @@
 <form novalidate (ngSubmit)="OnSubmit(cadInfo, formulario)" #formulario="ngForm">
   <p-panel>
     <p-header>
-      Cadastro de informação
+      Cadastro de informacÃµes
     </p-header>
 
-    <p-fieldset legend="Cadastro de informações pessoais">
+    <p-fieldset legend="Cadastro de informaÃ§Ãµes pessoais">
       <div>
         <p-fieldset legend="Comprador principal">
           <div class="ui-g">
@@ -24,14 +24,14 @@
                   <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
                 </div>
                 <div class="ui-md-8" id="tipoP">
-                  <p-radioButton value=1 label="Física" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
-                  <p-radioButton value=2 label="Jurídica" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
+                  <p-radioButton value=1 label="FÃ­sica" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
+                  <p-radioButton value=2 label="JurÃºdica" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
                 </div>
               </div>
 
               <div class="ui-g">
                 <div class="ui-md-4">
-                  <label class="ajusteLabel" for="numeroIdent">Número de identidade: </label>
+                  <label class="ajusteLabel" for="numeroIdent">NÃºmero de identidade: </label>
                 </div>
                 <div class="ui-md-8">
                   <input type="text" class="ajusteInput" pInputText id="numeroIdent" ngModel  name="ndocumento"  #ndocumento="ngModel" [(ngModel)]="comprador.ndocumento">
@@ -40,7 +40,7 @@
 
               <div class="ui-g">
                 <div class="ui-md-4">
-                  <label class="ajusteLabel" for="dataExp">Data expedição: </label>
+                  <label class="ajusteLabel" for="dataExp">Data expediÃ§Ã£o: </label>
                 </div>
                 <div class="ui-md-8">
                   <p-calendar [showIcon]="true"  [yearNavigator]="true" yearRange="1900:2018" [monthNavigator]="true" 
@@ -94,7 +94,7 @@
 
               <div class="ui-g">
                 <div class="ui-md-4">
-                  <label class="ajusteLabel" for="orgExp">Órgão expeditor: </label>
+                  <label class="ajusteLabel" for="orgExp">Ã³rgÃ£o expeditor: </label>
                 </div>
                 <div class="ui-md-8">
                   <input type="text" class="ajusteInput" pInputText id="orgExp" ngModel name="orgaoexpedidor"  #orgaoexpedidor="ngModel" [(ngModel)]="comprador.orgaoexpedidor">
@@ -112,7 +112,7 @@
 
               <div class="ui-g">
                 <div class="ui-md-4">
-                  <label class="ajusteLabel" for="profissao">Profissão: </label>
+                  <label class="ajusteLabel" for="profissao">ProfissÃµes: </label>
                 </div>
                 <div class="ui-md-8">
                   <input type="text" class="ajusteInput" pInputText id="profissao" ngModel name="profissao"  #profissao="ngModel" [(ngModel)]="comprador.profissao">
@@ -124,7 +124,7 @@
 
         </p-fieldset>
 
-        <p-fieldset legend="Endereço">
+        <p-fieldset legend="EndereÃ§o">
           <div class="ui-g">
             <div class="ui-md-6">
 
@@ -140,7 +140,7 @@
 
               <div class="ui-g">
                 <div class="ui-md-4">
-                  <label class="ajusteLabel" for="numero">Número: </label>
+                  <label class="ajusteLabel" for="numero">NÃºmero: </label>
                 </div>
                 <div class="ui-md-8">
                   <input type="text" class="ajusteInput" pInputText id="numero" ngModel name="numeroendereco"  #numeroendereco="ngModel" [(ngModel)]="comprador.numeroendereco">
@@ -170,10 +170,10 @@
 
               <div class="ui-g">
                 <div class="ui-md-4">
-                  <label class="ajusteLabel" for="endereço">Endereço: </label>
+                  <label class="ajusteLabel" for="endereÃ§o">EndereÃ§o: </label>
                 </div>
                 <div class="ui-md-8">
-                  <input type="text" class="ajusteInput" pInputText id="endereço" ngModel name="enderecoresidencial"  #enderecoresidencial="ngModel" [(ngModel)]="comprador.endereco">
+                  <input type="text" class="ajusteInput" pInputText id="endereÃ§o" ngModel name="enderecoresidencial"  #enderecoresidencial="ngModel" [(ngModel)]="comprador.endereco">
                 </div>
               </div>
 
@@ -285,7 +285,7 @@
       </p-fieldset>
     </div>
 
-    <p-fieldset legend="Cadastro de informações do Imóvel">
+    <p-fieldset legend="Cadastro de inforÃ§Ãµes do ImÃ³vel">
       
       <div class="ui-g">
         <div class="ui-md-1">
@@ -328,7 +328,7 @@
 
             <div class="ui-g">
               <div class="ui-md-3">
-                <label class="ajusteLabel" for="origin">Originação: </label>
+                <label class="ajusteLabel" for="origin">OriginaÃ§Ã£o: </label>
               </div>
               <div class="ui-md-7" id="origin">
                 <p-dropdown placeholder="Selecione..." optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
@@ -371,7 +371,7 @@
 
                 <div class="ui-g">
                   <div class="ui-md-5">
-                    <label class="ajusteLabel" for="vagaAutomovel">Vaga de automóvel: </label>
+                    <label class="ajusteLabel" for="vagaAutomovel">Vaga de automovel: </label>
                   </div>
                   <div class="ui-md-7">
                     <input type="text" class="ajusteInput" pInputText id="vagaAutomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
@@ -404,7 +404,7 @@
         </div>
       </p-fieldset>
 
-      <p-fieldset legend="Endereço do Imovel">
+      <p-fieldset legend="EndereÃ§o do Imovel">
         <div class="ui-g">
           <div class="ui-md-6">
 
@@ -420,7 +420,7 @@
 
             <div class="ui-g">
               <div class="ui-md-4">
-                <label class="ajusteLabel" for="numeroImovel">Número: </label>
+                <label class="ajusteLabel" for="numeroImovel">NÃºmero: </label>
               </div>
               <div class="ui-md-8">
                 <input type="text" class="ajusteInput" pInputText id="numeroImovel"ngModel name="numero"  #numero="ngModel" [(ngModel)]="cadInfo.numero">
@@ -450,10 +450,10 @@
 
             <div class="ui-g">
               <div class="ui-md-4">
-                <label class="ajusteLabel" for="endereçoImovel">Endereço: </label>
+                <label class="ajusteLabel" for="endereÃ§oImovel">EndereÃ§o: </label>
               </div>
               <div class="ui-md-8">
-                <input type="text" class="ajusteInput" pInputText id="endereçoImovel"ngModel name="endereco"  #endereco="ngModel" [(ngModel)]="cadInfo.endereco">
+                <input type="text" class="ajusteInput" pInputText id="endereÃ§oImovel"ngModel name="endereco"  #endereco="ngModel" [(ngModel)]="cadInfo.endereco">
               </div>
             </div>
 
@@ -484,7 +484,7 @@
     </p-fieldset>
 
     <p-footer>
-      <button pButton type="submit" label="Avançar >>" class="ui-button-rounded ui-button-success" 
+      <button pButton type="submit" label="AvanÃ§ar >>" class="ui-button-rounded ui-button-success" 
         [ngStyle]="{'width': '15%', 'margin': '3px'}"></button>
       <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
         [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario)"></button>

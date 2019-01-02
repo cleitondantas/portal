@@ -73,7 +73,7 @@ export class CadastroComponent implements OnInit {
     this.estadoCivil = [
       {value: {id: 1, name: 'Solteiro(a)'}},
       {value: {id: 2, name: 'Casado(a)'}},
-      {value: {id: 3, name: 'Viúvo(a)'}},
+      {value: {id: 3, name: 'Viuvo(a)'}},
       {value: {id: 4, name: 'Divorciado(a)'}}
     ];
 
