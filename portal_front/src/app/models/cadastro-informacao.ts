@@ -1,13 +1,10 @@
 import { Compradores } from "./compradores";
 
 export class CadastroInformacao {
-    codoriginacao: number;
-    codcadastroincorporadora: string;
-    incorporadora: {
-        codincorporadora: number;
-        descincorporadora: string;
-    }
-    codempreendimento: number;
+    codoriginacao: any;
+    numerocadastroincorporadorafid: number;
+    codincorporadora: any;
+    codempreendimento: any;
     blocotorre: string;
     unidade: string;
     valorvenda: number;
@@ -24,6 +21,7 @@ export class CadastroInformacao {
     endereco: string;
     complemento: string;
     uf: any;
+    dataentrada: string;
     clientes: Compradores[];
 
 }
