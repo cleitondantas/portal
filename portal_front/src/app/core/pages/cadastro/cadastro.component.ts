@@ -9,6 +9,10 @@ import { Estadobr } from './../../../models/estadobr';
 import { Empreendimento } from './../../../models/empreendimento';
 import { EstadoCivil } from 'src/app/models/estado-civil';
 import { TipoContato } from './../../../models/tipo-contato';
+import { TipoClientes } from 'src/app/models/tipo-clientes';
+import { Incorporadoras } from './../../../models/incorporadoras';
+import { environment } from 'src/environments/environment';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-cadastro',
@@ -17,51 +21,49 @@ import { TipoContato } from './../../../models/tipo-contato';
 })
 export class CadastroComponent implements OnInit {
 
-  contato: any[];
-  contatoDisplay: any[];
-  compradores: Compradores[];
+  contato: any[] = [];
+  contatoDisplay: any[] = [];
+  compradores: Compradores[] = [];
   listaContato: any[];
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
   estado: Estadobr[];
   contatoSelecionado: any;
   contAny: any;
-  incorp: any[];
+  incorp: Incorporadoras[];
   empreendimento: Empreendimento[];
   originacao: Originacao[];
+  tipocliente: TipoClientes[];
+  retornocadastro: CadastroInformacao;
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
   contatos: Contatos = new Contatos();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private confirmationService: ConfirmationService
   ) {
 
   }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
-    /*let url = 'http://10.6.5.99:8100/api/cliente';
-    let json = JSON.stringify(this.formulario.value);
-    let header = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXRoZXVzLm1fYyIsImNyZWF0ZWQiOjE1NDQ2NDMwMjU5NDgsImV4cCI6MTU0NDY2MTAyNX0.4AQeH-PfWFyFP4zXmCmnHLRKT3pjhU5JEKrVWND3eqdbXVr_s2iXQCUqH16n1ziCeWezVNjVzRoLXWGj76XAcw'})
-  
-
-    this.http.post<FormGroup>(url, json, {headers: header}).subscribe(dados => {
-      console.log(dados);
-      // reseta o form
-      this.formulario.reset();
-    },
-    (error: any) => alert('erro'));*/
-
     cadInfo.uf = cadInfo.uf.uf;
     cadInfo.clientes = this.compradores;
     cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
-    cadInfo.codempreendimento = cadInfo.codempreendimento.codEmpreendimento;
+    cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
     cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
+    for (let index = 0; index < cadInfo.clientes.length; index++) {
+      cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+    }
+    cadInfo.cep = cadInfo.cep.replace('-', '');
 
     this.compradores = [];
 
-    //this.http.post<CadastroInformacao>('10.6.5.99:8100/api/cadastro', JSON.stringify(cadInfo));
+     /*this.http.post<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo).subscribe(res => {
+      this.retornocadastro = res,
+      console.log(res)
+    });*/
 
     console.log(JSON.stringify(this.cadInfo), cadInfo);
 
@@ -74,30 +76,21 @@ export class CadastroComponent implements OnInit {
     this.http.get<Originacao[]>(`http://10.6.5.99:8100/api/originacoes`).subscribe(dados => this.originacao = dados['data']);
     this.http.get<EstadoCivil[]>(`http://10.6.5.99:8100/api/estadocivil`).subscribe(dados => this.estadoCivil = dados['data']);
     this.http.get<TipoContato[]>(`http://10.6.5.99:8100/api/tipocontatos`).subscribe(dados => this.tipoContato = dados['data']);
-    
-    this.contato = [];
-
-    this.contatoDisplay = [];
-
-    this.compradores = [];
-
-    this.incorp = [
-      {codincorporadora: 1, descincorporadora: 'ECOSFERA'},
-      {codincorporadora: 2, descincorporadora: 'DIRECIONAL'}
-    ]
+    this.http.get<TipoClientes[]>(`http://10.6.5.99:8100/api/tipoclientes`).subscribe(dados => this.tipocliente = dados['data']);
+    this.http.get<Incorporadoras[]>(`http://10.6.5.99:8100/api/incorporadoras`).subscribe(dados => this.incorp = dados['data']);
   }
 
-  adicionarContato (contato: Contatos) { //ARRUMAR A PARTE DE CONTATO
+  adicionarContato (contato: Contatos) {
     var contatoDisplay: Contatos = new Contatos();
     var contato2: Contatos = new Contatos();
 
     this.contAny = contato.codtipocontato as any;
 
-    contatoDisplay.tipocontato = this.contAny.value.name;
-    contatoDisplay.codtipocontato = this.contAny.value.id;
+    contatoDisplay.tipocontato = this.contAny.desctipocontato;
+    contatoDisplay.codtipocontato = this.contAny.codtipocontato;
     contatoDisplay.desccontato = contato.desccontato;
     
-    contato2.codtipocontato = this.contAny.value.id;
+    contato2.codtipocontato = this.contAny.codtipocontato;
     contato2.cpfcnpj = this.comprador.cpfcnpj;
     contato2.desccontato = contato.desccontato; 
 
@@ -239,5 +232,19 @@ export class CadastroComponent implements OnInit {
     }
     
     rowData.principal = true;
+  }
+
+  confirmacao() {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja continuar?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        alert('aceitou')
+      },
+      reject: () => {
+        alert('rejeitou')
+      }
+    })
   }
 }
