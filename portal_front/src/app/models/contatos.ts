@@ -1,7 +1,6 @@
 export class Contatos {
-    tipocontato: string
+    tipocontato: string;
     codtipocontato: number;
     cpfcnpj: string;
     desccontato: string;
-
 }

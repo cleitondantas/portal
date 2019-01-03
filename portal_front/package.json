@@ -28,8 +28,8 @@
     "jquery": "^3.3.1",
     "ng2-currency-mask": "^5.3.1",
     "primeflex": "^1.0.0-rc.1",
-    "primeicons": "^1.0.0",
-    "primeng": "^6.1.7",
+    "primeicons": "^1.0.0-beta.10",
+    "primeng": "^6.1.2",
     "rxjs": "^6.3.3",
     "zone.js": "~0.8.26"
   },

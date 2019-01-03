@@ -1,3 +1,4 @@
+import { Originacao } from './../../../models/originacao';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
@@ -5,6 +6,9 @@ import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Compradores } from 'src/app/models/compradores';
 import { Contatos } from 'src/app/models/contatos';
 import { Estadobr } from './../../../models/estadobr';
+import { Empreendimento } from './../../../models/empreendimento';
+import { EstadoCivil } from 'src/app/models/estado-civil';
+import { TipoContato } from './../../../models/tipo-contato';
 
 @Component({
   selector: 'app-cadastro',
@@ -17,13 +21,14 @@ export class CadastroComponent implements OnInit {
   contatoDisplay: any[];
   compradores: Compradores[];
   listaContato: any[];
-  estadoCivil: any[];
-  tipoContato: any[];
+  estadoCivil: EstadoCivil[];
+  tipoContato: TipoContato[];
   estado: Estadobr[];
   contatoSelecionado: any;
   contAny: any;
   incorp: any[];
-  empreendimento: any[];
+  empreendimento: Empreendimento[];
+  originacao: Originacao[];
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -50,38 +55,31 @@ export class CadastroComponent implements OnInit {
 
     cadInfo.uf = cadInfo.uf.uf;
     cadInfo.clientes = this.compradores;
-    cadInfo.codempreendimento = Number(cadInfo.codempreendimento);
+    cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+    cadInfo.codempreendimento = cadInfo.codempreendimento.codEmpreendimento;
+    cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
+
+    this.compradores = [];
 
     //this.http.post<CadastroInformacao>('10.6.5.99:8100/api/cadastro', JSON.stringify(cadInfo));
 
-    console.log(JSON.stringify(this.cadInfo), this.cadInfo);
+    console.log(JSON.stringify(this.cadInfo), cadInfo);
 
     formulario.reset();
   }
 
   ngOnInit() {
     this.http.get<Estadobr[]>('./../../../../assets/estados.json').subscribe(dados => this.estado = dados);
-
+    this.http.get<Empreendimento[]>(`http://10.6.5.99:8100/api/empreendimentos`).subscribe(dados => this.empreendimento = dados['data']);
+    this.http.get<Originacao[]>(`http://10.6.5.99:8100/api/originacoes`).subscribe(dados => this.originacao = dados['data']);
+    this.http.get<EstadoCivil[]>(`http://10.6.5.99:8100/api/estadocivil`).subscribe(dados => this.estadoCivil = dados['data']);
+    this.http.get<TipoContato[]>(`http://10.6.5.99:8100/api/tipocontatos`).subscribe(dados => this.tipoContato = dados['data']);
+    
     this.contato = [];
 
     this.contatoDisplay = [];
 
     this.compradores = [];
-
-    this.empreendimento = [];
-
-    this.estadoCivil = [
-      {value: {id: 1, name: 'Solteiro(a)'}},
-      {value: {id: 2, name: 'Casado(a)'}},
-      {value: {id: 3, name: 'Viuvo(a)'}},
-      {value: {id: 4, name: 'Divorciado(a)'}}
-    ];
-
-    this.tipoContato = [
-      {value: {id: 1, name: 'Celular'}},
-      {value: {id: 2, name: 'Telefone'}},
-      {value: {id: 3, name: 'E-mail'}}
-    ];
 
     this.incorp = [
       {codincorporadora: 1, descincorporadora: 'ECOSFERA'},
@@ -89,7 +87,7 @@ export class CadastroComponent implements OnInit {
     ]
   }
 
-  adicionarContato (contato: Contatos) {
+  adicionarContato (contato: Contatos) { //ARRUMAR A PARTE DE CONTATO
     var contatoDisplay: Contatos = new Contatos();
     var contato2: Contatos = new Contatos();
 
@@ -100,6 +98,7 @@ export class CadastroComponent implements OnInit {
     contatoDisplay.desccontato = contato.desccontato;
     
     contato2.codtipocontato = this.contAny.value.id;
+    contato2.cpfcnpj = this.comprador.cpfcnpj;
     contato2.desccontato = contato.desccontato; 
 
     this.contatoDisplay.push(contatoDisplay);
@@ -119,7 +118,7 @@ export class CadastroComponent implements OnInit {
     comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
     comprador2.dataexpedicao = comprador.dataexpedicao;
     comprador2.datanascimento = comprador.datanascimento;
-    comprador2.codestadocivil = comprador.codestadocivil.value.id; 
+    comprador2.codestadocivil = comprador.codestadocivil.codEstadoCivil; 
     comprador2.nacionalidade = comprador.nacionalidade;
     comprador2.profissao = comprador.profissao;
     comprador2.cepresidencial = comprador.cepresidencial;
