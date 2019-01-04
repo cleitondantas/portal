@@ -22,31 +22,33 @@ public class TipoCliente  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod_tipo_cliente")
-	private Integer  codTipoCliente;
+	private Integer  codtipocliente;
 	
 	
 	@Column(name="desc_tipo_cliente")
-	private String descTipoCliente;
+	private String desctipocliente;
 
 
-	public Integer getCodTipoCliente() {
-		return codTipoCliente;
+	public Integer getCodtipocliente() {
+		return codtipocliente;
 	}
 
 
-	public void setCodTipoCliente(Integer codTipoCliente) {
-		this.codTipoCliente = codTipoCliente;
+	public void setCodtipocliente(Integer codtipocliente) {
+		this.codtipocliente = codtipocliente;
 	}
 
 
-	public String getDescTipoCliente() {
-		return descTipoCliente;
+	public String getDesctipocliente() {
+		return desctipocliente;
 	}
 
 
-	public void setDescTipoCliente(String descTipoCliente) {
-		this.descTipoCliente = descTipoCliente;
-	} 
+	public void setDesctipocliente(String desctipocliente) {
+		this.desctipocliente = desctipocliente;
+	}
+
+
 	
 	
 	

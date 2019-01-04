@@ -21,39 +21,38 @@ public class SubStatusAnalise implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="COD_SUB_STATUS_ANALISE")	
-	private Integer codSubStatusAnalise;
+	private Integer codsubstatusanalise;
 	
 	@Column(name="cod_status_analise")	
-	private Integer codStatusAnalise;
+	private Integer codstatusanalise;
 	
 	@Column(name="DESC_SUB_STATUS_ANALISE")	
-	private String descSubStatusAnalise;
+	private String descsubstatusanalise;
 
-	
-	
-	public Integer getCodSubStatusAnalise() {
-		return codSubStatusAnalise;
+	public Integer getCodsubstatusanalise() {
+		return codsubstatusanalise;
 	}
 
-	public void setCodSubStatusAnalise(Integer codSubStatusAnalise) {
-		this.codSubStatusAnalise = codSubStatusAnalise;
+	public void setCodsubstatusanalise(Integer codsubstatusanalise) {
+		this.codsubstatusanalise = codsubstatusanalise;
 	}
 
-	public Integer getCodStatusAnalise() {
-		return codStatusAnalise;
+	public Integer getCodstatusanalise() {
+		return codstatusanalise;
 	}
 
-	public void setCodStatusAnalise(Integer codStatusAnalise) {
-		this.codStatusAnalise = codStatusAnalise;
+	public void setCodstatusanalise(Integer codstatusanalise) {
+		this.codstatusanalise = codstatusanalise;
 	}
 
-	public String getDescSubStatusAnalise() {
-		return descSubStatusAnalise;
+	public String getDescsubstatusanalise() {
+		return descsubstatusanalise;
 	}
 
-	public void setDescSubStatusAnalise(String descSubStatusAnalise) {
-		this.descSubStatusAnalise = descSubStatusAnalise;
+	public void setDescsubstatusanalise(String descsubstatusanalise) {
+		this.descsubstatusanalise = descsubstatusanalise;
 	}
+
 	
 	
 	

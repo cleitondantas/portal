@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.montreal.portal.entity.Empreendimentos;
+import com.montreal.portal.entity.Empreendimento;
 import com.montreal.portal.repository.EmpreendimentosRepository;
 import com.montreal.portal.response.Response;
 
@@ -27,9 +27,9 @@ public class EmpreendimentoControler {
 	
 	
 	@GetMapping(value = "/empreendimentos")
-    public ResponseEntity<Response<Iterable<Empreendimentos>>> findAllEmpreendimentos() {
-		Response<Iterable<Empreendimentos>> response = new Response<Iterable<Empreendimentos>>();
-		Iterable<Empreendimentos> users = empreendimentosRepository.findAll();
+    public ResponseEntity<Response<Iterable<Empreendimento>>> findAllEmpreendimentos() {
+		Response<Iterable<Empreendimento>> response = new Response<Iterable<Empreendimento>>();
+		Iterable<Empreendimento> users = empreendimentosRepository.findAll();
 		if (users == null) {
 			response.getErrors().add("Not Fund:");
 			return ResponseEntity.badRequest().body(response);
@@ -39,14 +39,14 @@ public class EmpreendimentoControler {
     }
 	
 	@PostMapping(value = "/empreendimento")
-	public ResponseEntity<Response<Empreendimentos>> create(HttpServletRequest request, @RequestBody Empreendimentos  contatoClientes,BindingResult result) {
-		Response<Empreendimentos> response = new Response<Empreendimentos>();
+	public ResponseEntity<Response<Empreendimento>> create(HttpServletRequest request, @RequestBody Empreendimento  contatoClientes,BindingResult result) {
+		Response<Empreendimento> response = new Response<Empreendimento>();
 		try {
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 				return ResponseEntity.badRequest().body(response);
 			}
-			Empreendimentos userPersisted = (Empreendimentos) empreendimentosRepository.save(contatoClientes);
+			Empreendimento userPersisted = (Empreendimento) empreendimentosRepository.save(contatoClientes);
 			response.setData(userPersisted);
 		} catch (DuplicateKeyException dE) {
 			response.getErrors().add("E-mail already registered !");
