@@ -32,7 +32,7 @@ import { MenuItem } from 'primeng/api';
 import { TabViewModule } from 'primeng/tabview';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CurrencyMaskModule } from "ng2-currency-mask";
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { DadosCadastraisComponent } from './pages/informacoes/dados-cadastrais/dados-cadastrais.component';
 import { HistoricoComponent } from './pages/informacoes/historico/historico.component';
@@ -66,8 +66,8 @@ import { AnaliseComponent } from './pages/analise-credito/analise/analise.compon
     TabViewModule,
     InputTextareaModule,
     ReactiveFormsModule,
-    CurrencyMaskModule
-
+    CurrencyMaskModule,
+    ConfirmDialogModule,
   ],
   declarations: [
     HomeComponent,

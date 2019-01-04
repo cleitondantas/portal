@@ -24,8 +24,7 @@
                   <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
                 </div>
                 <div class="ui-md-8" id="tipoP">
-                  <p-radioButton value=1 label="Física" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
-                  <p-radioButton value=2 label="Jurídica" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
+                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codtipocliente}}" label="{{tipo.desctipocliente}}" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
                 </div>
               </div>
 
@@ -342,7 +341,7 @@
 
       <p-fieldset legend="DADOS DO EMPREENDIMENTO">
         <div class="ui-g">
-          <div class="ui-md-5">
+          <div class="ui-md-7">
 
             <div class="ui-g">
               <div class="ui-md-4">
@@ -350,14 +349,37 @@
               </div>
               <div class="ui-md-8" id="empreend">
                 <p-dropdown placeholder="Selecione..." optionLabel="descempreendimento" [options]="empreendimento" [autoWidth]="false" [style]="{'width': '100%'}" 
-                ngModel name="codempreendimento"  #codempreendimento="ngModel" [(ngModel)]="cadInfo.codempreendimento"></p-dropdown>              </div>
+                ngModel name="codempreendimento"  #codempreendimento="ngModel" [(ngModel)]="cadInfo.codempreendimento" filter="true"></p-dropdown>              </div>
             </div>
 
+            <div class="ui-g">
+              <div class="ui-md-8">
+                <div class="ui-g">
+                  <div class="ui-md-6">
+                    <label class="ajusteLabel" for="vagaAutomovel">Vaga de automóvel: </label>
+                  </div>
+                  <div class="ui-md-6">
+                    <input type="text" class="ajusteInput" pInputText id="vagaAutomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui-md-4">
+                <div class="ui-g">
+                  <div class="ui-md-4">
+                    <label class="ajusteLabel" for="box">Box: </label>
+                  </div>
+                  <div class="ui-md-8">
+                    <input type="text" class="ajusteInput" pInputText id="box"ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="ui-md-7">
+          <div class="ui-md-5">
             <div class="ui-g">
-              <div class="ui-md-6">
+              <div class="ui-md-6" [ngStyle]="{'padding-top': '0px'}">
 
                 <div class="ui-g">
                   <div class="ui-md-4">
@@ -367,19 +389,9 @@
                     <input type="text" class="ajusteInput" pInputText id="bloco"ngModel name="blocotorre"  #blocotorre="ngModel" [(ngModel)]="cadInfo.blocotorre">
                   </div>
                 </div>
-
-
-                <div class="ui-g">
-                  <div class="ui-md-5">
-                    <label class="ajusteLabel" for="vagaAutomovel">Vaga de automóvel: </label>
-                  </div>
-                  <div class="ui-md-7">
-                    <input type="text" class="ajusteInput" pInputText id="vagaAutomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
-                  </div>
-                </div>
               </div>
 
-              <div class="ui-md-6">
+              <div class="ui-md-6" [ngStyle]="{'padding-top': '0px'}">
 
                 <div class="ui-g">
                   <div class="ui-md-4">
@@ -387,15 +399,6 @@
                   </div>
                   <div class="ui-md-8">
                     <input type="text" class="ajusteInput" pInputText id="apto"ngModel name="numeroapartamento"  #numeroapartamento="ngModel" [(ngModel)]="cadInfo.numeroapartamento">
-                  </div>
-                </div>
-
-                <div class="ui-g">
-                  <div class="ui-md-4">
-                    <label class="ajusteLabel" for="box">Box: </label>
-                  </div>
-                  <div class="ui-md-8">
-                    <input type="text" class="ajusteInput" pInputText id="box"ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box">
                   </div>
                 </div>
               </div>
@@ -485,7 +488,7 @@
 
     <p-footer>
       <button pButton type="submit" label="Avançar >>" class="ui-button-rounded ui-button-success" 
-        [ngStyle]="{'width': '15%', 'margin': '3px'}"></button>
+        [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="confirmacao()"></button>
       <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
         [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario)"></button>
       <br><br>
@@ -493,4 +496,5 @@
   </p-panel>
 
   <br><br><br>
+  <p-confirmDialog [style]="{width: '425px'}"></p-confirmDialog>
 </form>
