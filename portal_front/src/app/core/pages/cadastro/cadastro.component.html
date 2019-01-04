@@ -1,4 +1,4 @@
-<form novalidate (ngSubmit)="OnSubmit(cadInfo, formulario)" #formulario="ngForm">
+<form novalidate (ngSubmit)="confirmacao(cadInfo, formulario)" #formulario="ngForm">
   <p-panel>
     <p-header>
       Cadastro de informação
@@ -232,9 +232,9 @@
               <p-table [value]="contatoDisplay" [scrollable]="true" [(selection)]="contatoSelecionado" dataKey="contato" scrollHeight="200px">
                 <ng-template pTemplate="header">
                   <tr>
-                    <th>Excluir</th>
-                    <th>Tipo</th>
-                    <th>Contato</th>
+                    <th><strong>Excluir</strong></th>
+                    <th><strong>Tipo</strong></th>
+                    <th><strong>Contato</strong></th>
                   </tr>
                 </ng-template>
 
@@ -261,11 +261,11 @@
         <p-table [value]="compradores" >
           <ng-template pTemplate="header">
             <tr>
-              <th>Excluir</th>
-              <th>Nome</th>
-              <th>CPF</th>
-              <th>Renda</th>
-              <th>Comprador principal</th>
+              <th><strong>Excluir</strong></th>
+              <th><strong>Nome</strong></th>
+              <th><strong>CPF</strong></th>
+              <th><strong>Renda</strong></th>
+              <th><strong>Comprador principal</strong></th>
             </tr>
           </ng-template>
   
@@ -496,5 +496,5 @@
   </p-panel>
 
   <br><br><br>
-  <p-confirmDialog [style]="{width: '425px'}"></p-confirmDialog>
+  <p-confirmDialog [ngStyle]="{width: '425px'}"></p-confirmDialog>
 </form>

@@ -1,4 +1,4 @@
-<form novalidate [formGroup]="formulario">
+<form novalidate>
   <div class="ui-g">
     <div class="ui-md-6">
 
@@ -7,7 +7,7 @@
           <label class="ajusteLabel" for="fid">FID: </label>
         </div>
         <div class="ui-md-10">
-          <input type="text" class="ajusteInput" pInputText id="fid" formControlName="fid">
+          <input type="text" class="ajusteInput" pInputText id="fid">
         </div>
       </div>
 
@@ -16,7 +16,7 @@
           <label class="ajusteLabel" for="valorAvali">Valor de Avaliação: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorAvali" formControlName="valorAval">
+          <input type="text" class="ajusteInput" pInputText id="valorAvali">
         </div>
       </div>
 
@@ -25,7 +25,7 @@
           <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorComVem" formControlName="valorComVen">
+          <input type="text" class="ajusteInput" pInputText id="valorComVem">
         </div>
       </div>
 
@@ -35,7 +35,7 @@
         </div>
         <div class="ui-md-8" id="modalidade">
           <p-dropdown placeholder="PRO-COTISTA" optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
-          class="ajusteInput" formControlName="modalidade"></p-dropdown>
+          class="ajusteInput"></p-dropdown>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
         <div class="ui-md-8">
           <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
           class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="dataEnv" dateFormat="dd/mm/yy" formControlName="dataEnvBanco"></p-calendar>
+          id="dataEnv" dateFormat="dd/mm/yy"></p-calendar>
         </div>
       </div>
 
@@ -55,7 +55,7 @@
           <label class="ajusteLabel" for="valorPrestAprov">Valor prestação Aprovado: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorPrestAprov" formControlName="valorPrestAprov">
+          <input type="text" class="ajusteInput" pInputText id="valorPrestAprov">
         </div>
       </div>
 
@@ -64,7 +64,7 @@
           <label class="ajusteLabel" for="sicaq">SICAQ: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="sicaq" formControlName="sicaq">
+          <input type="text" class="ajusteInput" pInputText id="sicaq">
         </div>
       </div>
 
@@ -73,7 +73,7 @@
           <label class="ajusteLabel" for="correspondente">Correspondente: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="correspondente" formControlName="correspondente">
+          <input type="text" class="ajusteInput" pInputText id="correspondente">
         </div>
       </div>
 
@@ -90,7 +90,7 @@
         <div class="ui-md-8">
           <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
           class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="prazoFinan" dateFormat="dd/mm/yy" formControlName="prazoFinan"></p-calendar>
+          id="prazoFinan" dateFormat="dd/mm/yy"></p-calendar>
         </div>
       </div>
 
@@ -99,7 +99,7 @@
           <label class="ajusteLabel" for="banco">Banco: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="banco" formControlName="banco">
+          <input type="text" class="ajusteInput" pInputText id="banco">
         </div>
       </div>
 
@@ -109,7 +109,7 @@
         </div>
         <div class="ui-md-8" id="tipoAmor">
           <p-dropdown placeholder="DropDown Menu" optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
-          class="ajusteInput" formControlName="tipoAmor"></p-dropdown>
+          class="ajusteInput"></p-dropdown>
         </div>
       </div>
 
@@ -118,7 +118,7 @@
           <label class="ajusteLabel" for="valorSub">Valor subsidio: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorSub" formControlName="valorSub">
+          <input type="text" class="ajusteInput" pInputText id="valorSub">
         </div>
       </div>
 
@@ -127,7 +127,7 @@
           <label class="ajusteLabel" for="valorAvaliBanco">Valor avaliação Banco: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorAvaliBanco" formControlName="valorAvalBanco">
+          <input type="text" class="ajusteInput" pInputText id="valorAvaliBanco">
         </div>
       </div>
 
@@ -136,7 +136,7 @@
           <label class="ajusteLabel" for="fgts">FGTS: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="fgts" formControlName="fgts">
+          <input type="text" class="ajusteInput" pInputText id="fgts">
         </div>
       </div>
 
@@ -145,14 +145,85 @@
           <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="recProp" formControlName="recProp">
+          <input type="text" class="ajusteInput" pInputText id="recProp">
         </div>
       </div>
 
     </div>
   </div>
 
-  <p-fieldset legend="Simulação" formGroupName="simulacao">
+  <p-fieldset legend="Valores do processo">
+    <div class="ui-g">
+      <div class="ui-md-6">
+
+        <div class="ui-g">
+          <div class="ui-md-4">
+            <label class="ajusteLabel" for="despesasFinan">Despesas financiadas: </label>
+          </div>
+          <div class="ui-md-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" 
+            id="despesasFinan"/>
+          </div>
+        </div>
+
+        <div class="ui-g">
+          <div class="ui-md-4">
+            <label class="ajusteLabel" for="finanTotal">Financiamento total: </label>
+          </div>
+          <div class="ui-md-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="finanTotal"/>
+          </div>
+        </div>
+
+        <div class="ui-g">
+          <div class="ui-md-4">
+            <label class="ajusteLabel" for="fgts">FGTS: </label>
+          </div>
+          <div class="ui-md-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="fgts"/>
+          </div>
+        </div>
+
+      </div>
+      <div class="ui-md-6">
+
+        <div class="ui-g">
+          <div class="ui-md-4">
+            <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
+          </div>
+          <div class="ui-md-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="recProp"/>
+          </div>
+        </div>
+
+        <div class="ui-g">
+          <div class="ui-md-4">
+            <label class="ajusteLabel" for="saldoDev">Saldo devedor: </label>
+          </div>
+          <div class="ui-md-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="saldoDev"/>
+          </div>
+        </div>
+
+        <div class="ui-g">
+          <div class="ui-md-4">
+            <label class="ajusteLabel" for="valorVenda">Valor da venda: </label>
+          </div>
+          <div class="ui-md-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="valorVenda"/>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </p-fieldset>
+
+  <p-fieldset legend="Simulação">
     <div class="ui-g">
       <div class="ui-md-6">
 
@@ -162,7 +233,7 @@
           </div>
           <div class="ui-md-6" id="instFinan">
             <p-dropdown [options]="instFinan" optionLabel="name" placeholder="Selecione..." [autoWidth]="false" [style]="{'width': '100%'}" 
-            class="ajusteInput" formControlName="instFinan"></p-dropdown>
+            class="ajusteInput"></p-dropdown>
           </div>
           <div class="ui-md-2">
             <button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" 
@@ -191,7 +262,7 @@
           <td> 
             <p-dropdown [options]="[{nome: 'Aprovado'}, {nome: 'Reprovado'}]" optionLabel="nome"></p-dropdown>  
           </td>
-          <td> {{simul.valor}} </td>
+          <td> <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>          </td>
           <td> 
             <p-tableRadioButton [value]="rowData"></p-tableRadioButton>  
           </td>
@@ -200,78 +271,7 @@
     </p-table>
   </p-fieldset>
 
-  <p-fieldset legend="Valores do processo" formGroupName="valoresProcesso">
-    <div class="ui-g">
-      <div class="ui-md-6">
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="despesasFinan">Despesas financiadas: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="despesasFinan"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="despesasFinan"></p-inputMask>
-          </div>
-        </div>
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="finanTotal">Financiamento total: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="finanTotal"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="finanTotal"></p-inputMask>
-          </div>
-        </div>
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="fgts">FGTS: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="fgts"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="fgtsValProc"></p-inputMask>
-          </div>
-        </div>
-
-      </div>
-      <div class="ui-md-6">
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="despesasFinan"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="recPropValProc"></p-inputMask>
-          </div>
-        </div>
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="saldoDev">Saldo devedor: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="saldoDev"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="saldoDevedor"></p-inputMask>
-          </div>
-        </div>
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="valorVenda">Valor da venda: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="valorVenda"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="valorVen"></p-inputMask>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </p-fieldset>
-
-  <p-fieldset legend="Datas do processo" formGroupName="datasProcesso">
+  <p-fieldset legend="Datas do processo">
     <div class="ui-g">
       <div class="ui-md-6">
 
@@ -282,7 +282,7 @@
         <div class="ui-md-8">
           <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
           class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="dataMae" dateFormat="dd/mm/yy" formControlName="dataPastaMae"></p-calendar>
+          id="dataMae" dateFormat="dd/mm/yy"></p-calendar>
         </div>
       </div>
 
@@ -293,7 +293,7 @@
         <div class="ui-md-8">
           <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
           class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="dataEmissao" dateFormat="dd/mm/yy" formControlName="dataEmissao"></p-calendar>
+          id="dataEmissao" dateFormat="dd/mm/yy"></p-calendar>
         </div>
       </div>
 
@@ -304,7 +304,7 @@
         <div class="ui-md-8">
           <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
           class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="dataAssin" dateFormat="dd/mm/yy" formControlName="dataAssinatura"></p-calendar>
+          id="dataAssin" dateFormat="dd/mm/yy"></p-calendar>
         </div>
       </div>
 
