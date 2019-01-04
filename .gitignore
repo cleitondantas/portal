@@ -80,3 +80,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+portal_front/src/app/core/pages/cadastro/

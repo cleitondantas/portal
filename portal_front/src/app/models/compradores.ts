@@ -8,11 +8,11 @@ export class Compradores {
     orgaoexpedidor: string;
     dataexpedicao: string;
     datanascimento: string;
-    codestadocivil: number;
+    codestadocivil: any;
     nacionalidade: string;
     profissao: string;
     cepresidencial: string;
-    uf: string;
+    uf: any;
     cidade: string;
     bairro: string;
     endereco: string;

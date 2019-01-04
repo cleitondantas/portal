@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.montreal.portal.entity.Cadastro;
 import com.montreal.portal.entity.Cliente;
+import com.montreal.portal.entity.Contato;
 import com.montreal.portal.repository.CasdastroRepository;
 import com.montreal.portal.response.Response;
 
@@ -46,6 +47,11 @@ public class CadastroControler {
 
 			if (cadastro.getClientes() != null) {
 				for (Cliente item : cadastro.getClientes()) {
+					for(Contato contato :item.getContatos()) {
+						contato.setCpfcnpj(item.getCpfcnpj());
+					}
+					
+					
 					if (item.getPrincipal()) {
 						cadastro.setCpfcnpj(item.getCpfcnpj());
 					}

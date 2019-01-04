@@ -1,11 +1,18 @@
+import { Originacao } from './../../../models/originacao';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Compradores } from 'src/app/models/compradores';
 import { Contatos } from 'src/app/models/contatos';
-import { copyStyles } from '@angular/animations/browser/src/util';
+import { Estadobr } from './../../../models/estadobr';
+import { Empreendimento } from './../../../models/empreendimento';
+import { EstadoCivil } from 'src/app/models/estado-civil';
+import { TipoContato } from './../../../models/tipo-contato';
+import { TipoClientes } from 'src/app/models/tipo-clientes';
+import { Incorporadoras } from './../../../models/incorporadoras';
+import { environment } from 'src/environments/environment';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-cadastro',
@@ -14,282 +21,146 @@ import { copyStyles } from '@angular/animations/browser/src/util';
 })
 export class CadastroComponent implements OnInit {
 
-  data: Date;
-  renda: string;
-  cep: string;
-  contato: any = {};
-  compradores: any[];
-  compselec: any;
-  estadoCivil: any[];
-  tipoContato: any[];
-  formulario: FormGroup;
+  contato: any[] = [];
+  contatoDisplay: any[] = [];
+  compradores: Compradores[] = [];
+  listaContato: any[];
+  estadoCivil: EstadoCivil[];
+  tipoContato: TipoContato[];
+  estado: Estadobr[];
   contatoSelecionado: any;
-  estado: any[];
-  novocontato: Contatos;
-  comprador: Compradores[] = [];
-  cliente: FormArray;
+  contAny: any;
+  incorp: Incorporadoras[];
+  empreendimento: Empreendimento[];
+  originacao: Originacao[];
+  tipocliente: TipoClientes[];
+  retornocadastro: CadastroInformacao;
+
+  comprador: Compradores = new Compradores();
+  cadInfo: CadastroInformacao = new CadastroInformacao();
+  contatos: Contatos = new Contatos();
 
   constructor(
-    private formbuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private confirmationService: ConfirmationService
   ) {
 
   }
 
-  OnSubmit() {
-    /*let url = 'http://10.6.5.99:8100/api/cliente';
-    let json = JSON.stringify(this.formulario.value);
-    let header = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXRoZXVzLm1fYyIsImNyZWF0ZWQiOjE1NDQ2NDMwMjU5NDgsImV4cCI6MTU0NDY2MTAyNX0.4AQeH-PfWFyFP4zXmCmnHLRKT3pjhU5JEKrVWND3eqdbXVr_s2iXQCUqH16n1ziCeWezVNjVzRoLXWGj76XAcw'})
-  
+  OnSubmit(cadInfo: CadastroInformacao, formulario) {
+    cadInfo.uf = cadInfo.uf.uf;
+    cadInfo.clientes = this.compradores;
+    cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+    cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
+    cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
+    for (let index = 0; index < cadInfo.clientes.length; index++) {
+      cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+    }
+    cadInfo.cep = cadInfo.cep.replace('-', '');
 
-    this.http.post<FormGroup>(url, json, {headers: header}).subscribe(dados => {
-      console.log(dados);
-      // reseta o form
-      this.formulario.reset();
-    },
-    (error: any) => alert('erro'));*/
+    this.compradores = [];
 
+     /*this.http.post<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo).subscribe(res => {
+      this.retornocadastro = res,
+      console.log(res)
+    });*/
 
-    console.log(this.formulario.value);
-    localStorage.setItem('testes', JSON.stringify(this.formulario.value));
-    this.formulario.reset(new CadastroInformacao());
-    console.log(CadastroInformacao);
+    console.log(JSON.stringify(this.cadInfo), cadInfo);
+
+    formulario.reset();
   }
 
   ngOnInit() {
-    this.criarForm()
-
-    this.estado = [{
-    "Sigla": "AC",
-    "Nome": "Acre"
-    },     
-    {
-    "Sigla": "AL",
-    "Nome": "Alagoas"
-    },     
-    {
-    "Sigla": "AM",
-    "Nome": "Amazonas"
-    },     
-    {
-    "Sigla": "AP",
-    "Nome": "Amapá"
-    },     
-    {
-    "Sigla": "BA",
-    "Nome": "Bahia"
-    },     
-    {
-    "Sigla": "CE",
-    "Nome": "Ceará"
-    },     
-    {
-    "Sigla": "DF",
-    "Nome": "Distrito Federal"
-    },     
-    {
-    "Sigla": "ES",
-    "Nome": "Espírito Santo"
-    },     
-    {
-    "Sigla": "GO",
-    "Nome": "Goiás"
-    },     
-    {
-    "Sigla": "MA",
-    "Nome": "Maranhão"
-    },     
-    {
-    "Sigla": "MG",
-    "Nome": "Minas Gerais"
-    },     
-    {
-    "Sigla": "MS",
-    "Nome": "Mato Grosso do Sul"
-    },     
-    {
-    "Sigla": "MT",
-    "Nome": "Mato Grosso"
-    },     
-    {
-    "Sigla": "PA",
-    "Nome": "Pará"
-    },     
-    {
-    "Sigla": "PB",
-    "Nome": "Paraíba"
-    },     
-    {
-    "Sigla": "PE",
-    "Nome": "Pernambuco"
-    },     
-    {
-    "Sigla": "PI",
-    "Nome": "Piauí"
-    },     
-    {
-    "Sigla": "PR",
-    "Nome": "Paraná"
-    },     
-    {
-    "Sigla": "RJ",
-    "Nome": "Rio de Janeiro"
-    },     
-    {
-    "Sigla": "RN",
-    "Nome": "Rio Grande do Norte"
-    },     
-    {
-    "Sigla": "RO",
-    "Nome": "Rondônia"
-    },     
-    {
-    "Sigla": "RR",
-    "Nome": "Roraima"
-    },     
-    {
-    "Sigla": "RS",
-    "Nome": "Rio Grande do Sul"
-    },     
-    {
-    "Sigla": "SC",
-    "Nome": "Santa Catarina"
-    },     
-    {
-    "Sigla": "SE",
-    "Nome": "Sergipe"
-    },     
-    {
-    "Sigla": "SP",
-    "Nome": "São Paulo"
-    },     
-    {
-    "Sigla": "TO",
-    "Nome": "Tocantins"
-    }]
-
-    this.contato = [
-      {tipo: 'Telefone', contato: '1195442443'}
-    ];
-
-    this.compradores = [
-      {excluir: 'X', nome: 'Giacomo Guilizzoni', cpf: '433.344.123-33', renda: 'R$50000', },
-      {excluir: 'X', nome: 'Marco Bottoni', cpf: '343.235.121-32', renda: 'R$10000', },
-    ];
-
-    this.estadoCivil = [
-      {name: 'Solteiro(a)', value: 1},
-      {name: 'Casado(a)', value: 2},
-      {name: 'Viúvo(a)', value: 3},
-      {name: 'Divorciado(a)', value: 4}
-    ];
-
-    this.tipoContato = [
-      {name: 'Celular', value: 1},
-      {name: 'E-mail', value: 2},
-      {name: 'Telefone', value: 3}
-    ]
+    this.http.get<Estadobr[]>('./../../../../assets/estados.json').subscribe(dados => this.estado = dados);
+    this.http.get<Empreendimento[]>(`http://10.6.5.99:8100/api/empreendimentos`).subscribe(dados => this.empreendimento = dados['data']);
+    this.http.get<Originacao[]>(`http://10.6.5.99:8100/api/originacoes`).subscribe(dados => this.originacao = dados['data']);
+    this.http.get<EstadoCivil[]>(`http://10.6.5.99:8100/api/estadocivil`).subscribe(dados => this.estadoCivil = dados['data']);
+    this.http.get<TipoContato[]>(`http://10.6.5.99:8100/api/tipocontatos`).subscribe(dados => this.tipoContato = dados['data']);
+    this.http.get<TipoClientes[]>(`http://10.6.5.99:8100/api/tipoclientes`).subscribe(dados => this.tipocliente = dados['data']);
+    this.http.get<Incorporadoras[]>(`http://10.6.5.99:8100/api/incorporadoras`).subscribe(dados => this.incorp = dados['data']);
   }
 
-  criarForm() {
-    this.formulario = this.formbuilder.group({
-      codoriginacao: [null],
-      codcadastroincorporadora: [null],
-      codempreendimento: [null],
-      blocotorre: [null],
-      unidade: [null],
-      valorvenda: [null],
-      saldodevedor: [null],
-      codusuario: [null],
-      datacadastro: [null],
-      vagaautomovel: [null],
-      box: [null],
-      numeroapartamento: [null],
-      cep: [null],
-      numero: [null],
-      bairro: [null],
-      cidade: [null],
-      endereco: [null],
-      complemento: [null],
-      uf: [null],
-      clientes: this.formbuilder.array([ this.clientes() ])
-      })
-  }
+  adicionarContato (contato: Contatos) {
+    var contatoDisplay: Contatos = new Contatos();
+    var contato2: Contatos = new Contatos();
 
-  clientes(): FormGroup {
-    return this.formbuilder.group({
-      cpfcnpj: [null],
-      codtipocliente: [null],
-      nomecliente: [null],
-      ndocumento: [null],
-      orgaoexpedidor: [null],
-      dataexpedicao: [null],
-      datanascimento: [null],
-      codestadocivil: [null],
-      nacionalidade: [null],
-      profissao: [null],
-      cepresidencial: [null],
-      uf: [null],
-      cidade: [],
-      bairro: [],
-      endereco: [],
-      complemento: [],
-      numeroendereco: [],
-      codusuario: [],
-      datacadastro: [],
-      valorrenda: [],
-      contatos: this.formbuilder.group({
-        codtipocontato: [],
-        cpfcnpj: [],
-        desccontato: [],
-      }),
-      principal: [false],
-    })
-  }
+    this.contAny = contato.codtipocontato as any;
 
-  addComprador():void {
-    this.cliente = this.formulario.get('clientes') as FormArray;
-    this.cliente.push(this.clientes());
-  }
-
-  createOrUpdateUsuer(comprador: Compradores){
-    this.http.put<Compradores>('http://10.6.5.99:8100/api/cliente', comprador);
-
-  }
-
-  adicionarCompradorLista () {
-    let nomeComprador = this.formulario.controls.clientes['controls'].nomecliente.value;
-    let cpfComprador = this.formulario.controls.clientes['controls'].cpfcnpj.value;
-    let rendaComprador = this.formulario.controls.clientes['controls'].valorrenda.value;;
-
-    this.compradores.push({nome: nomeComprador, cpf: cpfComprador, renda: rendaComprador});
-
-  }
-
-  
-  adicionarContato () {
-    //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.desccontato.value)
-    //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.name)
-    //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.value)
-    this.novocontato = new Contatos();
-    this.novocontato.codtipocontato =''+this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.value;
-    this.novocontato.desccontato = this.formulario.controls.clientes['controls'][0].controls.contatos.controls.desccontato.value;
-    console.log(this.novocontato);
-    this.contato.push(this.novocontato);
+    contatoDisplay.tipocontato = this.contAny.desctipocontato;
+    contatoDisplay.codtipocontato = this.contAny.codtipocontato;
+    contatoDisplay.desccontato = contato.desccontato;
     
-    //let tipoC = this.formulario.controls.clientes['controls'].contatos.controls.codtipocontato.value.name;
-    //let contatoC = this.formulario.controls.clientes['controls'].contatos.controls.desccontato.value;
+    contato2.codtipocontato = this.contAny.codtipocontato;
+    contato2.cpfcnpj = this.comprador.cpfcnpj;
+    contato2.desccontato = contato.desccontato; 
 
-    //this.contato.push({tipo: tipoC, contato: contatoC})
+    this.contatoDisplay.push(contatoDisplay);
+    this.contato.push(contato2);
 
-    //this.formulario.controls.clientes['controls'].contatos.reset();
+    this.contatos.codtipocontato = null;
+    this.contatos.desccontato = null;
   }
 
-  removerContato (contatoC) {
-    console.log(contatoC);
+  adicionarCompradorLista (comprador: Compradores) {
+    var comprador2: Compradores = new Compradores();
 
+    comprador2.cpfcnpj = comprador.cpfcnpj;
+    comprador2.codtipocliente = Number(comprador.codtipocliente); 
+    comprador2.nomecliente = comprador.nomecliente;
+    comprador2.ndocumento = comprador.ndocumento;
+    comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
+    comprador2.dataexpedicao = comprador.dataexpedicao;
+    comprador2.datanascimento = comprador.datanascimento;
+    comprador2.codestadocivil = comprador.codestadocivil.codEstadoCivil; 
+    comprador2.nacionalidade = comprador.nacionalidade;
+    comprador2.profissao = comprador.profissao;
+    comprador2.cepresidencial = comprador.cepresidencial;
+    comprador2.uf = comprador.uf.uf;
+    comprador2.cidade = comprador.cidade; 
+    comprador2.bairro = comprador.bairro;
+    comprador2.endereco = comprador.endereco;
+    comprador2.complemento = comprador.complemento;
+    comprador2.numeroendereco = comprador.numeroendereco;
+    comprador2.codusuario = comprador.codusuario;
+    comprador2.datacadastro = comprador.datacadastro;
+    comprador2.valorrenda = comprador.valorrenda;
+    comprador2.contatos = this.contato;
+    comprador2.principal = comprador.principal;
+
+    this.compradores.push(comprador2);
+
+    comprador = new Compradores();
+
+    this.comprador.cpfcnpj = null;
+    this.comprador.codtipocliente = null;
+    this.comprador.nomecliente = null;
+    this.comprador.ndocumento = null;
+    this.comprador.orgaoexpedidor = null;
+    this.comprador.dataexpedicao = null;
+    this.comprador.datanascimento = null;
+    this.comprador.codestadocivil = null; 
+    this.comprador.nacionalidade = null;
+    this.comprador.profissao = null;
+    this.comprador.cepresidencial = null;
+    this.comprador.uf = null;
+    this.comprador.cidade = null; 
+    this.comprador.bairro = null;
+    this.comprador.endereco = null;
+    this.comprador.complemento = null;
+    this.comprador.numeroendereco = null;
+    this.comprador.codusuario = null;
+    this.comprador.datacadastro = null;
+    this.comprador.valorrenda = null;
+    this.contato = [];
+    this.contatoDisplay = [];
+    this.comprador.principal = false;
+  }
+ 
+  removerContato (contatoC) {
     let index = this.contato.indexOf(contatoC);
+    
     this.contato.splice(index, 1);
+    this.contatoDisplay.splice(index, 1);
   }
 
   removerComprador (comprador) {
@@ -297,12 +168,8 @@ export class CadastroComponent implements OnInit {
     this.compradores.splice(index, 1);
   }
 
-  limparFormulario () {
-    this.formulario.reset();
-  }
-
   consultaCEP() {
-    let cep = this.formulario.controls.clientes['controls'].cepresidencial.value;
+    let cep = this.comprador.cepresidencial;
 
     if (cep != null && cep !== '') {
       cep = cep.replace(/\D/g, '');
@@ -320,20 +187,16 @@ export class CadastroComponent implements OnInit {
   }
 
   populaDadosForm(dados) {
-    this.formulario.patchValue({
-      clientes: {
-        cepresidencial: dados.cep,
-        uf: {Sigla: dados.uf, Nome: dados.localidade},
-        cidade: dados.localidade,
-        bairro: dados.bairro,
-        endereco: dados.logradouro,
-        complemento: dados.complemento,
-      }
-    });
+    this.comprador.cepresidencial = dados.cep;
+    this.comprador.uf = {uf: dados.uf.toUpperCase()};
+    this.comprador.cidade = dados.localidade;
+    this.comprador.bairro = dados.bairro;
+    this.comprador.endereco = dados.logradouro;
+    this.comprador.complemento = dados.complemento;
   }
 
   consultaCEPImovel() {
-  let cep = this.formulario.controls.cep.value;
+  let cep = this.cadInfo.cep;
 
   if (cep != null && cep !== '') {
     cep = cep.replace(/\D/g, '');
@@ -351,13 +214,37 @@ export class CadastroComponent implements OnInit {
   }
 
   populaDadosFormImovel(dados) {
-    this.formulario.patchValue({
-      cep: dados.cep,
-      uf: {Sigla: dados.uf, Nome: dados.localidade},
-      cidade: dados.localidade,
-      bairro: dados.bairro,
-      endereco: dados.logradouro,
-      complemento: dados.complemento,
-    });
+    this.cadInfo.cep = dados.cep;
+    this.cadInfo.uf = {uf: dados.uf.toUpperCase()};
+    this.cadInfo.cidade = dados.localidade;
+    this.cadInfo.bairro = dados.bairro;
+    this.cadInfo.endereco = dados.logradouro;
+    this.cadInfo.complemento = dados.complemento;
+  }
+
+  limparFormulario(f) {
+    f.reset();
+  }
+
+  setarTrue(rowData: Compradores) {
+    for(var i = 0, len = this.compradores.length; i < len; ++i) {
+      this.compradores[i].principal = false;
+    }
+    
+    rowData.principal = true;
+  }
+
+  confirmacao() {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja continuar?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        alert('aceitou')
+      },
+      reject: () => {
+        alert('rejeitou')
+      }
+    })
   }
 }

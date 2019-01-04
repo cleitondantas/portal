@@ -10,6 +10,8 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { CadastroGuard } from './guards/cadastro.guard';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { ConfirmationService } from 'primeng/api';
+
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
       useClass: AuthInterceptor,
       multi: true
     },
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

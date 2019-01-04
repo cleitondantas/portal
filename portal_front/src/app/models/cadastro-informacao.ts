@@ -1,10 +1,10 @@
 import { Compradores } from "./compradores";
 
 export class CadastroInformacao {
-    comprador: Compradores[];
-    codoriginacao: number;
-    codcadastroincorporadora: string;
-    codempreendimento: number;
+    codoriginacao: any;
+    numerocadastroincorporadorafid: number;
+    codincorporadora: any;
+    codempreendimento: any;
     blocotorre: string;
     unidade: string;
     valorvenda: number;
@@ -20,5 +20,8 @@ export class CadastroInformacao {
     cidade: string;
     endereco: string;
     complemento: string;
-    uf: string;
+    uf: any;
+    dataentrada: string;
+    clientes: Compradores[];
+
 }

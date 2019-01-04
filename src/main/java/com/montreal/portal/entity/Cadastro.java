@@ -39,17 +39,16 @@ public class Cadastro implements Serializable{
 	@Column(name="cod_originacao")
 	private Integer  codoriginacao;
 	
-	
-	@ManyToOne
-	@JoinColumn(name="cod_cadastro_incorporadora", referencedColumnName="cod_incorporadora")
-	private Incorporadora incorporadora;
+	@Column(name="numero_cadastro_incorporadora_fid")
+	private  Integer numerocadastroincorporadorafid;
+	@Column(name="cod_incorporadora")
+	private Integer codincorporadora;
 
 	@Column(name="cpf_cnpj")
 	private String cpfcnpj;
 
 	@Column(name="cod_empreendimento")
-	private Integer codempreendimento;
-	
+	private Integer codempreendimento;	
 	
 	@Column(name="bloco_torre")
 	private String blocotorre;
@@ -64,7 +63,7 @@ public class Cadastro implements Serializable{
 	private BigDecimal saldodevedor;
 	
 	@Column(name="cod_usuario")
-	private Integer codusuario;
+	private Long codusuario;
 	
 	
 	@Column(name="data_cadastro")
@@ -127,13 +126,7 @@ public class Cadastro implements Serializable{
 	}
 
 
-	public Integer getCodempreendimento() {
-		return codempreendimento;
-	}
 
-	public void setCodempreendimento(Integer codempreendimento) {
-		this.codempreendimento = codempreendimento;
-	}
 
 	public String getBlocotorre() {
 		return blocotorre;
@@ -167,11 +160,12 @@ public class Cadastro implements Serializable{
 		this.saldodevedor = saldodevedor;
 	}
 
-	public Integer getCodusuario() {
+
+	public Long getCodusuario() {
 		return codusuario;
 	}
 
-	public void setCodusuario(Integer codusuario) {
+	public void setCodusuario(Long codusuario) {
 		this.codusuario = codusuario;
 	}
 
@@ -287,15 +281,33 @@ public class Cadastro implements Serializable{
 		this.cpfcnpj = cpfcnpj;
 	}
 
-	public Incorporadora getIncorporadora() {
-		return incorporadora;
+
+	public Integer getCodincorporadora() {
+		return codincorporadora;
 	}
 
-	public void setIncorporadora(Incorporadora incorporadora) {
-		this.incorporadora = incorporadora;
+	public void setCodincorporadora(Integer codincorporadora) {
+		this.codincorporadora = codincorporadora;
+	}
+
+	public Integer getNumerocadastroincorporadorafid() {
+		return numerocadastroincorporadorafid;
+	}
+
+	public void setNumerocadastroincorporadorafid(Integer numerocadastroincorporadorafid) {
+		this.numerocadastroincorporadorafid = numerocadastroincorporadorafid;
+	}
+
+	public Integer getCodempreendimento() {
+		return codempreendimento;
+	}
+
+	public void setCodempreendimento(Integer codempreendimento) {
+		this.codempreendimento = codempreendimento;
 	}
 
 
 	
+
 	
 }
