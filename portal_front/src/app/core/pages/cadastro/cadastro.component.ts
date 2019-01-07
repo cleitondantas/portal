@@ -13,7 +13,6 @@ import { Incorporadoras } from './../../../models/incorporadoras';
 import { CadastroChamadasService } from './../../../services/cadastro-chamadas.service';
 import { CadastroLogicaService } from './../../../services/cadastro-logica.service';
 import { Originacao } from './../../../models/originacao';
-import { environment } from 'src/environments/environment';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
@@ -52,20 +51,7 @@ export class CadastroComponent implements OnInit {
   }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
-    
-    cadInfo.uf = cadInfo.uf.uf;
-    cadInfo.clientes = this.compradores;
-    cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
-    cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
-    cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
-    for (let index = 0; index < cadInfo.clientes.length; index++) {
-      cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
-    }
-    cadInfo.cep = cadInfo.cep.replace('-', '');
-
-    this.compradores = [];
-
-    this.http.post<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo).subscribe(res => {
+    this.chamadasService.createUser(cadInfo).subscribe(res => {
       this.retornocadastro = res,
       console.log(res)
     });
@@ -82,7 +68,7 @@ export class CadastroComponent implements OnInit {
     this.chamadasService.getEstadoCivil().subscribe(dados => this.estadoCivil = dados['data']);
     this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
     this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
-    this.chamadasService.getIncorporadoras().subscribe(dados => this.incorp = dados['data']);
+    //this.chamadasService.getIncorporadoras().subscribe(dados => this.incorp = dados['data']);
   }
 
   adicionarContato (contato: Contatos) {
@@ -197,6 +183,19 @@ export class CadastroComponent implements OnInit {
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
+        cadInfo.uf = cadInfo.uf.uf;
+        cadInfo.clientes = this.compradores;
+        cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+        cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
+        cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
+        for (let index = 0; index < cadInfo.clientes.length; index++) {
+          cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+        }
+        cadInfo.cep = cadInfo.cep.replace('-', '');
+    
+        this.compradores = [];
+
+
         this.OnSubmit(cadInfo, formulario);
       },
       reject: () => {

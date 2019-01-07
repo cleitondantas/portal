@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Simulacoes } from 'src/app/models/simulacoes';
 
 @Component({
   selector: 'app-analise',
@@ -7,19 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnaliseComponent implements OnInit {
 
-  simulacao: any[];
+  simulacaoLista: any[];
   simulSelec: any;
   instFinan: any[];
+
+  simulacoes: Simulacoes = new Simulacoes();
 
   constructor(
   ) { }
 
   ngOnInit() {
-    this.simulacao = [
-      {excluir: '', instituicao: 'Santander', valor: 'R$15000', financiado: ''},
-      {excluir: '', instituicao: 'Itau', valor: 'R$19000', financiado: ''},
-      {excluir: '', instituicao: 'Caixa', valor: 'R$19000', financiado: ''},
-    ]
+    this.simulacaoLista = []
 
     this.instFinan = [
       {name: 'Banco do Brasil', value: 'banco do brasil'},
@@ -27,11 +26,26 @@ export class AnaliseComponent implements OnInit {
       {name: 'Santander', value: 'santander'},
       {name: 'Bradesco', value: 'bradesco'},
       {name: 'Caixa', value: 'caixa'},
-
     ]
   }
 
-  adicionarInstFinan() {
+  adicionarSimulacao(simulacao: Simulacoes) {
+    var simulacao2: Simulacoes = new Simulacoes();
+
+    simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao;
+    simulacao2.codsicaq = simulacao.codsicaq;
+    simulacao2.prazofinanciamento = simulacao.prazofinanciamento;
+    simulacao2.codtipoamortizacao = simulacao.codtipoamortizacao;
+    simulacao2.valorsubsidio = simulacao.valorsubsidio;
+    simulacao2.valorfgts = simulacao.valorfgts;
+    simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
+    simulacao2.valordespesasfinanciadas = simulacao.valordespesasfinanciadas;
+    simulacao2.valorrecursosproprios = simulacao.valorrecursosproprios;
+    simulacao2.valorfinanciamento = simulacao.valorfinanciamento;
+
+    this.simulacaoLista.push(simulacao2);
+
+    console.log(this.simulacaoLista);
   }
 
   removerInstFinan (banco) {

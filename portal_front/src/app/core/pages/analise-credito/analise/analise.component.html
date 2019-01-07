@@ -31,11 +31,20 @@
 
       <div class="ui-g">
         <div class="ui-md-4">
-          <label class="ajusteLabel" for="modalidade">Modalidade: </label>
+          <label class="ajusteLabel" for="valorfinanciamento">Valor do Crédito: </label>
         </div>
-        <div class="ui-md-8" id="modalidade">
+        <div class="ui-md-8">
+          <input type="text" class="ajusteInput" pInputText id="valorfinanciamento" name="valorfinanciamento" #valorfinanciamento="ngModel" [(ngModel)]="simulacoes.valorfinanciamento">
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-md-4">
+          <label class="ajusteLabel" for="codmodalidadesimulacao">Modalidade: </label>
+        </div>
+        <div class="ui-md-8" id="codmodalidadesimulacao">
           <p-dropdown placeholder="PRO-COTISTA" optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
-          class="ajusteInput"></p-dropdown>
+          class="ajusteInput" ngModel name="codmodalidadesimulacao" #codmodalidadesimulacao="ngModel" [(ngModel)]="simulacoes.codmodalidadesimulacao"></p-dropdown>
         </div>
       </div>
 
@@ -61,10 +70,10 @@
 
       <div class="ui-g">
         <div class="ui-md-4">
-          <label class="ajusteLabel" for="sicaq">SICAQ: </label>
+          <label class="ajusteLabel" for="codsicaq">SICAQ: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="sicaq">
+          <input type="text" class="ajusteInput" pInputText id="codsicaq" name="codsicaq" #codsicaq="ngModel" [(ngModel)]="simulacoes.codsicaq">
         </div>
       </div>
 
@@ -82,15 +91,16 @@
     <div class="ui-md-6">
 
       <div class="espaco" [ngStyle]="{'width': '741px', 'height': '49px'}"></div>
+      <div class="espaco" [ngStyle]="{'width': '741px', 'height': '49px'}"></div>
 
       <div class="ui-g">
         <div class="ui-md-4">
-          <label class="ajusteLabel" for="prazoFinan">Prazo financiamento: </label>
+          <label class="ajusteLabel" for="prazofinanciamento">Prazo financiamento: </label>
         </div>
         <div class="ui-md-8">
           <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
           class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="prazoFinan" dateFormat="dd/mm/yy"></p-calendar>
+          id="prazofinanciamento" dateFormat="dd/mm/yy" name="prazofinanciamento" #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento"></p-calendar>
         </div>
       </div>
 
@@ -105,20 +115,20 @@
 
       <div class="ui-g">
         <div class="ui-md-4">
-          <label class="ajusteLabel" for="tipoAmor">Tipo Amortização: </label>
+          <label class="ajusteLabel" for="codtipoamortizacao">Tipo Amortização: </label>
         </div>
-        <div class="ui-md-8" id="tipoAmor">
+        <div class="ui-md-8" id="codtipoamortizacao">
           <p-dropdown placeholder="DropDown Menu" optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
-          class="ajusteInput"></p-dropdown>
+          class="ajusteInput" name="codtipoamortizacao" #codtipoamortizacao="ngModel" [(ngModel)]="simulacoes.codtipoamortizacao"></p-dropdown>
         </div>
       </div>
 
       <div class="ui-g">
         <div class="ui-md-4">
-          <label class="ajusteLabel" for="valorSub">Valor subsidio: </label>
+          <label class="ajusteLabel" for="valorsubsidio">Valor subsidio: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorSub">
+          <input type="text" class="ajusteInput" pInputText id="valorsubsidio" name="valorsubsidio" #valorsubsidio="ngModel" [(ngModel)]="simulacoes.valorsubsidio">
         </div>
       </div>
 
@@ -133,19 +143,19 @@
 
       <div class="ui-g">
         <div class="ui-md-4">
-          <label class="ajusteLabel" for="fgts">FGTS: </label>
+          <label class="ajusteLabel" for="valorfgts">FGTS: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="fgts">
+          <input type="text" class="ajusteInput" pInputText id="valorfgts" name="valorfgts" #valorfgts="ngModel" [(ngModel)]="simulacoes.valorfgts">
         </div>
       </div>
 
       <div class="ui-g">
         <div class="ui-md-4">
-          <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
+          <label class="ajusteLabel" for="valorrecursosproprios">Recurso próprio: </label>
         </div>
         <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="recProp">
+          <input type="text" class="ajusteInput" pInputText id="valorrecursosproprios" name="valorrecursosproprios" #valorrecursosproprios="ngModel" [(ngModel)]="simulacoes.valorrecursosproprios">
         </div>
       </div>
 
@@ -158,11 +168,11 @@
 
         <div class="ui-g">
           <div class="ui-md-4">
-            <label class="ajusteLabel" for="despesasFinan">Despesas financiadas: </label>
+            <label class="ajusteLabel" for="valordespesasfinanciadas">Despesas financiadas: </label>
           </div>
           <div class="ui-md-8">
             <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" 
-            id="despesasFinan"/>
+            id="valordespesasfinanciadas" name="valordespesasfinanciadas" #valordespesasfinanciadas="ngModel" [(ngModel)]="simulacoes.valordespesasfinanciadas"/>
           </div>
         </div>
 
@@ -229,22 +239,22 @@
 
         <div class="ui-g">
           <div class="ui-md-4">
-            <label class="ajusteLabel" for="instFinan">Instituição financeira: </label>
+            <label class="ajusteLabel" for="codinstituicaofinanceira">Instituição financeira: </label>
           </div>
-          <div class="ui-md-6" id="instFinan">
+          <div class="ui-md-6" id="codinstituicaofinanceira">
             <p-dropdown [options]="instFinan" optionLabel="name" placeholder="Selecione..." [autoWidth]="false" [style]="{'width': '100%'}" 
-            class="ajusteInput"></p-dropdown>
+            class="ajusteInput" name="codinstituicaofinanceira" #codinstituicaofinanceira="ngModel" [(ngModel)]="simulacoes.codinstituicaofinanceira"></p-dropdown>
           </div>
           <div class="ui-md-2">
             <button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" 
-            [ngStyle]="{'width': '100%'}" (click)="adicionarInstFinan()"></button>
+            [ngStyle]="{'width': '100%'}" (click)="adicionarSimulacao(simulacoes)"></button>
           </div>
         </div>
         
       </div>
     </div>
     
-    <p-table [value]="simulacao" [(selection)]="simulSelec" dataKey="instituicao">
+    <p-table [value]="simulacaoLista" [(selection)]="simulSelec" dataKey="instituicao">
       <ng-template pTemplate="header">
         <tr>
           <th>Excluir</th>
@@ -258,7 +268,7 @@
       <ng-template pTemplate="body" let-rowData let-simul>
         <tr [pSelectableRow]="rowData">
           <td><button pButton icon="pi pi-trash" (click)="removerInstFinan(rowData)"></button></td>
-          <td> {{simul.instituicao}} </td>
+          <td> {{simul.codinstituicaofinanceira.name}} </td>
           <td> 
             <p-dropdown [options]="[{nome: 'Aprovado'}, {nome: 'Reprovado'}]" optionLabel="nome"></p-dropdown>  
           </td>

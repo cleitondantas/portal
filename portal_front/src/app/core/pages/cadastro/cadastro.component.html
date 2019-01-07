@@ -24,7 +24,7 @@
                   <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
                 </div>
                 <div class="ui-md-8" id="tipoP">
-                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codtipocliente}}" label="{{tipo.desctipocliente}}" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
+                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codtipocliente}}" label="{{tipo.descTipoCliente}}" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
                 </div>
               </div>
 
@@ -208,7 +208,7 @@
                   <label class="ajusteLabel" for="tipo">Tipo: </label>
                 </div>
                 <div class="ui-md-8" id="tipo">
-                  <p-dropdown placeholder="Selecione..." optionLabel="desctipocontato" [options]="tipoContato" dataKey="value"
+                  <p-dropdown placeholder="Selecione..." optionLabel="descTipoContato" [options]="tipoContato" dataKey="value"
                   [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codtipocontato"  #codtipocontato="ngModel" [(ngModel)]="contatos.codtipocontato"></p-dropdown>
                 </div>
               </div>
@@ -348,7 +348,7 @@
                 <label class="ajusteLabel" for="empreend">Empreendimento: </label>
               </div>
               <div class="ui-md-8" id="empreend">
-                <p-dropdown placeholder="Selecione..." optionLabel="descempreendimento" [options]="empreendimento" [autoWidth]="false" [style]="{'width': '100%'}" 
+                <p-dropdown placeholder="Selecione..." optionLabel="descEmpreendimento" [options]="empreendimento" [autoWidth]="false" [style]="{'width': '100%'}" 
                 ngModel name="codempreendimento"  #codempreendimento="ngModel" [(ngModel)]="cadInfo.codempreendimento" filter="true"></p-dropdown>              </div>
             </div>
 

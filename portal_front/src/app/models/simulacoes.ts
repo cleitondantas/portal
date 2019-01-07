@@ -18,5 +18,5 @@ export class Simulacoes {
     codstatussimulacao: number; 
     obs: string;
     codusuario: number; 
-    datasimulacao :string;
+    datasimulacao:string;
 }
