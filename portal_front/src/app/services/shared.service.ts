@@ -28,10 +28,12 @@ export class SharedService {
   }
 
   isLoggedIn():boolean {
-    if(this.user == null){
+    /*if(this.user == null){
       return false;
     }
-    return this.user.email != '';
+    return this.user.email != '';*/
+
+    return true;
   }
 
   

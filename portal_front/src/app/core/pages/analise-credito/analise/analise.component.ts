@@ -8,9 +8,15 @@ import { Simulacoes } from 'src/app/models/simulacoes';
 })
 export class AnaliseComponent implements OnInit {
 
-  simulacaoLista: any[];
+  simulacaoLista: any[] = [];
   simulSelec: any;
   instFinan: any[];
+
+  currencyMask1: any;
+  currencyMask2: any;
+  currencyMask3: any;
+  currencyMask4: any;
+  currencyMask5: any;
 
   simulacoes: Simulacoes = new Simulacoes();
 
@@ -18,7 +24,6 @@ export class AnaliseComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.simulacaoLista = []
 
     this.instFinan = [
       {name: 'Banco do Brasil', value: 'banco do brasil'},
@@ -48,7 +53,9 @@ export class AnaliseComponent implements OnInit {
     console.log(this.simulacaoLista);
   }
 
-  removerInstFinan (banco) {
-
+  removerSimulacao(simul) {
+    let index = this.simulacaoLista.indexOf(simul);
+    
+    this.simulacaoLista.splice(index, 1);
   }
 }

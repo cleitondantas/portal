@@ -24,7 +24,11 @@ export class AuthService {
 
   fazerLogin(form : NgForm, usuario: Usuario){
     console.log('URL origin:'+environment.urlpath);
-    this.http.post((environment.urlpath+url),usuario).subscribe((userAuthentication : CurrentUser)=>{
+    this.router.navigate(['/home']);
+    this.usuarioAutenticado = true;
+    this.mostrarsistema.emit(true);
+
+    /*this.http.post((environment.urlpath+url),usuario).subscribe((userAuthentication : CurrentUser)=>{
       this.shared.token = userAuthentication.token;
       this.shared.user = userAuthentication.usuario
       this.usuarioAutenticado = true;
@@ -48,7 +52,7 @@ export class AuthService {
       this.usuarioAutenticado = false;
       console.log('ERRO AO TENTAR LOGAR');
       window.location.reload();
-    });
+    });*/
   }
 
   fazerLogout(){
@@ -66,12 +70,12 @@ export class AuthService {
 
   isUsuarioAutenticado(){
     //if(sessionStorage.getItem('token')!==null){
-      if(localStorage.getItem('token')!==null){
-      this.mostrarsistema.emit(true);
+      //if(localStorage.getItem('token')!==null){
+      //this.mostrarsistema.emit(true);
       return true;
-    }
-    console.log('token false')
-    return false;
+    //}
+    //console.log('token false')
+    //return false;
   }
 
 

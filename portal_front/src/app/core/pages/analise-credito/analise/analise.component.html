@@ -182,7 +182,7 @@
           </div>
           <div class="ui-md-8">
             <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-            id="finanTotal"/>
+            id="finanTotal"  name="currencyMask1"  [(ngModel)]="currencyMask1"/>
           </div>
         </div>
 
@@ -192,7 +192,7 @@
           </div>
           <div class="ui-md-8">
             <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-            id="fgts"/>
+            id="fgts" name="currencyMask2"  [(ngModel)]="currencyMask2"/>
           </div>
         </div>
 
@@ -205,7 +205,7 @@
           </div>
           <div class="ui-md-8">
             <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-            id="recProp"/>
+            id="recProp" name="currencyMask3"  [(ngModel)]="currencyMask3"/>
           </div>
         </div>
 
@@ -215,7 +215,7 @@
           </div>
           <div class="ui-md-8">
             <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-            id="saldoDev"/>
+            id="saldoDev" name="currencyMask4"  [(ngModel)]="currencyMask4"/>
           </div>
         </div>
 
@@ -225,7 +225,7 @@
           </div>
           <div class="ui-md-8">
             <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-            id="valorVenda"/>
+            id="valorVenda" name="currencyMask5"  [(ngModel)]="currencyMask5"/>
           </div>
         </div>
 
@@ -267,12 +267,14 @@
 
       <ng-template pTemplate="body" let-rowData let-simul>
         <tr [pSelectableRow]="rowData">
-          <td><button pButton icon="pi pi-trash" (click)="removerInstFinan(rowData)"></button></td>
+          <td><button pButton icon="pi pi-trash" (click)="removerSimulacao(rowData)"></button></td>
           <td> {{simul.codinstituicaofinanceira.name}} </td>
           <td> 
             <p-dropdown [options]="[{nome: 'Aprovado'}, {nome: 'Reprovado'}]" optionLabel="nome"></p-dropdown>  
           </td>
-          <td> <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>          </td>
+          <td> 
+            <input pInputText class="ajusteInput"/>
+          </td>
           <td> 
             <p-tableRadioButton [value]="rowData"></p-tableRadioButton>  
           </td>
