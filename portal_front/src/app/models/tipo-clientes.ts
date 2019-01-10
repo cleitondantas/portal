@@ -1,4 +1,4 @@
 export interface TipoClientes {
-    codtipocliente: number;
+    codTipoCliente: number;
     descTipoCliente: string;
 }

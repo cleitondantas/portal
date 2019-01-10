@@ -69,8 +69,8 @@ export class CadastroLogicaService {
 
     this.contAny = contato.codtipocontato as any;
 
-    contatoDisplay.tipocontato = this.contAny.desctipocontato;
-    contatoDisplay.codtipocontato = this.contAny.codtipocontato;
+    contatoDisplay.tipocontato = this.contAny.descTipoContato;
+    contatoDisplay.codtipocontato = this.contAny.codTipoContato;
     contatoDisplay.desccontato = contato.desccontato;
 
     return contatoDisplay;
@@ -81,7 +81,7 @@ export class CadastroLogicaService {
 
     this.contAny = contato.codtipocontato as any;
 
-    contato2.codtipocontato = this.contAny.codtipocontato;
+    contato2.codtipocontato = this.contAny.codTipoContato;
     contato2.desccontato = contato.desccontato; 
 
     return contato2;
@@ -93,4 +93,19 @@ export class CadastroLogicaService {
 
     return contato;
   }
+
+  /*compradorSessionStorage(formulario) {
+    var a: any = sessionStorage.getItem('compradorLista');
+    if (a != null) {
+      a = sessionStorage.length;
+    } else {
+      a = sessionStorage.setItem('compradorLista', JSON.stringify(formulario))
+    }
+    let i;
+    if(a > 0) {
+      for (i= a + 1; i > a; i) {
+        sessionStorage.setItem('compradorLista' + [i], JSON.stringify(formulario))
+      }
+    }
+  }*/
 }

@@ -51,10 +51,10 @@ export class CadastroComponent implements OnInit {
   }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
-    this.chamadasService.createUser(cadInfo).subscribe(res => {
+    /*this.chamadasService.createUser(cadInfo).subscribe(res => {
       this.retornocadastro = res,
       console.log(res)
-    });
+    });*/
     
     console.log(JSON.stringify(this.cadInfo), cadInfo);
 
@@ -69,6 +69,15 @@ export class CadastroComponent implements OnInit {
     this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
     this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
     //this.chamadasService.getIncorporadoras().subscribe(dados => this.incorp = dados['data']);
+
+    var a = sessionStorage.getItem('comprador');
+    if(a !== null) {
+      this.comprador = JSON.parse(a);
+    }
+    var b = sessionStorage.getItem('compraImovel');
+    if(b !== null) {
+      this.cadInfo = JSON.parse(b);
+    }
   }
 
   adicionarContato (contato: Contatos) {
@@ -86,6 +95,9 @@ export class CadastroComponent implements OnInit {
   adicionarCompradorLista (comprador: Compradores) {
     var comprador2 = this.logicaService.adicionarComprador(comprador);
     comprador2.contatos = this.contato;
+
+    //var a = sessionStorage.getItem('comprador');
+    //this.logicaService.compradorSessionStorage(JSON.parse(a));
 
     this.compradores.push(comprador2);
 
@@ -185,7 +197,7 @@ export class CadastroComponent implements OnInit {
       accept: () => {
         cadInfo.uf = cadInfo.uf.uf;
         cadInfo.clientes = this.compradores;
-        cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+        //cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
         cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
         cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
         for (let index = 0; index < cadInfo.clientes.length; index++) {
@@ -202,5 +214,14 @@ export class CadastroComponent implements OnInit {
         alert('rejeitou')
       }
     })
+  }
+
+  f1(f){
+    console.log(f.value)
+    sessionStorage.setItem('comprador', JSON.stringify(f.value));
+  }
+  
+  f2(cadInfo) {
+    sessionStorage.setItem('compraImovel', JSON.stringify(cadInfo));
   }
 }

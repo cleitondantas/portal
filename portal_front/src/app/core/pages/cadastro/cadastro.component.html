@@ -1,10 +1,10 @@
-<form novalidate (ngSubmit)="confirmacao(cadInfo, formulario)" #formulario="ngForm">
+<form novalidate (ngSubmit)="confirmacao(cadInfo, formulario)" #formulario="ngForm" >
   <p-panel>
     <p-header>
       Cadastro de informação
     </p-header>
 
-    <p-fieldset legend="Cadastro de informações pessoais">
+    <p-fieldset legend="Cadastro de informações pessoais"  (keyup)="f1(formulario)">
       <div>
         <p-fieldset legend="Comprador principal">
           <div class="ui-g">
@@ -24,7 +24,7 @@
                   <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
                 </div>
                 <div class="ui-md-8" id="tipoP">
-                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codtipocliente}}" label="{{tipo.descTipoCliente}}" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
+                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codTipoCliente}}" label="{{tipo.descTipoCliente}}" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
                 </div>
               </div>
 
@@ -284,7 +284,7 @@
       </p-fieldset>
     </div>
 
-    <p-fieldset legend="Cadastro de informações do Imóvel">
+    <p-fieldset legend="Cadastro de informações do Imóvel" (keyup)="f2(cadInfo)">
       
       <div class="ui-g">
         <div class="ui-md-1">
