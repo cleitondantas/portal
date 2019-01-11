@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
 
@@ -10,7 +11,7 @@ export class AnaliseComponent implements OnInit {
 
   simulacaoLista: any[] = [];
   simulSelec: any;
-  instFinan: any[];
+  instFinan: any[] = [];
 
   currencyMask1: any;
   currencyMask2: any;
@@ -20,18 +21,11 @@ export class AnaliseComponent implements OnInit {
 
   simulacoes: Simulacoes = new Simulacoes();
 
-  constructor(
+  constructor( private http: HttpClient
   ) { }
 
   ngOnInit() {
-
-    this.instFinan = [
-      {name: 'Banco do Brasil', value: 'banco do brasil'},
-      {name: 'Itau', value: 'itau'},
-      {name: 'Santander', value: 'santander'},
-      {name: 'Bradesco', value: 'bradesco'},
-      {name: 'Caixa', value: 'caixa'},
-    ]
+    this.http.get(`http://localhost:8100/api/instituicoesfinanceiras`).subscribe(dados => this.instFinan = dados['data'])
   }
 
   adicionarSimulacao(simulacao: Simulacoes) {
