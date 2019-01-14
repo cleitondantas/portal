@@ -6,7 +6,7 @@
         <label class="ajusteLabel" for="faturarContrato">A faturar contrato: </label>
       </div>
       <div class="p-col-9">
-        <input type="text" class="ajusteInput" pInputText id="faturarContrato">
+        <input type="text" class="ajusteInput" pInputText id="faturarContrato" [ngStyle]="{'width': '50%'}">
       </div>
     </div>
 
@@ -82,8 +82,7 @@
             <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="dd/mm/yy" ></p-calendar>
-            <button class="ui-calendar-button ui-button ui-state-default ui-corner-all ui-button-icon-only" type="button" pButton><span class="ui-button-icon-left pi pi-calendar">
-            </span></button>
+            <button pButton type="button" icon="pi pi-calendar"></button>
           </div>    
         </div>
       </div>
@@ -97,8 +96,7 @@
             <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="dd/mm/yy" ></p-calendar>
-            <button class="ui-calendar-button ui-button ui-state-default ui-corner-all ui-button-icon-only" type="button" pButton><span class="ui-button-icon-left pi pi-calendar">
-            </span></button>
+            <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
       </div>
@@ -177,7 +175,7 @@
     <label class="ajusteLabel" for="observacao" [ngStyle]="{'padding-left': '14px'}">Observação:</label>
     <textarea pInputTextarea [rows]="4" id="observacao" [ngStyle]="{'margin': '0px 14px 14px 14px'}" style="width: 100%"></textarea>
     <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-info" 
-    [ngStyle]="{'width': '100px', 'margin-left': '14px'}"></button>
+    [ngStyle]="{'width': '100px', 'margin-left': '14px'}" icon="pi pi-save" iconPos="right"></button>
   </div>
 
 </p-fieldset>

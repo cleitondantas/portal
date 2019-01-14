@@ -14,6 +14,7 @@ import { CadastroChamadasService } from './../../../services/cadastro-chamadas.s
 import { CadastroLogicaService } from './../../../services/cadastro-logica.service';
 import { Originacao } from './../../../models/originacao';
 import { ConfirmationService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
@@ -45,7 +46,8 @@ export class CadastroComponent implements OnInit {
     private http: HttpClient,
     private confirmationService: ConfirmationService,
     private chamadasService: CadastroChamadasService,
-    private logicaService: CadastroLogicaService
+    private logicaService: CadastroLogicaService,
+    private router: Router
   ) {
 
   }
@@ -57,6 +59,8 @@ export class CadastroComponent implements OnInit {
     });*/
     
     console.log(JSON.stringify(this.cadInfo), cadInfo);
+    sessionStorage.clear();
+    sessionStorage.setItem('cadastro', JSON.stringify(cadInfo));
 
     formulario.reset();
   }
@@ -207,8 +211,9 @@ export class CadastroComponent implements OnInit {
     
         this.compradores = [];
 
-
         this.OnSubmit(cadInfo, formulario);
+
+        this.router.navigate(['/analise']);
       },
       reject: () => {
         alert('rejeitou')

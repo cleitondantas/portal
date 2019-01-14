@@ -24,7 +24,7 @@
                   <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
                 </div>
                 <div class="p-col-8" id="tipoP">
-                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codTipoCliente}}" label="{{tipo.descTipoCliente}}" name="tipoPessoa" class="radio" ngModel #tipoPessoa="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
+                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codTipoCliente}}" label="{{tipo.descTipoCliente}}" name="codtipocliente" class="radio" ngModel #codtipocliente="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
                 </div>
               </div>
 
@@ -46,8 +46,7 @@
                     <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                     class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                     id="dataexpedicao" dateFormat="dd/mm/yy" ngModel  name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"></p-calendar>
-                    <button class="ui-calendar-button ui-button ui-state-default ui-corner-all ui-button-icon-only" type="button" pButton><span class="ui-button-icon-left pi pi-calendar">
-                    </span></button>
+                    <button pButton type="button" icon="pi pi-calendar"></button>
                   </div>
                 </div>
               </div>
@@ -93,15 +92,14 @@
                     <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                     class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                     id="dataNasc" dateFormat="dd/mm/yy" ngModel  name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"></p-calendar>
-                    <button class="ui-calendar-button ui-button ui-state-default ui-corner-all ui-button-icon-only" type="button" pButton><span class="ui-button-icon-left pi pi-calendar">
-                    </span></button>
+                    <button pButton type="button" icon="pi pi-calendar"></button>
                   </div>
                 </div>
               </div>
 
               <div class="p-grid">
                 <div class="p-col-4">
-                  <label class="ajusteLabel" for="orgExp">Órgão expeditor: </label>
+                  <label class="ajusteLabel" for="orgExp">Órgão expedidor: </label>
                 </div>
                 <div class="p-col-8">
                   <input type="text" class="ajusteInput" pInputText id="orgExp" ngModel name="orgaoexpedidor"  #orgaoexpedidor="ngModel" [(ngModel)]="comprador.orgaoexpedidor">
@@ -177,10 +175,10 @@
 
               <div class="p-grid">
                 <div class="p-col-4">
-                  <label class="ajusteLabel" for="endereço">Endereço: </label>
+                  <label class="ajusteLabel" for="enderecoresidencial">Endereço: </label>
                 </div>
                 <div class="p-col-8">
-                  <input type="text" class="ajusteInput" pInputText id="endereço" ngModel name="enderecoresidencial"  #enderecoresidencial="ngModel" [(ngModel)]="comprador.endereco">
+                  <input type="text" class="ajusteInput" pInputText id="enderecoresidencial" ngModel name="enderecoresidencial"  #enderecoresidencial="ngModel" [(ngModel)]="comprador.endereco">
                 </div>
               </div>
 
@@ -232,7 +230,7 @@
               <br><br>
 
               <p><button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" 
-              [ngStyle]="{'float': 'right'}" (click)="adicionarContato(contatos)"></button>
+              [ngStyle]="{'float': 'right'}" (click)="adicionarContato(contatos)" icon="pi pi-plus-circle" iconPos="right"></button>
             </div>
 
             <br><br>
@@ -258,8 +256,9 @@
           </div>
         </p-fieldset>
 
-        <button pButton type="button" label="Adicionar +" class="ui-button-raised ui-button-secondary" 
-        [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}" (click)="adicionarCompradorLista(comprador)"></button>
+        <button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" 
+        [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}" (click)="adicionarCompradorLista(comprador)"
+        icon="pi pi-plus-circle" iconPos="right"></button>
 
       </div>
     </p-fieldset>
@@ -316,8 +315,7 @@
                   <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                   class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                   id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="comprador.datacadastro"></p-calendar>
-                  <button class="ui-calendar-button ui-button ui-state-default ui-corner-all ui-button-icon-only" type="button" pButton><span class="ui-button-icon-left pi pi-calendar">
-                  </span></button>
+                  <button pButton type="button" icon="pi pi-calendar"></button>
                 </div>
               </div>
             </div>
@@ -502,10 +500,12 @@
     </p-fieldset>
 
     <p-footer>
-      <button pButton type="submit" label="Avançar >>" class="ui-button-rounded ui-button-success" 
-        [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="confirmacao()"></button>
+      <button pButton type="submit" label="Avançar" class="ui-button-rounded ui-button-success" 
+        [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="confirmacao()" 
+        icon="pi pi-angle-double-right" iconPos="right"></button>
       <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
-        [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario)"></button>
+        [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario)"
+        icon="pi pi-refresh" iconPos="right"></button>
       <br><br>
     </p-footer>
   </p-panel>

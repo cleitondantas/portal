@@ -10,8 +10,8 @@ import { Simulacoes } from 'src/app/models/simulacoes';
 export class AnaliseComponent implements OnInit {
 
   simulacaoLista: any[] = [];
-  simulSelec: any;
   instFinan: any[] = [];
+  simul: any;
 
   currencyMask1: any;
   currencyMask2: any;
@@ -26,6 +26,13 @@ export class AnaliseComponent implements OnInit {
 
   ngOnInit() {
     this.http.get(`http://localhost:8100/api/instituicoesfinanceiras`).subscribe(dados => this.instFinan = dados['data'])
+
+    var a = sessionStorage.getItem('cadastro');
+    if(a !== null) {
+      this.simul = JSON.parse(a);
+    }
+
+    console.log(this.simul);
   }
 
   adicionarSimulacao(simulacao: Simulacoes) {
