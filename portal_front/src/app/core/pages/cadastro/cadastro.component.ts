@@ -15,6 +15,8 @@ import { CadastroLogicaService } from './../../../services/cadastro-logica.servi
 import { Originacao } from './../../../models/originacao';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import isValidCpf from '@brazilian-utils/is-valid-cpf';
+import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 
 @Component({
   selector: 'app-cadastro',
@@ -222,11 +224,28 @@ export class CadastroComponent implements OnInit {
   }
 
   f1(f){
-    console.log(f.value)
+    console.log(f) //FORM.CONTROLS.CAMPO.VALID/DIRTY/LEMBRA DISSO PRA COLOCAR SE EH VALIDO OU NAO
     sessionStorage.setItem('comprador', JSON.stringify(f.value));
   }
   
   f2(cadInfo) {
     sessionStorage.setItem('compraImovel', JSON.stringify(cadInfo));
+  }
+
+  /*formatarData(data) {
+    console.log(data);
+    let novaData = data.toLocaleString('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric'});
+    console.log(novaData);
+  }*/
+
+  verificaCpfCnpj() {
+    let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
+    let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
+
+    if(cpf || cnpj == true) {
+      alert('aaaa')
+    } else {
+      alert('bbb')
+    }
   }
 }

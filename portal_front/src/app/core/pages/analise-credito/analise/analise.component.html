@@ -43,7 +43,7 @@
           <label class="ajusteLabel" for="codmodalidadesimulacao">Modalidade: </label>
         </div>
         <div class="p-col-8" id="codmodalidadesimulacao">
-          <p-dropdown placeholder="PRO-COTISTA" optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
+          <p-dropdown placeholder="Selecione..." [options]="modalidade" optionLabel="descModalidadeSimulacao" [autoWidth]="false" [style]="{'width': '100%'}" 
           class="ajusteInput" ngModel name="codmodalidadesimulacao" #codmodalidadesimulacao="ngModel" [(ngModel)]="simulacoes.codmodalidadesimulacao"></p-dropdown>
         </div>
       </div>
@@ -124,7 +124,7 @@
           <label class="ajusteLabel" for="codtipoamortizacao">Tipo Amortização: </label>
         </div>
         <div class="p-col-8" id="codtipoamortizacao">
-          <p-dropdown placeholder="DropDown Menu" optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
+          <p-dropdown placeholder="Selecione..." [options]="tipoAmortizacao" optionLabel="descTipoAmortizacao" [autoWidth]="false" [style]="{'width': '100%'}" 
           class="ajusteInput" name="codtipoamortizacao" #codtipoamortizacao="ngModel" [(ngModel)]="simulacoes.codtipoamortizacao"></p-dropdown>
         </div>
       </div>
@@ -263,11 +263,11 @@
     <p-table [value]="simulacaoLista">
       <ng-template pTemplate="header">
         <tr>
-          <th>Excluir</th>
-          <th>Instituição</th>
-          <th>Aprovação</th>
-          <th>Valor</th>
-          <th>Financiado</th>
+          <th><strong>Excluir</strong></th>
+          <th><strong>Instituição</strong></th>
+          <th><strong>Aprovação</strong></th>
+          <th><strong>Valor</strong></th>
+          <th><strong>Financiado</strong></th>
         </tr>
       </ng-template>
 

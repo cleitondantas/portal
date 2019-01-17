@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
+import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 
 @Component({
   selector: 'app-analise',
@@ -11,6 +12,8 @@ export class AnaliseComponent implements OnInit {
 
   simulacaoLista: any[] = [];
   instFinan: any[] = [];
+  modalidade: any[] = [];
+  tipoAmortizacao: any[] = [];
   simul: any;
 
   currencyMask1: any;
@@ -21,11 +24,15 @@ export class AnaliseComponent implements OnInit {
 
   simulacoes: Simulacoes = new Simulacoes();
 
-  constructor( private http: HttpClient
+  constructor( 
+    private http: HttpClient,
+    private service: AnaliseChamadasService
   ) { }
 
   ngOnInit() {
-    this.http.get(`http://localhost:8100/api/instituicoesfinanceiras`).subscribe(dados => this.instFinan = dados['data'])
+    this.service.getInstFinan().subscribe(dados => this.instFinan = dados['data'])
+    this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
+    this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
 
     var a = sessionStorage.getItem('cadastro');
     if(a !== null) {
