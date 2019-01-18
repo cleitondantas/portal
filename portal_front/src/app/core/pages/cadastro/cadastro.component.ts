@@ -223,14 +223,14 @@ export class CadastroComponent implements OnInit {
     })
   }
 
-  f1(f){
+  /*f1(f){
     console.log(f) //FORM.CONTROLS.CAMPO.VALID/DIRTY/LEMBRA DISSO PRA COLOCAR SE EH VALIDO OU NAO
     sessionStorage.setItem('comprador', JSON.stringify(f.value));
   }
   
   f2(cadInfo) {
     sessionStorage.setItem('compraImovel', JSON.stringify(cadInfo));
-  }
+  }*/
 
   /*formatarData(data) {
     console.log(data);
@@ -238,14 +238,15 @@ export class CadastroComponent implements OnInit {
     console.log(novaData);
   }*/
 
-  verificaCpfCnpj() {
+  verificaCpfCnpj(form) {
     let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
     let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
 
     if(cpf || cnpj == true) {
       alert('aaaa')
     } else {
-      alert('bbb')
+      form.controls['cpfcnpj'].status = 'INVALID';
+      console.log(form)
     }
   }
 }

@@ -4,7 +4,7 @@
       Cadastro de informação
     </p-header>
 
-    <p-fieldset legend="Cadastro de informações pessoais" (keyup)="f1(formulario)" (click)="f1(formulario)">
+    <p-fieldset legend="Cadastro de informações pessoais">
       <div>
         <p-fieldset legend="Comprador principal">
           <div class="p-grid">
@@ -12,11 +12,11 @@
 
               <div class="p-grid">
                 <div class="p-col-4">
-                  <label class="ajusteLabel" for="cpf">CPF/CNPJ: </label>
+                  <label class="ajusteLabel" for="cpfcnpj">CPF/CNPJ: </label>
                 </div>
                 <div class="p-col-8">
-                  <input type="text" class="ajusteInput" pInputText id="cpf" ngModel  name="cpfcnpj"  #cpfcnpj="ngModel" [(ngModel)]="comprador.cpfcnpj"
-                  (blur)="verificaCpfCnpj()">
+                  <input type="text" class="ajusteInput" pInputText id="cpfcnpj" ngModel  name="cpfcnpj"  #cpfcnpj="ngModel" [(ngModel)]="comprador.cpfcnpj"
+                  (blur)="verificaCpfCnpj(formulario)">
                 </div>
               </div>
 
@@ -31,10 +31,10 @@
 
               <div class="p-grid">
                 <div class="p-col-4">
-                  <label class="ajusteLabel" for="numeroIdent">Número de identidade: </label>
+                  <label class="ajusteLabel" for="ndocumento">Número de identidade: </label>
                 </div>
                 <div class="p-col-8">
-                  <input type="text" class="ajusteInput" pInputText id="numeroIdent" ngModel  name="ndocumento"  #ndocumento="ngModel" [(ngModel)]="comprador.ndocumento">
+                  <input type="text" required class="ajusteInput" pInputText id="ndocumento" ngModel  name="ndocumento"  #ndocumento="ngModel" [(ngModel)]="comprador.ndocumento">
                 </div>
               </div>
 
@@ -292,7 +292,7 @@
       </p-fieldset>
     </div>
 
-    <p-fieldset legend="Cadastro de informações do Imóvel" (keyup)="f2(cadInfo)">
+    <p-fieldset legend="Cadastro de informações do Imóvel">
       
       <div class="p-grid">
         <div class="p-col-1">
@@ -504,7 +504,7 @@
       <div class="p-grid p-justify-end">
         <button pButton type="submit" label="Avançar" class="ui-button-rounded ui-button-success" 
           [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="confirmacao()" 
-          icon="pi pi-angle-double-right" iconPos="right"></button>
+          icon="pi pi-angle-double-right" iconPos="right" [disabled]="!formulario.valid"></button>
         <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
           [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario)"
           icon="pi pi-refresh" iconPos="right"></button>
