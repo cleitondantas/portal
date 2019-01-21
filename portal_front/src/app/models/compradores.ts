@@ -5,7 +5,7 @@ export class Compradores {
     codtipocliente: number;
     nomecliente: string;
     ndocumento: string;
-    orgaoexpedidor: string;
+    orgaoexpedidor: any;
     dataexpedicao: string;
     datanascimento: string;
     codestadocivil: any;

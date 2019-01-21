@@ -1,3 +1,4 @@
+import { OrgaoExpedidor } from './../models/orgao-expedidor';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Incorporadoras } from './../models/incorporadoras';
 import { EstadoCivil } from 'src/app/models/estado-civil';
@@ -49,5 +50,12 @@ export class CadastroChamadasService {
 
   createUser(cadInfo: CadastroInformacao) {
     return this.http.post<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo)
+  }
+
+  getOrgaoExpedidor() {
+    return this.http.get(`./../../assets/orgao-expedidor.json`)
+    .toPromise()
+    .then(res => <any[]> res)
+    .then(data => {return data;});
   }
 }

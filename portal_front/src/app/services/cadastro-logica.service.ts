@@ -17,7 +17,7 @@ export class CadastroLogicaService {
     comprador2.codtipocliente = Number(comprador.codtipocliente); 
     comprador2.nomecliente = comprador.nomecliente;
     comprador2.ndocumento = comprador.ndocumento;
-    comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
+    comprador2.orgaoexpedidor = comprador.orgaoexpedidor.sigla;
     comprador2.dataexpedicao = comprador.dataexpedicao;
     comprador2.datanascimento = comprador.datanascimento;
     comprador2.codestadocivil = comprador.codestadocivil.codEstadoCivil; 

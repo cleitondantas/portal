@@ -1,3 +1,4 @@
+import { OrgaoExpedidor } from './../../../models/orgao-expedidor';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
@@ -39,6 +40,8 @@ export class CadastroComponent implements OnInit {
   originacao: Originacao[];
   tipocliente: TipoClientes[];
   retornocadastro: CadastroInformacao;
+  orgaoExpedidor: OrgaoExpedidor[];
+  orgaoExpedidorFiltrado: any[];
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -96,6 +99,8 @@ export class CadastroComponent implements OnInit {
     this.contato.push(contato2);
 
     this.contatos = this.logicaService.limparContatos(this.contatos);
+    console.log(this.orgaoExpedidor);
+
   }
 
   adicionarCompradorLista (comprador: Compradores) {
@@ -106,6 +111,7 @@ export class CadastroComponent implements OnInit {
     //this.logicaService.compradorSessionStorage(JSON.parse(a));
 
     this.compradores.push(comprador2);
+    console.log(this.compradores, comprador2);
 
     comprador = new Compradores();
 
@@ -242,11 +248,29 @@ export class CadastroComponent implements OnInit {
     let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
     let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
 
-    if(cpf || cnpj == true) {
+    if((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
       alert('aaaa')
     } else {
       form.controls['cpfcnpj'].status = 'INVALID';
       console.log(form)
     }
+  }
+
+  search(event) {
+    let query = event.query;
+    this.chamadasService.getOrgaoExpedidor().then(orgaoExpedidor => {
+        this.orgaoExpedidorFiltrado = this.filtroOrgao(query, orgaoExpedidor);
+    });  
+  }
+
+  filtroOrgao(query, orgao) {
+    let filtered: any[] = [];
+    for (let i = 0; i < orgao.length; i++) {
+      let orgaos = orgao[i];
+      if(orgaos.sigla.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+          filtered.push(orgaos);
+      }
+  }
+  return filtered;
   }
 }

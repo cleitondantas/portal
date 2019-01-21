@@ -16,7 +16,7 @@
                 </div>
                 <div class="p-col-8">
                   <input type="text" class="ajusteInput" pInputText id="cpfcnpj" ngModel  name="cpfcnpj"  #cpfcnpj="ngModel" [(ngModel)]="comprador.cpfcnpj"
-                  (blur)="verificaCpfCnpj(formulario)">
+                  (blur)="verificaCpfCnpj(formulario)" pKeyFilter="pint">
                 </div>
               </div>
 
@@ -103,7 +103,9 @@
                   <label class="ajusteLabel" for="orgExp">Órgão expedidor: </label>
                 </div>
                 <div class="p-col-8">
-                  <input type="text" class="ajusteInput" pInputText id="orgExp" ngModel name="orgaoexpedidor"  #orgaoexpedidor="ngModel" [(ngModel)]="comprador.orgaoexpedidor">
+                  <p-autoComplete class="ajusteInput" [suggestions]="orgaoExpedidorFiltrado" (completeMethod)="search($event)" 
+                  field="sigla" id="orgExp" ngModel name="orgaoexpedidor"  #orgaoexpedidor="ngModel" 
+                  [(ngModel)]="comprador.orgaoexpedidor" [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"></p-autoComplete>
                 </div>
               </div>
 
@@ -299,7 +301,8 @@
           <label class="ajusteLabel" for="fid">FID: </label>
         </div>
         <div class="p-col-3">
-          <input type="number" pInputText id="fid-input" class="ajusteInput" ngModel name="numerocadastroincorporadorafid"  #numerocadastroincorporadorafid="ngModel" [(ngModel)]="cadInfo.numerocadastroincorporadorafid">
+          <input type="text" pInputText id="fid-input" class="ajusteInput" ngModel name="numerocadastroincorporadorafid" 
+          #numerocadastroincorporadorafid="ngModel" [(ngModel)]="cadInfo.numerocadastroincorporadorafid" pKeyFilter="pint">
         </div>
       </div>
 
@@ -504,7 +507,7 @@
       <div class="p-grid p-justify-end">
         <button pButton type="submit" label="Avançar" class="ui-button-rounded ui-button-success" 
           [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="confirmacao()" 
-          icon="pi pi-angle-double-right" iconPos="right" [disabled]="!formulario.valid"></button>
+          icon="pi pi-angle-double-right" iconPos="right" [disabled]="!formulario.valid || !cpfcnpj.valid"></button>
         <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
           [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario)"
           icon="pi pi-refresh" iconPos="right"></button>
