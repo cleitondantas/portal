@@ -69,8 +69,8 @@ export class CadastroLogicaService {
 
     this.contAny = contato.codtipocontato as any;
 
-    contatoDisplay.tipocontato = this.contAny.descTipoContato;
-    contatoDisplay.codtipocontato = this.contAny.codTipoContato;
+    contatoDisplay.tipocontato = this.contAny.desctipocontato;
+    contatoDisplay.codtipocontato = this.contAny.codtipocontato;
     contatoDisplay.desccontato = contato.desccontato;
 
     return contatoDisplay;
@@ -81,7 +81,7 @@ export class CadastroLogicaService {
 
     this.contAny = contato.codtipocontato as any;
 
-    contato2.codtipocontato = this.contAny.codTipoContato;
+    contato2.codtipocontato = this.contAny.codtipocontato;
     contato2.desccontato = contato.desccontato; 
 
     return contato2;

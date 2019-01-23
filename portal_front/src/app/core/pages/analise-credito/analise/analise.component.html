@@ -56,7 +56,7 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataexpedicao" dateFormat="dd/mm/yy" ></p-calendar>
+            id="dataexpedicao" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
             <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
@@ -104,7 +104,8 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="prazofinanciamento" dateFormat="dd/mm/yy" ngModel  name="prazofinanciamento"  #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento"></p-calendar>
+            id="prazofinanciamento" dateFormat="dd/mm/yy" ngModel  name="prazofinanciamento"  #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento"
+            [locale]="br"></p-calendar>
             <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
@@ -124,7 +125,7 @@
           <label class="ajusteLabel" for="codtipoamortizacao">Tipo Amortização: </label>
         </div>
         <div class="p-col-8" id="codtipoamortizacao">
-          <p-dropdown placeholder="Selecione..." [options]="tipoAmortizacao" optionLabel="descTipoAmortizacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+          <p-dropdown placeholder="Selecione..." [options]="tipoAmortizacao" optionLabel="desctipoamortizacao" [autoWidth]="false" [style]="{'width': '100%'}" 
           class="ajusteInput" name="codtipoamortizacao" #codtipoamortizacao="ngModel" [(ngModel)]="simulacoes.codtipoamortizacao"></p-dropdown>
         </div>
       </div>
@@ -301,7 +302,7 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataMae" dateFormat="dd/mm/yy" ></p-calendar>
+            id="dataMae" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
             <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
@@ -315,7 +316,7 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataEmissao" dateFormat="dd/mm/yy" ></p-calendar>
+            id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
             <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
@@ -329,7 +330,7 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataAssin" dateFormat="dd/mm/yy" ></p-calendar>
+            id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
             <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>

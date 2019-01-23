@@ -308,17 +308,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var primeng_tabview__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(primeng_tabview__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var primeng_inputtextarea__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! primeng/inputtextarea */ "./node_modules/primeng/inputtextarea.js");
 /* harmony import */ var primeng_inputtextarea__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(primeng_inputtextarea__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var _pages_informacoes_dados_cadastrais_dados_cadastrais_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./pages/informacoes/dados-cadastrais/dados-cadastrais.component */ "./src/app/core/pages/informacoes/dados-cadastrais/dados-cadastrais.component.ts");
-/* harmony import */ var _pages_informacoes_historico_historico_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./pages/informacoes/historico/historico.component */ "./src/app/core/pages/informacoes/historico/historico.component.ts");
-/* harmony import */ var _pages_analise_credito_analise_credito_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./pages/analise-credito/analise-credito.component */ "./src/app/core/pages/analise-credito/analise-credito.component.ts");
-/* harmony import */ var _pages_analise_credito_dados_faturamento_dados_faturamento_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./pages/analise-credito/dados-faturamento/dados-faturamento.component */ "./src/app/core/pages/analise-credito/dados-faturamento/dados-faturamento.component.ts");
-/* harmony import */ var _pages_analise_credito_analise_analise_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./pages/analise-credito/analise/analise.component */ "./src/app/core/pages/analise-credito/analise/analise.component.ts");
+/* harmony import */ var ng2_currency_mask__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ng2-currency-mask */ "./node_modules/ng2-currency-mask/index.js");
+/* harmony import */ var ng2_currency_mask__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(ng2_currency_mask__WEBPACK_IMPORTED_MODULE_32__);
+/* harmony import */ var _pages_informacoes_dados_cadastrais_dados_cadastrais_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./pages/informacoes/dados-cadastrais/dados-cadastrais.component */ "./src/app/core/pages/informacoes/dados-cadastrais/dados-cadastrais.component.ts");
+/* harmony import */ var _pages_informacoes_historico_historico_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./pages/informacoes/historico/historico.component */ "./src/app/core/pages/informacoes/historico/historico.component.ts");
+/* harmony import */ var _pages_analise_credito_analise_credito_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./pages/analise-credito/analise-credito.component */ "./src/app/core/pages/analise-credito/analise-credito.component.ts");
+/* harmony import */ var _pages_analise_credito_dados_faturamento_dados_faturamento_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./pages/analise-credito/dados-faturamento/dados-faturamento.component */ "./src/app/core/pages/analise-credito/dados-faturamento/dados-faturamento.component.ts");
+/* harmony import */ var _pages_analise_credito_analise_analise_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./pages/analise-credito/analise/analise.component */ "./src/app/core/pages/analise-credito/analise/analise.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -384,8 +387,8 @@ var CoreModule = /** @class */ (function () {
                 primeng_menu__WEBPACK_IMPORTED_MODULE_29__["MenuModule"],
                 primeng_tabview__WEBPACK_IMPORTED_MODULE_30__["TabViewModule"],
                 primeng_inputtextarea__WEBPACK_IMPORTED_MODULE_31__["InputTextareaModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_11__["FormsModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ReactiveFormsModule"]
+                _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ReactiveFormsModule"],
+                ng2_currency_mask__WEBPACK_IMPORTED_MODULE_32__["CurrencyMaskModule"]
             ],
             declarations: [
                 _pages_home_home_component__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"],
@@ -397,11 +400,11 @@ var CoreModule = /** @class */ (function () {
                 _pages_grafic_grafic_component__WEBPACK_IMPORTED_MODULE_20__["GraficComponent"],
                 _pages_import_import_component__WEBPACK_IMPORTED_MODULE_22__["ImportComponent"],
                 _pages_informacoes_informacoes_component__WEBPACK_IMPORTED_MODULE_24__["InformacoesComponent"],
-                _pages_informacoes_dados_cadastrais_dados_cadastrais_component__WEBPACK_IMPORTED_MODULE_32__["DadosCadastraisComponent"],
-                _pages_informacoes_historico_historico_component__WEBPACK_IMPORTED_MODULE_33__["HistoricoComponent"],
-                _pages_analise_credito_analise_credito_component__WEBPACK_IMPORTED_MODULE_34__["AnaliseCreditoComponent"],
-                _pages_analise_credito_dados_faturamento_dados_faturamento_component__WEBPACK_IMPORTED_MODULE_35__["DadosFaturamentoComponent"],
-                _pages_analise_credito_analise_analise_component__WEBPACK_IMPORTED_MODULE_36__["AnaliseComponent"],
+                _pages_informacoes_dados_cadastrais_dados_cadastrais_component__WEBPACK_IMPORTED_MODULE_33__["DadosCadastraisComponent"],
+                _pages_informacoes_historico_historico_component__WEBPACK_IMPORTED_MODULE_34__["HistoricoComponent"],
+                _pages_analise_credito_analise_credito_component__WEBPACK_IMPORTED_MODULE_35__["AnaliseCreditoComponent"],
+                _pages_analise_credito_dados_faturamento_dados_faturamento_component__WEBPACK_IMPORTED_MODULE_36__["DadosFaturamentoComponent"],
+                _pages_analise_credito_analise_analise_component__WEBPACK_IMPORTED_MODULE_37__["AnaliseComponent"],
             ],
             exports: [
                 _pages_cadastro_cadastro_component__WEBPACK_IMPORTED_MODULE_5__["CadastroComponent"],
@@ -502,7 +505,7 @@ module.exports = ".ajusteInput {\r\n    width: 100%;\r\n    margin-left: 5px;\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form novalidate [formGroup]=\"formulario\">\n  <div class=\"ui-g\">\n    <div class=\"ui-md-6\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-2\">\n          <label class=\"ajusteLabel\" for=\"fid\">FID: </label>\n        </div>\n        <div class=\"ui-md-10\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"fid\" formControlName=\"fid\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorAvali\">Valor de Avaliação: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorAvali\" formControlName=\"valorAval\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorComVen\">Valor de compra e venda: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorComVem\" formControlName=\"valorComVen\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"modalidade\">Modalidade: </label>\n        </div>\n        <div class=\"ui-md-8\" id=\"modalidade\">\n          <p-dropdown placeholder=\"PRO-COTISTA\" optionLabel=\"Demo\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n          class=\"ajusteInput\" formControlName=\"modalidade\"></p-dropdown>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"dataEnv\">Data envio ao Banco: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"dataEnv\" dateFormat=\"dd/mm/yy\" formControlName=\"dataEnvBanco\"></p-calendar>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorPrestAprov\">Valor prestação Aprovado: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorPrestAprov\" formControlName=\"valorPrestAprov\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"sicaq\">SICAQ: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"sicaq\" formControlName=\"sicaq\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"correspondente\">Correspondente: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"correspondente\" formControlName=\"correspondente\">\n        </div>\n      </div>\n\n    </div>\n\n    <div class=\"ui-md-6\">\n\n      <div class=\"espaco\" [ngStyle]=\"{'width': '741px', 'height': '49px'}\"></div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"prazoFinan\">Prazo financiamento: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"prazoFinan\" dateFormat=\"dd/mm/yy\" formControlName=\"prazoFinan\"></p-calendar>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"banco\">Banco: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"banco\" formControlName=\"banco\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"tipoAmor\">Tipo Amortização: </label>\n        </div>\n        <div class=\"ui-md-8\" id=\"tipoAmor\">\n          <p-dropdown placeholder=\"DropDown Menu\" optionLabel=\"Demo\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n          class=\"ajusteInput\" formControlName=\"tipoAmor\"></p-dropdown>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorSub\">Valor subsidio: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorSub\" formControlName=\"valorSub\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorAvaliBanco\">Valor avaliação Banco: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorAvaliBanco\" formControlName=\"valorAvalBanco\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"fgts\">FGTS: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"fgts\" formControlName=\"fgts\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"recProp\">Recurso próprio: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"recProp\" formControlName=\"recProp\">\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n  <p-fieldset legend=\"Simulação\" formGroupName=\"simulacao\">\n    <div class=\"ui-g\">\n      <div class=\"ui-md-6\">\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"instFinan\">Instituição financeira: </label>\n          </div>\n          <div class=\"ui-md-6\" id=\"instFinan\">\n            <p-dropdown [options]=\"instFinan\" optionLabel=\"name\" placeholder=\"Selecione...\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n            class=\"ajusteInput\" formControlName=\"instFinan\"></p-dropdown>\n          </div>\n          <div class=\"ui-md-2\">\n            <button pButton type=\"button\" label=\"Adicionar\" class=\"ui-button-raised ui-button-secondary\" \n            [ngStyle]=\"{'width': '100%'}\" (click)=\"adicionarInstFinan()\"></button>\n          </div>\n        </div>\n        \n      </div>\n    </div>\n    \n    <p-table [value]=\"simulacao\" [(selection)]=\"simulSelec\" dataKey=\"instituicao\">\n      <ng-template pTemplate=\"header\">\n        <tr>\n          <th>Excluir</th>\n          <th>Instituição</th>\n          <th>Aprovação</th>\n          <th>Valor</th>\n          <th>Financiado</th>\n        </tr>\n      </ng-template>\n\n      <ng-template pTemplate=\"body\" let-rowData let-simul>\n        <tr [pSelectableRow]=\"rowData\">\n          <td><button pButton icon=\"pi pi-trash\" (click)=\"removerInstFinan(rowData)\"></button></td>\n          <td> {{simul.instituicao}} </td>\n          <td> \n            <p-dropdown [options]=\"[{nome: 'Aprovado'}, {nome: 'Reprovado'}]\" optionLabel=\"nome\"></p-dropdown>  \n          </td>\n          <td> {{simul.valor}} </td>\n          <td> \n            <p-tableRadioButton [value]=\"rowData\"></p-tableRadioButton>  \n          </td>\n        </tr>\n      </ng-template>\n    </p-table>\n  </p-fieldset>\n\n  <p-fieldset legend=\"Valores do processo\" formGroupName=\"valoresProcesso\">\n    <div class=\"ui-g\">\n      <div class=\"ui-md-6\">\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"despesasFinan\">Despesas financiadas: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"despesasFinan\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"despesasFinan\"></p-inputMask>\n          </div>\n        </div>\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"finanTotal\">Financiamento total: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"finanTotal\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"finanTotal\"></p-inputMask>\n          </div>\n        </div>\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"fgts\">FGTS: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"fgts\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"fgtsValProc\"></p-inputMask>\n          </div>\n        </div>\n\n      </div>\n      <div class=\"ui-md-6\">\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"recProp\">Recurso próprio: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"despesasFinan\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"recPropValProc\"></p-inputMask>\n          </div>\n        </div>\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"saldoDev\">Saldo devedor: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"saldoDev\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"saldoDevedor\"></p-inputMask>\n          </div>\n        </div>\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"valorVenda\">Valor da venda: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"valorVenda\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"valorVen\"></p-inputMask>\n          </div>\n        </div>\n\n      </div>\n    </div>\n  </p-fieldset>\n\n  <p-fieldset legend=\"Datas do processo\" formGroupName=\"datasProcesso\">\n    <div class=\"ui-g\">\n      <div class=\"ui-md-6\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"dataMae\">Data da pasta mãe: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"dataMae\" dateFormat=\"dd/mm/yy\" formControlName=\"dataPastaMae\"></p-calendar>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"dataEmissao\">Data de Emissão: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"dataEmissao\" dateFormat=\"dd/mm/yy\" formControlName=\"dataEmissao\"></p-calendar>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"dataAssin\">Data de assinatura: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"dataAssin\" dateFormat=\"dd/mm/yy\" formControlName=\"dataAssinatura\"></p-calendar>\n        </div>\n      </div>\n\n      </div>\n    </div>\n  </p-fieldset>\n</form>\n<br><br>\n"
+module.exports = "<form novalidate [formGroup]=\"formulario\">\n  <div class=\"ui-g\">\n    <div class=\"ui-md-6\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-2\">\n          <label class=\"ajusteLabel\" for=\"fid\">FID: </label>\n        </div>\n        <div class=\"ui-md-10\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"fid\" formControlName=\"fid\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorAvali\">Valor de Avaliação: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorAvali\" formControlName=\"valorAval\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorComVen\">Valor de compra e venda: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorComVem\" formControlName=\"valorComVen\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"modalidade\">Modalidade: </label>\n        </div>\n        <div class=\"ui-md-8\" id=\"modalidade\">\n          <p-dropdown placeholder=\"PRO-COTISTA\" optionLabel=\"Demo\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n          class=\"ajusteInput\" formControlName=\"modalidade\"></p-dropdown>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"dataEnv\">Data envio ao Banco: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"dataEnv\" dateFormat=\"dd/mm/yy\" formControlName=\"dataEnvBanco\"></p-calendar>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorPrestAprov\">Valor prestação Aprovado: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorPrestAprov\" formControlName=\"valorPrestAprov\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"sicaq\">SICAQ: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"sicaq\" formControlName=\"sicaq\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"correspondente\">Correspondente: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"correspondente\" formControlName=\"correspondente\">\n        </div>\n      </div>\n\n    </div>\n\n    <div class=\"ui-md-6\">\n\n      <div class=\"espaco\" [ngStyle]=\"{'width': '741px', 'height': '49px'}\"></div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"prazoFinan\">Prazo financiamento: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"prazoFinan\" dateFormat=\"dd/mm/yy\" formControlName=\"prazoFinan\"></p-calendar>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"banco\">Banco: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"banco\" formControlName=\"banco\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"tipoAmor\">Tipo Amortização: </label>\n        </div>\n        <div class=\"ui-md-8\" id=\"tipoAmor\">\n          <p-dropdown placeholder=\"DropDown Menu\" optionLabel=\"Demo\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n          class=\"ajusteInput\" formControlName=\"tipoAmor\"></p-dropdown>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorSub\">Valor subsidio: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorSub\" formControlName=\"valorSub\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"valorAvaliBanco\">Valor avaliação Banco: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"valorAvaliBanco\" formControlName=\"valorAvalBanco\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"fgts\">FGTS: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"fgts\" formControlName=\"fgts\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"recProp\">Recurso próprio: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"recProp\" formControlName=\"recProp\">\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n  <p-fieldset legend=\"Simulação\" formGroupName=\"simulacao\">\n    <div class=\"ui-g\">\n      <div class=\"ui-md-6\">\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"instFinan\">Instituição financeira: </label>\n          </div>\n          <div class=\"ui-md-6\" id=\"instFinan\">\n            <p-dropdown [options]=\"instFinan\" optionLabel=\"name\" placeholder=\"Selecione...\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n            class=\"ajusteInput\" formControlName=\"instFinan\"></p-dropdown>\n          </div>\n          <div class=\"ui-md-2\">\n            <button pButton type=\"button\" label=\"Adicionar\" class=\"ui-button-raised ui-button-secondary\" \n            [ngStyle]=\"{'width': '100%'}\" (click)=\"adicionarInstFinan()\"></button>\n          </div>\n        </div>\n        \n      </div>\n    </div>\n    \n    <p-table [value]=\"simulacao\" [(selection)]=\"simulSelec\" dataKey=\"instituicao\">\n      <ng-template pTemplate=\"header\">\n        <tr>\n          <th>Excluir</th>\n          <th>Instituição</th>\n          <th>Aprovação</th>\n          <th>Valor</th>\n          <th>Financiado</th>\n        </tr>\n      </ng-template>\n\n      <ng-template pTemplate=\"body\" let-rowData let-simul>\n        <tr [pSelectableRow]=\"rowData\">\n          <td><button pButton icon=\"pi pi-trash\" (click)=\"removerInstFinan(rowData)\"></button></td>\n          <td> {{simul.instituicao}} </td>\n          <td> \n            <p-dropdown [options]=\"[{nome: 'Aprovado'}, {nome: 'Reprovado'}]\" optionLabel=\"nome\"></p-dropdown>  \n          </td>\n          <td> {{simul.valor}} </td>\n          <td> \n            <p-tableRadioButton [value]=\"rowData\"></p-tableRadioButton>  \n          </td>\n        </tr>\n      </ng-template>\n    </p-table>\n  </p-fieldset>\n\n  <p-fieldset legend=\"Valores do processo\" formGroupName=\"valoresProcesso\">\n    <div class=\"ui-g\">\n      <div class=\"ui-md-6\">\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"despesasFinan\">Despesas financiadas: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"despesasFinan\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"despesasFinan\"></p-inputMask>\n          </div>\n        </div>\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"finanTotal\">Financiamento total: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"finanTotal\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"finanTotal\"></p-inputMask>\n          </div>\n        </div>\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"fgts\">FGTS: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"fgts\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"fgtsValProc\"></p-inputMask>\n          </div>\n        </div>\n\n      </div>\n      <div class=\"ui-md-6\">\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"recProp\">Recurso próprio: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"despesasFinan\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"recPropValProc\"></p-inputMask>\n          </div>\n        </div>\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"saldoDev\">Saldo devedor: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"saldoDev\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"saldoDevedor\"></p-inputMask>\n          </div>\n        </div>\n\n        <div class=\"ui-g\">\n          <div class=\"ui-md-4\">\n            <label class=\"ajusteLabel\" for=\"valorVenda\">Valor da venda: </label>\n          </div>\n          <div class=\"ui-md-8\">\n            <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"valorVenda\"\n            mask=\"R$ 999.999,99?\" slotChar=\" \" formControlName=\"valorVen\"></p-inputMask>\n          </div>\n        </div>\n\n      </div>\n    </div>\n  </p-fieldset>\n\n  <p-fieldset legend=\"Datas do processo\" formGroupName=\"datasProcesso\">\n    <div class=\"ui-g\">\n      <div class=\"ui-md-6\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"dataMae\">Data da pasta mãe: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"dataMae\" dateFormat=\"dd/mm/yy\" formControlName=\"dataPastaMae\"></p-calendar>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"dataEmissao\">Data de Emissão: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"dataEmissao\" dateFormat=\"dd/mm/yy\" formControlName=\"dataEmissao\"></p-calendar>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"dataAssin\">Data de assinatura: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"dataAssin\" dateFormat=\"dd/mm/yy\" formControlName=\"dataAssinatura\"></p-calendar>\n        </div>\n      </div>\n\n      </div>\n    </div>\n  </p-fieldset>\n</form>\n<br><br>\n"
 
 /***/ }),
 
@@ -621,7 +624,7 @@ module.exports = ".ajusteInput {\r\n    width: 100%;\r\n    margin-left: 5px;\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-g\">\n  <div class=\"ui-md-6\">\n\n    <div class=\"ui-g\">\n      <div class=\"ui-md-3\">\n        <label class=\"ajusteLabel\" for=\"faturarContrato\">A faturar contrato: </label>\n      </div>\n      <div class=\"ui-md-9\">\n        <input type=\"text\" class=\"ajusteInput\" pInputText id=\"faturarContrato\">\n      </div>\n    </div>\n\n  </div>\n  <div class=\"ui-md-6\">\n\n    <div class=\"ui-g\">\n      <div class=\"ui-md-2\">\n        <label class=\"ajusteLabel\" for=\"cpf\">CPF/CNPJ: </label>\n      </div>\n      <div class=\"ui-md-10\">\n        <input type=\"text\" class=\"ajusteInput\" pInputText id=\"cpf\">\n      </div>\n    </div>\n\n  </div>\n</div>\n\n<p-fieldset legend=\"Faturamento\">\n  <div class=\"ui-g\">\n    <div class=\"ui-md-4\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"primeiraParcela\">1° Parcela: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"primeiraParcela\"\n          mask=\"R$ 999.999,99?\" slotChar=\" \"></p-inputMask>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"segundaParcela\">2° Parcela: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <p-inputMask  [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"segundaParcela\"\n          mask=\"R$ 999.999,99?\" slotChar=\" \"></p-inputMask>\n        </div>\n      </div>\n\n    </div>\n    <div class=\"ui-md-4\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"primeiraNotaFiscal\">Nota fiscal: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"primeiraNotaFiscal\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"segundaNotaFiscal\">Nota fiscal: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"segundaNotaFiscal\">\n        </div>\n      </div>\n\n    </div>\n    <div class=\"ui-md-4\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"primeiroMesFatu\">Mês faturamento: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"primeiroMesFatu\" dateFormat=\"dd/mm/yy\"></p-calendar>       \n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"segundoMesFatu\">Mês faturamento: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"segundoMesFatu\" dateFormat=\"dd/mm/yy\"></p-calendar>\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n  <br><br><br>\n\n  <div class=\"ui-g\">\n    <div class=\"ui-md-6\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"recebIncorp\">TT RECEBE INCORP: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"recebIncorp\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"prevReceb\">RECEBIMENTO PREVISTO: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"prevReceb\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"notaFiscal\">NOTA FISCAL: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"notaFiscal\">\n        </div>\n      </div>\n\n    </div>\n    <div class=\"ui-md-6\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"recebTeorico\">RECEB TEÓRICO BCO: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"recebTeorico\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"mesFaturado\">MÊS FATURADO: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"mesFaturado\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"totalReceb\">TOTAL RECEBIDO: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"totalReceb\">\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n  <br><br><br>\n\n  <div class=\"ui-g\">\n    <label class=\"ajusteLabel\" for=\"observacao\" [ngStyle]=\"{'padding-left': '14px'}\">Observação:</label>\n    <textarea pInputTextarea [rows]=\"4\" id=\"observacao\" [ngStyle]=\"{'margin': '0px 14px 14px 14px'}\" style=\"width: 100%\"></textarea>\n    <button pButton type=\"button\" label=\"Salvar\" class=\"ui-button-raised ui-button-info\" \n    [ngStyle]=\"{'width': '100px', 'margin-left': '14px'}\"></button>\n  </div>\n\n</p-fieldset>\n<br><br>"
+module.exports = "<div class=\"ui-g\">\n  <div class=\"ui-md-6\">\n\n    <div class=\"ui-g\">\n      <div class=\"ui-md-3\">\n        <label class=\"ajusteLabel\" for=\"faturarContrato\">A faturar contrato: </label>\n      </div>\n      <div class=\"ui-md-9\">\n        <input type=\"text\" class=\"ajusteInput\" pInputText id=\"faturarContrato\">\n      </div>\n    </div>\n\n  </div>\n  <div class=\"ui-md-6\">\n\n    <div class=\"ui-g\">\n      <div class=\"ui-md-2\">\n        <label class=\"ajusteLabel\" for=\"cpf\">CPF/CNPJ: </label>\n      </div>\n      <div class=\"ui-md-10\">\n        <input type=\"text\" class=\"ajusteInput\" pInputText id=\"cpf\">\n      </div>\n    </div>\n\n  </div>\n</div>\n\n<p-fieldset legend=\"Faturamento\">\n  <div class=\"ui-g\">\n    <div class=\"ui-md-4\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"primeiraParcela\">1° Parcela: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"primeiraParcela\"\n          mask=\"R$ 999.999,99?\" slotChar=\" \"></p-inputMask>\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"segundaParcela\">2° Parcela: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <p-inputMask  [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"segundaParcela\"\n          mask=\"R$ 999.999,99?\" slotChar=\" \"></p-inputMask>\n        </div>\n      </div>\n\n    </div>\n    <div class=\"ui-md-4\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"primeiraNotaFiscal\">Nota fiscal: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"primeiraNotaFiscal\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"segundaNotaFiscal\">Nota fiscal: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"segundaNotaFiscal\">\n        </div>\n      </div>\n\n    </div>\n    <div class=\"ui-md-4\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"primeiroMesFatu\">Mês faturamento: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"primeiroMesFatu\" dateFormat=\"dd/mm/yy\"></p-calendar>       \n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-4\">\n          <label class=\"ajusteLabel\" for=\"segundoMesFatu\">Mês faturamento: </label>\n        </div>\n        <div class=\"ui-md-8\">\n          <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n          class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n          id=\"segundoMesFatu\" dateFormat=\"dd/mm/yy\"></p-calendar>\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n  <br><br><br>\n\n  <div class=\"ui-g\">\n    <div class=\"ui-md-6\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"recebIncorp\">TT RECEBE INCORP: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"recebIncorp\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"prevReceb\">RECEBIMENTO PREVISTO: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"prevReceb\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"notaFiscal\">NOTA FISCAL: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"notaFiscal\">\n        </div>\n      </div>\n\n    </div>\n    <div class=\"ui-md-6\">\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"recebTeorico\">RECEB TEÓRICO BCO: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"recebTeorico\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"mesFaturado\">MÊS FATURADO: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"mesFaturado\">\n        </div>\n      </div>\n\n      <div class=\"ui-g\">\n        <div class=\"ui-md-3\">\n          <label class=\"ajusteLabel\" for=\"totalReceb\">TOTAL RECEBIDO: </label>\n        </div>\n        <div class=\"ui-md-9\">\n          <input type=\"text\" class=\"ajusteInput\" pInputText id=\"totalReceb\">\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n  <br><br><br>\n\n  <div class=\"ui-g\">\n    <label class=\"ajusteLabel\" for=\"observacao\" [ngStyle]=\"{'padding-left': '14px'}\">Observação:</label>\n    <textarea pInputTextarea [rows]=\"4\" id=\"observacao\" [ngStyle]=\"{'margin': '0px 14px 14px 14px'}\" style=\"width: 100%\"></textarea>\n    <button pButton type=\"button\" label=\"Salvar\" class=\"ui-button-raised ui-button-info\" \n    [ngStyle]=\"{'width': '100px', 'margin-left': '14px'}\"></button>\n  </div>\n\n</p-fieldset>\n<br><br>"
 
 /***/ }),
 
@@ -684,7 +687,7 @@ module.exports = ".fontSizeLabel{\n    font-size: 11pt\n}\n.formclass {\n    min
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form novalidate [formGroup]=\"formulario\" (ngSubmit)=\"OnSubmit()\">\n  <p-panel>\n    <p-header>\n      Cadastro de informação\n    </p-header>\n\n    <p-fieldset legend=\"Cadastro de informações pessoais\" formArrayName=\"clientes\" *ngFor=\"let item of formulario.get('clientes')['controls']; let i = index;\">\n      <div [formGroupName]=\"i\">\n      <p-fieldset legend=\"Comprador principal\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"cpf\">CPF/CNPJ: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"cpf\" formControlName=\"cpfcnpj\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"tipoP\">Tipo de pessoa: </label>\n              </div>\n              <div class=\"ui-md-8\" id=\"tipoP\">\n                <p-radioButton value=\"1\" label=\"Física\" name=\"tipoPessoa\" class=\"radio\" formControlName=\"codtipocliente\"></p-radioButton>\n                <p-radioButton value=\"2\" label=\"Jurídica\" name=\"tipoPessoa\" class=\"radio\" formControlName=\"codtipocliente\"></p-radioButton>\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"numeroIdent\">Número de identidade: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"numeroIdent\" formControlName=\"ndocumento\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"dataExp\">Data expedição: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <p-calendar [showIcon]=\"true\"  [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n                class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n                id=\"dataExp\" formControlName=\"dataexpedicao\" dateFormat=\"dd/mm/yy\"></p-calendar>\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"estadoCivil\">Estado civil: </label>\n              </div>\n              <div class=\"ui-md-8\" id=\"estadoCivil\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"name\" [options]=\"estadoCivil\" [autoWidth]=\"false\" \n                [style]=\"{'width': '100%'}\" class=\"ajusteInput\" formControlName=\"codestadocivil\"></p-dropdown>\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"renda\">Renda: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"renda\"\n                mask=\"R$ 999.999,99?\" slotChar=\" \"  formControlName=\"valorrenda\"></p-inputMask>\n              </div>\n            </div>\n\n          </div>\n\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"nomeC\">Nome do cliente: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"nomeC\" formControlName=\"nomecliente\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"dataNasc\">Data de nascimento: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n                class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n                id=\"dataNasc\" formControlName=\"datanascimento\" dateFormat=\"dd/mm/yy\"></p-calendar>\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"orgExp\">Órgão expeditor: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"orgExp\" formControlName=\"orgaoexpedidor\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"nacionalidade\">Nacionalidade: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"nacionalidade\" formControlName=\"nacionalidade\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"profissao\">Profissão: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"profissao\"  formControlName=\"profissao\">\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </p-fieldset>\n\n      <p-fieldset legend=\"Endereço\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"cep\">CEP: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"cep\" mask=\"99999-999\" \n                slotChar=\" \"  formControlName=\"cepresidencial\" (onBlur)=\"consultaCEP()\"></p-inputMask>\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"numero\">Número: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"numero\"  formControlName=\"numeroendereco\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"bairro\">Bairro: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"bairro\"  formControlName=\"bairro\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"cidade\">Cidade: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"cidade\"  formControlName=\"cidade\">\n              </div>\n            </div>\n\n          </div>\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"endereço\">Endereço: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"endereço\"  formControlName=\"endereco\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"complemento\">Complemento: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"complemento\"  formControlName=\"complemento\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"estado\">Estado: </label>\n              </div>\n              <div class=\"ui-md-8\" id=\"estado\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"Nome\" [options]=\"estado\" \n                [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" class=\"ajusteInput\"  formControlName=\"uf\"></p-dropdown>\n              </div>\n            </div>\n\n          </div>\n        </div>\n      </p-fieldset>\n\n      <p-fieldset legend=\"Contatos\" formGroupName=\"contatos\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"tipo\">Tipo: </label>\n              </div>\n              <div class=\"ui-md-8\" id=\"estado\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"name\" [options]=\"tipoContato\" \n                [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" class=\"ajusteInput\"  formControlName=\"codtipocontato\"></p-dropdown>\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"context\"  formControlName=\"desccontato\">\n              </div>\n            </div>\n\n            <br><br>\n\n            <p><button pButton type=\"button\" label=\"Adicionar\" class=\"ui-button-raised ui-button-secondary\" \n            [ngStyle]=\"{'float': 'right'}\" (click)=\"adicionarContato()\"></button>\n          </div>\n\n          <br><br>\n          <div class=\"ui-md-6\">\n            <p-table [value]=\"contato\" [scrollable]=\"true\" [(selection)]=\"contatoSelecionado\" dataKey=\"contato\" scrollHeight=\"200px\">\n              <ng-template pTemplate=\"header\">\n                <tr>\n                  <th>Excluir</th>\n                  <th>Tipo</th>\n                  <th>Contato</th>\n                </tr>\n              </ng-template>\n\n              <ng-template pTemplate=\"body\" let-rowData let-cont>\n                <tr [pSelectableRow]=\"rowData\">\n                  <td> <button pButton icon=\"pi pi-trash\" (click)=\"removerContato(rowData)\"></button> </td>\n                  <td> {{cont.tipo}} </td>\n                  <td> {{cont.contato}} </td>\n                </tr>\n              </ng-template>\n            </p-table>\n          </div>\n        </div>\n      </p-fieldset>\n\n      <button pButton type=\"button\" label=\"Adicionar +\" class=\"ui-button-raised ui-button-secondary\" \n      [ngStyle]=\"{'float': 'right', 'width': '30%', 'margin': '5px'}\" (click)=\"adicionarCompradorLista(i)\"></button>\n    \n      <div class=\"ui-g\">\n        <p-fieldset legend=\"Compradores\">\n          <p-table [value]=\"compradores\" >\n            <ng-template pTemplate=\"header\">\n              <tr>\n                <th>Excluir</th>\n                <th>Nome</th>\n                <th>CPF</th>\n                <th>Renda</th>\n                <th>Comprador principal</th>\n              </tr>\n            </ng-template>\n    \n            <ng-template pTemplate=\"body\" let-rowData let-comp>\n              <tr [pSelectableRow]=\"rowData\">\n                <td> <button pButton icon=\"pi pi-user-minus\" (click)=\"removerComprador(rowData)\"></button> </td>\n                <td> {{comp.nome}} </td>\n                <td> {{comp.cpf}} </td>\n                <td> {{comp.renda}} </td>\n                <td>\n                    <p-tableRadioButton [value]=\"rowData\" value=true name=\"principal\" ngDefaultControl=\"principal\"></p-tableRadioButton>\n                </td>\n              </tr>\n            </ng-template>\n          </p-table>\n        </p-fieldset>\n      </div>\n    </div>\n    </p-fieldset>\n\n    <p-fieldset legend=\"Cadastro de informações do Imóvel\">\n      \n      <div class=\"ui-g\">\n        <div class=\"ui-md-1\">\n          <label class=\"ajusteLabel\" for=\"fid\">FID: </label>\n        </div>\n        <div class=\"ui-md-3\">\n          <input type=\"text\" pInputText id=\"fid-input\" class=\"ajusteInput\"  formControlName=\"codcadastroincorporadora\">\n        </div>\n      </div>\n\n      <p-fieldset legend=\"INCORPORADORA\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-3\">\n            \n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"entrada\">Entrada: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <p-calendar [showIcon]=\"true\"  [yearNavigator]=\"true\" yearRange=\"1900:2018\" [monthNavigator]=\"true\" \n                class=\"ajusteInput\" id=\"entrada\"  dateFormat=\"dd/mm/yy\"></p-calendar>\n              </div>\n            </div>\n\n          </div>\n          <div class=\"ui-md-5\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-3\">\n                <label class=\"ajusteLabel\" for=\"incorporadora\">Incorporadora: </label>\n              </div>\n              <div class=\"ui-md-7\" id=\"incorporadora\">\n                <p-dropdown placeholder=\"Selecione\" optionLabel=\"Demo\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n                ></p-dropdown>\n              </div>\n            </div>\n\n          </div>\n          <div class=\"ui-md-4\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-3\">\n                <label class=\"ajusteLabel\" for=\"origin\">Originação: </label>\n              </div>\n              <div class=\"ui-md-7\" id=\"origin\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"Demo\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n                 formControlName=\"codoriginacao\"></p-dropdown>\n              </div>\n            </div>\n\n          </div>\n        </div>\n      </p-fieldset>\n\n      <p-fieldset legend=\"DADOS DO EMPREENDIMENTO\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"empreend\">Empreendimento: </label>\n              </div>\n              <div class=\"ui-md-8\" id=\"empreend\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"empreendimento\"  formControlName=\"codempreendimento\">\n              </div>\n            </div>\n\n          </div>\n\n          <div class=\"ui-md-6\">\n            <div class=\"ui-g\">\n              <div class=\"ui-md-6\">\n\n                <div class=\"ui-g\">\n                  <div class=\"ui-md-4\">\n                    <label class=\"ajusteLabel\" for=\"bloco\">Bloco: </label>\n                  </div>\n                  <div class=\"ui-md-8\">\n                    <input type=\"text\" class=\"ajusteInput\" pInputText id=\"bloco\"  formControlName=\"blocotorre\">\n                  </div>\n                </div>\n\n\n                <div class=\"ui-g\">\n                  <div class=\"ui-md-5\">\n                    <label class=\"ajusteLabel\" for=\"vagaAutomovel\">Vaga de automóvel: </label>\n                  </div>\n                  <div class=\"ui-md-7\">\n                    <input type=\"text\" class=\"ajusteInput\" pInputText id=\"vagaAutomovel\"  formControlName=\"vagaautomovel\">\n                  </div>\n                </div>\n              </div>\n\n              <div class=\"ui-md-6\">\n\n                <div class=\"ui-g\">\n                  <div class=\"ui-md-4\">\n                    <label class=\"ajusteLabel\" for=\"apto\">Apartamento: </label>\n                  </div>\n                  <div class=\"ui-md-8\">\n                    <input type=\"text\" class=\"ajusteInput\" pInputText id=\"apto\"  formControlName=\"numeroapartamento\">\n                  </div>\n                </div>\n\n                <div class=\"ui-g\">\n                  <div class=\"ui-md-4\">\n                    <label class=\"ajusteLabel\" for=\"box\">Box: </label>\n                  </div>\n                  <div class=\"ui-md-8\">\n                    <input type=\"text\" class=\"ajusteInput\" pInputText id=\"box\"  formControlName=\"box\">\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </p-fieldset>\n\n      <p-fieldset legend=\"Endereço do Imovel\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"cepImovel\">CEP: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"cepImovel\" mask=\"99999-999\" \n                slotChar=\" \"  formControlName=\"cep\" (onBlur)=\"consultaCEPImovel()\"></p-inputMask>\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"numeroImovel\">Número: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"numeroImovel\"  formControlName=\"numero\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"bairroImovel\">Bairro: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"bairroImovel\"  formControlName=\"bairro\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"cidadeImovel\">Cidade: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"cidadeImovel\"  formControlName=\"cidade\">\n              </div>\n            </div>\n\n          </div>\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"endereçoImovel\">Endereço: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"endereçoImovel\"  formControlName=\"endereco\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"complementoImovel\">Complemento: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"complementoImovel\"  formControlName=\"complemento\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"estadoImovel\">Estado: </label>\n              </div>\n              <div class=\"ui-md-8\" id=\"estadoImovel\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"Nome\" [options]=\"estado\" \n                [autoWidth]=\"false\" [style]=\"{'width': '100%', 'margin-left': '5px'}\"  formControlName=\"uf\"></p-dropdown>\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </p-fieldset>\n\n    </p-fieldset>\n\n    <p-footer>\n      <button pButton type=\"submit\" label=\"Avançar >>\" class=\"ui-button-rounded ui-button-success\" \n        [ngStyle]=\"{'width': '15%', 'margin': '3px'}\"></button>\n      <button pButton type=\"button\" label=\"Limpar\" class=\"ui-button-rounded ui-button-warning\" \n      [ngStyle]=\"{'width': '15%', 'margin': '3px'}\" (click)=\"limparFormulario()\" ></button>\n      <br><br>\n    </p-footer>\n  </p-panel>\n\n  <div class=\"ui0g\">\n    {{ formulario.value | json }}\n  </div>\n  <br><br><br>\n</form>"
+module.exports = "<form novalidate (ngSubmit)=\"OnSubmit(cadInfo, formulario)\" #formulario=\"ngForm\">\n  <p-panel>\n    <p-header>\n      Cadastro de informação\n    </p-header>\n\n    <p-fieldset legend=\"Cadastro de informações pessoais\">\n      <div>\n        <p-fieldset legend=\"Comprador principal\">\n          <div class=\"ui-g\">\n            <div class=\"ui-md-6\">\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"cpf\">CPF/CNPJ: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"cpf\" ngModel  name=\"cpfcnpj\"  #cpfcnpj=\"ngModel\" [(ngModel)]=\"comprador.cpfcnpj\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"tipoP\">Tipo de pessoa: </label>\n                </div>\n                <div class=\"ui-md-8\" id=\"tipoP\">\n                  <p-radioButton value=1 label=\"Física\" name=\"tipoPessoa\" class=\"radio\" ngModel #tipoPessoa=\"ngModel\" [(ngModel)]=\"comprador.codtipocliente\"></p-radioButton>\n                  <p-radioButton value=2 label=\"Jurídica\" name=\"tipoPessoa\" class=\"radio\" ngModel #tipoPessoa=\"ngModel\" [(ngModel)]=\"comprador.codtipocliente\"></p-radioButton>\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"numeroIdent\">Número de identidade: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"numeroIdent\" ngModel  name=\"ndocumento\"  #ndocumento=\"ngModel\" [(ngModel)]=\"comprador.ndocumento\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"dataExp\">Data expedição: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <p-calendar [showIcon]=\"true\"  [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n                  class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n                  id=\"dataExp\" dateFormat=\"dd/mm/yy\" ngModel name=\"dataexpedicao\"  #dataexpedicao=\"ngModel\" [(ngModel)]=\"comprador.dataexpedicao\"></p-calendar>\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"estadoCivil\">Estado civil: </label>\n                </div>\n                <div class=\"ui-md-8\" id=\"estadoCivil\">\n                  <p-dropdown placeholder=\"Selecione...\" optionLabel=\"descEstadoCivil\" [options]=\"estadoCivil\" [autoWidth]=\"false\" dataKey=\"value\"\n                  [style]=\"{'width': '100%'}\" class=\"ajusteInput\" ngModel name=\"codestadocivil\" #codestadocivil=\"ngModel\" [(ngModel)]=\"comprador.codestadocivil\"></p-dropdown>\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"renda\">Renda: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input currencyMask pInputText class=\"ajusteInput\" name=\"valorrenda\" [(ngModel)]=\"comprador.valorrenda\" [options]=\"{ prefix: 'R$ ', thousands: '.', decimal: ',' }\"/>\n                </div>\n              </div>\n\n            </div>\n\n            <div class=\"ui-md-6\">\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"nomeC\">Nome do cliente: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"nomeC\" ngModel  name=\"nomecliente\"  #nomecliente=\"ngModel\" [(ngModel)]=\"comprador.nomecliente\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"dataNasc\">Data de nascimento: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <p-calendar [showIcon]=\"true\" [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n                  class=\"ajusteInput\" [inputStyle]=\"{'width': '96.5%'}\" [style]=\"{'width': '96.5%'}\" \n                  id=\"dataNasc\" dateFormat=\"dd/mm/yy\" ngModel  name=\"datanascimento\"  #datanascimento=\"ngModel\" [(ngModel)]=\"comprador.datanascimento\"></p-calendar>\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"orgExp\">Órgão expeditor: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"orgExp\" ngModel name=\"orgaoexpedidor\"  #orgaoexpedidor=\"ngModel\" [(ngModel)]=\"comprador.orgaoexpedidor\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"nacionalidade\">Nacionalidade: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"nacionalidade\" ngModel name=\"nacionalidade\"  #nacionalidade=\"ngModel\" [(ngModel)]=\"comprador.nacionalidade\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"profissao\">Profissão: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"profissao\" ngModel name=\"profissao\"  #profissao=\"ngModel\" [(ngModel)]=\"comprador.profissao\">\n                </div>\n              </div>\n\n            </div>\n          </div>\n\n        </p-fieldset>\n\n        <p-fieldset legend=\"Endereço\">\n          <div class=\"ui-g\">\n            <div class=\"ui-md-6\">\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"cep\">CEP: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"cep\" mask=\"99999-999\" \n                  slotChar=\" \"  (onBlur)=\"consultaCEP()\"  ngModel name=\"cepresidencial\"  #cepresidencial=\"ngModel\" [(ngModel)]=\"comprador.cepresidencial\"></p-inputMask>\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"numero\">Número: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"numero\" ngModel name=\"numeroendereco\"  #numeroendereco=\"ngModel\" [(ngModel)]=\"comprador.numeroendereco\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"bairro\">Bairro: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"bairro\" ngModel name=\"bairroresidencial\"  #bairroresidencial=\"ngModel\" [(ngModel)]=\"comprador.bairro\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"cidade\">Cidade: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"cidade\" ngModel name=\"cidaderesidencial\"  #cidaderesidencial=\"ngModel\" [(ngModel)]=\"comprador.cidade\">\n                </div>\n              </div>\n\n            </div>\n            <div class=\"ui-md-6\">\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"endereço\">Endereço: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"endereço\" ngModel name=\"enderecoresidencial\"  #enderecoresidencial=\"ngModel\" [(ngModel)]=\"comprador.endereco\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"complemento\">Complemento: </label>\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"complemento\" ngModel name=\"complementoresidencial\"  #complementoresidencial=\"ngModel\" [(ngModel)]=\"comprador.complemento\">\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"estado\">Estado: </label>\n                </div>\n                <div class=\"ui-md-8\" id=\"estado\">\n                  <p-dropdown placeholder=\"Selecione...\" optionLabel=\"uf\" [options]=\"estado\" \n                  [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" class=\"ajusteInput\" ngModel name=\"ufresidencial\"  #ufresidencial=\"ngModel\" [(ngModel)]=\"comprador.uf\"></p-dropdown>\n                </div>\n              </div>\n\n            </div>\n          </div>\n        </p-fieldset>\n\n        <p-fieldset legend=\"Contatos\">\n          <div class=\"ui-g\">\n            <div class=\"ui-md-6\" >\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                  <label class=\"ajusteLabel\" for=\"tipo\">Tipo: </label>\n                </div>\n                <div class=\"ui-md-8\" id=\"tipo\">\n                  <p-dropdown placeholder=\"Selecione...\" optionLabel=\"desctipocontato\" [options]=\"tipoContato\" dataKey=\"value\"\n                  [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" class=\"ajusteInput\" ngModel name=\"codtipocontato\"  #codtipocontato=\"ngModel\" [(ngModel)]=\"contatos.codtipocontato\"></p-dropdown>\n                </div>\n              </div>\n\n              <div class=\"ui-g\">\n                <div class=\"ui-md-4\">\n                </div>\n                <div class=\"ui-md-8\">\n                  <input type=\"text\" class=\"ajusteInput\" pInputText id=\"context\" ngModel name=\"desccontato\"  #desccontato=\"ngModel\" [(ngModel)]=\"contatos.desccontato\">\n                </div>\n              </div>\n\n              <br><br>\n\n              <p><button pButton type=\"button\" label=\"Adicionar\" class=\"ui-button-raised ui-button-secondary\" \n              [ngStyle]=\"{'float': 'right'}\" (click)=\"adicionarContato(contatos)\"></button>\n            </div>\n\n            <br><br>\n            <div class=\"ui-md-6\">\n              <p-table [value]=\"contatoDisplay\" [scrollable]=\"true\" [(selection)]=\"contatoSelecionado\" dataKey=\"contato\" scrollHeight=\"200px\">\n                <ng-template pTemplate=\"header\">\n                  <tr>\n                    <th>Excluir</th>\n                    <th>Tipo</th>\n                    <th>Contato</th>\n                  </tr>\n                </ng-template>\n\n                <ng-template pTemplate=\"body\" let-contatoC let-cont>\n                  <tr [pSelectableRow]=\"contatoC\">\n                    <td> <button pButton type=\"button\" (click)=\"removerContato(contatoC)\" icon=\"pi pi-trash\"></button> </td>\n                    <td> {{cont.tipocontato}} </td>\n                    <td> {{cont.desccontato}} </td>\n                  </tr>\n                </ng-template>\n              </p-table>\n            </div>\n          </div>\n        </p-fieldset>\n\n        <button pButton type=\"button\" label=\"Adicionar +\" class=\"ui-button-raised ui-button-secondary\" \n        [ngStyle]=\"{'float': 'right', 'width': '30%', 'margin': '5px'}\" (click)=\"adicionarCompradorLista(comprador)\"></button>\n\n      </div>\n    </p-fieldset>\n\n    <div class=\"ui-g\">\n      <p-fieldset legend=\"Compradores\">\n        <p-table [value]=\"compradores\" >\n          <ng-template pTemplate=\"header\">\n            <tr>\n              <th>Excluir</th>\n              <th>Nome</th>\n              <th>CPF</th>\n              <th>Renda</th>\n              <th>Comprador principal</th>\n            </tr>\n          </ng-template>\n  \n          <ng-template pTemplate=\"body\" let-rowData let-comp>\n            <tr [pSelectableRow]=\"rowData\">\n              <td> <button pButton icon=\"pi pi-user-minus\" (click)=\"removerComprador(rowData)\"></button> </td>\n              <td> {{comp.nomecliente}} </td>\n              <td> {{comp.cpfcnpj}} </td>\n              <td> {{comp.valorrenda}} </td>\n              <td>\n                  <p-tableRadioButton [value]=\"rowData\" value=true name=\"principal\" (click)=\"setarTrue(rowData)\" ngDefaultControl=\"comprador.principal\"></p-tableRadioButton>\n              </td>\n            </tr>\n          </ng-template>\n        </p-table>\n      </p-fieldset>\n    </div>\n\n    <p-fieldset legend=\"Cadastro de informações do Imóvel\">\n      \n      <div class=\"ui-g\">\n        <div class=\"ui-md-1\">\n          <label class=\"ajusteLabel\" for=\"fid\">FID: </label>\n        </div>\n        <div class=\"ui-md-3\">\n          <input type=\"number\" pInputText id=\"fid-input\" class=\"ajusteInput\" ngModel name=\"numerocadastroincorporadorafid\"  #numerocadastroincorporadorafid=\"ngModel\" [(ngModel)]=\"cadInfo.numerocadastroincorporadorafid\">\n        </div>\n      </div>\n\n      <p-fieldset legend=\"INCORPORADORA\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-3\">\n            \n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"entrada\">Entrada: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <p-calendar [showIcon]=\"true\"  [yearNavigator]=\"true\" yearRange=\"1900:2019\" [monthNavigator]=\"true\" \n                class=\"ajusteInput\" id=\"entrada\" dateFormat=\"dd/mm/yy\" ngModel name=\"dataentrada\"  #dataentrada=\"ngModel\" [(ngModel)]=\"cadInfo.dataentrada\"></p-calendar>\n              </div>\n            </div>\n\n          </div>\n          <div class=\"ui-md-5\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-3\">\n                <label class=\"ajusteLabel\" for=\"incorporadora\">Incorporadora: </label>\n              </div>\n              <div class=\"ui-md-7\" id=\"incorporadora\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"descincorporadora\" [options]=\"incorp\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n                ngModel name=\"codincorporadora\" #codincorporadora=\"ngModel\" [(ngModel)]=\"cadInfo.codincorporadora\"></p-dropdown>\n              </div>\n            </div>\n\n          </div>\n          <div class=\"ui-md-4\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-3\">\n                <label class=\"ajusteLabel\" for=\"codoriginacao\">Originação: </label>\n              </div>\n              <div class=\"ui-md-7\" id=\"origin\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"descOriginacao\" [options]=\"originacao\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n                ngModel name=\"codoriginacao\"  #codoriginacao=\"ngModel\" [(ngModel)]=\"cadInfo.codoriginacao\"></p-dropdown>\n              </div>\n            </div>\n\n          </div>\n        </div>\n      </p-fieldset>\n\n      <p-fieldset legend=\"DADOS DO EMPREENDIMENTO\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-5\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"empreend\">Empreendimento: </label>\n              </div>\n              <div class=\"ui-md-8\" id=\"empreend\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"descempreendimento\" [options]=\"empreendimento\" [autoWidth]=\"false\" [style]=\"{'width': '100%'}\" \n                ngModel name=\"codempreendimento\"  #codempreendimento=\"ngModel\" [(ngModel)]=\"cadInfo.codempreendimento\"></p-dropdown>              </div>\n            </div>\n\n          </div>\n\n          <div class=\"ui-md-7\">\n            <div class=\"ui-g\">\n              <div class=\"ui-md-6\">\n\n                <div class=\"ui-g\">\n                  <div class=\"ui-md-4\">\n                    <label class=\"ajusteLabel\" for=\"bloco\">Bloco: </label>\n                  </div>\n                  <div class=\"ui-md-8\">\n                    <input type=\"text\" class=\"ajusteInput\" pInputText id=\"bloco\"ngModel name=\"blocotorre\"  #blocotorre=\"ngModel\" [(ngModel)]=\"cadInfo.blocotorre\">\n                  </div>\n                </div>\n\n\n                <div class=\"ui-g\">\n                  <div class=\"ui-md-5\">\n                    <label class=\"ajusteLabel\" for=\"vagaAutomovel\">Vaga de automóvel: </label>\n                  </div>\n                  <div class=\"ui-md-7\">\n                    <input type=\"text\" class=\"ajusteInput\" pInputText id=\"vagaAutomovel\"ngModel name=\"vagaautomovel\"  #vagaautomovel=\"ngModel\" [(ngModel)]=\"cadInfo.vagaautomovel\">\n                  </div>\n                </div>\n              </div>\n\n              <div class=\"ui-md-6\">\n\n                <div class=\"ui-g\">\n                  <div class=\"ui-md-4\">\n                    <label class=\"ajusteLabel\" for=\"apto\">Apartamento: </label>\n                  </div>\n                  <div class=\"ui-md-8\">\n                    <input type=\"text\" class=\"ajusteInput\" pInputText id=\"apto\"ngModel name=\"numeroapartamento\"  #numeroapartamento=\"ngModel\" [(ngModel)]=\"cadInfo.numeroapartamento\">\n                  </div>\n                </div>\n\n                <div class=\"ui-g\">\n                  <div class=\"ui-md-4\">\n                    <label class=\"ajusteLabel\" for=\"box\">Box: </label>\n                  </div>\n                  <div class=\"ui-md-8\">\n                    <input type=\"text\" class=\"ajusteInput\" pInputText id=\"box\"ngModel name=\"box\"  #box=\"ngModel\" [(ngModel)]=\"cadInfo.box\">\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </p-fieldset>\n\n      <p-fieldset legend=\"Endereço do Imovel\">\n        <div class=\"ui-g\">\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"cepImovel\">CEP: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <p-inputMask [style]=\"{'width': '100%', 'margin-left': '5px'}\" id=\"cepImovel\" mask=\"99999-999\" \n                slotChar=\" \"ngModel name=\"cep\"  #cep=\"ngModel\" [(ngModel)]=\"cadInfo.cep\" (onBlur)=\"consultaCEPImovel()\"></p-inputMask>\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"numeroImovel\">Número: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"numeroImovel\"ngModel name=\"numero\"  #numero=\"ngModel\" [(ngModel)]=\"cadInfo.numero\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"bairroImovel\">Bairro: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"bairroImovel\"ngModel name=\"bairro\"  #bairro=\"ngModel\" [(ngModel)]=\"cadInfo.bairro\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"cidadeImovel\">Cidade: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"cidadeImovel\"ngModel name=\"cidade\"  #cidade=\"ngModel\" [(ngModel)]=\"cadInfo.cidade\">\n              </div>\n            </div>\n\n          </div>\n          <div class=\"ui-md-6\">\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"endereçoImovel\">Endereço: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"endereçoImovel\"ngModel name=\"endereco\"  #endereco=\"ngModel\" [(ngModel)]=\"cadInfo.endereco\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"complementoImovel\">Complemento: </label>\n              </div>\n              <div class=\"ui-md-8\">\n                <input type=\"text\" class=\"ajusteInput\" pInputText id=\"complementoImovel\"ngModel name=\"complemento\"  #complemento=\"ngModel\" [(ngModel)]=\"cadInfo.complemento\">\n              </div>\n            </div>\n\n            <div class=\"ui-g\">\n              <div class=\"ui-md-4\">\n                <label class=\"ajusteLabel\" for=\"estadoImovel\">Estado: </label>\n              </div>\n              <div class=\"ui-md-8\" id=\"estadoImovel\">\n                <p-dropdown placeholder=\"Selecione...\" optionLabel=\"uf\" [options]=\"estado\" \n                [autoWidth]=\"false\" [style]=\"{'width': '100%', 'margin-left': '5px'}\" ngModel name=\"uf\"  #uf=\"ngModel\" [(ngModel)]=\"cadInfo.uf\"></p-dropdown>\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </p-fieldset>\n\n    </p-fieldset>\n\n    <p-footer>\n      <button pButton type=\"submit\" label=\"Avançar >>\" class=\"ui-button-rounded ui-button-success\" \n        [ngStyle]=\"{'width': '15%', 'margin': '3px'}\"></button>\n      <button pButton type=\"button\" label=\"Limpar\" class=\"ui-button-rounded ui-button-warning\" \n        [ngStyle]=\"{'width': '15%', 'margin': '3px'}\" (click)=\"limparFormulario(formulario)\"></button>\n      <br><br>\n    </p-footer>\n  </p-panel>\n\n  <br><br><br>\n</form>"
 
 /***/ }),
 
@@ -699,10 +702,10 @@ module.exports = "<form novalidate [formGroup]=\"formulario\" (ngSubmit)=\"OnSub
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CadastroComponent", function() { return CadastroComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var src_app_models_cadastro_informacao__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/models/cadastro-informacao */ "./src/app/models/cadastro-informacao.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var src_app_models_cadastro_informacao__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/models/cadastro-informacao */ "./src/app/models/cadastro-informacao.ts");
+/* harmony import */ var src_app_models_compradores__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/models/compradores */ "./src/app/models/compradores.ts");
 /* harmony import */ var src_app_models_contatos__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/models/contatos */ "./src/app/models/contatos.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -720,13 +723,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var CadastroComponent = /** @class */ (function () {
-    function CadastroComponent(formbuilder, http) {
-        this.formbuilder = formbuilder;
+    function CadastroComponent(http) {
         this.http = http;
-        this.contato = {};
-        this.comprador = [];
+        this.comprador = new src_app_models_compradores__WEBPACK_IMPORTED_MODULE_4__["Compradores"]();
+        this.cadInfo = new src_app_models_cadastro_informacao__WEBPACK_IMPORTED_MODULE_3__["CadastroInformacao"]();
+        this.contatos = new src_app_models_contatos__WEBPACK_IMPORTED_MODULE_5__["Contatos"]();
     }
-    CadastroComponent.prototype.OnSubmit = function () {
+    CadastroComponent.prototype.OnSubmit = function (cadInfo, formulario) {
         /*let url = 'http://10.6.5.99:8100/api/cliente';
         let json = JSON.stringify(this.formulario.value);
         let header = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXRoZXVzLm1fYyIsImNyZWF0ZWQiOjE1NDQ2NDMwMjU5NDgsImV4cCI6MTU0NDY2MTAyNX0.4AQeH-PfWFyFP4zXmCmnHLRKT3pjhU5JEKrVWND3eqdbXVr_s2iXQCUqH16n1ziCeWezVNjVzRoLXWGj76XAcw'})
@@ -738,237 +741,108 @@ var CadastroComponent = /** @class */ (function () {
           this.formulario.reset();
         },
         (error: any) => alert('erro'));*/
-        console.log(this.formulario.value);
-        localStorage.setItem('testes', JSON.stringify(this.formulario.value));
-        this.formulario.reset(new src_app_models_cadastro_informacao__WEBPACK_IMPORTED_MODULE_4__["CadastroInformacao"]());
-        console.log(src_app_models_cadastro_informacao__WEBPACK_IMPORTED_MODULE_4__["CadastroInformacao"]);
+        cadInfo.uf = cadInfo.uf.uf;
+        cadInfo.clientes = this.compradores;
+        cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+        cadInfo.codempreendimento = cadInfo.codempreendimento.codEmpreendimento;
+        cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
+        this.compradores = [];
+        //this.http.post<CadastroInformacao>('10.6.5.99:8100/api/cadastro', JSON.stringify(cadInfo));
+        console.log(JSON.stringify(this.cadInfo), cadInfo);
+        formulario.reset();
     };
     CadastroComponent.prototype.ngOnInit = function () {
-        this.criarForm();
-        this.estado = [{
-                "Sigla": "AC",
-                "Nome": "Acre"
-            },
-            {
-                "Sigla": "AL",
-                "Nome": "Alagoas"
-            },
-            {
-                "Sigla": "AM",
-                "Nome": "Amazonas"
-            },
-            {
-                "Sigla": "AP",
-                "Nome": "Amapá"
-            },
-            {
-                "Sigla": "BA",
-                "Nome": "Bahia"
-            },
-            {
-                "Sigla": "CE",
-                "Nome": "Ceará"
-            },
-            {
-                "Sigla": "DF",
-                "Nome": "Distrito Federal"
-            },
-            {
-                "Sigla": "ES",
-                "Nome": "Espírito Santo"
-            },
-            {
-                "Sigla": "GO",
-                "Nome": "Goiás"
-            },
-            {
-                "Sigla": "MA",
-                "Nome": "Maranhão"
-            },
-            {
-                "Sigla": "MG",
-                "Nome": "Minas Gerais"
-            },
-            {
-                "Sigla": "MS",
-                "Nome": "Mato Grosso do Sul"
-            },
-            {
-                "Sigla": "MT",
-                "Nome": "Mato Grosso"
-            },
-            {
-                "Sigla": "PA",
-                "Nome": "Pará"
-            },
-            {
-                "Sigla": "PB",
-                "Nome": "Paraíba"
-            },
-            {
-                "Sigla": "PE",
-                "Nome": "Pernambuco"
-            },
-            {
-                "Sigla": "PI",
-                "Nome": "Piauí"
-            },
-            {
-                "Sigla": "PR",
-                "Nome": "Paraná"
-            },
-            {
-                "Sigla": "RJ",
-                "Nome": "Rio de Janeiro"
-            },
-            {
-                "Sigla": "RN",
-                "Nome": "Rio Grande do Norte"
-            },
-            {
-                "Sigla": "RO",
-                "Nome": "Rondônia"
-            },
-            {
-                "Sigla": "RR",
-                "Nome": "Roraima"
-            },
-            {
-                "Sigla": "RS",
-                "Nome": "Rio Grande do Sul"
-            },
-            {
-                "Sigla": "SC",
-                "Nome": "Santa Catarina"
-            },
-            {
-                "Sigla": "SE",
-                "Nome": "Sergipe"
-            },
-            {
-                "Sigla": "SP",
-                "Nome": "São Paulo"
-            },
-            {
-                "Sigla": "TO",
-                "Nome": "Tocantins"
-            }];
-        this.contato = [
-            { tipo: 'Telefone', contato: '1195442443' }
-        ];
-        this.compradores = [
-            { excluir: 'X', nome: 'Giacomo Guilizzoni', cpf: '433.344.123-33', renda: 'R$50000', },
-            { excluir: 'X', nome: 'Marco Bottoni', cpf: '343.235.121-32', renda: 'R$10000', },
-        ];
-        this.estadoCivil = [
-            { name: 'Solteiro(a)', value: 1 },
-            { name: 'Casado(a)', value: 2 },
-            { name: 'Viúvo(a)', value: 3 },
-            { name: 'Divorciado(a)', value: 4 }
-        ];
-        this.tipoContato = [
-            { name: 'Celular', value: 1 },
-            { name: 'E-mail', value: 2 },
-            { name: 'Telefone', value: 3 }
+        var _this = this;
+        this.http.get('./../../../../assets/estados.json').subscribe(function (dados) { return _this.estado = dados; });
+        this.http.get("http://10.6.5.99:8100/api/empreendimentos").subscribe(function (dados) { return _this.empreendimento = dados['data']; });
+        this.http.get("http://10.6.5.99:8100/api/originacoes").subscribe(function (dados) { return _this.originacao = dados['data']; });
+        this.http.get("http://10.6.5.99:8100/api/estadocivil").subscribe(function (dados) { return _this.estadoCivil = dados['data']; });
+        this.http.get("http://10.6.5.99:8100/api/tipocontatos").subscribe(function (dados) { return _this.tipoContato = dados['data']; });
+        this.contato = [];
+        this.contatoDisplay = [];
+        this.compradores = [];
+        this.incorp = [
+            { codincorporadora: 1, descincorporadora: 'ECOSFERA' },
+            { codincorporadora: 2, descincorporadora: 'DIRECIONAL' }
         ];
     };
-    CadastroComponent.prototype.criarForm = function () {
-        this.formulario = this.formbuilder.group({
-            codoriginacao: [null],
-            codcadastroincorporadora: [null],
-            codempreendimento: [null],
-            blocotorre: [null],
-            unidade: [null],
-            valorvenda: [null],
-            saldodevedor: [null],
-            codusuario: [null],
-            datacadastro: [null],
-            vagaautomovel: [null],
-            box: [null],
-            numeroapartamento: [null],
-            cep: [null],
-            numero: [null],
-            bairro: [null],
-            cidade: [null],
-            endereco: [null],
-            complemento: [null],
-            uf: [null],
-            clientes: this.formbuilder.array([this.clientes()])
-        });
+    CadastroComponent.prototype.adicionarContato = function (contato) {
+        var contatoDisplay = new src_app_models_contatos__WEBPACK_IMPORTED_MODULE_5__["Contatos"]();
+        var contato2 = new src_app_models_contatos__WEBPACK_IMPORTED_MODULE_5__["Contatos"]();
+        this.contAny = contato.codtipocontato;
+        contatoDisplay.tipocontato = this.contAny.value.name;
+        contatoDisplay.codtipocontato = this.contAny.value.id;
+        contatoDisplay.desccontato = contato.desccontato;
+        contato2.codtipocontato = this.contAny.value.id;
+        contato2.cpfcnpj = this.comprador.cpfcnpj;
+        contato2.desccontato = contato.desccontato;
+        this.contatoDisplay.push(contatoDisplay);
+        this.contato.push(contato2);
+        this.contatos.codtipocontato = null;
+        this.contatos.desccontato = null;
     };
-    CadastroComponent.prototype.clientes = function () {
-        return this.formbuilder.group({
-            cpfcnpj: [null],
-            codtipocliente: [null],
-            nomecliente: [null],
-            ndocumento: [null],
-            orgaoexpedidor: [null],
-            dataexpedicao: [null],
-            datanascimento: [null],
-            codestadocivil: [null],
-            nacionalidade: [null],
-            profissao: [null],
-            cepresidencial: [null],
-            uf: [null],
-            cidade: [],
-            bairro: [],
-            endereco: [],
-            complemento: [],
-            numeroendereco: [],
-            codusuario: [],
-            datacadastro: [],
-            valorrenda: [],
-            contatos: this.formbuilder.group({
-                codtipocontato: [],
-                cpfcnpj: [],
-                desccontato: [],
-            }),
-            principal: [false],
-        });
-    };
-    CadastroComponent.prototype.addComprador = function () {
-        this.cliente = this.formulario.get('clientes');
-        this.cliente.push(this.clientes());
-    };
-    CadastroComponent.prototype.createOrUpdateUsuer = function (comprador) {
-        this.http.put('http://10.6.5.99:8100/api/cliente', comprador);
-    };
-    CadastroComponent.prototype.adicionarCompradorLista = function () {
-        var nomeComprador = this.formulario.controls.clientes['controls'].nomecliente.value;
-        var cpfComprador = this.formulario.controls.clientes['controls'].cpfcnpj.value;
-        var rendaComprador = this.formulario.controls.clientes['controls'].valorrenda.value;
-        ;
-        this.compradores.push({ nome: nomeComprador, cpf: cpfComprador, renda: rendaComprador });
-    };
-    CadastroComponent.prototype.adicionarContato = function () {
-        //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.desccontato.value)
-        //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.name)
-        //console.log(this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.value)
-        this.novocontato = new src_app_models_contatos__WEBPACK_IMPORTED_MODULE_5__["Contatos"]();
-        this.novocontato.codtipocontato = '' + this.formulario.controls.clientes['controls'][0].controls.contatos.controls.codtipocontato.value.value;
-        this.novocontato.desccontato = this.formulario.controls.clientes['controls'][0].controls.contatos.controls.desccontato.value;
-        console.log(this.novocontato);
-        this.contato.push(this.novocontato);
-        //let tipoC = this.formulario.controls.clientes['controls'].contatos.controls.codtipocontato.value.name;
-        //let contatoC = this.formulario.controls.clientes['controls'].contatos.controls.desccontato.value;
-        //this.contato.push({tipo: tipoC, contato: contatoC})
-        //this.formulario.controls.clientes['controls'].contatos.reset();
+    CadastroComponent.prototype.adicionarCompradorLista = function (comprador) {
+        var comprador2 = new src_app_models_compradores__WEBPACK_IMPORTED_MODULE_4__["Compradores"]();
+        comprador2.cpfcnpj = comprador.cpfcnpj;
+        comprador2.codtipocliente = Number(comprador.codtipocliente);
+        comprador2.nomecliente = comprador.nomecliente;
+        comprador2.ndocumento = comprador.ndocumento;
+        comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
+        comprador2.dataexpedicao = comprador.dataexpedicao;
+        comprador2.datanascimento = comprador.datanascimento;
+        comprador2.codestadocivil = comprador.codestadocivil.codEstadoCivil;
+        comprador2.nacionalidade = comprador.nacionalidade;
+        comprador2.profissao = comprador.profissao;
+        comprador2.cepresidencial = comprador.cepresidencial;
+        comprador2.uf = comprador.uf.uf;
+        comprador2.cidade = comprador.cidade;
+        comprador2.bairro = comprador.bairro;
+        comprador2.endereco = comprador.endereco;
+        comprador2.complemento = comprador.complemento;
+        comprador2.numeroendereco = comprador.numeroendereco;
+        comprador2.codusuario = comprador.codusuario;
+        comprador2.datacadastro = comprador.datacadastro;
+        comprador2.valorrenda = comprador.valorrenda;
+        comprador2.contatos = this.contato;
+        comprador2.principal = comprador.principal;
+        this.compradores.push(comprador2);
+        comprador = new src_app_models_compradores__WEBPACK_IMPORTED_MODULE_4__["Compradores"]();
+        this.comprador.cpfcnpj = null;
+        this.comprador.codtipocliente = null;
+        this.comprador.nomecliente = null;
+        this.comprador.ndocumento = null;
+        this.comprador.orgaoexpedidor = null;
+        this.comprador.dataexpedicao = null;
+        this.comprador.datanascimento = null;
+        this.comprador.codestadocivil = null;
+        this.comprador.nacionalidade = null;
+        this.comprador.profissao = null;
+        this.comprador.cepresidencial = null;
+        this.comprador.uf = null;
+        this.comprador.cidade = null;
+        this.comprador.bairro = null;
+        this.comprador.endereco = null;
+        this.comprador.complemento = null;
+        this.comprador.numeroendereco = null;
+        this.comprador.codusuario = null;
+        this.comprador.datacadastro = null;
+        this.comprador.valorrenda = null;
+        this.contato = [];
+        this.contatoDisplay = [];
+        this.comprador.principal = false;
     };
     CadastroComponent.prototype.removerContato = function (contatoC) {
-        console.log(contatoC);
         var index = this.contato.indexOf(contatoC);
         this.contato.splice(index, 1);
+        this.contatoDisplay.splice(index, 1);
     };
     CadastroComponent.prototype.removerComprador = function (comprador) {
         var index = this.compradores.indexOf(comprador);
         this.compradores.splice(index, 1);
     };
-    CadastroComponent.prototype.limparFormulario = function () {
-        this.formulario.reset();
-    };
     CadastroComponent.prototype.consultaCEP = function () {
         var _this = this;
-        var cep = this.formulario.controls.clientes['controls'].cepresidencial.value;
+        var cep = this.comprador.cepresidencial;
         if (cep != null && cep !== '') {
             cep = cep.replace(/\D/g, '');
             if (cep !== '') {
@@ -978,23 +852,19 @@ var CadastroComponent = /** @class */ (function () {
                 }
             }
         }
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({});
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])({});
     };
     CadastroComponent.prototype.populaDadosForm = function (dados) {
-        this.formulario.patchValue({
-            clientes: {
-                cepresidencial: dados.cep,
-                uf: { Sigla: dados.uf, Nome: dados.localidade },
-                cidade: dados.localidade,
-                bairro: dados.bairro,
-                endereco: dados.logradouro,
-                complemento: dados.complemento,
-            }
-        });
+        this.comprador.cepresidencial = dados.cep;
+        this.comprador.uf = { uf: dados.uf.toUpperCase() };
+        this.comprador.cidade = dados.localidade;
+        this.comprador.bairro = dados.bairro;
+        this.comprador.endereco = dados.logradouro;
+        this.comprador.complemento = dados.complemento;
     };
     CadastroComponent.prototype.consultaCEPImovel = function () {
         var _this = this;
-        var cep = this.formulario.controls.cep.value;
+        var cep = this.cadInfo.cep;
         if (cep != null && cep !== '') {
             cep = cep.replace(/\D/g, '');
             if (cep !== '') {
@@ -1004,17 +874,24 @@ var CadastroComponent = /** @class */ (function () {
                 }
             }
         }
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({});
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])({});
     };
     CadastroComponent.prototype.populaDadosFormImovel = function (dados) {
-        this.formulario.patchValue({
-            cep: dados.cep,
-            uf: { Sigla: dados.uf, Nome: dados.localidade },
-            cidade: dados.localidade,
-            bairro: dados.bairro,
-            endereco: dados.logradouro,
-            complemento: dados.complemento,
-        });
+        this.cadInfo.cep = dados.cep;
+        this.cadInfo.uf = { uf: dados.uf.toUpperCase() };
+        this.cadInfo.cidade = dados.localidade;
+        this.cadInfo.bairro = dados.bairro;
+        this.cadInfo.endereco = dados.logradouro;
+        this.cadInfo.complemento = dados.complemento;
+    };
+    CadastroComponent.prototype.limparFormulario = function (f) {
+        f.reset();
+    };
+    CadastroComponent.prototype.setarTrue = function (rowData) {
+        for (var i = 0, len = this.compradores.length; i < len; ++i) {
+            this.compradores[i].principal = false;
+        }
+        rowData.principal = true;
     };
     CadastroComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1022,8 +899,7 @@ var CadastroComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./cadastro.component.html */ "./src/app/core/pages/cadastro/cadastro.component.html"),
             styles: [__webpack_require__(/*! ./cadastro.component.css */ "./src/app/core/pages/cadastro/cadastro.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], CadastroComponent);
     return CadastroComponent;
 }());
@@ -2054,6 +1930,27 @@ var CadastroInformacao = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/models/compradores.ts":
+/*!***************************************!*\
+  !*** ./src/app/models/compradores.ts ***!
+  \***************************************/
+/*! exports provided: Compradores */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Compradores", function() { return Compradores; });
+var Compradores = /** @class */ (function () {
+    function Compradores() {
+        this.principal = false;
+    }
+    return Compradores;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/models/contatos.ts":
 /*!************************************!*\
   !*** ./src/app/models/contatos.ts ***!
@@ -2314,7 +2211,6 @@ var MenuBarComponent = /** @class */ (function () {
         this.profileUser = localStorage.getItem('profile');
     }
     MenuBarComponent.prototype.ngOnInit = function () {
-        var _this = this;
         this.itemsmenu = [{
                 label: 'File',
                 items: [
@@ -2377,16 +2273,11 @@ var MenuBarComponent = /** @class */ (function () {
                         ]
                     }
                 ]
-            }, {
-                label: 'Exit',
-                command: function (event) { _this.logOut(); },
-                icon: 'pi pi-fw pi-home',
-                visible: true
             }
         ];
     };
     MenuBarComponent.prototype.logOut = function () {
-        //this.doIt();
+        this.doIt();
         this.authService.fazerLogout();
     };
     MenuBarComponent.prototype.doIt = function () {

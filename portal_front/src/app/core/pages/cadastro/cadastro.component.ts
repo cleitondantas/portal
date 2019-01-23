@@ -42,6 +42,7 @@ export class CadastroComponent implements OnInit {
   retornocadastro: CadastroInformacao;
   orgaoExpedidor: OrgaoExpedidor[];
   orgaoExpedidorFiltrado: any[];
+  br: any;
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -77,7 +78,7 @@ export class CadastroComponent implements OnInit {
     this.chamadasService.getEstadoCivil().subscribe(dados => this.estadoCivil = dados['data']);
     this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
     this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
-    //this.chamadasService.getIncorporadoras().subscribe(dados => this.incorp = dados['data']);
+    this.chamadasService.getIncorporadoras().subscribe(dados => this.incorp = dados['data']);
 
     var a = sessionStorage.getItem('comprador');
     if(a !== null) {
@@ -86,6 +87,18 @@ export class CadastroComponent implements OnInit {
     var b = sessionStorage.getItem('compraImovel');
     if(b !== null) {
       this.cadInfo = JSON.parse(b);
+    }
+
+    this.br = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
+      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
+      today: 'Hoje',
+      clear: 'Limpar',
+      dateFormat: 'dd/mm/yy'
     }
   }
 
@@ -99,7 +112,7 @@ export class CadastroComponent implements OnInit {
     this.contato.push(contato2);
 
     this.contatos = this.logicaService.limparContatos(this.contatos);
-    console.log(this.orgaoExpedidor);
+    console.log(contato2, contatoDisplay);
 
   }
 
@@ -209,7 +222,7 @@ export class CadastroComponent implements OnInit {
       accept: () => {
         cadInfo.uf = cadInfo.uf.uf;
         cadInfo.clientes = this.compradores;
-        //cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+        cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
         cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
         cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
         for (let index = 0; index < cadInfo.clientes.length; index++) {

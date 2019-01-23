@@ -25,7 +25,7 @@
                   <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
                 </div>
                 <div class="p-col-8" id="tipoP">
-                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codTipoCliente}}" label="{{tipo.descTipoCliente}}" name="codtipocliente" class="radio" ngModel #codtipocliente="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
+                  <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codtipocliente}}" label="{{tipo.desctipocliente}}" name="codtipocliente" class="radio" ngModel #codtipocliente="ngModel" [(ngModel)]="comprador.codtipocliente"></p-radioButton>
                 </div>
               </div>
 
@@ -46,7 +46,8 @@
                   <div class="ui-inputgroup">
                     <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                     class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                    id="dataexpedicao" dateFormat="dd/mm/yy" ngModel  name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"></p-calendar>
+                    id="dataexpedicao" dateFormat="dd/mm/yy" ngModel name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"
+                    [locale]="br"></p-calendar>
                     <button pButton type="button" icon="pi pi-calendar"></button>
                   </div>
                 </div>
@@ -92,7 +93,8 @@
                   <div class="ui-inputgroup">
                     <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                     class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                    id="dataNasc" dateFormat="dd/mm/yy..." ngModel  name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"></p-calendar>
+                    id="dataNasc" dateFormat="dd/mm/yy..." ngModel  name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
+                    [locale]="br"></p-calendar>
                     <button pButton type="button" icon="pi pi-calendar"></button>
                   </div>
                 </div>
@@ -217,7 +219,7 @@
                   <label class="ajusteLabel" for="tipo">Tipo: </label>
                 </div>
                 <div class="p-col-8" id="tipo">
-                  <p-dropdown placeholder="Selecione..." optionLabel="descTipoContato" [options]="tipoContato" dataKey="value"
+                  <p-dropdown placeholder="Selecione..." optionLabel="desctipocontato" [options]="tipoContato" dataKey="value"
                   [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codtipocontato"  #codtipocontato="ngModel" [(ngModel)]="contatos.codtipocontato"></p-dropdown>
                 </div>
               </div>
@@ -318,7 +320,8 @@
                 <div class="ui-inputgroup">
                   <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                   class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                  id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="comprador.datacadastro"></p-calendar>
+                  id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="comprador.datacadastro"
+                  [locale]="br"></p-calendar>
                   <button pButton type="button" icon="pi pi-calendar"></button>
                 </div>
               </div>
@@ -363,7 +366,7 @@
                 <label class="ajusteLabel" for="empreend">Empreendimento: </label>
               </div>
               <div class="p-col-8" id="empreend">
-                <p-dropdown placeholder="Selecione..." optionLabel="descEmpreendimento" [options]="empreendimento" [autoWidth]="false" 
+                <p-dropdown placeholder="Selecione..." optionLabel="descempreendimento" [options]="empreendimento" [autoWidth]="false" 
                 [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="codempreendimento"  #codempreendimento="ngModel" 
                 [(ngModel)]="cadInfo.codempreendimento" filter="true"></p-dropdown>
               </div>

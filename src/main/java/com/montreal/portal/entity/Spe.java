@@ -23,47 +23,46 @@ public class Spe implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cnpj_spe")
-	private String cnpjSpe;
+	private String cnpjspe;
 	
 	
 	@Column(name="cod_incorporadora")
-	private Integer codIncorporadora;
+	private Integer codincorporadora;
 	
 	
 	@Column(name="desc_spe")
-	private String descSpe;
+	private String descspe;
 
 
-	public String getCnpjSpe() {
-		return cnpjSpe;
+	public String getCnpjspe() {
+		return cnpjspe;
 	}
 
 
-	public void setCnpjSpe(String cnpjSpe) {
-		this.cnpjSpe = cnpjSpe;
+	public void setCnpjspe(String cnpjspe) {
+		this.cnpjspe = cnpjspe;
 	}
 
 
-	public Integer getCodIncorporadora() {
-		return codIncorporadora;
+	public Integer getCodincorporadora() {
+		return codincorporadora;
 	}
 
 
-	public void setCodIncorporadora(Integer codIncorporadora) {
-		this.codIncorporadora = codIncorporadora;
+	public void setCodincorporadora(Integer codincorporadora) {
+		this.codincorporadora = codincorporadora;
 	}
 
 
-	public String getDescSpe() {
-		return descSpe;
+	public String getDescspe() {
+		return descspe;
 	}
 
 
-	public void setDescSpe(String descSpe) {
-		this.descSpe = descSpe;
+	public void setDescspe(String descspe) {
+		this.descspe = descspe;
 	}
-	
-	
+
 	
 	
 	

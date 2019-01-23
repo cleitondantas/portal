@@ -71,7 +71,7 @@ public class AnaliseControler {
 				
 				//analiseRepositoy.findById(Integer.parseInt(id));
 				
-				analise.setCodAnalise(Integer.parseInt(id));
+				analise.setCodanalise(Integer.parseInt(id));
 				if (result.hasErrors()) {
 					result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 					return ResponseEntity.badRequest().body(response);

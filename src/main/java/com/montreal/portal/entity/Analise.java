@@ -18,101 +18,100 @@ public class Analise  implements Serializable{
 	
 	@Id
 	@Column(name="COD_ANALISE")	
-	private Integer codAnalise;
+	private Integer codanalise;
 	
 	@Column(name="COD_CADASTRO")
-	private Integer codCadastro;
+	private Integer codcadastro;
 	
 	@Column(name="data_pasta_mae")
-	private Date dataPastaMae;
+	private Date datapastamae;
 	
 	@Column(name="data_emissao")
-	private Date dataEmissao;
+	private Date dataemissao;
 	
 	@Column(name="data_assinatura")
-	private Date dataAssinatura;
+	private Date dataassinatura;
 	
 	@Column(name="cod_status_analise")
-	private Integer codStatusAnalise;
+	private Integer codstatusanalise;
 	
 	@Column(name="cod_sub_status_analise")
-	private Integer codSubStatusAnalise;
+	private Integer codsubstatusanalise;
 	
 	@Column(name="cod_simulacao")
-	private Integer codSimulacao;
+	private Integer codsimulacao;
 	
 	@Column(name="obs")
 	private String obs;
 	
 	@Column(name="cod_usuario")
-	private Long codUsuario;
+	private Long codusuario;
 	
 	@Column(name="data_simulacao")
-	private Date dataSimulacao;
+	private Date datasimulacao;
 
-
-	public Integer getCodAnalise() {
-		return codAnalise;
+	public Integer getCodanalise() {
+		return codanalise;
 	}
 
-	public void setCodAnalise(Integer codAnalise) {
-		this.codAnalise = codAnalise;
+	public void setCodanalise(Integer codanalise) {
+		this.codanalise = codanalise;
 	}
 
-	public Integer getCodCadastro() {
-		return codCadastro;
+	public Integer getCodcadastro() {
+		return codcadastro;
 	}
 
-	public void setCodCadastro(Integer codCadastro) {
-		this.codCadastro = codCadastro;
+	public void setCodcadastro(Integer codcadastro) {
+		this.codcadastro = codcadastro;
 	}
 
-	public Date getDataPastaMae() {
-		return dataPastaMae;
+	public Date getDatapastamae() {
+		return datapastamae;
 	}
 
-	public void setDataPastaMae(Date dataPastaMae) {
-		this.dataPastaMae = dataPastaMae;
+	public void setDatapastamae(Date datapastamae) {
+		this.datapastamae = datapastamae;
 	}
 
-	public Date getDataEmissao() {
-		return dataEmissao;
+	public Date getDataemissao() {
+		return dataemissao;
 	}
 
-	public void setDataEmissao(Date dataEmissao) {
-		this.dataEmissao = dataEmissao;
+	public void setDataemissao(Date dataemissao) {
+		this.dataemissao = dataemissao;
 	}
 
-	public Date getDataAssinatura() {
-		return dataAssinatura;
+	public Date getDataassinatura() {
+		return dataassinatura;
 	}
 
-	public void setDataAssinatura(Date dataAssinatura) {
-		this.dataAssinatura = dataAssinatura;
+	public void setDataassinatura(Date dataassinatura) {
+		this.dataassinatura = dataassinatura;
 	}
 
-	public Integer getCodStatusAnalise() {
-		return codStatusAnalise;
+	public Integer getCodstatusanalise() {
+		return codstatusanalise;
 	}
 
-	public void setCodStatusAnalise(Integer codStatusAnalise) {
-		this.codStatusAnalise = codStatusAnalise;
+	public void setCodstatusanalise(Integer codstatusanalise) {
+		this.codstatusanalise = codstatusanalise;
 	}
 
-	public Integer getCodSubStatusAnalise() {
-		return codSubStatusAnalise;
+	public Integer getCodsubstatusanalise() {
+		return codsubstatusanalise;
 	}
 
-	public void setCodSubStatusAnalise(Integer codSubStatusAnalise) {
-		this.codSubStatusAnalise = codSubStatusAnalise;
+	public void setCodsubstatusanalise(Integer codsubstatusanalise) {
+		this.codsubstatusanalise = codsubstatusanalise;
 	}
 
-	public Integer getCodSimulacao() {
-		return codSimulacao;
+	public Integer getCodsimulacao() {
+		return codsimulacao;
 	}
 
-	public void setCodSimulacao(Integer codSimulacao) {
-		this.codSimulacao = codSimulacao;
+	public void setCodsimulacao(Integer codsimulacao) {
+		this.codsimulacao = codsimulacao;
 	}
 
 	public String getObs() {
@@ -123,23 +122,22 @@ public class Analise  implements Serializable{
 		this.obs = obs;
 	}
 
-	public Long getCodUsuario() {
-		return codUsuario;
+	public Long getCodusuario() {
+		return codusuario;
 	}
 
-	public void setCodUsuario(Long codUsuario) {
-		this.codUsuario = codUsuario;
+	public void setCodusuario(Long codusuario) {
+		this.codusuario = codusuario;
 	}
 
-	public Date getDataSimulacao() {
-		return dataSimulacao;
+	public Date getDatasimulacao() {
+		return datasimulacao;
 	}
 
-	public void setDataSimulacao(Date dataSimulacao) {
-		this.dataSimulacao = dataSimulacao;
+	public void setDatasimulacao(Date datasimulacao) {
+		this.datasimulacao = datasimulacao;
 	}
-	
-	
-	
+
+
 	
 }

@@ -21,28 +21,27 @@ public class TipoAmortizacao implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="COD_TIPO_AMORTIZACAO")
-	private Integer codTipoAmortizacao;
+	private Integer codtipoamortizacao;
 	
 	@Column(name="DESC_TIPO_AMORTIZACAO")
-	private String descTipoAmortizacao;
+	private String desctipoamortizacao;
 
-	public Integer getCodTipoAmortizacao() {
-		return codTipoAmortizacao;
+	public Integer getCodtipoamortizacao() {
+		return codtipoamortizacao;
 	}
 
-	public void setCodTipoAmortizacao(Integer codTipoAmortizacao) {
-		this.codTipoAmortizacao = codTipoAmortizacao;
+	public void setCodtipoamortizacao(Integer codtipoamortizacao) {
+		this.codtipoamortizacao = codtipoamortizacao;
 	}
 
-	public String getDescTipoAmortizacao() {
-		return descTipoAmortizacao;
+	public String getDesctipoamortizacao() {
+		return desctipoamortizacao;
 	}
 
-	public void setDescTipoAmortizacao(String descTipoAmortizacao) {
-		this.descTipoAmortizacao = descTipoAmortizacao;
+	public void setDesctipoamortizacao(String desctipoamortizacao) {
+		this.desctipoamortizacao = desctipoamortizacao;
 	}
-	
-	
+
 	
 	
 }
