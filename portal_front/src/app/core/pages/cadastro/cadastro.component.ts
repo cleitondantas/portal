@@ -43,6 +43,7 @@ export class CadastroComponent implements OnInit {
   orgaoExpedidor: OrgaoExpedidor[];
   orgaoExpedidorFiltrado: any[];
   br: any;
+  disabled: boolean = true;
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -113,7 +114,6 @@ export class CadastroComponent implements OnInit {
 
     this.contatos = this.logicaService.limparContatos(this.contatos);
     console.log(contato2, contatoDisplay);
-
   }
 
   adicionarCompradorLista (comprador: Compradores) {
@@ -124,6 +124,7 @@ export class CadastroComponent implements OnInit {
     //this.logicaService.compradorSessionStorage(JSON.parse(a));
 
     this.compradores.push(comprador2);
+    this.disabled = false;
     console.log(this.compradores, comprador2);
 
     comprador = new Compradores();
@@ -144,6 +145,12 @@ export class CadastroComponent implements OnInit {
   removerComprador (comprador) {
     let index = this.compradores.indexOf(comprador);
     this.compradores.splice(index, 1);
+
+    if (this.compradores.length <= 0) {
+      this.disabled = true;
+    } else {
+      this.disabled = false;
+    }
   }
 
   consultaCEP() {
@@ -156,7 +163,7 @@ export class CadastroComponent implements OnInit {
         const  validacep = /^[0-9]{8}$/;
 
         if (validacep.test(cep)) {
-          return this.http.get(`//viacep.com.br/ws/${cep}/json`).subscribe(dados => this.populaDadosForm(dados));
+          return this.chamadasService.getCep(cep).subscribe(dados => this.populaDadosForm(dados));
         }
       }
     }
@@ -183,7 +190,7 @@ export class CadastroComponent implements OnInit {
       const  validacep = /^[0-9]{8}$/;
 
       if (validacep.test(cep)) {
-        return this.http.get(`//viacep.com.br/ws/${cep}/json`).subscribe(dados => this.populaDadosFormImovel(dados));
+        return this.chamadasService.getCep(cep).subscribe(dados => this.populaDadosFormImovel(dados));
       }
     }
   }

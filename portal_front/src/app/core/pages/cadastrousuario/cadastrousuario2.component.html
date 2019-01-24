@@ -1,0 +1,45 @@
+<div class="p-grid p-justify-center p-align-center">
+    <div class="main-container">
+        <form id="form" #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <p-panel header="Cadastro de usuário">
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <input type="text" class="ajusteInput" pInputText placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuario.nome"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Telefone ou Ramal" id="contato" pattern="\d+" ngModel name="telefone" #telefone="ngModel" [(ngModel)]="usuario.telefone"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuario.login"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Senha" id="senha" ngModel name="senha"  #senha="ngModel" [(ngModel)]="usuario.password"/>
+                    </div>
+
+                    <div class="p-col-6">
+                        <input type="text" class="ajusteInput" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuario.sobrenome"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="CPF" name="cpf" #cpf="ngModel" [(ngModel)]="usuario.cpf"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Repita o nickname" id="cnickname"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Confirme a senha" id="csenha"/>
+                    </div>
+
+                    <div class="p-col-12">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">@</span>
+                            <input id="idemail" type="email" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuario.email">  
+                        </div>
+                    </div>
+
+                    <div class="p-col-12">
+                        <div class="ui-inputgroup">
+                            <p-multiSelect [options]="selectRoles" optionLabel="profile" [(ngModel)]="usuario.perfis" defaultLabel="Selecione o perfil.." [ngModelOptions]="{standalone:true}" 
+                            [style]="{'width': '100%'}" [ngStyle]="{'width': '100%'}"></p-multiSelect>
+                        </div>
+                    </div>
+
+                    <div class="p-grid p-justify-end" [ngStyle]="{'width': '100%', 'height': '100%'}">
+                        <button pButton type="submit" label="Salvar" class="ui-button-rounded ui-button-success" 
+                        [ngStyle]="{'width': '15%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
+                    </div>
+
+                    <!--ARRUMAR O CONTAINER ALTURA-->
+
+                </div>
+            </p-panel>
+        </form>
+    </div> 
+</div>

@@ -9,7 +9,7 @@ import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-cadastrousuario',
-  templateUrl: './cadastrousuario.component.html',
+  templateUrl: './cadastrousuario2.component.html',
   styleUrls: ['./cadastrousuario.component.css']
 })
 

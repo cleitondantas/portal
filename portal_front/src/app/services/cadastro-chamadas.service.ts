@@ -58,4 +58,8 @@ export class CadastroChamadasService {
     .then(res => <any[]> res)
     .then(data => {return data;});
   }
+
+  getCep(cep) {
+    return this.http.get(`//viacep.com.br/ws/${cep}/json`);
+  }
 }
