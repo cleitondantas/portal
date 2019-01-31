@@ -1,6 +1,7 @@
 package com.montreal.portal.controler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,7 @@ public class CadastroControler {
 	private CasdastroRepository casdastroRepository;
 
 	@PostMapping(value = "/cadastro")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Cadastro>> create(HttpServletRequest request, @RequestBody Cadastro cadastro, BindingResult result) {
 		Response<Cadastro> response = new Response<Cadastro>();
 		try {
@@ -57,6 +60,7 @@ public class CadastroControler {
 					}
 				}
 			}
+			cadastro.setDatacadastro(new Date());
 			Cadastro cs = (Cadastro) casdastroRepository.save(cadastro);
 			response.setData(cs);
 		} catch (Exception e) {
@@ -67,6 +71,7 @@ public class CadastroControler {
 	}
 
 	@PutMapping(value = "/cadastro")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Cadastro>> update(HttpServletRequest request, @RequestBody Cadastro cadastro,
 			BindingResult result) {
 		Response<Cadastro> response = new Response<Cadastro>();
@@ -94,6 +99,7 @@ public class CadastroControler {
 	}
 
 	@GetMapping(value = "/cadastros")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Iterable<Cadastro>>> findAllCadastro() {
 		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
 		try {
@@ -120,6 +126,7 @@ public class CadastroControler {
 	}
 
 	@GetMapping(value = "/cadastro/{cod}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Iterable<Cadastro>>> findCadastro(@PathVariable String cod) {
 		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
 		List<Cadastro>  cadastros  =  new ArrayList<Cadastro>();

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class SpeControler {
 	
 	
 	@GetMapping(value = "/spe")	
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Spe>>> findAllSpe() {
 		Response<Iterable<Spe>> response = new Response<Iterable<Spe>>();
 		Iterable<Spe> users = speRepository.findAll();
@@ -41,6 +43,7 @@ public class SpeControler {
 	
 	
 	@PostMapping(value = "/spe")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Spe>> create(HttpServletRequest request, @RequestBody Spe spe,BindingResult result) {
 		Response<Spe> response = new Response<Spe>();
 		try {

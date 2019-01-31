@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class HistoricoControler {
 	private HistoricoRepository historicoRepository;
 	
 	@GetMapping(value = "/historicos")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Historico>>> findAllHistorico() {
 		Response<Iterable<Historico>> response = new Response<Iterable<Historico>>();
 		Iterable<Historico> users = historicoRepository.findAll();
@@ -41,6 +43,7 @@ public class HistoricoControler {
     }
 	
 	@PostMapping(value = "/historico")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Historico>> create(HttpServletRequest request, @RequestBody Historico  historico,BindingResult result) {
 		Response<Historico> response = new Response<Historico>();
 		try {

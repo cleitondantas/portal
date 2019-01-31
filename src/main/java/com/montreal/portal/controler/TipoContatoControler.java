@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,8 @@ public class TipoContatoControler {
 	@Autowired
 	private TipoContatoRepository tipoContatoRepository;
 	
-	@GetMapping(value = "/tipocontatos")	
+	@GetMapping(value = "/tipocontatos")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<TipoContato>>> findAllTipoContato() {
 		Response<Iterable<TipoContato>> response = new Response<Iterable<TipoContato>>();
 		Iterable<TipoContato> users = tipoContatoRepository.findAll();
@@ -40,6 +42,7 @@ public class TipoContatoControler {
 	
 	
 	@PostMapping(value = "/tipocontato")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<TipoContato>> create(HttpServletRequest request, @RequestBody TipoContato tipoContato,BindingResult result) {
 		Response<TipoContato> response = new Response<TipoContato>();
 		try {

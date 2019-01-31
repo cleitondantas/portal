@@ -1,4 +1,4 @@
-import { Originacao } from './../../../models/originacao';
+import { OrgaoExpedidor } from './../../../models/orgao-expedidor';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
@@ -11,8 +11,14 @@ import { EstadoCivil } from 'src/app/models/estado-civil';
 import { TipoContato } from './../../../models/tipo-contato';
 import { TipoClientes } from 'src/app/models/tipo-clientes';
 import { Incorporadoras } from './../../../models/incorporadoras';
-import { environment } from 'src/environments/environment';
+import { CadastroChamadasService } from './../../../services/cadastro-chamadas.service';
+import { CadastroLogicaService } from './../../../services/cadastro-logica.service';
+import { Originacao } from './../../../models/originacao';
 import { ConfirmationService } from 'primeng/api';
+import { Router } from '@angular/router';
+import isValidCpf from '@brazilian-utils/is-valid-cpf';
+import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -25,16 +31,20 @@ export class CadastroComponent implements OnInit {
   contatoDisplay: any[] = [];
   compradores: Compradores[] = [];
   listaContato: any[];
+  contatoSelecionado: any;
+
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
   estado: Estadobr[];
-  contatoSelecionado: any;
-  contAny: any;
   incorp: Incorporadoras[];
   empreendimento: Empreendimento[];
   originacao: Originacao[];
   tipocliente: TipoClientes[];
   retornocadastro: CadastroInformacao;
+  orgaoExpedidor: OrgaoExpedidor[];
+  orgaoExpedidorFiltrado: any[];
+  br: any;
+  disabled: boolean = true;
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -42,118 +52,87 @@ export class CadastroComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private chamadasService: CadastroChamadasService,
+    private logicaService: CadastroLogicaService,
+    private router: Router
   ) {
 
   }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
-    cadInfo.uf = cadInfo.uf.uf;
-    cadInfo.clientes = this.compradores;
-    cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
-    cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
-    cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
-    for (let index = 0; index < cadInfo.clientes.length; index++) {
-      cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
-    }
-    cadInfo.cep = cadInfo.cep.replace('-', '');
-
-    this.compradores = [];
-
-     /*this.http.post<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo).subscribe(res => {
-      this.retornocadastro = res,
-      console.log(res)
-    });*/
-
-    console.log(JSON.stringify(this.cadInfo), cadInfo);
+   this.chamadasService.createUser(cadInfo).subscribe(res => {
+      this.retornocadastro = res
+    });
+    
+   // console.log(JSON.stringify(this.cadInfo), cadInfo);
+    sessionStorage.clear();
+    sessionStorage.setItem('cadastro', JSON.stringify(cadInfo));
 
     formulario.reset();
   }
 
   ngOnInit() {
-    this.http.get<Estadobr[]>('./../../../../assets/estados.json').subscribe(dados => this.estado = dados);
-    this.http.get<Empreendimento[]>(`http://10.6.5.99:8100/api/empreendimentos`).subscribe(dados => this.empreendimento = dados['data']);
-    this.http.get<Originacao[]>(`http://10.6.5.99:8100/api/originacoes`).subscribe(dados => this.originacao = dados['data']);
-    this.http.get<EstadoCivil[]>(`http://10.6.5.99:8100/api/estadocivil`).subscribe(dados => this.estadoCivil = dados['data']);
-    this.http.get<TipoContato[]>(`http://10.6.5.99:8100/api/tipocontatos`).subscribe(dados => this.tipoContato = dados['data']);
-    this.http.get<TipoClientes[]>(`http://10.6.5.99:8100/api/tipoclientes`).subscribe(dados => this.tipocliente = dados['data']);
-    this.http.get<Incorporadoras[]>(`http://10.6.5.99:8100/api/incorporadoras`).subscribe(dados => this.incorp = dados['data']);
+    this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
+    this.chamadasService.getEmpreendimentos().subscribe(dados => this.empreendimento = dados['data']);
+    this.chamadasService.getOriginacao().subscribe(dados => this.originacao = dados['data']);
+    this.chamadasService.getEstadoCivil().subscribe(dados => this.estadoCivil = dados['data']);
+    this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
+    this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
+    this.chamadasService.getIncorporadoras().subscribe(dados => this.incorp = dados['data']);
+
+    var a = sessionStorage.getItem('comprador');
+    if(a !== null) {
+      this.comprador = JSON.parse(a);
+    }
+    var b = sessionStorage.getItem('compraImovel');
+    if(b !== null) {
+      this.cadInfo = JSON.parse(b);
+    }
+
+    this.br = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
+      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
+      today: 'Hoje',
+      clear: 'Limpar',
+      dateFormat: 'dd/mm/yy'
+    }
   }
 
   adicionarContato (contato: Contatos) {
-    var contatoDisplay: Contatos = new Contatos();
-    var contato2: Contatos = new Contatos();
+    var contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
+    var contato2 = this.logicaService.adicionarContatosLista(contato);
 
-    this.contAny = contato.codtipocontato as any;
-
-    contatoDisplay.tipocontato = this.contAny.desctipocontato;
-    contatoDisplay.codtipocontato = this.contAny.codtipocontato;
-    contatoDisplay.desccontato = contato.desccontato;
-    
-    contato2.codtipocontato = this.contAny.codtipocontato;
     contato2.cpfcnpj = this.comprador.cpfcnpj;
-    contato2.desccontato = contato.desccontato; 
 
     this.contatoDisplay.push(contatoDisplay);
     this.contato.push(contato2);
 
-    this.contatos.codtipocontato = null;
-    this.contatos.desccontato = null;
+    this.contatos = this.logicaService.limparContatos(this.contatos);
+    console.log(contato2, contatoDisplay);
   }
 
   adicionarCompradorLista (comprador: Compradores) {
-    var comprador2: Compradores = new Compradores();
-
-    comprador2.cpfcnpj = comprador.cpfcnpj;
-    comprador2.codtipocliente = Number(comprador.codtipocliente); 
-    comprador2.nomecliente = comprador.nomecliente;
-    comprador2.ndocumento = comprador.ndocumento;
-    comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
-    comprador2.dataexpedicao = comprador.dataexpedicao;
-    comprador2.datanascimento = comprador.datanascimento;
-    comprador2.codestadocivil = comprador.codestadocivil.codEstadoCivil; 
-    comprador2.nacionalidade = comprador.nacionalidade;
-    comprador2.profissao = comprador.profissao;
-    comprador2.cepresidencial = comprador.cepresidencial;
-    comprador2.uf = comprador.uf.uf;
-    comprador2.cidade = comprador.cidade; 
-    comprador2.bairro = comprador.bairro;
-    comprador2.endereco = comprador.endereco;
-    comprador2.complemento = comprador.complemento;
-    comprador2.numeroendereco = comprador.numeroendereco;
-    comprador2.codusuario = comprador.codusuario;
-    comprador2.datacadastro = comprador.datacadastro;
-    comprador2.valorrenda = comprador.valorrenda;
+    var comprador2 = this.logicaService.adicionarComprador(comprador);
     comprador2.contatos = this.contato;
-    comprador2.principal = comprador.principal;
+
+    //var a = sessionStorage.getItem('comprador');
+    //this.logicaService.compradorSessionStorage(JSON.parse(a));
 
     this.compradores.push(comprador2);
+    this.disabled = false;
+    console.log(this.compradores, comprador2);
 
     comprador = new Compradores();
 
-    this.comprador.cpfcnpj = null;
-    this.comprador.codtipocliente = null;
-    this.comprador.nomecliente = null;
-    this.comprador.ndocumento = null;
-    this.comprador.orgaoexpedidor = null;
-    this.comprador.dataexpedicao = null;
-    this.comprador.datanascimento = null;
-    this.comprador.codestadocivil = null; 
-    this.comprador.nacionalidade = null;
-    this.comprador.profissao = null;
-    this.comprador.cepresidencial = null;
-    this.comprador.uf = null;
-    this.comprador.cidade = null; 
-    this.comprador.bairro = null;
-    this.comprador.endereco = null;
-    this.comprador.complemento = null;
-    this.comprador.numeroendereco = null;
-    this.comprador.codusuario = null;
-    this.comprador.datacadastro = null;
-    this.comprador.valorrenda = null;
+    this.comprador = this.logicaService.limparComprador(this.comprador);
+
     this.contato = [];
     this.contatoDisplay = [];
-    this.comprador.principal = false;
   }
  
   removerContato (contatoC) {
@@ -166,6 +145,12 @@ export class CadastroComponent implements OnInit {
   removerComprador (comprador) {
     let index = this.compradores.indexOf(comprador);
     this.compradores.splice(index, 1);
+
+    if (this.compradores.length <= 0) {
+      this.disabled = true;
+    } else {
+      this.disabled = false;
+    }
   }
 
   consultaCEP() {
@@ -178,7 +163,7 @@ export class CadastroComponent implements OnInit {
         const  validacep = /^[0-9]{8}$/;
 
         if (validacep.test(cep)) {
-          return this.http.get(`//viacep.com.br/ws/${cep}/json`).subscribe(dados => this.populaDadosForm(dados));
+          return this.chamadasService.getCep(cep).subscribe(dados => this.populaDadosForm(dados));
         }
       }
     }
@@ -205,7 +190,7 @@ export class CadastroComponent implements OnInit {
       const  validacep = /^[0-9]{8}$/;
 
       if (validacep.test(cep)) {
-        return this.http.get(`//viacep.com.br/ws/${cep}/json`).subscribe(dados => this.populaDadosFormImovel(dados));
+        return this.chamadasService.getCep(cep).subscribe(dados => this.populaDadosFormImovel(dados));
       }
     }
   }
@@ -234,17 +219,68 @@ export class CadastroComponent implements OnInit {
     rowData.principal = true;
   }
 
-  confirmacao() {
+  confirmacao(cadInfo: CadastroInformacao, formulario) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja continuar?',
       header: 'Confirmação',
       icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
       accept: () => {
-        alert('aceitou')
+        cadInfo.uf = cadInfo.uf.uf;
+        cadInfo.clientes = this.compradores;
+        cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+        cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
+        cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
+        for (let index = 0; index < cadInfo.clientes.length; index++) {
+          cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+        }
+        cadInfo.cep = cadInfo.cep.replace('-', '');
+        cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+        this.compradores = [];
+
+        this.OnSubmit(cadInfo, formulario);
+
+        //this.router.navigate(['/analise']);
       },
       reject: () => {
         alert('rejeitou')
       }
     })
+  }
+
+  /*formatarData(data) {
+    console.log(data);
+    let novaData = data.toLocaleString('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric'});
+    console.log(novaData);
+  }*/
+
+  verificaCpfCnpj(form) {
+    let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
+    let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
+
+    if((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
+      //alert('aaaa')
+    } else {
+      form.controls['cpfcnpj'].status = 'INVALID';
+    }
+  }
+
+  search(event) {
+    let query = event.query;
+    this.chamadasService.getOrgaoExpedidor().then(orgaoExpedidor => {
+        this.orgaoExpedidorFiltrado = this.filtroOrgao(query, orgaoExpedidor);
+    });  
+  }
+
+  filtroOrgao(query, orgao) {
+    let filtered: any[] = [];
+    for (let i = 0; i < orgao.length; i++) {
+      let orgaos = orgao[i];
+      if(orgaos.sigla.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+          filtered.push(orgaos);
+      }
+  }
+  return filtered;
   }
 }

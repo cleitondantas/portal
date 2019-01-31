@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class OriginacaoControler {
 	private OriginacaoRepository originacaoRepository;
 	
 	@GetMapping(value = "/originacoes")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Originacao>>> findAllOriginacao() {
 		Response<Iterable<Originacao>> response = new Response<Iterable<Originacao>>();
 		Iterable<Originacao> users = originacaoRepository.findAll();
@@ -40,6 +42,7 @@ public class OriginacaoControler {
 	
 	
 	@PostMapping(value = "/originacao")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Originacao>> create(HttpServletRequest request, @RequestBody Originacao  originacao,BindingResult result) {
 		Response<Originacao> response = new Response<Originacao>();
 		try {

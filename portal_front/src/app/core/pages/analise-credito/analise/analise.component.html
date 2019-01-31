@@ -1,197 +1,287 @@
-<form novalidate [formGroup]="formulario">
-  <div class="ui-g">
-    <div class="ui-md-6">
+<form novalidate>
+  <div class="p-grid">
+    <div class="p-col-6">
 
-      <div class="ui-g">
-        <div class="ui-md-2">
+      <div class="p-grid">
+        <div class="p-col-2">
           <label class="ajusteLabel" for="fid">FID: </label>
         </div>
-        <div class="ui-md-10">
-          <input type="text" class="ajusteInput" pInputText id="fid" formControlName="fid">
+        <div class="p-col-10">
+          <input type="text" class="ajusteInput" pInputText id="fid">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="valorAvali">Valor de Avaliação: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorAvali" formControlName="valorAval">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="valorAvali">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorComVem" formControlName="valorComVen">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="valorComVem">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
-          <label class="ajusteLabel" for="modalidade">Modalidade: </label>
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" for="valorfinanciamento">Valor do Crédito: </label>
         </div>
-        <div class="ui-md-8" id="modalidade">
-          <p-dropdown placeholder="PRO-COTISTA" optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
-          class="ajusteInput" formControlName="modalidade"></p-dropdown>
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="valorfinanciamento" name="valorfinanciamento" #valorfinanciamento="ngModel" [(ngModel)]="simulacoes.valorfinanciamento">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" for="codmodalidadesimulacao">Modalidade: </label>
+        </div>
+        <div class="p-col-8" id="codmodalidadesimulacao">
+          <p-dropdown placeholder="Selecione..." [options]="modalidade" optionLabel="descModalidadeSimulacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+          class="ajusteInput" ngModel name="codmodalidadesimulacao" #codmodalidadesimulacao="ngModel" [(ngModel)]="simulacoes.codmodalidadesimulacao"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="dataEnv">Data envio ao Banco: </label>
         </div>
-        <div class="ui-md-8">
-          <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-          class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="dataEnv" dateFormat="dd/mm/yy" formControlName="dataEnvBanco"></p-calendar>
+        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+          <div class="ui-inputgroup">
+            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            id="dataexpedicao" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            <button pButton type="button" icon="pi pi-calendar"></button>
+          </div>
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="valorPrestAprov">Valor prestação Aprovado: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorPrestAprov" formControlName="valorPrestAprov">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="valorPrestAprov">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
-          <label class="ajusteLabel" for="sicaq">SICAQ: </label>
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" for="codsicaq">SICAQ: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="sicaq" formControlName="sicaq">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="codsicaq" name="codsicaq" #codsicaq="ngModel" [(ngModel)]="simulacoes.codsicaq">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="correspondente">Correspondente: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="correspondente" formControlName="correspondente">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="correspondente">
         </div>
       </div>
 
     </div>
 
-    <div class="ui-md-6">
+    <div class="p-col-6">
 
-      <div class="espaco" [ngStyle]="{'width': '741px', 'height': '49px'}"></div>
+      <div class="espaco" [ngStyle]="{'width': '741px', 'height': '42px'}"></div>
+      <div class="espaco" [ngStyle]="{'width': '741px', 'height': '42px'}"></div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
-          <label class="ajusteLabel" for="prazoFinan">Prazo financiamento: </label>
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" for="prazofinanciamento">Prazo financiamento: </label>
         </div>
-        <div class="ui-md-8">
-          <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-          class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="prazoFinan" dateFormat="dd/mm/yy" formControlName="prazoFinan"></p-calendar>
+        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+          <div class="ui-inputgroup">
+            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            id="prazofinanciamento" dateFormat="dd/mm/yy" ngModel  name="prazofinanciamento"  #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento"
+            [locale]="br"></p-calendar>
+            <button pButton type="button" icon="pi pi-calendar"></button>
+          </div>
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="banco">Banco: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="banco" formControlName="banco">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="banco">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
-          <label class="ajusteLabel" for="tipoAmor">Tipo Amortização: </label>
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" for="codtipoamortizacao">Tipo Amortização: </label>
         </div>
-        <div class="ui-md-8" id="tipoAmor">
-          <p-dropdown placeholder="DropDown Menu" optionLabel="Demo" [autoWidth]="false" [style]="{'width': '100%'}" 
-          class="ajusteInput" formControlName="tipoAmor"></p-dropdown>
-        </div>
-      </div>
-
-      <div class="ui-g">
-        <div class="ui-md-4">
-          <label class="ajusteLabel" for="valorSub">Valor subsidio: </label>
-        </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorSub" formControlName="valorSub">
+        <div class="p-col-8" id="codtipoamortizacao">
+          <p-dropdown placeholder="Selecione..." [options]="tipoAmortizacao" optionLabel="desctipoamortizacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+          class="ajusteInput" name="codtipoamortizacao" #codtipoamortizacao="ngModel" [(ngModel)]="simulacoes.codtipoamortizacao"></p-dropdown>
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" for="valorsubsidio">Valor subsidio: </label>
+        </div>
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="valorsubsidio" name="valorsubsidio" #valorsubsidio="ngModel" [(ngModel)]="simulacoes.valorsubsidio">
+        </div>
+      </div>
+
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="valorAvaliBanco">Valor avaliação Banco: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="valorAvaliBanco" formControlName="valorAvalBanco">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="valorAvaliBanco">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
-          <label class="ajusteLabel" for="fgts">FGTS: </label>
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" for="valorfgts">FGTS: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="fgts" formControlName="fgts">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="valorfgts" name="valorfgts" #valorfgts="ngModel" [(ngModel)]="simulacoes.valorfgts">
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
-          <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" for="valorrecursosproprios">Recurso próprio: </label>
         </div>
-        <div class="ui-md-8">
-          <input type="text" class="ajusteInput" pInputText id="recProp" formControlName="recProp">
+        <div class="p-col-8">
+          <input type="text" class="ajusteInput" pInputText id="valorrecursosproprios" name="valorrecursosproprios" #valorrecursosproprios="ngModel" [(ngModel)]="simulacoes.valorrecursosproprios">
         </div>
       </div>
 
     </div>
   </div>
 
-  <p-fieldset legend="Simulação" formGroupName="simulacao">
-    <div class="ui-g">
-      <div class="ui-md-6">
+  <p-fieldset legend="Valores do processo">
+    <div class="p-grid">
+      <div class="p-col-6">
 
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="instFinan">Instituição financeira: </label>
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valordespesasfinanciadas">Despesas financiadas: </label>
           </div>
-          <div class="ui-md-6" id="instFinan">
-            <p-dropdown [options]="instFinan" optionLabel="name" placeholder="Selecione..." [autoWidth]="false" [style]="{'width': '100%'}" 
-            class="ajusteInput" formControlName="instFinan"></p-dropdown>
+          <div class="p-col-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" 
+            id="valordespesasfinanciadas" name="valordespesasfinanciadas" #valordespesasfinanciadas="ngModel" [(ngModel)]="simulacoes.valordespesasfinanciadas"/>
           </div>
-          <div class="ui-md-2">
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="finanTotal">Financiamento total: </label>
+          </div>
+          <div class="p-col-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="finanTotal"  name="currencyMask1"  [(ngModel)]="currencyMask1"/>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="fgts">FGTS: </label>
+          </div>
+          <div class="p-col-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="fgts" name="currencyMask2"  [(ngModel)]="currencyMask2"/>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-col-6">
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
+          </div>
+          <div class="p-col-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="recProp" name="currencyMask3"  [(ngModel)]="currencyMask3"/>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="saldoDev">Saldo devedor: </label>
+          </div>
+          <div class="p-col-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="saldoDev" name="currencyMask4"  [(ngModel)]="currencyMask4"/>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorVenda">Valor da venda: </label>
+          </div>
+          <div class="p-col-8">
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            id="valorVenda" name="currencyMask5"  [(ngModel)]="currencyMask5"/>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </p-fieldset>
+
+  <p-fieldset legend="Simulação">
+    <div class="p-grid">
+      <div class="p-col-6">
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="codinstituicaofinanceira">Instituição financeira: </label>
+          </div>
+          <div class="p-col-6" id="codinstituicaofinanceira">
+            <p-dropdown [options]="instFinan" optionLabel="descInstituicaoFinanceira" placeholder="Selecione..." [autoWidth]="false" [style]="{'width': '100%'}" 
+            class="ajusteInput" name="codinstituicaofinanceira" #codinstituicaofinanceira="ngModel" [(ngModel)]="simulacoes.codinstituicaofinanceira"></p-dropdown>
+          </div>
+          <div class="p-col-2">
             <button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" 
-            [ngStyle]="{'width': '100%'}" (click)="adicionarInstFinan()"></button>
+            [ngStyle]="{'width': '100%'}" (click)="adicionarSimulacao(simulacoes)" icon="pi pi-plus" iconPos="right"></button>
           </div>
         </div>
         
       </div>
     </div>
     
-    <p-table [value]="simulacao" [(selection)]="simulSelec" dataKey="instituicao">
+    <p-table [value]="simulacaoLista">
       <ng-template pTemplate="header">
         <tr>
-          <th>Excluir</th>
-          <th>Instituição</th>
-          <th>Aprovação</th>
-          <th>Valor</th>
-          <th>Financiado</th>
+          <th><strong>Excluir</strong></th>
+          <th><strong>Instituição</strong></th>
+          <th><strong>Aprovação</strong></th>
+          <th><strong>Valor</strong></th>
+          <th><strong>Financiado</strong></th>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-rowData let-simul>
         <tr [pSelectableRow]="rowData">
-          <td><button pButton icon="pi pi-trash" (click)="removerInstFinan(rowData)"></button></td>
-          <td> {{simul.instituicao}} </td>
+          <td><button pButton icon="pi pi-trash" (click)="removerSimulacao(rowData)"></button></td>
+          <td> {{simul.codinstituicaofinanceira.descInstituicaoFinanceira}} </td>
           <td> 
             <p-dropdown [options]="[{nome: 'Aprovado'}, {nome: 'Reprovado'}]" optionLabel="nome"></p-dropdown>  
           </td>
-          <td> {{simul.valor}} </td>
+          <td> 
+            <input pInputText class="ajusteInput"/>
+          </td>
           <td> 
             <p-tableRadioButton [value]="rowData"></p-tableRadioButton>  
           </td>
@@ -200,111 +290,49 @@
     </p-table>
   </p-fieldset>
 
-  <p-fieldset legend="Valores do processo" formGroupName="valoresProcesso">
-    <div class="ui-g">
-      <div class="ui-md-6">
+  <p-fieldset legend="Datas do processo">
+    <div class="p-grid">
+      <div class="p-col-6">
 
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="despesasFinan">Despesas financiadas: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="despesasFinan"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="despesasFinan"></p-inputMask>
-          </div>
-        </div>
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="finanTotal">Financiamento total: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="finanTotal"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="finanTotal"></p-inputMask>
-          </div>
-        </div>
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="fgts">FGTS: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="fgts"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="fgtsValProc"></p-inputMask>
-          </div>
-        </div>
-
-      </div>
-      <div class="ui-md-6">
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="despesasFinan"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="recPropValProc"></p-inputMask>
-          </div>
-        </div>
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="saldoDev">Saldo devedor: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="saldoDev"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="saldoDevedor"></p-inputMask>
-          </div>
-        </div>
-
-        <div class="ui-g">
-          <div class="ui-md-4">
-            <label class="ajusteLabel" for="valorVenda">Valor da venda: </label>
-          </div>
-          <div class="ui-md-8">
-            <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="valorVenda"
-            mask="R$ 999.999,99?" slotChar=" " formControlName="valorVen"></p-inputMask>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </p-fieldset>
-
-  <p-fieldset legend="Datas do processo" formGroupName="datasProcesso">
-    <div class="ui-g">
-      <div class="ui-md-6">
-
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="dataMae">Data da pasta mãe: </label>
         </div>
-        <div class="ui-md-8">
-          <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-          class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="dataMae" dateFormat="dd/mm/yy" formControlName="dataPastaMae"></p-calendar>
+        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+          <div class="ui-inputgroup">
+            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            id="dataMae" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            <button pButton type="button" icon="pi pi-calendar"></button>
+          </div>
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="dataEmissao">Data de Emissão: </label>
         </div>
-        <div class="ui-md-8">
-          <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-          class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="dataEmissao" dateFormat="dd/mm/yy" formControlName="dataEmissao"></p-calendar>
+        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+          <div class="ui-inputgroup">
+            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            <button pButton type="button" icon="pi pi-calendar"></button>
+          </div>
         </div>
       </div>
 
-      <div class="ui-g">
-        <div class="ui-md-4">
+      <div class="p-grid">
+        <div class="p-col-4">
           <label class="ajusteLabel" for="dataAssin">Data de assinatura: </label>
         </div>
-        <div class="ui-md-8">
-          <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-          class="ajusteInput" [inputStyle]="{'width': '96.5%'}" [style]="{'width': '96.5%'}" 
-          id="dataAssin" dateFormat="dd/mm/yy" formControlName="dataAssinatura"></p-calendar>
+        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+          <div class="ui-inputgroup">
+            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            <button pButton type="button" icon="pi pi-calendar"></button>
+          </div>
         </div>
       </div>
 
