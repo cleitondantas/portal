@@ -40,7 +40,7 @@ export class AuthService {
       this.usuarioAutenticado = false;
       console.log('ERRO AO TENTAR LOGAR');
       window.location.reload();
-    });*/
+    });
   }
 
   fazerLogout(){

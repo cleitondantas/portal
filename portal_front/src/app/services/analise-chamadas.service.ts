@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { InstFinan } from './../models/inst-finan';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,14 +15,14 @@ export class AnaliseChamadasService {
   ) { }
 
   getModalidades () {
-    return this.http.get<Modalidades[]>(`http://localhost:8100/api/modalidadesimulacoes`);
+    return this.http.get<Modalidades[]>(environment.urlpath + '/api/modalidadesimulacoes');
   }
 
   getInstFinan () {
-    return this.http.get<InstFinan[]>(`http://localhost:8100/api/instituicoesfinanceiras`);
+    return this.http.get<InstFinan[]>(environment.urlpath + '/api/instituicoesfinanceiras');
   }
 
   getTipoAmortizacao () {
-    return this.http.get<TipoAmortizacao[]>(`http://localhost:8100/api/tipoamortizacao`);
+    return this.http.get<TipoAmortizacao[]>(environment.urlpath + '/api/tipoamortizacao');
   }
 }

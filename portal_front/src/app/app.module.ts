@@ -30,7 +30,7 @@ import { ConfirmationService } from 'primeng/api';
     AuthService,
     AuthGuard,
     CadastroGuard,
-    /*{ provide: HTTP_INTERCEPTORS,
+    { provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
     },

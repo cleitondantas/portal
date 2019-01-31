@@ -44,11 +44,10 @@
                 </div>
                 <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
                   <div class="ui-inputgroup">
-                    <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-                    class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+                    <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+                    class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                     id="dataexpedicao" dateFormat="dd/mm/yy" ngModel name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"
                     [locale]="br"></p-calendar>
-                    <button pButton type="button" icon="pi pi-calendar"></button>
                   </div>
                 </div>
               </div>
@@ -91,11 +90,11 @@
                 </div>
                 <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
                   <div class="ui-inputgroup">
-                    <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-                    class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                    id="dataNasc" dateFormat="dd/mm/yy" ngModel  name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
-                    [locale]="br"></p-calendar>
-                    <button pButton type="button" icon="pi pi-calendar"></button>
+                    <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+                    class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+                    id="dataNasc" dateFormat="dd/mm/yy" ngModel name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
+                    [locale]="br" showButtonBar="true"></p-calendar>
+                    <!--<button pButton type="button" icon="pi pi-calendar" (click)="calendarFocus()"></button>-->
                   </div>
                 </div>
               </div>
@@ -144,7 +143,7 @@
                 </div>
                 <div class="p-col-8">
                   <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
-                  slotChar=" "  (onBlur)="consultaCEP()"  ngModel name="cepresidencial"  #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"></p-inputMask>
+                  slotChar=" "  (onBlur)="consultaCEP()" ngModel name="cepresidencial"  #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"></p-inputMask>
                 </div>
               </div>
 
@@ -318,11 +317,10 @@
               </div>
               <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
                 <div class="ui-inputgroup">
-                  <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-                  class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+                  <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+                  class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                   id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="comprador.datacadastro"
                   [locale]="br"></p-calendar>
-                  <button pButton type="button" icon="pi pi-calendar"></button>
                 </div>
               </div>
             </div>
