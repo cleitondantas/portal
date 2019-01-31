@@ -1,4 +1,3 @@
-import { OrgaoExpedidor } from './../models/orgao-expedidor';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Incorporadoras } from './../models/incorporadoras';
 import { EstadoCivil } from 'src/app/models/estado-civil';
@@ -25,30 +24,32 @@ export class CadastroChamadasService {
   }
 
   getEmpreendimentos() {
-    return this.http.get<Empreendimento[]>(`http://localhost:8100/api/empreendimentos`);
+    return this.http.get<Empreendimento[]>(environment.urlpath +'/api/empreendimentos');
   }
 
   getOriginacao() {
-    return this.http.get<Originacao[]>(`http://localhost:8100/api/originacoes`)
+    return this.http.get<Originacao[]>(environment.urlpath +'/api/originacoes')
   }
 
   getEstadoCivil() {
-    return this.http.get<EstadoCivil[]>(`http://localhost:8100/api/estadocivil`);
+    return this.http.get<EstadoCivil[]>(environment.urlpath +'/api/estadocivil');
   }
 
   getTipoContato() {
-    return this.http.get<TipoContato[]>(`http://localhost:8100/api/tipocontatos`);
+    return this.http.get<TipoContato[]>(environment.urlpath +'/api/tipocontatos');
   }
 
   getTipoClientes() {
-    return this.http.get<TipoClientes[]>(`http://localhost:8100/api/tipoclientes`);
+    return this.http.get<TipoClientes[]>(environment.urlpath +'/api/tipoclientes');
   }
 
   getIncorporadoras() {
-    return this.http.get<Incorporadoras[]>(`http://localhost:8100/api/incorporadoras`)
+  
+    return this.http.get<Incorporadoras[]>(environment.urlpath +'/api/incorporadoras')
   }
 
   createUser(cadInfo: CadastroInformacao) {
+    console.log(JSON.stringify(cadInfo));
     return this.http.post<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo)
   }
 
@@ -60,6 +61,8 @@ export class CadastroChamadasService {
   }
 
   getCep(cep) {
-    return this.http.get(`//viacep.com.br/ws/${cep}/json`);
+    // CRIEI UM REDIRECIONAMENTO INTERNO NO BACKEND PARA TRATAR NO SERVIDOR O CEP ANTES DE ENVIAR PARA O FRONT
+    //return this.http.get(`//viacep.com.br/ws/${cep}/json`);
+    return this.http.get(environment.urlpath +'/api/cep/'+cep);
   }
 }

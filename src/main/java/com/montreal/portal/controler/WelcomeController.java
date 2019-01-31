@@ -22,7 +22,31 @@ public class WelcomeController {
 	public String home() {	
 		return "";
 	}
+	
+	@RequestMapping("/cadastro")
+	public String cadastro() {	
+		return "";
+	}
 
+	@RequestMapping("/analise")
+	public String analise() {	
+		return "";
+	}
 
+	@RequestMapping("/informacoes")
+	public String informacoes() {	
+		return "";
+	}
+	
+	@RequestMapping("/grafic")
+	public String grafic() {	
+		return "";
+	}
+	
+	@RequestMapping("/cadastrousuario")
+	public String cadastrousuario() {	
+		return "";
+	}
+	
 	
 }
