@@ -66,7 +66,7 @@ export class CadastroComponent implements OnInit {
     });
     
    // console.log(JSON.stringify(this.cadInfo), cadInfo);
-    sessionStorage.clear();
+   // sessionStorage.clear();
     sessionStorage.setItem('cadastro', JSON.stringify(cadInfo));
 
     formulario.reset();
@@ -241,7 +241,7 @@ export class CadastroComponent implements OnInit {
 
         this.OnSubmit(cadInfo, formulario);
 
-        //this.router.navigate(['/analise']);
+       this.router.navigate(['/analise']);
       },
       reject: () => {
         alert('rejeitou')
