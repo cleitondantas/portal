@@ -18,6 +18,7 @@ import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -60,12 +61,11 @@ export class CadastroComponent implements OnInit {
   }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
-    /*this.chamadasService.createUser(cadInfo).subscribe(res => {
-      this.retornocadastro = res,
-      console.log(res)
-    });*/
+   this.chamadasService.createUser(cadInfo).subscribe(res => {
+      this.retornocadastro = res
+    });
     
-    console.log(JSON.stringify(this.cadInfo), cadInfo);
+   // console.log(JSON.stringify(this.cadInfo), cadInfo);
     sessionStorage.clear();
     sessionStorage.setItem('cadastro', JSON.stringify(cadInfo));
 
@@ -236,27 +236,18 @@ export class CadastroComponent implements OnInit {
           cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
         }
         cadInfo.cep = cadInfo.cep.replace('-', '');
-    
+        cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
         this.compradores = [];
 
         this.OnSubmit(cadInfo, formulario);
 
-        this.router.navigate(['/analise']);
+        //this.router.navigate(['/analise']);
       },
       reject: () => {
         alert('rejeitou')
       }
     })
   }
-
-  /*f1(f){
-    console.log(f) //FORM.CONTROLS.CAMPO.VALID/DIRTY/LEMBRA DISSO PRA COLOCAR SE EH VALIDO OU NAO
-    sessionStorage.setItem('comprador', JSON.stringify(f.value));
-  }
-  
-  f2(cadInfo) {
-    sessionStorage.setItem('compraImovel', JSON.stringify(cadInfo));
-  }*/
 
   /*formatarData(data) {
     console.log(data);
@@ -269,10 +260,9 @@ export class CadastroComponent implements OnInit {
     let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
 
     if((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
-      alert('aaaa')
+      //alert('aaaa')
     } else {
       form.controls['cpfcnpj'].status = 'INVALID';
-      console.log(form)
     }
   }
 

@@ -24,31 +24,19 @@ export class AuthService {
 
   fazerLogin(form : NgForm, usuario: Usuario){
     console.log('URL origin:'+environment.urlpath);
-    this.router.navigate(['/home']);
-    this.usuarioAutenticado = true;
-    this.mostrarsistema.emit(true);
-
-    /*this.http.post((environment.urlpath+url),usuario).subscribe((userAuthentication : CurrentUser)=>{
-      this.shared.token = userAuthentication.token;
-      this.shared.user = userAuthentication.usuario
+    this.http.post((environment.urlpath+url),usuario).subscribe((userAuthentication : CurrentUser)=>{
+      this.shared.setToken(userAuthentication.token);
+      this.shared.setSessionUsuario(userAuthentication.usuario);
       this.usuarioAutenticado = true;
       this.mostrarsistema.emit(true);
-      sessionStorage.setItem('token',this.shared.token);
-      localStorage.setItem('token',this.shared.token); 
-      localStorage.setItem('nome_usuario',this.shared.user.nome + ' '+this.shared.user.sobrenome);
-      localStorage.setItem('login',this.shared.user.login); 
-      localStorage.setItem('profile',this.shared.user.perfis[0]['profile'])
-      console.log(this.shared.user.nome + ' '+this.shared.user.sobrenome);
+      localStorage.setItem('nome_usuario',userAuthentication.usuario.nome + ' '+userAuthentication.usuario.sobrenome);
+      console.log(userAuthentication.usuario.nome + ' '+userAuthentication.usuario.sobrenome);
       this.router.navigate(['/home']);
     },err => {
-      this.shared.token = null;
-      this.shared.user = null;
+      this.shared.setToken(null);
       this.shared.showTemplate.emit(false);
-      sessionStorage.removeItem('token');
-      localStorage.removeItem('token');
       localStorage.removeItem('nome_usuario');
-      localStorage.removeItem('login');
-      localStorage.removeItem('profile');
+      this.shared.removeSessionUsuario();
       this.usuarioAutenticado = false;
       console.log('ERRO AO TENTAR LOGAR');
       window.location.reload();
@@ -56,26 +44,19 @@ export class AuthService {
   }
 
   fazerLogout(){
-  localStorage.removeItem('token');
-  sessionStorage.removeItem('token');
-  localStorage.removeItem('nome_usuario');
-  localStorage.removeItem('login');
+  this.shared.removeSessionUsuario();
   this.usuarioAutenticado = false;
-  this.shared.token = null;
-  this.shared.user = null;
   this.shared.showTemplate.emit(false);
   console.log('logout')
   window.location.reload();
   }
 
   isUsuarioAutenticado(){
-    //if(sessionStorage.getItem('token')!==null){
-      //if(localStorage.getItem('token')!==null){
-      //this.mostrarsistema.emit(true);
+    if(this.shared.isLoggedIn()){
+      this.mostrarsistema.emit(true);
       return true;
-    //}
-    //console.log('token false')
-    //return false;
+    }
+    return false;
   }
 
 

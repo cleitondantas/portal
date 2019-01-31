@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class ClientesControler {
 	private ClientesRepository clientesRepository;
 	
 	@GetMapping(value = "/clientes")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Cliente>>> findAllClientes() {
 		Response<Iterable<Cliente>> response = new Response<Iterable<Cliente>>();
 		Iterable<Cliente> users = clientesRepository.findAll();
@@ -43,6 +45,7 @@ public class ClientesControler {
 	
 	
 	@PostMapping(value = "/cliente")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Cliente>> create(HttpServletRequest request, @RequestBody Cliente  client,BindingResult result) {
 		Response<Cliente> response = new Response<Cliente>();
 		try {
@@ -72,6 +75,7 @@ public class ClientesControler {
 
 
 	 @PutMapping("/cliente/{cpf}")
+	 @PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	 public ResponseEntity<Response<Cliente>> update(@PathVariable String cpf, @RequestBody Cliente client,BindingResult result){
 			Response<Cliente> response = new Response<Cliente>();
 			try {

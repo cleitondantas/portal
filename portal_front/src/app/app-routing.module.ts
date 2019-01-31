@@ -13,16 +13,16 @@ import { InformacoesComponent } from './core/pages/informacoes/informacoes.compo
 import { AnaliseCreditoComponent } from './core/pages/analise-credito/analise-credito.component';
 
 const routes: Routes = [
-  { path: 'informacoes',/* canActivate: [AuthGuard],*/component: InformacoesComponent},
-  { path: 'analise', /* canActivate: [AuthGuard],*/  component: AnaliseCreditoComponent},
-  { path: 'importar', /* canActivate: [AuthGuard],*/  component: ImportComponent},
-  { path: 'cadastrousuario', /* canActivate: [AuthGuard],*/  component: CadastrousuarioComponent},
-  { path: 'home', /* canActivate: [AuthGuard],*/  component: HomeComponent},
-  { path: 'grafic', /* canActivate: [AuthGuard],*/  component: GraficComponent},
-  { path: 'cadastro',/* canActivate: [AuthGuard],*/  component: CadastroComponent},  
-  { path: 'lista',/* canActivate: [AuthGuard],*/  component: RelatorioListaComponent},
+  { path: 'informacoes', canActivate: [AuthGuard],component: InformacoesComponent},
+  { path: 'analise',canActivate: [AuthGuard], component: AnaliseCreditoComponent},
+  { path: 'importar', canActivate: [AuthGuard],component: ImportComponent},
+  { path: 'cadastrousuario', canActivate: [AuthGuard],  component: CadastrousuarioComponent},
+  { path: 'home',  canActivate: [AuthGuard],  component: HomeComponent},
+  { path: 'grafic', canActivate: [AuthGuard], component: GraficComponent},
+  { path: 'cadastro',canActivate: [AuthGuard], component: CadastroComponent},  
+  { path: 'lista',canActivate: [AuthGuard], component: RelatorioListaComponent},
   { path: 'login', component: LoginComponent},
-  { path: '',/* canActivate: [AuthGuard],*/  pathMatch: 'full',redirectTo: 'home' }
+  { path: '',canActivate: [AuthGuard], pathMatch: 'full',redirectTo: 'home' }
 ];
 
 
