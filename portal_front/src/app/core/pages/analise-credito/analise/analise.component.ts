@@ -10,6 +10,8 @@ import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.servic
 })
 export class AnaliseComponent implements OnInit {
 
+  numfid: any;
+  codcadastro: any;
   simulacaoLista: any[] = [];
   instFinan: any[] = [];
   modalidade: any[] = [];
@@ -36,6 +38,10 @@ export class AnaliseComponent implements OnInit {
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
 
     var a = sessionStorage.getItem('cadastro');
+    this.numfid  = sessionStorage.getItem('FID');
+    this.codcadastro = sessionStorage.getItem('COD');
+    console.log('ANALISE FID'+this.numfid);
+    console.log('ANALISE COD'+this.codcadastro);
     if(a !== null) {
       this.simul = JSON.parse(a);
     }

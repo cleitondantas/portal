@@ -28,7 +28,7 @@ export class CadastroChamadasService {
   }
 
   getOriginacao() {
-    return this.http.get<Originacao[]>(environment.urlpath +'/api/originacoes')
+    return this.http.get<Originacao[]>(environment.urlpath +'/api/originacoes');
   }
 
   getEstadoCivil() {

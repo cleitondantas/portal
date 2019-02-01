@@ -1,6 +1,7 @@
 import { Compradores } from "./compradores";
 
 export class CadastroInformacao {
+    codcadastro: number;
     codoriginacao: any;
     numerocadastroincorporadorafid: number;
     codincorporadora: any;

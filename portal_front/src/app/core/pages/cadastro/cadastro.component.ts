@@ -61,14 +61,16 @@ export class CadastroComponent implements OnInit {
   }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
-   this.chamadasService.createUser(cadInfo).subscribe(res => {
-      this.retornocadastro = res
+   this.chamadasService.createUser(cadInfo).subscribe(dados => {
+      this.retornocadastro = dados['data'];
+      console.log(JSON.stringify(dados['data']));
+      console.log("COD "+this.retornocadastro.codcadastro);
+      console.log("FID "+this.retornocadastro.numerocadastroincorporadorafid);
+      sessionStorage.setItem('FID',this.retornocadastro.numerocadastroincorporadorafid+"");
+      sessionStorage.setItem('COD',this.retornocadastro.codcadastro+"");
     });
-    
    // console.log(JSON.stringify(this.cadInfo), cadInfo);
    // sessionStorage.clear();
-    sessionStorage.setItem('cadastro', JSON.stringify(cadInfo));
-
     formulario.reset();
   }
 
@@ -240,7 +242,7 @@ export class CadastroComponent implements OnInit {
         this.compradores = [];
 
         this.OnSubmit(cadInfo, formulario);
-
+        
        this.router.navigate(['/analise']);
       },
       reject: () => {
