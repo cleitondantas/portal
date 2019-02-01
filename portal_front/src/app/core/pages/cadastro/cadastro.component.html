@@ -34,7 +34,7 @@
                   <label class="ajusteLabel" for="ndocumento">Número de identidade: </label>
                 </div>
                 <div class="p-col-8">
-                  <input type="text" required class="ajusteInput" pInputText id="ndocumento" ngModel  name="ndocumento"  #ndocumento="ngModel" [(ngModel)]="comprador.ndocumento">
+                  <input type="text" class="ajusteInput" pInputText id="ndocumento" ngModel  name="ndocumento"  #ndocumento="ngModel" [(ngModel)]="comprador.ndocumento">
                 </div>
               </div>
 
@@ -219,7 +219,8 @@
                 </div>
                 <div class="p-col-8" id="tipo">
                   <p-dropdown placeholder="Selecione..." optionLabel="desctipocontato" [options]="tipoContato" dataKey="value"
-                  [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codtipocontato"  #codtipocontato="ngModel" [(ngModel)]="contatos.codtipocontato"></p-dropdown>
+                  [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codtipocontato" #codtipocontato="ngModel" [(ngModel)]="contatos.codtipocontato"
+                  (onChange)="validContato($event)"></p-dropdown>
                 </div>
               </div>
 
@@ -227,7 +228,8 @@
                 <div class="p-col-4">
                 </div>
                 <div class="p-col-8">
-                  <input type="text" class="ajusteInput" pInputText id="context" ngModel name="desccontato"  #desccontato="ngModel" [(ngModel)]="contatos.desccontato">
+                  <input type="text" class="ajusteInput" pInputText id="desccontato" ngModel name="desccontato" #desccontato="ngModel" [(ngModel)]="contatos.desccontato"
+                  [textMask]="{mask: mask}">
                 </div>
               </div>
 
@@ -320,7 +322,7 @@
                   <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                   class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                   id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="comprador.datacadastro"
-                  [locale]="br"></p-calendar>
+                  [locale]="br" showButtonBar="true"></p-calendar>
                 </div>
               </div>
             </div>
@@ -397,7 +399,7 @@
 
           <div class="p-col-5">
             <div class="p-grid">
-              <div class="p-col-6" [ngStyle]="{'padding-top': '0px'}">
+              <div class="p-col-6">
 
                 <div class="p-grid">
                   <div class="p-col-4">
@@ -409,7 +411,7 @@
                 </div>
               </div>
 
-              <div class="p-col-6" [ngStyle]="{'padding-top': '0px'}">
+              <div class="p-col-6">
 
                 <div class="p-grid">
                   <div class="p-col-4">

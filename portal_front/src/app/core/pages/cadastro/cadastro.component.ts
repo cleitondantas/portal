@@ -45,6 +45,7 @@ export class CadastroComponent implements OnInit {
   orgaoExpedidorFiltrado: any[];
   br: any;
   disabled: boolean = true;
+  mask= ['^[1-9]{2}\-[2-9][0-9]{7,8}$'];
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -69,7 +70,8 @@ export class CadastroComponent implements OnInit {
       sessionStorage.setItem('FID',this.retornocadastro.numerocadastroincorporadorafid+"");
       sessionStorage.setItem('COD',this.retornocadastro.codcadastro+"");
     });
-   // console.log(JSON.stringify(this.cadInfo), cadInfo);
+
+    console.log(JSON.stringify(this.cadInfo), cadInfo);
    // sessionStorage.clear();
     formulario.reset();
   }
@@ -115,7 +117,7 @@ export class CadastroComponent implements OnInit {
     this.contato.push(contato2);
 
     this.contatos = this.logicaService.limparContatos(this.contatos);
-    console.log(contato2, contatoDisplay);
+    document.getElementById("desccontato").removeAttribute('placeholder');
   }
 
   adicionarCompradorLista (comprador: Compradores) {
@@ -284,5 +286,21 @@ export class CadastroComponent implements OnInit {
       }
   }
   return filtered;
+  }
+
+  validContato(evento) {
+    evento.value = evento.value.codtipocontato;
+    var input = document.getElementById("desccontato");
+
+    if(evento.value == 1) {
+      input.setAttribute('placeholder', 'XXXX-XXXX');
+      this.mask = ['^[1-9]{2}\-[2-9][0-9]{7,8}$']
+    } else if (evento.value == 2) {
+      input.setAttribute('placeholder', '(XX) XXXXX-XXXX');
+    } else if (evento.value == 3) {
+      input.setAttribute('placeholder', 'email@email.com');
+    }
+
+    console.log(evento)
   }
 }

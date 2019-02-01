@@ -84,7 +84,7 @@
           <label class="ajusteLabel" for="correspondente">Correspondente: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="correspondente">
+          <input type="text" class="ajusteInput" pInputText id="correspondente" name="correspondente" #correspondente="ngModel" [(ngModel)]="simulacoes.correspondente">
         </div>
       </div>
 
