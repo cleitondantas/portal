@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class AnaliseControler {
 	
 	
 	@GetMapping(value = "/analises")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Analise>>> findAllAnalise() {
 		Response<Iterable<Analise>> response = new Response<Iterable<Analise>>();
 		Iterable<Analise> users = analiseRepositoy.findAll();
@@ -43,6 +45,7 @@ public class AnaliseControler {
 	
 	
 	@PostMapping(value = "/analise")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Analise>> create(HttpServletRequest request, @RequestBody Analise  analise,BindingResult result) {
 		Response<Analise> response = new Response<Analise>();
 		try {
@@ -65,6 +68,7 @@ public class AnaliseControler {
 	
 	 
 	 @PutMapping("/analise/{id}")
+	 @PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	 public ResponseEntity<Response<Analise>> update(@PathVariable String id, @RequestBody Analise analise,BindingResult result){
 			Response<Analise> response = new Response<Analise>();
 			try {

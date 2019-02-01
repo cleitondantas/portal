@@ -112,15 +112,15 @@ conts:boolean = false;
 doIt(){
    if(this.conts){
         this.conts=false; 
-        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft:200}, {paddingLeft:0,delay:0.5, ease: Power1.easeOut});
-        TweenMax.fromTo(this.navmenuuser.nativeElement,0.3,{height:85+'%'},{height:0,display:'none', ease:  Power1.easeOut});
-        TweenMax.fromTo(this.box.nativeElement, 0.5, {height:85+'%'}, {height:0, ease: Power1.easeOut});
+        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft:313}, {paddingLeft:0,delay:0.5, ease: Power1.easeOut});
+        TweenMax.fromTo(this.navmenuuser.nativeElement,0.3,{height:'auto'},{height:0,display:'none', ease:  Power1.easeOut});
+        TweenMax.fromTo(this.box.nativeElement, 0.5, {height:'auto'}, {height:0, ease: Power1.easeOut});
         
     }else{
         this.conts=true;
-        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft:0}, {paddingLeft:200, ease:  Back.easeOut.config(1.7)});
-        TweenMax.fromTo(this.box.nativeElement,0.8, {height: 0}, {height:85+'%',delay:1, ease: Back.easeOut.config(1.7)});
-        TweenMax.fromTo(this.navmenuuser.nativeElement,0.8,{height: 0},{height:85+'%',delay:1,display:'block', ease: Back.easeOut.config(1.7)});
+        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft:0}, {paddingLeft:313, ease:  Back.easeOut.config(1.7)});
+        TweenMax.fromTo(this.box.nativeElement,0.8, {height: 0}, {height:'auto',delay:1, ease: Back.easeOut.config(1.7)});
+        TweenMax.fromTo(this.navmenuuser.nativeElement,0.8,{height: 0},{height:'auto',delay:1,display:'block', ease: Back.easeOut.config(1.7)});
         TweenMax.fromTo(this.box.nativeElement,1.5, {width: 325}, {width:325,delay:1, ease: Power1.easeOut}); 
     }
 }

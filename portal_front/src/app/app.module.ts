@@ -34,7 +34,7 @@ import { ConfirmationService } from 'primeng/api';
       useClass: AuthInterceptor,
       multi: true
     },
-    ConfirmationService
+        ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

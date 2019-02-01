@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class SicaqControler {
 	private SicaqRepository sicaqRepository;
 	
 	@GetMapping(value = "/sicaq")	
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Sicaq>>> findAllSicaq() {
 		Response<Iterable<Sicaq>> response = new Response<Iterable<Sicaq>>();
 		Iterable<Sicaq> users = sicaqRepository.findAll();
@@ -40,6 +42,7 @@ public class SicaqControler {
 	
 	
 	@PostMapping(value = "/sicaq")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Sicaq>> create(HttpServletRequest request, @RequestBody Sicaq sicaq,BindingResult result) {
 		Response<Sicaq> response = new Response<Sicaq>();
 		try {

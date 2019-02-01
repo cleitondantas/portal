@@ -11,17 +11,17 @@ body {
     justify-content: center;
 }
 
-.container{
-    width: 800px;
-    height: 600px;
+.main-container{
+    width: 50%;
+    height: 100%;
     border-radius: 5px;
     padding: 0px;
     box-shadow:0 5px 5px rgba(0,0,0,.175);
 }
 
 @media (max-width: 991px){
-    .container{
-        height: 800px;
+    .main-container{
+        height: auto;
     }
 }
 
@@ -86,3 +86,10 @@ body {
     }
 }
 
+
+/*--------*/
+
+.ajusteInput {
+    width: 100%;
+    margin: 1vw 0vw 1vw 0vw;
+}

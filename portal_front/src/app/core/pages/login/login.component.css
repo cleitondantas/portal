@@ -1,6 +1,6 @@
  /*background-image: url('../../../../assets/imagens/background.jpg');*/
 
-.fullpage {
+/*.fullpage {
     text-align: center;
     width: 100vw;
     height: 100vh;
@@ -49,5 +49,20 @@
   
   #logopsw{
     margin-top: 10px;
-  }
+  }*/
+
+.main-container{
+  width: 432px;
+  height: 450px; 
+  border-radius: 2px;
+  border: 1px solid lightseagreen;
+  background-color: aliceblue;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.main {
+  background-image: url('../../../../assets/imagens/background.jpg');
+  background-size: 100% 100% 100% 100%;
+  margin: 0px;
+}
   

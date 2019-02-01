@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class StatusSimulacaoControler {
 	
 	
 	@GetMapping(value = "/statussimulacao")	
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<StatusSimulacao>>> findAllSubStatusAnalise() {
 		Response<Iterable<StatusSimulacao>> response = new Response<Iterable<StatusSimulacao>>();
 		Iterable<StatusSimulacao> users = statusSimulacaoRepository.findAll();
@@ -43,6 +45,7 @@ public class StatusSimulacaoControler {
 	
 	
 	@PostMapping(value = "/statussimulacao")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<StatusSimulacao>> create(HttpServletRequest request, @RequestBody StatusSimulacao statusSimulacao,BindingResult result) {
 		Response<StatusSimulacao> response = new Response<StatusSimulacao>();
 		try {

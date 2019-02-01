@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class IncorporadorasControler {
 	private IncorporadorasRepository incorporadorasRepository;
 	
 	@GetMapping(value = "/incorporadoras")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Incorporadora>>> findAllInstituicaoFinanceira() {
 		Response<Iterable<Incorporadora>> response = new Response<Iterable<Incorporadora>>();
 		Iterable<Incorporadora> users = incorporadorasRepository.findAll();
@@ -39,6 +41,7 @@ public class IncorporadorasControler {
 	
 	
 	@PostMapping(value = "/incorporadora")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Incorporadora>> create(HttpServletRequest request, @RequestBody Incorporadora  incorporadora,BindingResult result) {
 		Response<Incorporadora> response = new Response<Incorporadora>();
 		try {

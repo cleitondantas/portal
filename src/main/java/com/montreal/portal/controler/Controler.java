@@ -13,16 +13,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.montreal.portal.entity.Cadastro;
 import com.montreal.portal.entity.Role;
 import com.montreal.portal.entity.Usuario;
 import com.montreal.portal.response.Response;
 import com.montreal.portal.service.RoleService;
 import com.montreal.portal.service.UsuarioService;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
 
 @RestController
 @RequestMapping("/api/user")
@@ -69,7 +73,7 @@ public class Controler {
 		}
 		
 		@GetMapping(value = "/usuarios")
-		@PreAuthorize("hasAnyRole('ADMIN')")
+		@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	    public ResponseEntity<Response<Iterable<Usuario>>> findAllUsuarios() {
 			Response<Iterable<Usuario>> response = new Response<Iterable<Usuario>>();
 			Iterable<Usuario> users = usuarioService.findAll();
@@ -116,6 +120,9 @@ public class Controler {
 			}
 			return ResponseEntity.ok(response);
 		}
+		
+		
+
 		
 //		@PostMapping(value = "/usuario")
 //		@PreAuthorize("hasAnyRole('ADMIN')")

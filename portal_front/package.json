@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.config.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^7.1.0",
     "@angular/platform-browser-dynamic": "^7.1.0",
     "@angular/router": "^7.1.0",
+    "@brazilian-utils/is-valid-cnpj": "^0.1.11",
+    "@brazilian-utils/is-valid-cpf": "^0.1.11",
     "bootstrap": "^4.1.3",
     "chart.js": "^2.7.3",
     "core-js": "^2.5.4",
@@ -34,7 +36,7 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.10.0",
+    "@angular-devkit/build-angular": "^0.12.1",
     "@angular/cli": "~7.0.6",
     "@angular/compiler-cli": "^7.1.0",
     "@angular/language-service": "^7.1.0",

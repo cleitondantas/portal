@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Simulacoes } from 'src/app/models/simulacoes';
+import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 
 @Component({
   selector: 'app-analise',
@@ -8,76 +10,79 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class AnaliseComponent implements OnInit {
 
-  simulacao: any[];
-  simulSelec: any;
-  formulario: FormGroup;
-  instFinan: any[];
+  numfid: any;
+  codcadastro: any;
+  simulacaoLista: any[] = [];
+  instFinan: any[] = [];
+  modalidade: any[] = [];
+  tipoAmortizacao: any[] = [];
+  simul: any;
+  br: any;
 
-  constructor(
-    private formbuilder: FormBuilder
+  currencyMask1: any;
+  currencyMask2: any;
+  currencyMask3: any;
+  currencyMask4: any;
+  currencyMask5: any;
+
+  simulacoes: Simulacoes = new Simulacoes();
+
+  constructor( 
+    private http: HttpClient,
+    private service: AnaliseChamadasService
   ) { }
 
   ngOnInit() {
+    this.service.getInstFinan().subscribe(dados => this.instFinan = dados['data'])
+    this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
+    this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
 
-    this.formulario = this.formbuilder.group({
-      fid: [null],
-      valorAval: [null],
-      valorComVen: [null],
-      modalidade: [null],
-      dataEnvBanco: [null],
-      valorPrestAprov: [null],
-      sicaq: [null],
-      correspondente: [null],
-      prazoFinan: [null],
-      banco: [null],
-      tipoAmor: [null],
-      valorSub: [null],
-      valorAvalBanco: [null],
-      fgts: [null],
-      recProp: [null],
-      simulacao: this.formbuilder.group({
-        instFinan: [null]
-      }),
-      valoresProcesso: this.formbuilder.group({
-        despesasFinan: [null],
-        finanTotal: [null],
-        fgtsValProc: [null],
-        recPropValProc: [null],
-        saldoDevedor: [null],
-        valorVen: [null]
-      }),
-      datasProcesso: this.formbuilder.group({
-        dataPastaMae: [null],
-        dataEmissao: [null],
-        dataAssinatura: [null]
-      })
-    })
+    var a = sessionStorage.getItem('cadastro');
+    this.numfid  = sessionStorage.getItem('FID');
+    this.codcadastro = sessionStorage.getItem('COD');
+    console.log('ANALISE FID'+this.numfid);
+    console.log('ANALISE COD'+this.codcadastro);
+    if(a !== null) {
+      this.simul = JSON.parse(a);
+    }
 
+    this.br = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
+      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
+      today: 'Hoje',
+      clear: 'Limpar',
+      dateFormat: 'dd/mm/yy'
+    }
 
-    this.simulacao = [
-      {excluir: '', instituicao: 'Santander', valor: 'R$15000', financiado: ''},
-      {excluir: '', instituicao: 'Itau', valor: 'R$19000', financiado: ''},
-      {excluir: '', instituicao: 'Caixa', valor: 'R$19000', financiado: ''},
-    ]
-
-    this.instFinan = [
-      {name: 'Banco do Brasil', value: 'banco do brasil'},
-      {name: 'Itau', value: 'itau'},
-      {name: 'Santander', value: 'santander'},
-      {name: 'Bradesco', value: 'bradesco'},
-      {name: 'Caixa', value: 'caixa'},
-
-    ]
+    console.log(this.simul);
   }
 
-  adicionarInstFinan() {
-    let banco = this.formulario.controls.simulacao['controls'].instFinan.value.name;
+  adicionarSimulacao(simulacao: Simulacoes) {
+    var simulacao2: Simulacoes = new Simulacoes();
 
-    this.simulacao.push({instituicao: banco})
+    simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao;
+    simulacao2.codsicaq = simulacao.codsicaq;
+    simulacao2.prazofinanciamento = simulacao.prazofinanciamento;
+    simulacao2.codtipoamortizacao = simulacao.codtipoamortizacao;
+    simulacao2.valorsubsidio = simulacao.valorsubsidio;
+    simulacao2.valorfgts = simulacao.valorfgts;
+    simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
+    simulacao2.valordespesasfinanciadas = simulacao.valordespesasfinanciadas;
+    simulacao2.valorrecursosproprios = simulacao.valorrecursosproprios;
+    simulacao2.valorfinanciamento = simulacao.valorfinanciamento;
+
+    this.simulacaoLista.push(simulacao2);
+
+    console.log(this.simulacaoLista);
   }
 
-  removerInstFinan (banco) {
-    let index = this.simulacao.indexOf(banco);
-    this.simulacao.splice(index, 1);
+  removerSimulacao(simul) {
+    let index = this.simulacaoLista.indexOf(simul);
+    
+    this.simulacaoLista.splice(index, 1);
   }
 }
