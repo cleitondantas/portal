@@ -3,7 +3,6 @@ package com.montreal.portal.controler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -130,15 +129,20 @@ public class CadastroControler {
 
 	@GetMapping(value = "/cadastro/{cod}")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
-	public ResponseEntity<Response<Iterable<Cadastro>>> findCadastro(@PathVariable String cod) {
+	public ResponseEntity<Response<Iterable<Cadastro>>> findFidCadastro(@PathVariable String cod) {
 		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
 		List<Cadastro>  cadastros  =  new ArrayList<Cadastro>();
 		Cadastro cadastro =null;
 		try {
-			Optional<Cadastro> cadastroOptional = casdastroRepository.findById(Integer.parseInt(cod));
-			if(cadastroOptional.isPresent()) {
-				cadastro = cadastroOptional.get();
-			}
+		List<Cadastro> listCadastro = 	casdastroRepository.findCadastroWithPartOfFid(Integer.parseInt(cod));
+		//	Optional<Cadastro> cadastroOptional = casdastroRepository.findById(Integer.parseInt(cod));
+//			if(cadastroOptional.isPresent()) {
+//				cadastro = cadastroOptional.get();
+//			}
+		
+		for(Cadastro item: listCadastro) {
+			cadastro = item;
+		}
 			if (cadastro.getClientes() != null) {
 				for (Cliente cliente : cadastro.getClientes()) {
 					if (cadastro.getCpfcnpj() != null) {
@@ -159,5 +163,7 @@ public class CadastroControler {
 		}
 		return ResponseEntity.ok(response);
 	}
+	
+	
 	
 }
