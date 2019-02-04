@@ -14,11 +14,12 @@ import { Incorporadoras } from './../../../models/incorporadoras';
 import { CadastroChamadasService } from './../../../services/cadastro-chamadas.service';
 import { CadastroLogicaService } from './../../../services/cadastro-logica.service';
 import { Originacao } from './../../../models/originacao';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, Message } from 'primeng/api';
 import { Router } from '@angular/router';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
+import emailMask from 'text-mask-addons/dist/emailMask'
 
 @Component({
   selector: 'app-cadastro',
@@ -45,7 +46,9 @@ export class CadastroComponent implements OnInit {
   orgaoExpedidorFiltrado: any[];
   br: any;
   disabled: boolean = true;
-  mask= ['^[1-9]{2}\-[2-9][0-9]{7,8}$'];
+  mask: Array<string | RegExp>;
+  disabledInput: boolean = true;
+  msgs: Message[] = [];
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -118,25 +121,35 @@ export class CadastroComponent implements OnInit {
 
     this.contatos = this.logicaService.limparContatos(this.contatos);
     document.getElementById("desccontato").removeAttribute('placeholder');
+    this.disabledInput = true;
   }
 
-  adicionarCompradorLista (comprador: Compradores) {
-    var comprador2 = this.logicaService.adicionarComprador(comprador);
-    comprador2.contatos = this.contato;
-
-    //var a = sessionStorage.getItem('comprador');
-    //this.logicaService.compradorSessionStorage(JSON.parse(a));
-
-    this.compradores.push(comprador2);
-    this.disabled = false;
-    console.log(this.compradores, comprador2);
-
-    comprador = new Compradores();
-
-    this.comprador = this.logicaService.limparComprador(this.comprador);
-
-    this.contato = [];
-    this.contatoDisplay = [];
+  adicionarCompradorLista (comprador: Compradores, formCadInfo) {
+    if (this.validaFormulario(formCadInfo) == true) {
+      var comprador2 = this.logicaService.adicionarComprador(comprador);
+      comprador2.contatos = this.contato;
+  
+      //var a = sessionStorage.getItem('comprador');
+      //this.logicaService.compradorSessionStorage(JSON.parse(a));
+  
+      this.compradores.push(comprador2);
+      this.disabled = false;
+      console.log(this.compradores, comprador2);
+  
+      comprador = new Compradores();
+  
+      this.comprador = this.logicaService.limparComprador(this.comprador);
+  
+      this.contato = [];
+      this.contatoDisplay = [];
+    } else {
+      this.msgs = [];
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao adicionar comprador!',
+        detail: 'Existem campos não preenchidos.'
+      })
+    }
   }
  
   removerContato (contatoC) {
@@ -259,14 +272,24 @@ export class CadastroComponent implements OnInit {
     console.log(novaData);
   }*/
 
-  verificaCpfCnpj(form) {
+  verificaCpfCnpj(formCadInfo) {
     let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
     let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
 
     if((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
-      //alert('aaaa')
+      return true;
     } else {
-      form.controls['cpfcnpj'].status = 'INVALID';
+      formCadInfo.controls['cpfcnpj'].status = 'INVALID';
+      return false;
+    }
+  }
+
+  validaFormulario(formCadInfo) {
+    let cpfcnpj = this.verificaCpfCnpj(formCadInfo);
+    if (formCadInfo.valid == false || this.contato.length == 0 || cpfcnpj == false) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -291,16 +314,21 @@ export class CadastroComponent implements OnInit {
   validContato(evento) {
     evento.value = evento.value.codtipocontato;
     var input = document.getElementById("desccontato");
+    this.contatos.desccontato = '';
+    this.disabledInput = false;
 
     if(evento.value == 1) {
-      input.setAttribute('placeholder', 'XXXX-XXXX');
-      this.mask = ['^[1-9]{2}\-[2-9][0-9]{7,8}$']
+      input.setAttribute('placeholder', '(XX) XXXX-XXXX');
+      this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else if (evento.value == 2) {
       input.setAttribute('placeholder', '(XX) XXXXX-XXXX');
+      this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else if (evento.value == 3) {
-      input.setAttribute('placeholder', 'email@email.com');
+      input.setAttribute('placeholder', 'email@email.com')
+      this.mask = emailMask;
     }
 
-    console.log(evento)
+    console.log(evento, this.mask);
   }
+  
 }
