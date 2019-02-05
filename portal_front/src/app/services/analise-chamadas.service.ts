@@ -15,14 +15,14 @@ export class AnaliseChamadasService {
   ) { }
 
   getModalidades () {
-    return this.http.get<Modalidades[]>(environment.urlpath+'/api/modalidadesimulacoes');
+    return this.http.get<Modalidades[]>(environment.urlpath + '/api/modalidadesimulacoes');
   }
 
   getInstFinan () {
-    return this.http.get<InstFinan[]>(environment.urlpath+'/api/instituicoesfinanceiras');
+    return this.http.get<InstFinan[]>(environment.urlpath + '/api/instituicoesfinanceiras');
   }
 
   getTipoAmortizacao () {
-    return this.http.get<TipoAmortizacao[]>(environment.urlpath+'/api/tipoamortizacao');
+    return this.http.get<TipoAmortizacao[]>(environment.urlpath + '/api/tipoamortizacao');
   }
 }
