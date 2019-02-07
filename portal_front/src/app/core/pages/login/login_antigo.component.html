@@ -1,0 +1,25 @@
+<div class="fullpage">
+<div  class="container shadow-lg idform" id="main-container">
+        <div class="alert alert-danger" [style.visibility]="mensagemErro !=='' ? 'visible' : 'hidden' " style="position: absolute; width:400px;">
+                <strong>Erro:</strong> {{mensagemErro}} 
+         </div>
+
+    <form name="forms" (ngSubmit)="fazerLogin(f)" #f="ngForm" novalidate>
+        <img src="assets/imagens/montreal_logo.png" class="rounded-circle" id="logo">
+        <div class="input-group-prepend form-group "  >
+            <i class="fa fa-user" id="logouser" style="font-size: 29px"></i>
+            <input type="text" name="usuario" placeholder="Digite o usuário..." [(ngModel)]="user.login" #usuario="ngModel" [ngClass]="{ 'is-invalid': f.submitted && usuario.invalid }" class="form-control" required>
+        </div>
+  
+        <div class="input-group-prepend form-group" >
+            <i class="fa fa-key" id="logopsw" style="font-size:29px"></i>
+            <input type="password" id="psw" name="password" placeholder="Digite a senha..." class="form-control"
+                data-toggle="tooltip" data-placement="top" title="A senha deve conter no mínimo 6 caractéres sendo no mínimo um caractér especial, uma letra maiúscula, uma letra minúscula e um número."
+                data-trigger="focus" [(ngModel)]="user.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required  >
+        </div>
+       
+        <button type="submit" class="w-100 btn btn-success">Login</button>
+
+  </form>
+  </div>
+</div>
