@@ -16,7 +16,7 @@
           <label class="ajusteLabel" for="valorAvali">Valor de Avaliação: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="valorAvali">
+          <input type="text" class="ajusteInput" pInputText id="valorAvali" name="valoravaliacao" #valoravaliacao='ngModel' [(ngModel)]="simulacoes.valoravaliacao" >
         </div>
       </div>
 
@@ -25,16 +25,16 @@
           <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="valorComVem">
+          <input type="text" class="ajusteInput" pInputText id="valorComVem" name="valorcompravenda" #valorcompravenda='ngModel' [(ngModel)]="simulacoes.valorcompravenda" >
         </div>
       </div>
 
       <div class="p-grid">
         <div class="p-col-4">
-          <label class="ajusteLabel" for="valorfinanciamento">Valor do Crédito: </label>
+          <label class="ajusteLabel" for="valorcredito">Valor do Crédito: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="valorfinanciamento" name="valorfinanciamento" #valorfinanciamento="ngModel" [(ngModel)]="simulacoes.valorfinanciamento">
+          <input type="text" class="ajusteInput" pInputText id="valorcredito" name="valorcredito" #valorcredito="ngModel" [(ngModel)]="simulacoes.valorcredito">
         </div>
       </div>
 
@@ -54,20 +54,10 @@
         </div>
         <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataexpedicao" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
-            <button pButton type="button" icon="pi pi-calendar"></button>
+            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            id="dataenviobanco" dateFormat="dd/mm/yy" [locale]="br" ngModel name="dataenviobanco"  #dataenviobanco="ngModel" [(ngModel)]="simulacoes.dataenviobanco" ></p-calendar>
           </div>
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorPrestAprov">Valor prestação Aprovado: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="valorPrestAprov">
         </div>
       </div>
 
@@ -85,7 +75,7 @@
           <label class="ajusteLabel" for="correspondente">Correspondente: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="correspondente">
+          <input type="text" class="ajusteInput" pInputText id="correspondente" name="correspondente" #correspondente="ngModel" [(ngModel)]="simulacoes.correspondente">
         </div>
       </div>
 
@@ -94,29 +84,13 @@
     <div class="p-col-6">
 
       <div class="espaco" [ngStyle]="{'width': '741px', 'height': '42px'}"></div>
-      <div class="espaco" [ngStyle]="{'width': '741px', 'height': '42px'}"></div>
 
       <div class="p-grid">
         <div class="p-col-4">
           <label class="ajusteLabel" for="prazofinanciamento">Prazo financiamento: </label>
         </div>
-        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
-          <div class="ui-inputgroup">
-            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="prazofinanciamento" dateFormat="dd/mm/yy" ngModel  name="prazofinanciamento"  #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento"
-            [locale]="br"></p-calendar>
-            <button pButton type="button" icon="pi pi-calendar"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="banco">Banco: </label>
-        </div>
         <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="banco">
+          <input type="text" class="ajusteInput" pInputText id="prazofinanciamento" name="prazofinanciamento" #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento" pKeyFilter="pint">
         </div>
       </div>
 
@@ -138,34 +112,6 @@
           <input type="text" class="ajusteInput" pInputText id="valorsubsidio" name="valorsubsidio" #valorsubsidio="ngModel" [(ngModel)]="simulacoes.valorsubsidio">
         </div>
       </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorAvaliBanco">Valor avaliação Banco: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="valorAvaliBanco">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorfgts">FGTS: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="valorfgts" name="valorfgts" #valorfgts="ngModel" [(ngModel)]="simulacoes.valorfgts">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorrecursosproprios">Recurso próprio: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="valorrecursosproprios" name="valorrecursosproprios" #valorrecursosproprios="ngModel" [(ngModel)]="simulacoes.valorrecursosproprios">
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -225,17 +171,6 @@
             id="saldoDev" name="currencyMask4"  [(ngModel)]="currencyMask4"/>
           </div>
         </div>
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="valorVenda">Valor da venda: </label>
-          </div>
-          <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-            id="valorVenda" name="currencyMask5"  [(ngModel)]="currencyMask5"/>
-          </div>
-        </div>
-
       </div>
     </div>
   </p-fieldset>
@@ -267,7 +202,9 @@
           <th><strong>Excluir</strong></th>
           <th><strong>Instituição</strong></th>
           <th><strong>Aprovação</strong></th>
-          <th><strong>Valor</strong></th>
+          <th><strong>Valor Total</strong></th>
+          <th><strong>Taxa de Juros</strong></th>
+          <th><strong>Valor 1º Parcela</strong></th>
           <th><strong>Financiado</strong></th>
         </tr>
       </ng-template>
@@ -280,7 +217,13 @@
             <p-dropdown [options]="[{nome: 'Aprovado'}, {nome: 'Reprovado'}]" optionLabel="nome"></p-dropdown>  
           </td>
           <td> 
-            <input pInputText class="ajusteInput"/>
+            <input currencyMask pInputText class="ajusteInput"   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
+          </td>
+          <td> 
+              <input currencyMask pInputText class="ajusteInput"   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
+          </td>
+          <td> 
+              <input currencyMask pInputText class="ajusteInput"   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
           </td>
           <td> 
             <p-tableRadioButton [value]="rowData"></p-tableRadioButton>  
@@ -300,10 +243,9 @@
         </div>
         <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataMae" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
-            <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
       </div>
@@ -314,10 +256,9 @@
         </div>
         <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
-            <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
       </div>
@@ -328,16 +269,28 @@
         </div>
         <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
-            <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
       </div>
 
       </div>
     </div>
+
   </p-fieldset>
+  <p-fieldset >
+      <div class="p-grid">
+          <div class="p-col-10">
+          </div> 
+        <div class="p-col-1">
+            <button pButton type="button" label="Cancelar" class="ui-button-danger" ></button>
+          </div>
+          <div class="p-col-1">
+              <button pButton type="button" label="Salvar" class="ui-button-success" ></button>
+            </div>
+      </div>   
+    </p-fieldset>
 </form>
 <br><br>

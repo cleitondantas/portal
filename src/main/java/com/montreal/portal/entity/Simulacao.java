@@ -26,7 +26,6 @@ public class Simulacao implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod_simulacao")
 	private Integer codsimulacao;
-	
 
 	@Column(name="cod_cadastro")
 	private Integer codcadastro;
@@ -34,10 +33,7 @@ public class Simulacao implements Serializable{
 	@Column(name="cod_instituicao_financeira")
 	private Integer codinstituicaofinanceira;
 	
-	
-	@Column(name="proposta_inst_financ")
-	private String propostainstfinanc;
-	
+
 	@Column(name="correspondente")
 	private String correspondente;
 	
@@ -49,6 +45,9 @@ public class Simulacao implements Serializable{
 
 	@Column(name="cod_tipo_amortizacao")
 	private Integer codtipoamortizacao;
+	
+	@Column(name="valor_avaliacao", precision=16, scale=2)
+	private BigDecimal valoravaliacao;
 	
 	@Column(name="valor_avaliacao_inst_financ", precision=16, scale=2)
 	private BigDecimal valoravaliacaoinstfinanc;
@@ -69,23 +68,35 @@ public class Simulacao implements Serializable{
 	private BigDecimal valorrecursosproprios;
 
 	@Column(name="prazo_financiamento")
-	private String prazofinanciamento;
+	private Integer  prazofinanciamento;
 	
-	@Column(name="valor_parcela", precision=16, scale=2)
-	private BigDecimal valorparcela;
+	@Column(name="valor_primeira_parcela", precision=16, scale=2)
+	private BigDecimal valorprimeiraparcela;
+	
+	@Column(name="valor_compra_venda", precision=16, scale=2)
+	private BigDecimal valorcompravenda;
+	
+	@Column(name="saldo_devedor", precision=16, scale=2)
+	private BigDecimal saldodevedor;
 	
 	@Column(name="cod_status_simulacao")
 	private Integer codstatussimulacao;
-	
-	@Column(name="obs")
-	private String obs;
-	
+
 	@Column(name="cod_usuario")
 	private Long codusuario;
 	
 	@Column(name="data_simulacao")
 	private Date datasimulacao;
 
+	@Column(name="data_envio_banco")
+	private Date dataenviobanco;
+	
+	@Column(name="valor_credito",precision=16, scale=2)
+	private BigDecimal valorcredito;
+	
+	@Column(name="taxadejuros",precision=16, scale=2)
+	private BigDecimal taxadejuros;
+	
 	public Integer getCodsimulacao() {
 		return codsimulacao;
 	}
@@ -108,14 +119,6 @@ public class Simulacao implements Serializable{
 
 	public void setCodinstituicaofinanceira(Integer codinstituicaofinanceira) {
 		this.codinstituicaofinanceira = codinstituicaofinanceira;
-	}
-
-	public String getPropostainstfinanc() {
-		return propostainstfinanc;
-	}
-
-	public void setPropostainstfinanc(String propostainstfinanc) {
-		this.propostainstfinanc = propostainstfinanc;
 	}
 
 	public String getCorrespondente() {
@@ -198,20 +201,12 @@ public class Simulacao implements Serializable{
 		this.valorrecursosproprios = valorrecursosproprios;
 	}
 
-	public String getPrazofinanciamento() {
+	public Integer getPrazofinanciamento() {
 		return prazofinanciamento;
 	}
 
-	public void setPrazofinanciamento(String prazofinanciamento) {
+	public void setPrazofinanciamento(Integer prazofinanciamento) {
 		this.prazofinanciamento = prazofinanciamento;
-	}
-
-	public BigDecimal getValorparcela() {
-		return valorparcela;
-	}
-
-	public void setValorparcela(BigDecimal valorparcela) {
-		this.valorparcela = valorparcela;
 	}
 
 	public Integer getCodstatussimulacao() {
@@ -222,13 +217,6 @@ public class Simulacao implements Serializable{
 		this.codstatussimulacao = codstatussimulacao;
 	}
 
-	public String getObs() {
-		return obs;
-	}
-
-	public void setObs(String obs) {
-		this.obs = obs;
-	}
 
 	public Long getCodusuario() {
 		return codusuario;
@@ -244,6 +232,56 @@ public class Simulacao implements Serializable{
 
 	public void setDatasimulacao(Date datasimulacao) {
 		this.datasimulacao = datasimulacao;
+	}
+
+	public BigDecimal getSaldodevedor() {
+		return saldodevedor;
+	}
+
+	public void setSaldodevedor(BigDecimal saldodevedor) {
+		this.saldodevedor = saldodevedor;
+	}
+
+	public Date getDataenviobanco() {
+		return dataenviobanco;
+	}
+
+	public void setDataenviobanco(Date dataenviobanco) {
+		this.dataenviobanco = dataenviobanco;
+	}
+
+	public BigDecimal getValorcredito() {
+		return valorcredito;
+	}
+
+	public void setValorcredito(BigDecimal valorcredito) {
+		this.valorcredito = valorcredito;
+	}
+
+
+
+	public BigDecimal getValorprimeiraparcela() {
+		return valorprimeiraparcela;
+	}
+
+	public void setValorprimeiraparcela(BigDecimal valorprimeiraparcela) {
+		this.valorprimeiraparcela = valorprimeiraparcela;
+	}
+
+	public BigDecimal getTaxadejuros() {
+		return taxadejuros;
+	}
+
+	public void setTaxadejuros(BigDecimal taxadejuros) {
+		this.taxadejuros = taxadejuros;
+	}
+
+	public BigDecimal getValorcompravenda() {
+		return valorcompravenda;
+	}
+
+	public void setValorcompravenda(BigDecimal valorcompravenda) {
+		this.valorcompravenda = valorcompravenda;
 	}
 
 	

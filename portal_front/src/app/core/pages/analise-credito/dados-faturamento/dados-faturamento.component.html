@@ -79,10 +79,9 @@
         </div>
         <div class="p-col-8">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
-            <button pButton type="button" icon="pi pi-calendar"></button>
           </div>    
         </div>
       </div>
@@ -93,10 +92,9 @@
         </div>
         <div class="p-col-8">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="false" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': '100%', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
-            <button pButton type="button" icon="pi pi-calendar"></button>
           </div>
         </div>
       </div>
@@ -174,9 +172,19 @@
   <div class="p-grid">
     <label class="ajusteLabel" for="observacao" [ngStyle]="{'padding-left': '14px'}">Observação:</label>
     <textarea pInputTextarea [rows]="4" id="observacao" [ngStyle]="{'margin': '0px 14px 14px 14px'}" style="width: 100%"></textarea>
-    <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-info" 
-    [ngStyle]="{'width': '100px', 'margin-left': '14px'}" icon="pi pi-save" iconPos="right"></button>
   </div>
 
 </p-fieldset>
+<p-fieldset >
+    <div class="p-grid">
+        <div class="p-col-10">
+        </div> 
+      <div class="p-col-1">
+          <button pButton type="button" label="Cancelar" class="ui-button-danger" ></button>
+        </div>
+        <div class="p-col-1">
+            <button pButton type="button" label="Salvar" class="ui-button-success" ></button>
+          </div>
+    </div>   
+  </p-fieldset>
 <br><br>

@@ -55,12 +55,7 @@ public class Cadastro implements Serializable{
 	@Column(name="unidade")
 	private String unidade;
 	
-	@Column(name="valor_venda", precision=16, scale=2)
-	private BigDecimal valorvenda;
-	
-	@Column(name="saldo_devedor", precision=16, scale=2)
-	private BigDecimal saldodevedor;
-	
+
 	@Column(name="cod_usuario")
 	private Long codusuario;
 	
@@ -142,23 +137,6 @@ public class Cadastro implements Serializable{
 	public void setUnidade(String unidade) {
 		this.unidade = unidade;
 	}
-
-	public BigDecimal getValorvenda() {
-		return valorvenda;
-	}
-
-	public void setValorvenda(BigDecimal valorvenda) {
-		this.valorvenda = valorvenda;
-	}
-
-	public BigDecimal getSaldodevedor() {
-		return saldodevedor;
-	}
-
-	public void setSaldodevedor(BigDecimal saldodevedor) {
-		this.saldodevedor = saldodevedor;
-	}
-
 
 	public Long getCodusuario() {
 		return codusuario;
