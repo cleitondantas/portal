@@ -1,22 +1,29 @@
 export class Simulacoes {
     codsimulacao: number;
     codcadastro: number;
-    codinstituicaofinanceira: number;
     propostainstfinanc: null;
-    correspondente: null;
+    codusuario: number; 
+    
+
+    valoravaliacao:number;
+    valorcompravenda:number;
+    valorcredito : number;
     codmodalidadesimulacao: number;
+    dataenviobanco: string;
     codsicaq: number;
+    correspondente: string;
+    prazofinanciamento: number;
     codtipoamortizacao: number;
-    valoravaliacaoinstfinanc:number; 
-    valorfinanciamento: number;
-    valordespesasfinanciadas: number;
     valorsubsidio: number;
+    valordespesasfinanciadas: number;
+    valorfinanciamento: number;
     valorfgts: number;
     valorrecursosproprios: number;
-    prazofinanciamento: string;
-    valorparcela: number;
+    saldodevedor:number;
+    codinstituicaofinanceira: number;
     codstatussimulacao: number; 
-    obs: string;
-    codusuario: number; 
+    valoravaliacaoinstfinanc:number; 
+    taxadejuros:number;
+    valorprimeiraparcela: number;
     datasimulacao:string;
 }

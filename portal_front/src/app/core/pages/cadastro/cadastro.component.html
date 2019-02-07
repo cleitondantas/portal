@@ -382,10 +382,16 @@
               <div class="p-col-4">
                 <label class="ajusteLabel" for="empreend">Empreendimento: </label>
               </div>
-              <div class="p-col-8" id="empreend">
+              <div class="p-col-4" id="empreend">
                 <p-dropdown placeholder="Selecione..." optionLabel="descempreendimento" [options]="empreendimento" [autoWidth]="false" 
                 [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="codempreendimento"  #codempreendimento="ngModel" 
                 [(ngModel)]="cadInfo.codempreendimento" filter="true"></p-dropdown>
+              </div>
+              <div class="p-col-2">
+                <label class="ajusteLabel" for="unidade">Unidade: </label>
+              </div>
+              <div class="p-col-2">
+                <input type="text" class="ajusteInput" pInputText id="unidade" ngModel name="unidade"  #unidade="ngModel" [(ngModel)]="cadInfo.unidade">
               </div>
             </div>
 
