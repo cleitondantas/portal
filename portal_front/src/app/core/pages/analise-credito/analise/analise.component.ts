@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { Analise } from 'src/app/models/analise';
 import { StatusSimulacao } from 'src/app/models/status-simulacao';
 
 @Component({
@@ -15,6 +16,7 @@ export class AnaliseComponent implements OnInit {
   numfid: any;
   codcadastro: any;
   simulacaoLista: any[] = [];
+  
   instFinan: any[] = [];
   modalidade: any[] = [];
   tipoAmortizacao: any[] = [];
@@ -23,7 +25,7 @@ export class AnaliseComponent implements OnInit {
   statussimulacao: any[] = [];
 
   simulacoes: Simulacoes = new Simulacoes();
-
+  analise: Analise  = new Analise();
   constructor( 
     private http: HttpClient,
     private service: AnaliseChamadasService
@@ -61,7 +63,6 @@ export class AnaliseComponent implements OnInit {
 
   adicionarSimulacao(simulacao: Simulacoes) {
     var simulacao2: Simulacoes = new Simulacoes();
-    console.log(this.statussimulacao);
 
     simulacao2.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     simulacao2.valoravaliacao = simulacao.valoravaliacao;
@@ -89,7 +90,7 @@ export class AnaliseComponent implements OnInit {
 
     console.log(this.simulacaoLista);
     console.log(JSON.stringify(this.simulacaoLista));
-
+/*
     this.simulacoes.valoravaliacao = null;
     this.simulacoes.valorcompravenda = null;
     this.simulacoes.valorcredito = null;
@@ -110,15 +111,18 @@ export class AnaliseComponent implements OnInit {
     this.simulacoes.valoravaliacaoinstfinanc = null;
     this.simulacoes.taxadejuros = null;
     this.simulacoes.valorprimeiraparcela = null;
+  */
   }
 
   removerSimulacao(simul) {
     let index = this.simulacaoLista.indexOf(simul);
-    
     this.simulacaoLista.splice(index, 1);
   }
 
   salvar() {
+    this.analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+    this.analise.codcadastro  = this.codcadastro;
+    
     console.log(this.simulacaoLista);
     console.log(JSON.stringify(this.simulacaoLista));
   }
