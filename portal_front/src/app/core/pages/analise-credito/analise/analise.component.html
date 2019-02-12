@@ -283,7 +283,8 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataMae" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            id="dataMae" dateFormat="dd/mm/yy" [locale]="br"
+            name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" ></p-calendar>
           </div>
         </div>
       </div>
@@ -296,7 +297,8 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"
+            name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" ></p-calendar>
           </div>
         </div>
       </div>
@@ -309,7 +311,8 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"
+            name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" ></p-calendar>
           </div>
         </div>
       </div>
