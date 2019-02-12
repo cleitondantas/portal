@@ -2,10 +2,18 @@ package com.montreal.portal.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +25,7 @@ public class Analise  implements Serializable{
 	private static final long serialVersionUID = 3830211136118428623L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="COD_ANALISE")	
 	private Integer codanalise;
 	
@@ -49,6 +58,14 @@ public class Analise  implements Serializable{
 	
 	@Column(name="data_simulacao")
 	private Date datasimulacao;
+	
+	@ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@JoinTable(name = "tb_relac_analise_simulacao", 
+	joinColumns = @JoinColumn(name = "cod_analise", referencedColumnName = "cod_analise"),
+	inverseJoinColumns = @JoinColumn(name = "cod_simulacao", referencedColumnName = "cod_simulacao"))
+ //   @JsonIdentityInfo(generator = com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	private List<Simulacao> simulacoes;
+	
 
 	public Integer getCodanalise() {
 		return codanalise;
@@ -136,6 +153,14 @@ public class Analise  implements Serializable{
 
 	public void setDatasimulacao(Date datasimulacao) {
 		this.datasimulacao = datasimulacao;
+	}
+
+	public List<Simulacao> getSimulacoes() {
+		return simulacoes;
+	}
+
+	public void setSimulacoes(List<Simulacao> simulacoes) {
+		this.simulacoes = simulacoes;
 	}
 
 

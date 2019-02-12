@@ -1,25 +1,33 @@
-<div class="fullpage">
-<div  class="container shadow-lg idform" id="main-container">
-        <div class="alert alert-danger" [style.visibility]="mensagemErro !=='' ? 'visible' : 'hidden' " style="position: absolute; width:400px;">
-                <strong>Erro:</strong> {{mensagemErro}} 
-         </div>
+<div class="p-grid p-justify-center p-align-center main" [ngStyle]="{'width': '100vw', 'height': '100vh'}">
+    <form name="forms" novalidate (ngSubmit)="fazerLogin(f)" #f="ngForm">
+        <div class="main-container p-grid p-justify-center p-align-center p-dir-col">
+            <img src="assets/imagens/montreal_logo.png" id="logo">
 
-    <form name="forms" (ngSubmit)="fazerLogin(f)" #f="ngForm" novalidate>
-        <img src="assets/imagens/montreal_logo.png" class="rounded-circle" id="logo">
-        <div class="input-group-prepend form-group "  >
-            <i class="fa fa-user" id="logouser" style="font-size: 29px"></i>
-            <input type="text" name="usuario" placeholder="Digite o usuário..." [(ngModel)]="user.login" #usuario="ngModel" [ngClass]="{ 'is-invalid': f.submitted && usuario.invalid }" class="form-control" required>
-        </div>
-  
-        <div class="input-group-prepend form-group" >
-            <i class="fa fa-key" id="logopsw" style="font-size:29px"></i>
-            <input type="password" id="psw" name="password" placeholder="Digite a senha..." class="form-control"
-                data-toggle="tooltip" data-placement="top" title="A senha deve conter no mínimo 6 caractéres sendo no mínimo um caractér especial, uma letra maiúscula, uma letra minúscula e um número."
-                data-trigger="focus" [(ngModel)]="user.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required  >
-        </div>
-       
-        <button type="submit" class="w-100 btn btn-success">Login</button>
+            <div class="p-grid p-justify-center" [ngStyle]="{'margin': '10px 0px 10px 0px', 'width': '90%'}">
+                <div class="ui-inputgroup" [ngStyle]="{'width': '90%'}">
+                    <span class="ui-inputgroup-addon">
+                        <i class="pi pi-user" style="font-size: 1.5em"></i>
+                    </span>
+                    <input pInputText [ngStyle]="{'width': '90%'}" type="text" name="usuario" placeholder="Digite o usuário..." 
+                    [(ngModel)]="user.login" #usuario="ngModel" [ngClass]="{'is-invalid': f.submitted && usuario.invalid}" 
+                    required>         
+                </div>
+            </div>
 
-  </form>
-  </div>
+            <div class="p-grid p-justify-center" [ngStyle]="{'margin': '10px 0px 10px 0px', 'width': '90%'}">
+                <div class="ui-inputgroup" [ngStyle]="{'width': '90%'}">
+                    <span class="ui-inputgroup-addon">
+                        <i class="pi pi-lock" style="font-size: 1.5em"></i>
+                    </span>
+                    <input pInputText [ngStyle]="{'width': '90%'}" type="password" id="psw" name="password" 
+                    placeholder="Digite a senha..."  title="A senha deve conter no mínimo 6 caractéres sendo no mínimo um caractér especial, uma letra maiúscula, uma letra minúscula e um número." 
+                    [(ngModel)]="user.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required>         
+                </div>
+            </div>
+
+            <button pButton type="submit" label="Login" class="ui-button-rounded ui-button-success"
+            [ngStyle]="{'width': '90%'}"></button>
+
+        </div>
+    </form>
 </div>

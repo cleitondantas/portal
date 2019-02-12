@@ -1,3 +1,4 @@
+import { CalendarioBr } from './../models/calendario-br';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Incorporadoras } from './../models/incorporadoras';
 import { EstadoCivil } from 'src/app/models/estado-civil';
@@ -64,5 +65,9 @@ export class CadastroChamadasService {
     // CRIEI UM REDIRECIONAMENTO INTERNO NO BACKEND PARA TRATAR NO SERVIDOR O CEP ANTES DE ENVIAR PARA O FRONT
     //return this.http.get(`//viacep.com.br/ws/${cep}/json`);
     return this.http.get(environment.urlpath +'/api/cep/'+cep);
+  }
+
+  getCalendarioBr() {
+    return this.http.get<CalendarioBr[]>(`./../../assets/calendario-br.json`);
   }
 }

@@ -1,3 +1,4 @@
+import { CalendarioBr } from './../../../models/calendario-br';
 import { OrgaoExpedidor } from './../../../models/orgao-expedidor';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -97,16 +98,17 @@ export class CadastroComponent implements OnInit {
       this.cadInfo = JSON.parse(b);
     }
 
-    this.br = {
-      firstDayOfWeek: 0,
+    this.br = 
+    {
       dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
       dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
       dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
       monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
       monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
-      today: 'Hoje',
-      clear: 'Limpar',
-      dateFormat: 'dd/mm/yy'
+      today: "Hoje",
+      firstDayOfWeek: 1,
+      clear: "Limpar",
+      dateFormat: "dd/mm/yy"
     }
   }
 
@@ -142,12 +144,13 @@ export class CadastroComponent implements OnInit {
   
       this.contato = [];
       this.contatoDisplay = [];
+      this.msgs = [];
     } else {
       this.msgs = [];
       this.msgs.push({
         severity: 'error',
         summary: 'Erro ao adicionar comprador!',
-        detail: 'Existem campos não preenchidos.'
+        detail: 'Existem campos não preenchidos ou preenchidos incorretamente.'
       })
     }
   }
