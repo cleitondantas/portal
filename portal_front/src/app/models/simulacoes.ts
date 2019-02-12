@@ -21,7 +21,7 @@ export class Simulacoes {
     valorrecursosproprios: number;
     saldodevedor:number;
     codinstituicaofinanceira: any;
-    codstatussimulacao: number; 
+    codstatussimulacao: any; 
     valoravaliacaoinstfinanc:number; 
     taxadejuros:number;
     valorprimeiraparcela: number;

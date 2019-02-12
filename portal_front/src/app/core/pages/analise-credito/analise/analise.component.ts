@@ -4,6 +4,7 @@ import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
+import { StatusSimulacao } from 'src/app/models/status-simulacao';
 
 @Component({
   selector: 'app-analise',
@@ -21,6 +22,7 @@ export class AnaliseComponent implements OnInit {
   tipoAmortizacao: any[] = [];
   simul: any;
   br: any;
+  statussimulacao: any[] = [];
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
@@ -33,6 +35,7 @@ export class AnaliseComponent implements OnInit {
     this.service.getInstFinan().subscribe(dados => this.instFinan = dados['data'])
     this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
+    this.service.getStatusSimulacao().subscribe(dados => this.statussimulacao = dados['data']);
 
     var a = sessionStorage.getItem('cadastro');
     this.numfid  = sessionStorage.getItem('FID');
@@ -60,7 +63,7 @@ export class AnaliseComponent implements OnInit {
 
   adicionarSimulacao(simulacao: Simulacoes) {
     var simulacao2: Simulacoes = new Simulacoes();
-    var analise2: Analise  = new Analise();
+
     simulacao2.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     simulacao2.valoravaliacao = simulacao.valoravaliacao;
     simulacao2.valorcompravenda = simulacao.valorcompravenda;

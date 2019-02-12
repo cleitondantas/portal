@@ -218,8 +218,8 @@
           <td><button pButton icon="pi pi-trash" (click)="removerSimulacao(rowData)"></button></td>
           <td> {{simul.codinstituicaofinanceira.descInstituicaoFinanceira}} </td>
           <td> 
-            <p-dropdown [options]="[{nome: 'Aprovado'}, {nome: 'Reprovado'}]" optionLabel="nome" id="codstatussimulacao"
-            ngModel name="codstatussimulacao" #codstatussimulacao="ngModel" [(ngModel)]="simulacoes.codstatussimulacao"></p-dropdown>  
+            <p-dropdown placeholder="Selecione..." [options]="statussimulacao" optionLabel="descstatussimulacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+            class="ajusteInput" id="codstatussimulacao" name="codstatussimulacao" #codstatussimulacao="ngModel" [(ngModel)]="rowData.codstatussimulacao"></p-dropdown>  
           </td>
           <td [pEditableColumn]="rowData" [pEditableColumnField]="'Valor Total'">
             <p-cellEditor>
@@ -229,9 +229,7 @@
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/>    
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-                  id="valoravaliacaoinstfinanc" name="valoravaliacaoinstfinanc" #valoravaliacaoinstfinanc="ngModel" [(ngModel)]="rowData.valoravaliacaoinstfinanc"
-                  [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/> 
+                  <label pInputText class="labelStyle">{{rowData.valoravaliacaoinstfinanc}}</label>
                 </ng-template>
             </p-cellEditor>
           </td>
