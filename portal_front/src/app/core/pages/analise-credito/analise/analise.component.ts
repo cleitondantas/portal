@@ -122,8 +122,14 @@ export class AnaliseComponent implements OnInit {
   salvar() {
     this.analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     this.analise.codcadastro  = this.codcadastro;
-    
-    console.log(this.simulacaoLista);
-    console.log(JSON.stringify(this.simulacaoLista));
+    for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
+      var item = this.simulacaoLista[_i];
+      this.simulacaoLista[_i].codinstituicaofinanceira = item.codinstituicaofinanceira ?  Number(item.codinstituicaofinanceira.codInstituicaoFinanceira):null;
+      console.log(this.simulacaoLista[_i].codinstituicaofinanceira)
+      this.simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
+    }
+    this.analise.simulacoes= this.simulacaoLista;
+    console.log(this.analise);
+    console.log(JSON.stringify(this.analise));
   }
 }

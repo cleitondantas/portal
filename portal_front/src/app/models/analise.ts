@@ -8,7 +8,7 @@ dataemissao:string;
 dataassinatura:string;
 codstatusanalise:number;
 codsubstatusanalise:number;
-codsimulacao:number;
+codsimulacaofinanciado:number;
 obs:string;
 codusuario:number;
 datasimulacao:string;
