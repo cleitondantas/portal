@@ -71,7 +71,7 @@
                     <label class="ajusteLabel" for="renda">Renda: </label>
                   </div>
                   <div class="p-col-8">
-                    <input currencyMask pInputText class="ajusteInput" name="valorrenda" [(ngModel)]="comprador.valorrenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                    <input currencyMask pInputText class="ajusteInput" name="valorrenda" [(ngModel)]="comprador.valorrenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
                     required/>
                   </div>
                 </div>

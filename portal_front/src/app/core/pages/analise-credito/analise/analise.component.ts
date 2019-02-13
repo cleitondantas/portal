@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
 import { StatusSimulacao } from 'src/app/models/status-simulacao';
+import { Dropdown } from 'primeng/primeng';
 
 @Component({
   selector: 'app-analise',
@@ -27,7 +27,6 @@ export class AnaliseComponent implements OnInit {
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
   constructor( 
-    private http: HttpClient,
     private service: AnaliseChamadasService
   ) { }
 
@@ -90,7 +89,7 @@ export class AnaliseComponent implements OnInit {
 
     console.log(this.simulacaoLista);
     console.log(JSON.stringify(this.simulacaoLista));
-/*
+  /*
     this.simulacoes.valoravaliacao = null;
     this.simulacoes.valorcompravenda = null;
     this.simulacoes.valorcredito = null;
@@ -125,5 +124,9 @@ export class AnaliseComponent implements OnInit {
     
     console.log(this.simulacaoLista);
     console.log(JSON.stringify(this.simulacaoLista));
+  }
+
+  focusDropDown(dd) {
+    console.log(dd)
   }
 }
