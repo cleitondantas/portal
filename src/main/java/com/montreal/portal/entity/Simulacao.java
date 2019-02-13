@@ -40,6 +40,9 @@ public class Simulacao implements Serializable{
 	@Column(name="cod_modalidade_simulacao")
 	private Integer codmodalidadesimulacao;
 	
+	@Column(name="obs")
+	private String obs;
+	
 	@Column(name="cod_sicaq")
 	private Integer codsicaq;
 
@@ -282,6 +285,22 @@ public class Simulacao implements Serializable{
 
 	public void setValorcompravenda(BigDecimal valorcompravenda) {
 		this.valorcompravenda = valorcompravenda;
+	}
+
+	public BigDecimal getValoravaliacao() {
+		return valoravaliacao;
+	}
+
+	public void setValoravaliacao(BigDecimal valoravaliacao) {
+		this.valoravaliacao = valoravaliacao;
+	}
+
+	public String getObs() {
+		return obs;
+	}
+
+	public void setObs(String obs) {
+		this.obs = obs;
 	}
 
 	
