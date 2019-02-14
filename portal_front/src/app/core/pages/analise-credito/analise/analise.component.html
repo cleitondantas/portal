@@ -234,8 +234,9 @@
               </ng-template>
               <ng-template pTemplate="output">
                 <input pInputText class="ajusteInput" value="{{rowData.codstatussimulacao.descstatussimulacao}}" 
-                *ngIf="rowData.codstatussimulacao != undefined"/>
-                <input pInputText class="ajusteInput" value="Selecione..." *ngIf="rowData.codstatussimulacao == undefined"/>
+                *ngIf="rowData.codstatussimulacao != undefined" (mouseover)="focusDropDown(inputDropdown)" #inputDropdown/>
+                <input pInputText class="ajusteInput" value="Selecione..." *ngIf="rowData.codstatussimulacao == undefined" 
+                #inputDropdown (mouseover)="focusDropDown(inputDropdown)"/>
               </ng-template>
             </p-cellEditor>
           </td>
@@ -296,7 +297,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataMae" dateFormat="dd/mm/yy" [locale]="br"
-            name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" ></p-calendar>
+            name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" showButtonBar="true"></p-calendar>
           </div>
         </div>
       </div>
@@ -310,7 +311,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"
-            name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" ></p-calendar>
+            name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" showButtonBar="true"></p-calendar>
           </div>
         </div>
       </div>
@@ -324,7 +325,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"
-            name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" ></p-calendar>
+            name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" showButtonBar="true"></p-calendar>
           </div>
         </div>
       </div>

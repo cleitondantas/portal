@@ -3,8 +3,6 @@ import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
-import { StatusSimulacao } from 'src/app/models/status-simulacao';
-import { Dropdown } from 'primeng/primeng';
 
 @Component({
   selector: 'app-analise',
@@ -23,6 +21,7 @@ export class AnaliseComponent implements OnInit {
   simul: any;
   br: any;
   statussimulacao: any[] = [];
+  
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
@@ -132,7 +131,7 @@ export class AnaliseComponent implements OnInit {
     console.log(JSON.stringify(this.analise));
   }
 
-  focusDropDown(dd) {
-    console.log(dd)
+  focusDropDown(input) {
+    input.click();
   }
 }
