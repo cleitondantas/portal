@@ -136,7 +136,7 @@ export class CadastroComponent implements OnInit {
   
       comprador = new Compradores();
   
-      this.comprador = this.logicaService.limparComprador(this.comprador);
+      this.limparCadInfo(formCadInfo);
   
       this.contato = [];
       this.contatoDisplay = [];
@@ -223,8 +223,9 @@ export class CadastroComponent implements OnInit {
     this.cadInfo.complemento = dados.complemento;
   }
 
-  limparFormulario(f) {
-    f.reset();
+  limparFormulario(cadImovel, cadInfo) {
+    cadImovel.reset();
+    cadInfo.reset();
   }
 
   setarTrue(rowData: Compradores) {
@@ -326,6 +327,10 @@ export class CadastroComponent implements OnInit {
       input.setAttribute('placeholder', 'email@email.com')
       this.mask = emailMask;
     }
+  }
+
+  limparCadInfo(cadInfo) {
+    cadInfo.reset();
   }
   
 }

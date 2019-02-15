@@ -63,6 +63,7 @@ export class AnaliseComponent implements OnInit {
     var simulacao2: Simulacoes = new Simulacoes();
 
     simulacao2.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+    simulacao2.codcadastro = this.codcadastro;
     simulacao2.valoravaliacao = simulacao.valoravaliacao;
     simulacao2.valorcompravenda = simulacao.valorcompravenda;
     simulacao2.valorcredito = simulacao.valorcredito;
