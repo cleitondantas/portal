@@ -34,8 +34,8 @@
           <label class="ajusteLabel" for="primeiraParcela">1° Parcela: </label>
         </div>
         <div class="p-col-9">
-          <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="primeiraParcela"
-          mask="R$ 999.999,99?" slotChar=" "></p-inputMask>
+          <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+          id="primeiraParcela"/>
         </div>
       </div>
 
@@ -44,8 +44,8 @@
           <label class="ajusteLabel" for="segundaParcela">2° Parcela: </label>
         </div>
         <div class="p-col-9">
-          <p-inputMask  [style]="{'width': '100%', 'margin-left': '5px'}" id="segundaParcela"
-          mask="R$ 999.999,99?" slotChar=" "></p-inputMask>
+          <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+          id="segundaParcela"/>
         </div>
       </div>
 

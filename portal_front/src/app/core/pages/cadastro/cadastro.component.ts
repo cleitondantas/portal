@@ -1,7 +1,5 @@
-import { CalendarioBr } from './../../../models/calendario-br';
 import { OrgaoExpedidor } from './../../../models/orgao-expedidor';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Compradores } from 'src/app/models/compradores';
@@ -56,7 +54,6 @@ export class CadastroComponent implements OnInit {
   contatos: Contatos = new Contatos();
 
   constructor(
-    private http: HttpClient,
     private confirmationService: ConfirmationService,
     private chamadasService: CadastroChamadasService,
     private logicaService: CadastroLogicaService,
@@ -136,11 +133,10 @@ export class CadastroComponent implements OnInit {
   
       this.compradores.push(comprador2);
       this.disabled = false;
-      console.log(this.compradores, comprador2);
   
       comprador = new Compradores();
   
-      this.comprador = this.logicaService.limparComprador(this.comprador);
+      this.limparCadInfo(formCadInfo);
   
       this.contato = [];
       this.contatoDisplay = [];
@@ -227,8 +223,9 @@ export class CadastroComponent implements OnInit {
     this.cadInfo.complemento = dados.complemento;
   }
 
-  limparFormulario(f) {
-    f.reset();
+  limparFormulario(cadImovel, cadInfo) {
+    cadImovel.reset();
+    cadInfo.reset();
   }
 
   setarTrue(rowData: Compradores) {
@@ -330,8 +327,10 @@ export class CadastroComponent implements OnInit {
       input.setAttribute('placeholder', 'email@email.com')
       this.mask = emailMask;
     }
+  }
 
-    console.log(evento, this.mask);
+  limparCadInfo(cadInfo) {
+    cadInfo.reset();
   }
   
 }

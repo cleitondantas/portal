@@ -39,7 +39,7 @@ export class AuthService {
       this.shared.removeSessionUsuario();
       this.usuarioAutenticado = false;
       console.log('ERRO AO TENTAR LOGAR');
-      window.location.reload();
+      localStorage.setItem('valid', 'false');
     });
   }
 

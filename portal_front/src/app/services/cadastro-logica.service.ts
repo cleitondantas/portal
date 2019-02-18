@@ -38,32 +38,6 @@ export class CadastroLogicaService {
     return comprador2;
   }
 
-  limparComprador(comprador: Compradores) {
-    comprador.cpfcnpj = null;
-    comprador.codtipocliente = null;
-    comprador.nomecliente = null;
-    comprador.ndocumento = null;
-    comprador.orgaoexpedidor = null;
-    comprador.dataexpedicao = null;
-    comprador.datanascimento = null;
-    comprador.codestadocivil = null; 
-    comprador.nacionalidade = null;
-    comprador.profissao = null;
-    comprador.cepresidencial = null;
-    comprador.uf = null;
-    comprador.cidade = null; 
-    comprador.bairro = null;
-    comprador.endereco = null;
-    comprador.complemento = null;
-    comprador.numeroendereco = null;
-    comprador.codusuario = null;
-    comprador.datacadastro = null;
-    comprador.valorrenda = null;
-    comprador.principal = false;
-
-    return comprador;
-  }
-
   adicionarContatosDisplay(contato: Contatos) {
     var contatoDisplay: Contatos = new Contatos();
 
