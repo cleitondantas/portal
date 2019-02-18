@@ -32,6 +32,7 @@ export class AuthService {
       localStorage.setItem('nome_usuario',userAuthentication.usuario.nome + ' '+userAuthentication.usuario.sobrenome);
       console.log(userAuthentication.usuario.nome + ' '+userAuthentication.usuario.sobrenome);
       this.router.navigate(['/home']);
+      this.shared.msgs = [];
     },err => {
       this.shared.setToken(null);
       this.shared.showTemplate.emit(false);
@@ -39,7 +40,11 @@ export class AuthService {
       this.shared.removeSessionUsuario();
       this.usuarioAutenticado = false;
       console.log('ERRO AO TENTAR LOGAR');
-      localStorage.setItem('valid', 'false');
+      this.shared.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao logar!',
+        detail: 'Usúario ou senha estão incorretos.'
+      });
     });
   }
 
@@ -58,6 +63,4 @@ export class AuthService {
     }
     return false;
   }
-
-
 }

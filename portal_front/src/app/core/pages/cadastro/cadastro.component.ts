@@ -224,8 +224,20 @@ export class CadastroComponent implements OnInit {
   }
 
   limparFormulario(cadImovel, cadInfo) {
-    cadImovel.reset();
-    cadInfo.reset();
+    this.confirmationService.confirm({
+      message: 'Deseja limpar os campos preenchidos?',
+      header: 'Atenção!',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+        cadImovel.reset();
+        cadInfo.reset();
+      },
+      reject: () => {
+          
+      }
+  });
   }
 
   setarTrue(rowData: Compradores) {
@@ -261,7 +273,7 @@ export class CadastroComponent implements OnInit {
        this.router.navigate(['/analise']);
       },
       reject: () => {
-        alert('rejeitou')
+        
       }
     })
   }
@@ -330,7 +342,19 @@ export class CadastroComponent implements OnInit {
   }
 
   limparCadInfo(cadInfo) {
-    cadInfo.reset();
+    this.confirmationService.confirm({
+      message: 'Deseja limpar os campos preenchidos?',
+      header: 'Atenção!',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+        cadInfo.reset();
+      },
+      reject: () => {
+          
+      }
+  });
   }
   
 }
