@@ -29,21 +29,8 @@ user = new Usuario();
   ngOnInit() {
   }
 
-
   fazerLogin(from : NgForm){
     this.authService.fazerLogin(from,this.user);
-    var a = localStorage.getItem('valid');
-    JSON.parse(a);
-    if (a != null) {
-      this.msgs = [];
-      this.msgs.push({
-        severity: 'error',
-        summary: 'Erro ao logar!',
-        detail: 'Usúario ou senha estão incorretos.'
-      })
-    } else {
-      this.msgs = [];
-    }
+    this.msgs = this.shared.msgs;
   }
-
 }
