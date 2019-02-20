@@ -10,6 +10,14 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
 import {MenuModule} from 'primeng/menu';
+import {DialogModule} from 'primeng/dialog';
+import {PanelModule} from 'primeng/panel';
+import {ButtonModule} from 'primeng/button';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {TableModule} from 'primeng/table';
+
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +26,12 @@ import {MenuModule} from 'primeng/menu';
     MessagesModule,
     MessageModule,
     ToastModule,
-    MenuModule
+    MenuModule,
+    DialogModule,
+    PanelModule,
+    ButtonModule,
+    AutoCompleteModule,
+    TableModule
   ],
   declarations: [
     ContentComponent,

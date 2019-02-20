@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { TipoContato } from '../models/tipo-contato';
 import { TipoClientes } from '../models/tipo-clientes';
 import { environment } from '../../environments/environment';
+import { Cliente } from '../models/cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +62,14 @@ export class CadastroChamadasService {
     .then(data => {return data;});
   }
 
+  getBuscaClienteCadastrado() {
+    return this.http.get<Cliente[]>(environment.urlpath +'/api/clientes')
+    .toPromise()
+    .then(res => <any[]> res)
+    .then(data => {console.log(data);  return data;});
+  }
+
+
   getCep(cep) {
     // CRIEI UM REDIRECIONAMENTO INTERNO NO BACKEND PARA TRATAR NO SERVIDOR O CEP ANTES DE ENVIAR PARA O FRONT
     //return this.http.get(`//viacep.com.br/ws/${cep}/json`);
@@ -70,4 +79,11 @@ export class CadastroChamadasService {
   getCalendarioBr() {
     return this.http.get<CalendarioBr[]>(`./../../assets/calendario-br.json`);
   }
+
+  getBuscaCadastrado(nome: string,cpf: string){
+  return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/nome/'+nome)
+  .toPromise()
+  .then(res => <any[]> res)
+  .then(data => {data;  return data;});
+}
 }
