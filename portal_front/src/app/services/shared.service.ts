@@ -3,7 +3,6 @@ import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { MessageService } from 'primeng/api';
 import { Role } from '../models/role';
-import { Message } from 'primeng/api';
 
 
 @Injectable({
@@ -17,7 +16,6 @@ export class SharedService {
   @Output() messengerService = new MessageService();
   @Output() showError = new EventEmitter<string>();
   showTemplate = new EventEmitter<boolean>();
-  msgs: Message[] = [];
   
   constructor() { 
     return SharedService.instance = SharedService.instance || this;

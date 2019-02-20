@@ -48,6 +48,7 @@ export class CadastroComponent implements OnInit {
   mask: Array<string | RegExp>;
   disabledInput: boolean = true;
   msgs: Message[] = [];
+  naoPreenchidos: any[] = []
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -136,17 +137,26 @@ export class CadastroComponent implements OnInit {
   
       comprador = new Compradores();
   
-      this.limparCadInfo(formCadInfo);
+      formCadInfo.reset();
   
       this.contato = [];
       this.contatoDisplay = [];
       this.msgs = [];
     } else {
+      this.naoPreenchidos = [];
+      for (var _i in formCadInfo.controls) {
+        var abc = _i;
+        console.log(formCadInfo.controls[abc])
+        if (formCadInfo.controls[abc].status == "INVALID") {
+          this.naoPreenchidos.push(abc)
+        }
+      }
+      console.log(this.naoPreenchidos);
       this.msgs = [];
       this.msgs.push({
         severity: 'error',
         summary: 'Erro ao adicionar comprador!',
-        detail: 'Existem campos não preenchidos ou preenchidos incorretamente.'
+        detail: `Existem campos não preenchidos ou preenchidos incorretamente.`
       })
     }
   }
@@ -352,7 +362,6 @@ export class CadastroComponent implements OnInit {
         cadInfo.reset();
       },
       reject: () => {
-          
       }
   });
   }
