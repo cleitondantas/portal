@@ -13,5 +13,10 @@ public interface CasdastroRepository extends JpaRepository<Cadastro,Integer>{
 	@Query("select c from Cadastro c where c.numerocadastroincorporadorafid = :fid")
 	List<Cadastro> findCadastroWithPartOfFid(@Param("fid") Integer fid);
 	
+	@Query(value = "select c.* from tb_cadastro c inner join tb_cliente_cadastro cc on cc.cod_cadastro = c.cod_cadastro inner join tb_clientes cl  on cl.cpf_cnpj = cc.cpf_cnpj where cl.nome_cliente like %:nome%",nativeQuery = true)
+	List<Cadastro> findCadastroWithPartOfNomeCliente(@Param("nome") String nome);
+	
+	@Query(value = "select c.* from tb_cadastro c inner join tb_cliente_cadastro cc on cc.cod_cadastro = c.cod_cadastro inner join tb_clientes cl  on cl.cpf_cnpj = cc.cpf_cnpj where cl.cpf_cnpj like %:cpf%",nativeQuery = true)
+	List<Cadastro> findCadastroWithPartOfCPFCliente(@Param("cpf") String cpf);
 	
 }

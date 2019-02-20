@@ -127,6 +127,8 @@ public class CadastroControler {
 		return ResponseEntity.ok(response);
 	}
 
+	
+	//Busca por FID
 	@GetMapping(value = "/cadastro/{cod}")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Iterable<Cadastro>>> findFidCadastro(@PathVariable String cod) {
@@ -165,5 +167,77 @@ public class CadastroControler {
 	}
 	
 	
+	@GetMapping(value = "/cadastro/nome/{nomeCliente}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+	public ResponseEntity<Response<Iterable<Cadastro>>> findNomeClienteCadastro(@PathVariable String nomeCliente) {
+		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
+		List<Cadastro>  cadastros  =  new ArrayList<Cadastro>();
+		Cadastro cadastro =null;
+		try {
+		List<Cadastro> listCadastro = 	casdastroRepository.findCadastroWithPartOfNomeCliente(nomeCliente);
+		//	Optional<Cadastro> cadastroOptional = casdastroRepository.findById(Integer.parseInt(cod));
+//			if(cadastroOptional.isPresent()) {
+//				cadastro = cadastroOptional.get();
+//			}
+		
+		for(Cadastro item: listCadastro) {
+			cadastro = item;
+		}
+			if (cadastro.getClientes() != null) {
+				for (Cliente cliente : cadastro.getClientes()) {
+					if (cadastro.getCpfcnpj() != null) {
+						if (cadastro.getCpfcnpj().equalsIgnoreCase(cliente.getCpfcnpj())) {
+							cliente.setPrincipal(true);
+						} else {
+							cliente.setPrincipal(false);
+						}
+					}
+				}
+			}
+			cadastros.add(cadastro);
+			response.setData(cadastros);
 	
+		} catch (Exception e) {
+			response.getErrors().add(e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping(value = "/cadastro/cpf/{cpf}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+	public ResponseEntity<Response<Iterable<Cadastro>>> findCPFClienteCadastro(@PathVariable String cpf) {
+		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
+		List<Cadastro>  cadastros  =  new ArrayList<Cadastro>();
+		Cadastro cadastro =null;
+		try {
+		List<Cadastro> listCadastro = 	casdastroRepository.findCadastroWithPartOfCPFCliente(cpf);
+		//	Optional<Cadastro> cadastroOptional = casdastroRepository.findById(Integer.parseInt(cod));
+//			if(cadastroOptional.isPresent()) {
+//				cadastro = cadastroOptional.get();
+//			}
+		
+		for(Cadastro item: listCadastro) {
+			cadastro = item;
+		}
+			if (cadastro.getClientes() != null) {
+				for (Cliente cliente : cadastro.getClientes()) {
+					if (cadastro.getCpfcnpj() != null) {
+						if (cadastro.getCpfcnpj().equalsIgnoreCase(cliente.getCpfcnpj())) {
+							cliente.setPrincipal(true);
+						} else {
+							cliente.setPrincipal(false);
+						}
+					}
+				}
+			}
+			cadastros.add(cadastro);
+			response.setData(cadastros);
+	
+		} catch (Exception e) {
+			response.getErrors().add(e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
+		return ResponseEntity.ok(response);
+	}
 }

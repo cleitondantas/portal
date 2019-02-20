@@ -1,9 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output } from '@angular/core';
 import {MenuItem, Message, MessageService} from 'primeng/api';
 import { AuthService } from '../../../../services/auth.service';
 import { Usuario } from 'src/app/models/usuario';
 import {Power1,Back} from 'gsap/all';
 import { Router } from '@angular/router';
+import { CadastroChamadasService } from 'src/app/services/cadastro-chamadas.service';
+import { Cliente } from 'src/app/models/cliente';
+import { Compradores } from 'src/app/models/compradores';
+import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
+
+
 
 declare var TweenMax: any;
 
@@ -15,11 +21,21 @@ declare var TweenMax: any;
 })
 
 export class MenuBarComponent implements OnInit {
+    
     @ViewChild('mushroom') box: ElementRef;
     @ViewChild('mushroom2') box2: ElementRef;
 
     @ViewChild('navmenuuser') navmenuuser: ElementRef;
 
+    display: boolean = false;
+    text: string;
+    results: string[];
+    nomeClienteFiltrado: any[];
+
+    nomeclienteSelecionado:string;
+    cpfclienteSelecionado:string
+
+    cadastrosTabelaBusca:CadastroInformacao[];
 
     items: MenuItem[];
     itemsmenu: MenuItem[];
@@ -28,12 +44,69 @@ export class MenuBarComponent implements OnInit {
     nomeUsuario: string;
     profileUser: string;
 
-    constructor(private router: Router,private authService: AuthService,private messageService: MessageService) {
+    constructor(
+        private router: Router,
+        private authService: AuthService,
+        private messageService: MessageService,
+        private chamadasService: CadastroChamadasService,) {
         authService.shared.messengerService = messageService;
         this.nomeUsuario = localStorage.getItem('nome_usuario');
         this.profileUser = localStorage.getItem('profile');
     }
 
+    blurSelect(item:any){
+        this.nomeclienteSelecionado = item.target.value;
+    }
+
+    clickBuscaPorNome(event:any){
+        this.buscaCadastro();
+    }
+
+    buscaCadastro(){
+        this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado,null).then(data => {
+            this.cadastrosTabelaBusca = data['data'] 
+            console.log(this.cadastrosTabelaBusca);
+        });
+    }
+
+    searchPorNome(event) {
+        let query = event.query;
+        this.chamadasService.getBuscaClienteCadastrado().then(clienteQuery => {
+            this.nomeClienteFiltrado = this.filtroClientePorNome(query, clienteQuery['data']);
+        });  
+      }
+
+    irCadastro(event){
+        console.log(event);
+    }
+
+      filtroClientePorNome(query,clienteQuery:Compradores[]) {
+        let filtered: any[] = [];
+        for (let i = 0; i < clienteQuery.length; i++) {
+          if(clienteQuery[i].nomecliente.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+            filtered.push(clienteQuery[i]);
+          }
+      }
+      return filtered;
+      }
+
+      searchPorCPF(event) {
+        let query = event.query;
+        this.chamadasService.getBuscaClienteCadastrado().then(clienteQuery => {
+            this.nomeClienteFiltrado = this.filtroClientePorCPF(query, clienteQuery['data']);
+        });  
+      }
+
+      filtroClientePorCPF(query,clienteQuery:Compradores[]) {
+        let filtered: any[] = [];
+        for (let i = 0; i < clienteQuery.length; i++) {
+            console.log(i + "CLiente"+ clienteQuery[i].cpfcnpj);
+          if(clienteQuery[i].cpfcnpj.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+            filtered.push(clienteQuery[i]);
+          }
+      }
+      return filtered;
+      }
   ngOnInit() {
     
     this.itemsmenu = [{
@@ -61,7 +134,11 @@ export class MenuBarComponent implements OnInit {
             label: 'Cadastro',
             routerLink: '/cadastro',
             icon: 'pi pi-fw pi-plus',
-            visible: true
+            visible: true,
+            items: [
+                {label: 'Novo ', icon: 'pi pi-fw pi-plus',routerLink:'/cadastro'},
+                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialog()}}
+              ]
           },
           {
             label: 'Análise de crédito',
@@ -101,7 +178,9 @@ export class MenuBarComponent implements OnInit {
           }
       ];
   }
-
+  showDialog() {
+    this.display = true;
+}
 
 logOut(){
     this.doIt();
