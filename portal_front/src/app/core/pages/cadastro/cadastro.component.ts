@@ -41,14 +41,12 @@ export class CadastroComponent implements OnInit {
   originacao: Originacao[];
   tipocliente: TipoClientes[];
   retornocadastro: CadastroInformacao;
-  orgaoExpedidor: OrgaoExpedidor[];
-  orgaoExpedidorFiltrado: any[];
   br: any;
   disabled: boolean = true;
   mask: Array<string | RegExp>;
   disabledInput: boolean = true;
   msgs: Message[] = [];
-  naoPreenchidos: any[] = []
+  msgs2: Message[]= [];
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -111,6 +109,7 @@ export class CadastroComponent implements OnInit {
   }
 
   adicionarContato (contato: Contatos) {
+    console.log(contato);
     var contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
     var contato2 = this.logicaService.adicionarContatosLista(contato);
 
@@ -125,6 +124,7 @@ export class CadastroComponent implements OnInit {
   }
 
   adicionarCompradorLista (comprador: Compradores, formCadInfo) {
+    console.log(comprador);
     if (this.validaFormulario(formCadInfo) == true) {
       var comprador2 = this.logicaService.adicionarComprador(comprador);
       comprador2.contatos = this.contato;
@@ -143,21 +143,27 @@ export class CadastroComponent implements OnInit {
       this.contatoDisplay = [];
       this.msgs = [];
     } else {
-      this.naoPreenchidos = [];
+      this.msgs = [];
+
       for (var _i in formCadInfo.controls) {
-        var abc = _i;
-        console.log(formCadInfo.controls[abc])
-        if (formCadInfo.controls[abc].status == "INVALID") {
-          this.naoPreenchidos.push(abc)
+        if (formCadInfo.controls[_i].status == "INVALID") {
+          formCadInfo.controls[_i].pristine = false;
+          this.msgs = [];
+          this.msgs.push({
+            severity: 'error',
+            summary: 'Erro ao adicionar comprador!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente.`
+          })
         }
       }
-      console.log(this.naoPreenchidos);
-      this.msgs = [];
-      this.msgs.push({
-        severity: 'error',
-        summary: 'Erro ao adicionar comprador!',
-        detail: `Existem campos não preenchidos ou preenchidos incorretamente.`
-      })
+
+      if (this.contato.length == 0) {
+        this.msgs.push({
+          severity: 'error',
+          summary: 'Erro ao adicionar comprador!',
+          detail: `Adicione pelo menos 1 contato.`
+        })
+      }
     }
   }
  
@@ -243,6 +249,8 @@ export class CadastroComponent implements OnInit {
       accept: () => {
         cadImovel.reset();
         cadInfo.reset();
+        this.contato = [];
+        this.contatoDisplay = [];
       },
       reject: () => {
           
@@ -259,33 +267,56 @@ export class CadastroComponent implements OnInit {
   }
 
   confirmacao(cadInfo: CadastroInformacao, formulario) {
-    this.confirmationService.confirm({
-      message: 'Tem certeza que deseja continuar?',
-      header: 'Confirmação',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Sim',
-      rejectLabel: 'Não',
-      accept: () => {
-        cadInfo.uf = cadInfo.uf.uf;
-        cadInfo.clientes = this.compradores;
-        cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
-        cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
-        cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
-        for (let index = 0; index < cadInfo.clientes.length; index++) {
-          cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
-        }
-        cadInfo.cep = cadInfo.cep.replace('-', '');
-        cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
-        this.compradores = [];
+    if (this.validaFormImovel(formulario) == true) {
+      this.confirmationService.confirm({
+        message: 'Tem certeza que deseja continuar?',
+        header: 'Confirmação',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Sim',
+        rejectLabel: 'Não',
+        accept: () => {
+          cadInfo.uf = cadInfo.uf.uf;
+          cadInfo.clientes = this.compradores;
+          cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+          cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
+          cadInfo.codoriginacao = cadInfo.codoriginacao['codOriginacao'];
+          for (let index = 0; index < cadInfo.clientes.length; index++) {
+            cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+          }
+          cadInfo.cep = cadInfo.cep.replace('-', '');
+          cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+          this.compradores = [];
 
-        this.OnSubmit(cadInfo, formulario);
-        
-       this.router.navigate(['/analise']);
-      },
-      reject: () => {
-        
+          this.OnSubmit(cadInfo, formulario);
+          
+        this.router.navigate(['/analise']);
+        },
+        reject: () => {
+        }
+      })
+    } else {
+      this.msgs2 = [];
+
+      for (var _i in formulario.controls) {
+        if (formulario.controls[_i].status == "INVALID") {
+          formulario.controls[_i].pristine = false;
+          this.msgs2 = [];
+          this.msgs2.push({
+            severity: 'error',
+            summary: 'Erro ao avançar!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente.`
+          })
+        }
       }
-    })
+
+      if (this.compradores.length == 0) {
+        this.msgs2.push({
+          severity: 'error',
+          summary: 'Erro ao avançar!',
+          detail: `Cadastre pelo menos 1 comprador.`
+        })
+      }
+    }
   }
 
   /*formatarData(data) {
@@ -315,22 +346,12 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  search(event) {
-    let query = event.query;
-    this.chamadasService.getOrgaoExpedidor().then(orgaoExpedidor => {
-        this.orgaoExpedidorFiltrado = this.filtroOrgao(query, orgaoExpedidor);
-    });  
-  }
-
-  filtroOrgao(query, orgao) {
-    let filtered: any[] = [];
-    for (let i = 0; i < orgao.length; i++) {
-      let orgaos = orgao[i];
-      if(orgaos.sigla.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-          filtered.push(orgaos);
-      }
-  }
-  return filtered;
+  validaFormImovel(formulario) {
+    if (formulario.valid == false || this.compradores.length == 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   validContato(evento) {
@@ -360,10 +381,52 @@ export class CadastroComponent implements OnInit {
       rejectLabel: 'Não',
       accept: () => {
         cadInfo.reset();
+        this.contato = [];
+        this.contatoDisplay = [];
       },
       reject: () => {
       }
   });
   }
   
+  visualizarComprador(comprador:Compradores) {
+    this.comprador.cpfcnpj = comprador.cpfcnpj;
+    this.comprador.codtipocliente = comprador.codtipocliente;
+    this.comprador.nomecliente = comprador.nomecliente;
+    this.comprador.ndocumento = comprador.ndocumento;
+    this.comprador.orgaoexpedidor = comprador.orgaoexpedidor;
+    this.comprador.dataexpedicao = comprador.dataexpedicao;
+    this.comprador.datanascimento = comprador.datanascimento;
+    this.comprador.codestadocivil = comprador.codestadocivil;
+    this.comprador.nacionalidade = comprador.nacionalidade;
+    this.comprador.profissao = comprador.profissao;
+    this.comprador.cepresidencial = comprador.cepresidencial;
+    this.comprador.uf = comprador.uf;
+    this.comprador.cidade = comprador.cidade
+    this.comprador.bairro = comprador.bairro;
+    this.comprador.endereco = comprador.endereco;
+    this.comprador.complemento = comprador.complemento;
+    this.comprador.numeroendereco = comprador.numeroendereco;
+    this.comprador.datacadastro = comprador.datacadastro;
+    this.comprador.valorrenda = comprador.valorrenda;
+    this.contato = comprador.contatos;
+    //this.contatoDisplay = comprador.contatos;
+    for(let item = 0 ; item < comprador.contatos.length;item++){
+      
+      
+      for(let item2 = 0 ; item2 <  this.tipoContato.length;item2++){
+        if(this.tipoContato[item2].codtipocontato == comprador.contatos[item].codtipocontato){
+           let contato: any;
+          contato.tipocontato =  this.tipoContato[item2].desctipocontato as any;
+          contato.desccontato = comprador.contatos[item].desccontato as any;
+          contato.codtipocontato = comprador.contatos[item].codtipocontato as any;
+          this.contatoDisplay.push(contato);
+        }
+        
+      }
+    }
+    
+
+    console.log(comprador)
+  }
 }
