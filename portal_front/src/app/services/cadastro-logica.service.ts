@@ -17,14 +17,14 @@ export class CadastroLogicaService {
     comprador2.codtipocliente = Number(comprador.codtipocliente); 
     comprador2.nomecliente = comprador.nomecliente;
     comprador2.ndocumento = comprador.ndocumento;
-    comprador2.orgaoexpedidor = comprador.orgaoexpedidor.sigla;
+    comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
     comprador2.dataexpedicao = comprador.dataexpedicao;
     comprador2.datanascimento = comprador.datanascimento;
     comprador2.codestadocivil = comprador.codestadocivil.codEstadoCivil; 
     comprador2.nacionalidade = comprador.nacionalidade;
     comprador2.profissao = comprador.profissao;
     comprador2.cepresidencial = comprador.cepresidencial;
-    comprador2.uf = comprador.uf.uf;
+    comprador2.uf = comprador.uf;
     comprador2.cidade = comprador.cidade; 
     comprador2.bairro = comprador.bairro;
     comprador2.endereco = comprador.endereco;

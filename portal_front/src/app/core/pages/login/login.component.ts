@@ -25,12 +25,20 @@ user = new Usuario();
     )
    }
 
-
   ngOnInit() {
   }
 
   fazerLogin(from : NgForm){
     this.authService.fazerLogin(from,this.user);
-    this.msgs = this.shared.msgs;
+    if (this.shared.getToken() == null || undefined) {
+      this.msgs = [];
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao logar!',
+        detail: 'Usúario ou senha estão incorretos.'
+      });
+    } else {
+      this.msgs = [];
+    }
   }
 }
