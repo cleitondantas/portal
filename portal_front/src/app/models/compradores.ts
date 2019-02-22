@@ -6,8 +6,8 @@ export class Compradores {
     nomecliente: string;
     ndocumento: string;
     orgaoexpedidor: any;
-    dataexpedicao: string;
-    datanascimento: string;
+    dataexpedicao: Date;
+    datanascimento: Date;
     codestadocivil: any;
     nacionalidade: string;
     profissao: string;
@@ -19,7 +19,7 @@ export class Compradores {
     complemento: string;
     numeroendereco: string;
     codusuario: string;
-    datacadastro: string;
+    datacadastro: Date;
     valorrenda: number;
     contatos: Contatos[];
     principal: boolean = false;
