@@ -114,16 +114,16 @@ export class CadastroComponent implements OnInit {
       let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
       let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
       console.log(cadastroinformacaoCarregada)
-      //Codigo de parce do objeto carregado para os dados da tela
+      this.compradores = cadastroinformacaoCarregada.clientes;
       
+      //Codigo de parce do objeto carregado para os dados da tela
+      //this.cadInfo = cadastroinformacaoCarregada;
       this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
       this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
       this.cadInfo.box = cadastroinformacaoCarregada.box;
       this.cadInfo.cep = cadastroinformacaoCarregada.cep;
       this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
       this.cadInfo.clientes  = cadastroinformacaoCarregada.clientes;
-      this.compradores = cadastroinformacaoCarregada.clientes;
-
       this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
       this.cadInfo.codempreendimento  = cadastroinformacaoCarregada.codempreendimento;
       this.cadInfo.codoriginacao = cadastroinformacaoCarregada.codoriginacao;
@@ -132,9 +132,15 @@ export class CadastroComponent implements OnInit {
       this.cadInfo.numero = cadastroinformacaoCarregada.numero;
       this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
       this.cadInfo.uf = cadastroinformacaoCarregada.uf;
-
-      
-
+      this.cadInfo.codincorporadora = cadastroinformacaoCarregada.codincorporadora;
+      this.cadInfo.datacadastro = cadastroinformacaoCarregada.datacadastro;
+      this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
+      this.cadInfo.numeroapartamento = cadastroinformacaoCarregada.numeroapartamento;
+      this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
+      this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
+      this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
+      this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
+      this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
 
       sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
     }
@@ -420,7 +426,7 @@ export class CadastroComponent implements OnInit {
       }
   });
   }
-  
+
   visualizarComprador(comprador:Compradores) {
     this.comprador.cpfcnpj = comprador.cpfcnpj;
     this.comprador.codtipocliente = comprador.codtipocliente;
@@ -441,24 +447,19 @@ export class CadastroComponent implements OnInit {
     this.comprador.numeroendereco = comprador.numeroendereco;
     this.comprador.datacadastro = comprador.datacadastro;
     this.comprador.valorrenda = comprador.valorrenda;
+    this.comprador.contatos = comprador.contatos;
     this.contato = comprador.contatos;
-    //this.contatoDisplay = comprador.contatos;
+    this.contatoDisplay =[];
     for(let item = 0 ; item < comprador.contatos.length;item++){
-      
-      
       for(let item2 = 0 ; item2 <  this.tipoContato.length;item2++){
         if(this.tipoContato[item2].codtipocontato == comprador.contatos[item].codtipocontato){
-           let contato: any;
-          contato.tipocontato =  this.tipoContato[item2].desctipocontato as any;
-          contato.desccontato = comprador.contatos[item].desccontato as any;
-          contato.codtipocontato = comprador.contatos[item].codtipocontato as any;
-          this.contatoDisplay.push(contato);
+            var contatoDisplay: Contatos = new Contatos();
+            contatoDisplay.tipocontato = this.tipoContato[item2].desctipocontato;
+            contatoDisplay.desccontato =  comprador.contatos[item].desccontato;
+            this.contatoDisplay.push(contatoDisplay);
+            console.log(this.contatoDisplay);
         }
-        
       }
     }
-    
-
-    console.log(comprador)
   }
 }
