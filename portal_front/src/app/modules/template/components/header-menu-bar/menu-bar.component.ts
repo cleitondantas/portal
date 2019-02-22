@@ -54,21 +54,27 @@ export class MenuBarComponent implements OnInit {
         this.profileUser = localStorage.getItem('profile');
     }
 
-    blurSelect(item:any){
+    blurNomeSelect(item:any){
         this.nomeclienteSelecionado = item.target.value;
     }
-
-    clickBuscaPorNome(event:any){
-        this.buscaCadastro();
+    blurCPFSelect(item:any){
+        this.cpfclienteSelecionado = item.target.value;
+ 
     }
-
-    buscaCadastro(){
+    clickBuscaPorNome(event:any){
         this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado,null).then(data => {
             this.cadastrosTabelaBusca = data['data'] 
-            console.log(this.cadastrosTabelaBusca);
         });
+    
     }
 
+    clickBuscaPorCPF(event:any){
+        this.chamadasService.getBuscaCadastrado(null,this.cpfclienteSelecionado).then(data => {
+            this.cadastrosTabelaBusca = data['data'] 
+
+        });
+      
+    }
     searchPorNome(event) {
         let query = event.query;
         this.chamadasService.getBuscaClienteCadastrado().then(clienteQuery => {
@@ -76,8 +82,17 @@ export class MenuBarComponent implements OnInit {
         });  
       }
 
-    irCadastro(event){
-        console.log(event);
+    irCadastro(codcadastro:number){
+        
+        for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
+            if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
+            console.log(this.cadastrosTabelaBusca[i])
+            console.log(JSON.stringify(this.cadastrosTabelaBusca[i]));
+            sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i]));
+            }
+        }
+        this.hideDialog();
+        this.router.navigate(['/cadastro']);
     }
 
       filtroClientePorNome(query,clienteQuery:Compradores[]) {
@@ -100,7 +115,6 @@ export class MenuBarComponent implements OnInit {
       filtroClientePorCPF(query,clienteQuery:Compradores[]) {
         let filtered: any[] = [];
         for (let i = 0; i < clienteQuery.length; i++) {
-            console.log(i + "CLiente"+ clienteQuery[i].cpfcnpj);
           if(clienteQuery[i].cpfcnpj.toLowerCase().indexOf(query.toLowerCase()) == 0) {
             filtered.push(clienteQuery[i]);
           }
@@ -181,6 +195,9 @@ export class MenuBarComponent implements OnInit {
   showDialog() {
     this.display = true;
 }
+  hideDialog(){
+    this.display = false;
+  }
 
 logOut(){
     this.doIt();
