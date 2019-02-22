@@ -22,12 +22,12 @@
      </div>
 </p-menubar>
 
-<p-dialog header="Buscar Cadastro" [(visible)]="display" draggable="false" positionTop="100"  baseZIndex="1000" width="750" height ="900" >
+<p-dialog header="Buscar Cadastro" [(visible)]="display" draggable="false" positionTop="100"  baseZIndex="1000" width="750" height ="900"  >
   
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
                     <p-autoComplete [suggestions]="nomeClienteFiltrado" (completeMethod)="searchPorNome($event)" field="nomecliente"  placeholder="Nome"
-                     id="idBuscaNome" size="90" [minLength]="3" (onBlur)="blurSelect($event)"
+                     id="idBuscaNome" size="90" [minLength]="3" (onBlur)="blurNomeSelect($event)"
                       [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"></p-autoComplete>
                     <p-button  icon="pi pi-search" (onClick)="clickBuscaPorNome($event)"></p-button>
                 </div>
@@ -35,11 +35,12 @@
                 <div class="ui-inputgroup" >
                     <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
                     <p-autoComplete  [suggestions]="nomeClienteFiltrado" (completeMethod)="searchPorCPF($event)" field="cpfcnpj"  placeholder="CPF"
-                    id="idBuscacpf" size="90" ngModel [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"></p-autoComplete>
-                    <button pButton type="button" icon="pi pi-search" ></button>              
+                    id="idBuscacpf" size="90" (onBlur)="blurCPFSelect($event)" ngModel [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"></p-autoComplete>
+                    <p-button  icon="pi pi-search" (onClick)="clickBuscaPorCPF($event)"></p-button>        
                 </div>
-
-                <p-table   [value]="cadastrosTabelaBusca">
+               <br>
+               <br>    
+                <p-table   [value]="cadastrosTabelaBusca"   >
                     <ng-template pTemplate="header">
                          <tr>
                               <th>Cod cadastro</th>

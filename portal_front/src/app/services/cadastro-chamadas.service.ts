@@ -66,7 +66,7 @@ export class CadastroChamadasService {
     return this.http.get<Cliente[]>(environment.urlpath +'/api/clientes')
     .toPromise()
     .then(res => <any[]> res)
-    .then(data => {console.log(data);  return data;});
+    .then(data => {return data;});
   }
 
 
@@ -81,9 +81,11 @@ export class CadastroChamadasService {
   }
 
   getBuscaCadastrado(nome: string,cpf: string){
-  return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/nome/'+nome)
-  .toPromise()
-  .then(res => <any[]> res)
-  .then(data => {data;  return data;});
+  if(nome!=null){
+  return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/nome/'+nome).toPromise().then(res => <any[]> res).then(data => {data;  return data;});
+  } else if(cpf !=null){
+    return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/cpf/'+cpf).toPromise().then(res => <any[]> res).then(data => {data;  return data;});
+  }
+
 }
 }

@@ -19,6 +19,7 @@ import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask'
+import { CadastroProposta } from 'src/app/models/cadastroPorposta';
 
 @Component({
   selector: 'app-cadastro',
@@ -73,6 +74,7 @@ export class CadastroComponent implements OnInit {
     });
 
     console.log(JSON.stringify(this.cadInfo), cadInfo);
+    
    // sessionStorage.clear();
     formulario.reset();
   }
@@ -106,6 +108,36 @@ export class CadastroComponent implements OnInit {
       firstDayOfWeek: 1,
       clear: "Limpar",
       dateFormat: "dd/mm/yy"
+    }
+
+    //Verifica se a tela está sendo carregada vinda do Campo de busca
+    if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
+      let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
+      let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
+      console.log(cadastroinformacaoCarregada)
+      //Codigo de parce do objeto carregado para os dados da tela
+      
+      this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
+      this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
+      this.cadInfo.box = cadastroinformacaoCarregada.box;
+      this.cadInfo.cep = cadastroinformacaoCarregada.cep;
+      this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
+      this.cadInfo.clientes  = cadastroinformacaoCarregada.clientes;
+      this.compradores = cadastroinformacaoCarregada.clientes;
+
+      this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
+      this.cadInfo.codempreendimento  = cadastroinformacaoCarregada.codempreendimento;
+      this.cadInfo.codoriginacao = cadastroinformacaoCarregada.codoriginacao;
+      this.cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
+      this.cadInfo.complemento = cadastroinformacaoCarregada.complemento;
+      this.cadInfo.numero = cadastroinformacaoCarregada.numero;
+      this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
+      this.cadInfo.uf = cadastroinformacaoCarregada.uf;
+
+      
+
+
+      sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
     }
   }
 
