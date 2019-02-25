@@ -86,8 +86,6 @@ export class MenuBarComponent implements OnInit {
         
         for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
             if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
-            console.log(this.cadastrosTabelaBusca[i])
-            console.log(JSON.stringify(this.cadastrosTabelaBusca[i]));
             sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i]));
             }
         }

@@ -20,7 +20,7 @@ import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask'
 import { CadastroProposta } from 'src/app/models/cadastroPorposta';
-
+import { map, catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -37,7 +37,7 @@ export class CadastroComponent implements OnInit {
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
   estado: Estadobr[];
-  incorp: Incorporadoras[];
+  private incorp: Incorporadoras[];
   empreendimento: Empreendimento[];
   originacao: Originacao[];
   tipocliente: TipoClientes[];
@@ -77,15 +77,17 @@ export class CadastroComponent implements OnInit {
    // sessionStorage.clear();
     formulario.reset();
   }
-
+  incorpotradoras:any[];
+  item: Incorporadoras;
   ngOnInit() {
+    console.log("ngOnInit");
     this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
     this.chamadasService.getEmpreendimentos().subscribe(dados => this.empreendimento = dados['data']);
     this.chamadasService.getOriginacao().subscribe(dados => this.originacao = dados['data']);
     this.chamadasService.getEstadoCivil().subscribe(dados => this.estadoCivil = dados['data']);
     this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
     this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
-    this.chamadasService.getIncorporadoras().subscribe(dados => this.incorp = dados['data']);
+    this.chamadasService.getIncorporadoras().subscribe(dados => {this.incorp = dados['data']});
 
     var a = sessionStorage.getItem('comprador');
     if(a !== null) {
@@ -108,6 +110,68 @@ export class CadastroComponent implements OnInit {
       clear: "Limpar",
       dateFormat: "dd/mm/yy"
     }
+     //Verifica se a tela está sendo carregada vinda do Campo de busca
+     if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
+      let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
+      let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
+      console.log(cadastroinformacaoCarregada)
+      this.compradores = cadastroinformacaoCarregada.clientes;
+    //Codigo de parce do objeto carregado para os dados da tela
+    this.cadInfo = cadastroinformacaoCarregada;
+    this.compradores = cadastroinformacaoCarregada.clientes;
+    this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
+    this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
+    this.cadInfo.box = cadastroinformacaoCarregada.box;
+    this.cadInfo.cep = cadastroinformacaoCarregada.cep;
+    this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
+    this.cadInfo.clientes  = cadastroinformacaoCarregada.clientes;
+    this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
+
+
+    this.chamadasService.getEmpreendimentos().subscribe(dados => {
+      this.empreendimento = dados['data']
+      for (let item = 0; item < this.empreendimento.length; item ++) {
+        if (this.empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
+          this.cadInfo.codempreendimento = {codempreendimento: cadastroinformacaoCarregada.codempreendimento, cnpjspe: this.empreendimento[item].cnpjspe, descempreendimento: this.empreendimento[item].descempreendimento};
+        }
+      }        
+    });
+    
+    this.chamadasService.getOriginacao().subscribe(dados => { 
+      this.originacao = dados['data']
+      for (let item = 0; item < this.originacao.length; item ++) {
+        if (this.originacao[item].codoriginacao == cadastroinformacaoCarregada.codoriginacao) {
+          this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
+        }
+      }  
+    });
+    
+    this.cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
+    this.cadInfo.complemento = cadastroinformacaoCarregada.complemento;
+    this.cadInfo.numero = cadastroinformacaoCarregada.numero;
+    this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
+    this.cadInfo.uf = {uf: cadastroinformacaoCarregada.uf};
+
+    this.chamadasService.getIncorporadoras().subscribe(dados => {
+      this.incorp = dados['data']
+      for (let item = 0; item < this.incorp.length; item ++) {
+        if (this.incorp[item].codincorporadora == cadastroinformacaoCarregada.codincorporadora) {
+          this.cadInfo.codincorporadora = {codincorporadora: cadastroinformacaoCarregada.codincorporadora, descincorporadora: this.incorp[item].descincorporadora};
+        }
+      }
+    });
+    
+    this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
+    this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
+    this.cadInfo.numeroapartamento = cadastroinformacaoCarregada.numeroapartamento;
+    this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
+    this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
+    this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
+    this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
+    this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
+    sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
+    }
+  
   }
 
   adicionarContato (contato: Contatos) {
@@ -122,7 +186,6 @@ export class CadastroComponent implements OnInit {
     this.contatos = this.logicaService.limparContatos(this.contatos);
     document.getElementById("desccontato").removeAttribute('placeholder');
     this.disabledInput = true;
-    this.visualizarImovel();
   }
 
   adicionarCompradorLista (comprador: Compradores, formCadInfo) {
@@ -425,11 +488,12 @@ export class CadastroComponent implements OnInit {
         }
       }
     }
+    
   }
-
+/*
   visualizarImovel() {
     //Verifica se a tela está sendo carregada vinda do Campo de busca
-    if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
+   // if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
       let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
       let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
       console.log(cadastroinformacaoCarregada)
@@ -479,6 +543,7 @@ export class CadastroComponent implements OnInit {
       this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
 
       sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
-    }
+   // }
   }
+  */
 }

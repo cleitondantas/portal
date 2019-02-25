@@ -11,6 +11,7 @@ import { TipoContato } from '../models/tipo-contato';
 import { TipoClientes } from '../models/tipo-clientes';
 import { environment } from '../../environments/environment';
 import { Cliente } from '../models/cliente';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -45,9 +46,8 @@ export class CadastroChamadasService {
     return this.http.get<TipoClientes[]>(environment.urlpath +'/api/tipoclientes');
   }
 
-  getIncorporadoras() {
-  
-    return this.http.get<Incorporadoras[]>(environment.urlpath +'/api/incorporadoras')
+  getIncorporadoras(){
+    return this.http.get<Incorporadoras[]>(environment.urlpath +'/api/incorporadoras');
   }
 
   createUser(cadInfo: CadastroInformacao) {
