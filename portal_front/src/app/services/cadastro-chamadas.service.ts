@@ -86,6 +86,9 @@ export class CadastroChamadasService {
   } else if(cpf !=null){
     return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/cpf/'+cpf).toPromise().then(res => <any[]> res).then(data => {data;  return data;});
   }
+  }
 
-}
+  putCadastro(cadInfo: CadastroInformacao) {
+    this.http.put<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo);
+  }
 }
