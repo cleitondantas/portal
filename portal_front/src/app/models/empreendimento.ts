@@ -1,5 +1,5 @@
 export class Empreendimento{
-    codmmpreendimento: number;
+    codempreendimento: number;
     cnpjspe: string;
     descempreendimento: string;
 }

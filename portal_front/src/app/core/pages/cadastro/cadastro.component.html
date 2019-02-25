@@ -50,7 +50,7 @@
                       <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                       class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                       id="dataexpedicao" dateFormat="dd/mm/yy" ngModel name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"
-                      [locale]="br" required></p-calendar>
+                      [locale]="br" required dataType="date"></p-calendar>
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,7 @@
                       <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                       class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                       id="dataNasc" dateFormat="dd/mm/yy" ngModel name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
-                      [locale]="br" required></p-calendar>
+                      [locale]="br" required dataType="date"></p-calendar>
                     </div>
                   </div>
                 </div>
@@ -343,7 +343,7 @@
                   <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                   class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                   id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="comprador.datacadastro"
-                  [locale]="br" showButtonBar="true" required></p-calendar>
+                  [locale]="br" showButtonBar="true" required dataType="date"></p-calendar>
                 </div>
               </div>
             </div>
@@ -369,7 +369,7 @@
                 <label class="ajusteLabel" for="codoriginacao">Originação: </label>
               </div>
               <div class="p-col-7" id="origin">
-                <p-dropdown placeholder="Selecione..." optionLabel="descOriginacao" [options]="originacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+                <p-dropdown placeholder="Selecione..." optionLabel="descoriginacao" [options]="originacao" [autoWidth]="false" [style]="{'width': '100%'}" 
                 ngModel name="codoriginacao"  #codoriginacao="ngModel" [(ngModel)]="cadInfo.codoriginacao" required></p-dropdown>
               </div>
             </div>

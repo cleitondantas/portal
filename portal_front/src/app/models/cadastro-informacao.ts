@@ -11,7 +11,7 @@ export class CadastroInformacao {
     valorvenda: number;
     saldodevedor: number;
     codusuario: number;
-    datacadastro: string;
+    datacadastro: Date;
     vagaautomovel: string;
     box: string;
     numeroapartamento: string;

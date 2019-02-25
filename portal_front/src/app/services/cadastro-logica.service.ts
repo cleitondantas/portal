@@ -24,7 +24,7 @@ export class CadastroLogicaService {
     comprador2.nacionalidade = comprador.nacionalidade;
     comprador2.profissao = comprador.profissao;
     comprador2.cepresidencial = comprador.cepresidencial;
-    comprador2.uf = comprador.uf;
+    comprador2.uf = comprador.uf.uf;
     comprador2.cidade = comprador.cidade; 
     comprador2.bairro = comprador.bairro;
     comprador2.endereco = comprador.endereco;
