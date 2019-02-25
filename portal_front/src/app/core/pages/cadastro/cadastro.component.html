@@ -241,7 +241,7 @@
                 <div class="p-col-4">
                 </div>
                 <div class="p-col-8">
-                  <input type="text" class="ajusteInput" pInputText id="desccontato" ngModel name="desccontato" #desccontato="ngModel" [(ngModel)]="contatos.desccontato"
+                  <input type="text" #desccontato class="ajusteInput" pInputText id="desccontato" ngModel name="desccontato" #desccontato="ngModel" [(ngModel)]="contatos.desccontato"
                   [textMask]="{mask: mask}" [disabled]="disabledInput">
                 </div>
               </div>

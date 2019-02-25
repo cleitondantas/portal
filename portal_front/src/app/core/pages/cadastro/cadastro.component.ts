@@ -27,7 +27,6 @@ import { map, catchError } from 'rxjs/operators';
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent implements OnInit {
-
   contato: any[] = [];
   contatoDisplay: any[] = [];
   compradores: Compradores[] = [];
@@ -59,7 +58,13 @@ export class CadastroComponent implements OnInit {
     private logicaService: CadastroLogicaService,
     private router: Router
   ) {
-
+    this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
+    this.chamadasService.getEmpreendimentos().subscribe(dados => this.empreendimento = dados['data']);
+    this.chamadasService.getOriginacao().subscribe(dados => this.originacao = dados['data']);
+    this.chamadasService.getEstadoCivil().subscribe(dados => this.estadoCivil = dados['data']);
+    this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
+    this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
+    this.chamadasService.getIncorporadoras().subscribe(dados => this.incorp = dados['data']);
   }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
