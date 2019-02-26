@@ -27,27 +27,28 @@ import { map, catchError } from 'rxjs/operators';
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent implements OnInit {
-
   contato: any[] = [];
   contatoDisplay: any[] = [];
   compradores: Compradores[] = [];
   listaContato: any[];
   contatoSelecionado: any;
+  disabled: boolean = false;
 
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
   estado: Estadobr[];
-  private incorp: Incorporadoras[];
+  incorp: Incorporadoras[];
   empreendimento: Empreendimento[];
   originacao: Originacao[];
   tipocliente: TipoClientes[];
   retornocadastro: CadastroInformacao;
   br: any;
-  disabled: boolean = true;
+  disabledButton: boolean = true;
   mask: Array<string | RegExp>;
   disabledInput: boolean = true;
   msgs: Message[] = [];
   msgs2: Message[]= [];
+  controle: boolean = false;
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -63,14 +64,14 @@ export class CadastroComponent implements OnInit {
   }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
-   this.chamadasService.createUser(cadInfo).subscribe(dados => {
-      this.retornocadastro = dados['data'];
-      console.log(JSON.stringify(dados['data']));
-      console.log("COD "+this.retornocadastro.codcadastro);
-      console.log("FID "+this.retornocadastro.numerocadastroincorporadorafid);
-      sessionStorage.setItem('FID',this.retornocadastro.numerocadastroincorporadorafid+"");
-      sessionStorage.setItem('COD',this.retornocadastro.codcadastro+"");
-    });
+      this.chamadasService.createUser(cadInfo).subscribe(dados => {
+        this.retornocadastro = dados['data'];
+        console.log(JSON.stringify(dados['data']));
+        console.log("COD "+this.retornocadastro.codcadastro);
+        console.log("FID "+this.retornocadastro.numerocadastroincorporadorafid);
+        sessionStorage.setItem('FID',this.retornocadastro.numerocadastroincorporadorafid+"");
+        sessionStorage.setItem('COD',this.retornocadastro.codcadastro+"");
+      });
 
     console.log(JSON.stringify(this.cadInfo), cadInfo);
     
@@ -80,7 +81,6 @@ export class CadastroComponent implements OnInit {
   incorpotradoras:any[];
   item: Incorporadoras;
   ngOnInit() {
-    console.log("ngOnInit");
     this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
     this.chamadasService.getEmpreendimentos().subscribe(dados => this.empreendimento = dados['data']);
     this.chamadasService.getOriginacao().subscribe(dados => this.originacao = dados['data']);
@@ -116,60 +116,61 @@ export class CadastroComponent implements OnInit {
       let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
       console.log(cadastroinformacaoCarregada)
       this.compradores = cadastroinformacaoCarregada.clientes;
-    //Codigo de parce do objeto carregado para os dados da tela
-    this.cadInfo = cadastroinformacaoCarregada;
-    this.compradores = cadastroinformacaoCarregada.clientes;
-    this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
-    this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
-    this.cadInfo.box = cadastroinformacaoCarregada.box;
-    this.cadInfo.cep = cadastroinformacaoCarregada.cep;
-    this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
-    this.cadInfo.clientes  = cadastroinformacaoCarregada.clientes;
-    this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
+      //Codigo de parce do objeto carregado para os dados da tela
+      this.cadInfo = cadastroinformacaoCarregada;
+      this.compradores = cadastroinformacaoCarregada.clientes;
+      this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
+      this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
+      this.cadInfo.box = cadastroinformacaoCarregada.box;
+      this.cadInfo.cep = cadastroinformacaoCarregada.cep;
+      this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
+      this.cadInfo.clientes  = cadastroinformacaoCarregada.clientes;
+      this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
 
 
-    this.chamadasService.getEmpreendimentos().subscribe(dados => {
-      this.empreendimento = dados['data']
-      for (let item = 0; item < this.empreendimento.length; item ++) {
-        if (this.empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
-          this.cadInfo.codempreendimento = {codempreendimento: cadastroinformacaoCarregada.codempreendimento, cnpjspe: this.empreendimento[item].cnpjspe, descempreendimento: this.empreendimento[item].descempreendimento};
-        }
-      }        
-    });
-    
-    this.chamadasService.getOriginacao().subscribe(dados => { 
-      this.originacao = dados['data']
-      for (let item = 0; item < this.originacao.length; item ++) {
-        if (this.originacao[item].codoriginacao == cadastroinformacaoCarregada.codoriginacao) {
-          this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
-        }
-      }  
-    });
-    
-    this.cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
-    this.cadInfo.complemento = cadastroinformacaoCarregada.complemento;
-    this.cadInfo.numero = cadastroinformacaoCarregada.numero;
-    this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
-    this.cadInfo.uf = {uf: cadastroinformacaoCarregada.uf};
+      this.chamadasService.getEmpreendimentos().subscribe(dados => {
+        this.empreendimento = dados['data']
+        for (let item = 0; item < this.empreendimento.length; item ++) {
+          if (this.empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
+            this.cadInfo.codempreendimento = {codempreendimento: cadastroinformacaoCarregada.codempreendimento, cnpjspe: this.empreendimento[item].cnpjspe, descempreendimento: this.empreendimento[item].descempreendimento};
+          }
+        }        
+      });
 
-    this.chamadasService.getIncorporadoras().subscribe(dados => {
-      this.incorp = dados['data']
-      for (let item = 0; item < this.incorp.length; item ++) {
-        if (this.incorp[item].codincorporadora == cadastroinformacaoCarregada.codincorporadora) {
-          this.cadInfo.codincorporadora = {codincorporadora: cadastroinformacaoCarregada.codincorporadora, descincorporadora: this.incorp[item].descincorporadora};
+      this.chamadasService.getOriginacao().subscribe(dados => { 
+        this.originacao = dados['data']
+        for (let item = 0; item < this.originacao.length; item ++) {
+          if (this.originacao[item].codoriginacao == cadastroinformacaoCarregada.codoriginacao) {
+            this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
+          }
+        }  
+      });
+
+      this.cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
+      this.cadInfo.complemento = cadastroinformacaoCarregada.complemento;
+      this.cadInfo.numero = cadastroinformacaoCarregada.numero;
+      this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
+      this.cadInfo.uf = {uf: cadastroinformacaoCarregada.uf};
+
+      this.chamadasService.getIncorporadoras().subscribe(dados => {
+        this.incorp = dados['data']
+        for (let item = 0; item < this.incorp.length; item ++) {
+          if (this.incorp[item].codincorporadora == cadastroinformacaoCarregada.codincorporadora) {
+            this.cadInfo.codincorporadora = {codincorporadora: cadastroinformacaoCarregada.codincorporadora, descincorporadora: this.incorp[item].descincorporadora};
+          }
         }
-      }
-    });
-    
-    this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
-    this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
-    this.cadInfo.numeroapartamento = cadastroinformacaoCarregada.numeroapartamento;
-    this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
-    this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
-    this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
-    this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
-    this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
-    sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
+      });
+
+      this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
+      this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
+      this.cadInfo.numeroapartamento = cadastroinformacaoCarregada.numeroapartamento;
+      this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
+      this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
+      this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
+      this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
+      this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
+      sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
+      this.controle = true;
     }
   
   }
@@ -454,6 +455,7 @@ export class CadastroComponent implements OnInit {
   }
 
   visualizarComprador(comprador:Compradores) {
+    this.disabledButton = false;
     this.comprador.cpfcnpj = comprador.cpfcnpj;
     this.comprador.codtipocliente = comprador.codtipocliente;
     this.comprador.nomecliente = comprador.nomecliente;
@@ -490,60 +492,32 @@ export class CadastroComponent implements OnInit {
     }
     
   }
-/*
-  visualizarImovel() {
-    //Verifica se a tela está sendo carregada vinda do Campo de busca
-   // if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
-      let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
-      let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
-      console.log(cadastroinformacaoCarregada)
-      this.compradores = cadastroinformacaoCarregada.clientes;
-      
-      //Codigo de parce do objeto carregado para os dados da tela
-      //this.cadInfo = cadastroinformacaoCarregada;
-      this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
-      this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
-      this.cadInfo.box = cadastroinformacaoCarregada.box;
-      this.cadInfo.cep = cadastroinformacaoCarregada.cep;
-      this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
-      this.cadInfo.clientes  = cadastroinformacaoCarregada.clientes;
-      this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
-
-      for (let item = 0; item < this.empreendimento.length; item ++) {
-        if (this.empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
-          this.cadInfo.codempreendimento = {codempreendimento: cadastroinformacaoCarregada.codempreendimento, cnpjspe: this.empreendimento[item].cnpjspe, descempreendimento: this.empreendimento[item].descempreendimento};
-        }
-      }      
-
-      for (let item = 0; item < this.originacao.length; item ++) {
-        if (this.originacao[item].codoriginacao == cadastroinformacaoCarregada.codoriginacao) {
-          this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
-        }
+  
+  atualizarComprador() {
+    for (let item = 0; item < this.compradores.length; item++) {
+      if (this.compradores[item].cpfcnpj == this.comprador.cpfcnpj) {
+        this.compradores[item].cpfcnpj = this.comprador.cpfcnpj;
+        this.compradores[item].codtipocliente = Number(this.comprador.codtipocliente);
+        this.compradores[item].nomecliente = this.comprador.nomecliente;
+        this.compradores[item].ndocumento = this.comprador.ndocumento;
+        this.compradores[item].orgaoexpedidor = this.comprador.orgaoexpedidor;
+        this.compradores[item].dataexpedicao = this.comprador.dataexpedicao;
+        this.compradores[item].datanascimento = this.comprador.datanascimento;
+        this.compradores[item].codestadocivil = this.comprador.codestadocivil.codEstadoCivil
+        this.compradores[item].nacionalidade = this.comprador.nacionalidade;
+        this.compradores[item].profissao = this.comprador.profissao;
+        this.compradores[item].cepresidencial = this.comprador.cepresidencial;
+        this.compradores[item].uf = this.comprador.uf.uf
+        this.compradores[item].cidade = this.comprador.cidade;
+        this.compradores[item].bairro = this.comprador.bairro;
+        this.compradores[item].endereco = this.comprador.endereco;
+        this.compradores[item].complemento = this.comprador.complemento;
+        this.compradores[item].numeroendereco = this.comprador.numeroendereco;
+        this.compradores[item].codusuario = this.comprador.codusuario;
+        this.compradores[item].datacadastro = this.comprador.datacadastro;
+        this.compradores[item].valorrenda = this.comprador.valorrenda;
+        this.compradores[item].principal = this.comprador.principal;
       }
-
-      this.cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
-      this.cadInfo.complemento = cadastroinformacaoCarregada.complemento;
-      this.cadInfo.numero = cadastroinformacaoCarregada.numero;
-      this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
-      this.cadInfo.uf = {uf: cadastroinformacaoCarregada.uf};
-
-      for (let item = 0; item < this.incorp.length; item ++) {
-        if (this.incorp[item].codincorporadora == cadastroinformacaoCarregada.codincorporadora) {
-          this.cadInfo.codincorporadora = {codincorporadora: cadastroinformacaoCarregada.codincorporadora, descincorporadora: this.incorp[item].descincorporadora};
-        }
-      }
-
-      this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
-      this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
-      this.cadInfo.numeroapartamento = cadastroinformacaoCarregada.numeroapartamento;
-      this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
-      this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
-      this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
-      this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
-      this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
-
-      sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
-   // }
+    }
   }
-  */
 }
