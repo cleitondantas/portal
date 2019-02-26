@@ -544,7 +544,7 @@
         icon="pi pi-refresh" iconPos="right"></button>
         <button pButton type="submit" label="Avançar" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
         icon="pi pi-angle-double-right" iconPos="right" (click)="confirmacao(cadInfo, formulario)" [hidden]="controle"></button>
-        <button pButton type="submit" label="Salvar" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
+        <button pButton type="submit" label="Salvar" (click)="atualizarCadastroInformacoes(cadInfo, formulario)" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
         icon="pi pi-save" iconPos="right" [hidden]="!controle"></button>       
       </div>
 

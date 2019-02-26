@@ -54,6 +54,7 @@ export class CadastroChamadasService {
     console.log(JSON.stringify(cadInfo));
     return this.http.post<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo)
   }
+  
 
   getOrgaoExpedidor() {
     return this.http.get(`./../../assets/orgao-expedidor.json`)
@@ -89,6 +90,6 @@ export class CadastroChamadasService {
   }
 
   putCadastro(cadInfo: CadastroInformacao) {
-    this.http.put<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo);
+   return this.http.put<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo);
   }
 }

@@ -78,6 +78,12 @@ export class CadastroComponent implements OnInit {
    // sessionStorage.clear();
     formulario.reset();
   }
+  
+
+
+
+
+
   incorpotradoras:any[];
   item: Incorporadoras;
   ngOnInit() {
@@ -139,9 +145,12 @@ export class CadastroComponent implements OnInit {
 
       this.chamadasService.getOriginacao().subscribe(dados => { 
         this.originacao = dados['data']
+        console.log(this.originacao);
+        console.log(cadastroinformacaoCarregada.codoriginacao)
         for (let item = 0; item < this.originacao.length; item ++) {
-          if (this.originacao[item].codoriginacao == cadastroinformacaoCarregada.codoriginacao) {
+          if (Number(this.originacao[item].codoriginacao) == Number(cadastroinformacaoCarregada.codoriginacao)) {
             this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
+            console.log("COD ORIGINACAO "+this.cadInfo.codoriginacao);
           }
         }  
       });
@@ -383,6 +392,33 @@ export class CadastroComponent implements OnInit {
       }
     }
   }
+
+
+  atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any){
+    cadInfo.uf = cadInfo.uf.uf;
+    cadInfo.clientes = this.compradores;
+    cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+    cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
+    cadInfo.codoriginacao = cadInfo.codoriginacao['codoriginacao'];
+    for (let index = 0; index < cadInfo.clientes.length; index++) {
+      cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+    }
+    cadInfo.cep = cadInfo.cep.replace('-', '');
+    cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+    this.compradores = [];
+
+    console.log(JSON.stringify(cadInfo))
+    this.chamadasService.putCadastro(cadInfo).subscribe(dados => this.retornocadastro = dados['data']);
+    formulario.reset();
+    this.router.navigate(['/home']);
+  }
+
+
+
+
+
+
+
 
   /*formatarData(data) {
     console.log(data);
