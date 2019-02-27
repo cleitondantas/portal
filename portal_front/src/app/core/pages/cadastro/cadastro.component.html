@@ -280,7 +280,7 @@
 
         <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-secondary" 
         [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}"
-        icon="pi pi-save" iconPos="right" [hidden]="disabledButton" (click)="atualizarComprador()"></button>
+        icon="pi pi-save" iconPos="right" [hidden]="disabledButton" (click)="atualizarComprador(formCadInfo)"></button>
 
         <button pButton type="button" label="Limpar comprador" class="ui-button-raised ui-button-warning" 
         [ngStyle]="{'float': 'right', 'width': '15%', 'margin': '5px'}" (click)="limparCadInfo(formCadInfo)"

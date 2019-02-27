@@ -30,7 +30,8 @@ user = new Usuario();
 
   fazerLogin(from : NgForm){
     this.authService.fazerLogin(from,this.user);
-    if (this.shared.getToken() == null || undefined) {
+    
+    if (this.shared.getToken() == null) {
       this.msgs = [];
       this.msgs.push({
         severity: 'error',
