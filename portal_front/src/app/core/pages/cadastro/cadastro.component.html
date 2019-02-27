@@ -60,7 +60,7 @@
                     <label class="ajusteLabel" for="estadoCivil">Estado civil: </label>
                   </div>
                   <div class="p-col-8" id="estadoCivil">
-                    <p-dropdown placeholder="Selecione..." optionLabel="descEstadoCivil" [options]="estadoCivil" [autoWidth]="false" dataKey="value"
+                    <p-dropdown placeholder="Selecione..." optionLabel="descestadocivil" [options]="estadoCivil" [autoWidth]="false" dataKey="value"
                     [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codestadocivil" #codestadocivil="ngModel" [(ngModel)]="comprador.codestadocivil"
                     required></p-dropdown>
                   </div>
@@ -544,7 +544,7 @@
         icon="pi pi-refresh" iconPos="right"></button>
         <button pButton type="submit" label="Avançar" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
         icon="pi pi-angle-double-right" iconPos="right" (click)="confirmacao(cadInfo, formulario)" [hidden]="controle"></button>
-        <button pButton type="submit" label="Salvar" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
+        <button pButton type="submit" label="Salvar" (click)="atualizarCadastroInformacoes(cadInfo, formulario)" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
         icon="pi pi-save" iconPos="right" [hidden]="!controle"></button>       
       </div>
 

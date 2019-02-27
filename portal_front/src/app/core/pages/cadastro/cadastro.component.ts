@@ -78,6 +78,12 @@ export class CadastroComponent implements OnInit {
    // sessionStorage.clear();
     formulario.reset();
   }
+  
+
+
+
+
+
   incorpotradoras:any[];
   item: Incorporadoras;
   ngOnInit() {
@@ -124,8 +130,37 @@ export class CadastroComponent implements OnInit {
       this.cadInfo.box = cadastroinformacaoCarregada.box;
       this.cadInfo.cep = cadastroinformacaoCarregada.cep;
       this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
-      this.cadInfo.clientes  = cadastroinformacaoCarregada.clientes;
       this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
+
+      this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
+
+      this.chamadasService.getEstadoCivil().subscribe(dados => {
+        this.estadoCivil = dados['data']
+        console.log(this.estadoCivil);
+        for (let item = 0; item < cadastroinformacaoCarregada.clientes.length; item ++) {
+            console.log("LACO 1 ITEM"+ item);
+          for (let i = 0; i < this.estadoCivil.length; i ++) {
+            console.log("LACO 2 iTEM"+ i);
+            console.log("IF Carregada "+ cadastroinformacaoCarregada.clientes[item].codestadocivil+" // estadoCivil "+ this.estadoCivil[i].codestadocivil);
+
+            if(Number(cadastroinformacaoCarregada.clientes[item].codestadocivil) == Number(this.estadoCivil[i].codestadocivil)){
+              console.log("IF"+ cadastroinformacaoCarregada.clientes[item].codestadocivil);
+              let descricao = this.estadoCivil[i].descestadocivil;
+              console.log("let descricao")
+              console.log(descricao)
+              cadastroinformacaoCarregada.clientes[item].codestadocivil = {
+                codestadocivil: cadastroinformacaoCarregada.clientes[item].codestadocivil,
+                descestadocivil: descricao  
+              };
+            }
+          }
+          }
+          
+          this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
+          console.log("this.cadInfo.clientes")
+         console.log(this.cadInfo.clientes)
+    });
+      
 
 
       this.chamadasService.getEmpreendimentos().subscribe(dados => {
@@ -139,9 +174,12 @@ export class CadastroComponent implements OnInit {
 
       this.chamadasService.getOriginacao().subscribe(dados => { 
         this.originacao = dados['data']
+        console.log(this.originacao);
+        console.log(cadastroinformacaoCarregada.codoriginacao)
         for (let item = 0; item < this.originacao.length; item ++) {
-          if (this.originacao[item].codoriginacao == cadastroinformacaoCarregada.codoriginacao) {
+          if (Number(this.originacao[item].codoriginacao) == Number(cadastroinformacaoCarregada.codoriginacao)) {
             this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
+            console.log("COD ORIGINACAO "+this.cadInfo.codoriginacao);
           }
         }  
       });
@@ -384,6 +422,33 @@ export class CadastroComponent implements OnInit {
     }
   }
 
+
+  atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any){
+    cadInfo.uf = cadInfo.uf.uf;
+    cadInfo.clientes = this.compradores;
+    cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+    cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
+    cadInfo.codoriginacao = cadInfo.codoriginacao['codoriginacao'];
+    for (let index = 0; index < cadInfo.clientes.length; index++) {
+      cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+    }
+    cadInfo.cep = cadInfo.cep.replace('-', '');
+    cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+    this.compradores = [];
+
+    console.log(JSON.stringify(cadInfo))
+    this.chamadasService.putCadastro(cadInfo).subscribe(dados => this.retornocadastro = dados['data']);
+    formulario.reset();
+    this.router.navigate(['/home']);
+  }
+
+
+
+
+
+
+
+
   /*formatarData(data) {
     console.log(data);
     let novaData = data.toLocaleString('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric'});
@@ -463,7 +528,20 @@ export class CadastroComponent implements OnInit {
     this.comprador.orgaoexpedidor = comprador.orgaoexpedidor;
     this.comprador.dataexpedicao = new Date(comprador.dataexpedicao);
     this.comprador.datanascimento = new Date(comprador.datanascimento);
+
+
+    for (let item = 0; item < this.estadoCivil.length; item++) {
+      if(Number(this.comprador.codestadocivil) == Number(this.estadoCivil[item].codestadocivil)){
+        comprador.codestadocivil = {
+          codestadocivil: this.estadoCivil[item].codestadocivil,
+          descestadocivil: this.estadoCivil[item].descestadocivil  
+        };
+      }
+    }
+    console.log("comprador.codestadocivil")
+    console.log(comprador.codestadocivil)
     this.comprador.codestadocivil = comprador.codestadocivil;
+
     this.comprador.nacionalidade = comprador.nacionalidade;
     this.comprador.profissao = comprador.profissao;
     this.comprador.cepresidencial = comprador.cepresidencial;

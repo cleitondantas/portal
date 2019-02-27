@@ -21,29 +21,27 @@ public class Originacao implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="COD_ORIGINACAO")
-	private Integer codOriginacao;
+	private Integer codoriginacao;
 	
 	@Column(name="DESC_ORIGINACAO")
-	private String descOriginacao;
+	private String descoriginacao;
 
-	public Integer getCodOriginacao() {
-		return codOriginacao;
+	public Integer getCodoriginacao() {
+		return codoriginacao;
 	}
 
-	public void setCodOriginacao(Integer codOriginacao) {
-		this.codOriginacao = codOriginacao;
+	public void setCodoriginacao(Integer codoriginacao) {
+		this.codoriginacao = codoriginacao;
 	}
 
-	public String getDescOriginacao() {
-		return descOriginacao;
+	public String getDescoriginacao() {
+		return descoriginacao;
 	}
 
-	public void setDescOriginacao(String descOriginacao) {
-		this.descOriginacao = descOriginacao;
+	public void setDescoriginacao(String descoriginacao) {
+		this.descoriginacao = descoriginacao;
 	}
 
-
-	
 	
 	
 }

@@ -96,7 +96,7 @@ public class Cadastro implements Serializable{
 	@Column(name="data_entrada")
 	private Date dataentrada;
 	
-    @ManyToMany(cascade={CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_cliente_cadastro", 
 	joinColumns = @JoinColumn(name = "cod_cadastro", referencedColumnName = "cod_cadastro"),
 	inverseJoinColumns = @JoinColumn(name = "cpf_cnpj", referencedColumnName = "cpf_cnpj"))
