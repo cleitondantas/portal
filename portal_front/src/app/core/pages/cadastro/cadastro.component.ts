@@ -80,10 +80,6 @@ export class CadastroComponent implements OnInit {
   }
   
 
-
-
-
-
   incorpotradoras:any[];
   item: Incorporadoras;
   ngOnInit() {
@@ -120,34 +116,21 @@ export class CadastroComponent implements OnInit {
      if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
       let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
       let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
-      console.log(cadastroinformacaoCarregada)
-      this.compradores = cadastroinformacaoCarregada.clientes;
       //Codigo de parce do objeto carregado para os dados da tela
       this.cadInfo = cadastroinformacaoCarregada;
-      this.compradores = cadastroinformacaoCarregada.clientes;
       this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
       this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
       this.cadInfo.box = cadastroinformacaoCarregada.box;
       this.cadInfo.cep = cadastroinformacaoCarregada.cep;
       this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
       this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
-
-      this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
-
       this.chamadasService.getEstadoCivil().subscribe(dados => {
         this.estadoCivil = dados['data']
-        console.log(this.estadoCivil);
         for (let item = 0; item < cadastroinformacaoCarregada.clientes.length; item ++) {
-            console.log("LACO 1 ITEM"+ item);
           for (let i = 0; i < this.estadoCivil.length; i ++) {
-            console.log("LACO 2 iTEM"+ i);
-            console.log("IF Carregada "+ cadastroinformacaoCarregada.clientes[item].codestadocivil+" // estadoCivil "+ this.estadoCivil[i].codestadocivil);
-
             if(Number(cadastroinformacaoCarregada.clientes[item].codestadocivil) == Number(this.estadoCivil[i].codestadocivil)){
-              console.log("IF"+ cadastroinformacaoCarregada.clientes[item].codestadocivil);
+       
               let descricao = this.estadoCivil[i].descestadocivil;
-              console.log("let descricao")
-              console.log(descricao)
               cadastroinformacaoCarregada.clientes[item].codestadocivil = {
                 codestadocivil: cadastroinformacaoCarregada.clientes[item].codestadocivil,
                 descestadocivil: descricao  
@@ -155,10 +138,8 @@ export class CadastroComponent implements OnInit {
             }
           }
           }
-          
+          this.compradores = cadastroinformacaoCarregada.clientes;
           this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
-          console.log("this.cadInfo.clientes")
-         console.log(this.cadInfo.clientes)
     });
       
 
@@ -174,12 +155,9 @@ export class CadastroComponent implements OnInit {
 
       this.chamadasService.getOriginacao().subscribe(dados => { 
         this.originacao = dados['data']
-        console.log(this.originacao);
-        console.log(cadastroinformacaoCarregada.codoriginacao)
         for (let item = 0; item < this.originacao.length; item ++) {
           if (Number(this.originacao[item].codoriginacao) == Number(cadastroinformacaoCarregada.codoriginacao)) {
             this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
-            console.log("COD ORIGINACAO "+this.cadInfo.codoriginacao);
           }
         }  
       });
@@ -426,11 +404,16 @@ export class CadastroComponent implements OnInit {
   atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any){
     cadInfo.uf = cadInfo.uf.uf;
     cadInfo.clientes = this.compradores;
+    
     cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
     cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
     cadInfo.codoriginacao = cadInfo.codoriginacao['codoriginacao'];
     for (let index = 0; index < cadInfo.clientes.length; index++) {
       cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+    
+      if(typeof  cadInfo.clientes[index].codestadocivil.codestadocivil !== 'undefined'){
+        cadInfo.clientes[index].codestadocivil = cadInfo.clientes[index].codestadocivil.codestadocivil;  
+      }
     }
     cadInfo.cep = cadInfo.cep.replace('-', '');
     cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
@@ -441,13 +424,6 @@ export class CadastroComponent implements OnInit {
     formulario.reset();
     this.router.navigate(['/home']);
   }
-
-
-
-
-
-
-
 
   /*formatarData(data) {
     console.log(data);
@@ -528,18 +504,17 @@ export class CadastroComponent implements OnInit {
     this.comprador.orgaoexpedidor = comprador.orgaoexpedidor;
     this.comprador.dataexpedicao = new Date(comprador.dataexpedicao);
     this.comprador.datanascimento = new Date(comprador.datanascimento);
-
+    
 
     for (let item = 0; item < this.estadoCivil.length; item++) {
       if(Number(this.comprador.codestadocivil) == Number(this.estadoCivil[item].codestadocivil)){
         comprador.codestadocivil = {
-          codestadocivil: this.estadoCivil[item].codestadocivil,
+          value: this.estadoCivil[item].codestadocivil,
           descestadocivil: this.estadoCivil[item].descestadocivil  
         };
       }
     }
-    console.log("comprador.codestadocivil")
-    console.log(comprador.codestadocivil)
+
     this.comprador.codestadocivil = comprador.codestadocivil;
 
     this.comprador.nacionalidade = comprador.nacionalidade;
@@ -557,7 +532,6 @@ export class CadastroComponent implements OnInit {
     this.comprador.contatos = comprador.contatos;
     this.contato = comprador.contatos;
     this.contatoDisplay = [];
-
     for (let item = 0; item < comprador.contatos.length; item++) {
       for (let item2 = 0; item2 <  this.tipoContato.length; item2++) {
         if (this.tipoContato[item2].codtipocontato == comprador.contatos[item].codtipocontato) {
@@ -581,7 +555,9 @@ export class CadastroComponent implements OnInit {
         this.compradores[item].orgaoexpedidor = this.comprador.orgaoexpedidor;
         this.compradores[item].dataexpedicao = this.comprador.dataexpedicao;
         this.compradores[item].datanascimento = this.comprador.datanascimento;
-        this.compradores[item].codestadocivil = this.comprador.codestadocivil.codEstadoCivil
+        
+        this.compradores[item].codestadocivil = this.comprador.codestadocivil.codestadocivil
+
         this.compradores[item].nacionalidade = this.comprador.nacionalidade;
         this.compradores[item].profissao = this.comprador.profissao;
         this.compradores[item].cepresidencial = this.comprador.cepresidencial;
