@@ -50,7 +50,7 @@
                       <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                       class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                       id="dataexpedicao" dateFormat="dd/mm/yy" ngModel name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"
-                      [locale]="br" required dataType="date"></p-calendar>
+                      [locale]="br" required dataType="date" inputId="dataExp" (onFocus)="formatarData()"></p-calendar>
                     </div>
                   </div>
                 </div>
@@ -149,8 +149,8 @@
                   </div>
                   <div class="p-col-8">
                     <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
-                    slotChar=" "  (onBlur)="consultaCEP()" ngModel name="cepresidencial"  #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"
-                    required></p-inputMask>
+                    slotChar=" " (onBlur)="consultaCEP()" ngModel name="cepresidencial"  #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"
+                    required inputId="cepcadastro" (onFocus)="setCursor()"></p-inputMask>
                   </div>
                 </div>
 
@@ -410,7 +410,7 @@
                     <label class="ajusteLabel" for="vagaAutomovel">Vaga de automóvel: </label>
                   </div>
                   <div class="p-col-6">
-                    <input type="text" class="ajusteInput" pInputText id="vagaAutomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel" required>
+                    <input type="text" class="ajusteInput" pInputText id="vagaAutomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
                   </div>
                 </div>
               </div>
@@ -421,7 +421,7 @@
                     <label class="ajusteLabel" for="box">Box: </label>
                   </div>
                   <div class="p-col-6">
-                    <input type="text" class="ajusteInput" pInputText id="box"ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box" required>
+                    <input type="text" class="ajusteInput" pInputText id="box"ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box">
                   </div>
                 </div>
               </div>
@@ -438,18 +438,6 @@
                   </div>
                   <div class="p-col-8">
                     <input type="text" class="ajusteInput" pInputText id="bloco"ngModel name="blocotorre"  #blocotorre="ngModel" [(ngModel)]="cadInfo.blocotorre" required>
-                  </div>
-                </div>
-              </div>
-
-              <div class="p-col-6">
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="apto">Apartamento: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="apto"ngModel name="numeroapartamento"  #numeroapartamento="ngModel" [(ngModel)]="cadInfo.numeroapartamento" required>
                   </div>
                 </div>
               </div>

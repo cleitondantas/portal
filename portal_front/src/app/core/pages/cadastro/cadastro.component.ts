@@ -45,6 +45,7 @@ export class CadastroComponent implements OnInit {
   br: any;
   disabledButton: boolean = true;
   mask: Array<string | RegExp>;
+  mask2: Array<string | RegExp> = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/];
   disabledInput: boolean = true;
   msgs: Message[] = [];
   msgs2: Message[]= [];
@@ -178,7 +179,6 @@ export class CadastroComponent implements OnInit {
 
       this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
       this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
-      this.cadInfo.numeroapartamento = cadastroinformacaoCarregada.numeroapartamento;
       this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
       this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
       this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
@@ -572,5 +572,27 @@ export class CadastroComponent implements OnInit {
     this.contatoDisplay = [];
     this.contato = [];
     this.disabledButton = true;
+  }
+
+  setCursor(){
+    var input = document.getElementById("cepcadastro");
+    this.setSelectionRange(input, 0, 0)
+  }
+
+  setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+      input.focus();
+      input.setSelectionRange(selectionStart, selectionEnd);
+    } else if (input.createTextRange) {
+      var range = input.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', selectionEnd);
+      range.moveStart('character', selectionStart);
+    }
+  }
+
+  formatarData() {
+   /* var input = document.getElementById("dataExp");
+    input.*/
   }
 }

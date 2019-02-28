@@ -14,7 +14,6 @@ export class CadastroInformacao {
     datacadastro: Date;
     vagaautomovel: string;
     box: string;
-    numeroapartamento: string;
     cep: string;
     numero: string;
     bairro: string;

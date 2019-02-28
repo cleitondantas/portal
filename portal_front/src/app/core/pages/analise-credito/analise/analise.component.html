@@ -159,7 +159,7 @@
           </div>
           <div class="p-col-8">
             <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="fgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts"/>
+            id="fgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio()"/>
           </div>
         </div>
 
