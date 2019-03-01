@@ -31,7 +31,9 @@
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/gsap/src/uncompressed/TweenMax.js"
+              "node_modules/gsap/src/uncompressed/TweenMax.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"
             ]
           },
           "configurations": {

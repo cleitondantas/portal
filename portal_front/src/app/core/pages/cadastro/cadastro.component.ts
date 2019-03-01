@@ -19,6 +19,7 @@ import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask'
+import * as $ from 'jquery-mask-plugin';
 
 @Component({
   selector: 'app-cadastro',
@@ -186,8 +187,7 @@ export class CadastroComponent implements OnInit {
       this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
       sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
       this.controle = true;
-    }
-  
+    }    
   }
 
   adicionarContato (contato: Contatos) {
@@ -575,12 +575,13 @@ export class CadastroComponent implements OnInit {
   }
 
   setCursor(){
-    var input = document.getElementById("cepcadastro");
-    this.setSelectionRange(input, 0, 0)
+    var cep = (<HTMLInputElement>document.getElementById("cepcadastro"));
+    var len = cep.value.length;
+    cep.setSelectionRange(len, len);
   }
 
   setSelectionRange(input, selectionStart, selectionEnd) {
-    if (input.setSelectionRange) {
+    /*if (input.setSelectionRange) {
       input.focus();
       input.setSelectionRange(selectionStart, selectionEnd);
     } else if (input.createTextRange) {
@@ -588,11 +589,6 @@ export class CadastroComponent implements OnInit {
       range.collapse(true);
       range.moveEnd('character', selectionEnd);
       range.moveStart('character', selectionStart);
-    }
-  }
-
-  formatarData() {
-   /* var input = document.getElementById("dataExp");
-    input.*/
+    }*/
   }
 }

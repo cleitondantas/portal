@@ -50,7 +50,7 @@
                       <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                       class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                       id="dataexpedicao" dateFormat="dd/mm/yy" ngModel name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"
-                      [locale]="br" required dataType="date" inputId="dataExp" (onFocus)="formatarData()"></p-calendar>
+                      [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,7 @@
                       <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                       class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                       id="dataNasc" dateFormat="dd/mm/yy" ngModel name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
-                      [locale]="br" required dataType="date"></p-calendar>
+                      [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
                     </div>
                   </div>
                 </div>
@@ -347,7 +347,7 @@
                   <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                   class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                   id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="cadInfo.datacadastro"
-                  [locale]="br" showButtonBar="true" required dataType="date"></p-calendar>
+                  [locale]="br" showButtonBar="true" required dataType="date" rPCalendarMask></p-calendar>
                 </div>
               </div>
             </div>
