@@ -148,9 +148,9 @@
                     <label class="ajusteLabel" for="cep">CEP: </label>
                   </div>
                   <div class="p-col-8">
-                    <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
-                    slotChar=" " (onBlur)="consultaCEP()" ngModel name="cepresidencial"  #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"
-                    required inputId="cepcadastro" (onFocus)="setCursor()"></p-inputMask>
+                    <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cepresidencial" mask="99999-999" 
+                    (onBlur)="consultaCEP()" ngModel name="cepresidencial" #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"
+                    required inputId="cepcadastro" (click)="setCursor('cepcadastro')"></p-inputMask>
                   </div>
                 </div>
 
@@ -455,8 +455,9 @@
                 <label class="ajusteLabel" for="cepImovel">CEP: </label>
               </div>
               <div class="p-col-8">
-                <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cepImovel" mask="99999-999" 
-                slotChar=" "ngModel name="cep"  #cep="ngModel" [(ngModel)]="cadInfo.cep" (onBlur)="consultaCEPImovel()" required></p-inputMask>
+                <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
+                ngModel name="cep" #cep="ngModel" [(ngModel)]="cadInfo.cep" (onBlur)="consultaCEPImovel()" required
+                inputId="cepImovel" (click)="setCursor('cepImovel')"></p-inputMask>
               </div>
             </div>
 

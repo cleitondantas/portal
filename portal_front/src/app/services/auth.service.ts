@@ -14,7 +14,7 @@ let url: string = '/api/auth';
 
 export class AuthService {
   
-  private usuarioAutenticado: boolean = false;
+  usuarioAutenticado: boolean = false;
   mostrarsistema = new EventEmitter<boolean>();
   shared : SharedService;
   constructor(private http: HttpClient,private router: Router) {

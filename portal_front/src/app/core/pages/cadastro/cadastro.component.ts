@@ -19,7 +19,6 @@ import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask'
-import * as $ from 'jquery-mask-plugin';
 
 @Component({
   selector: 'app-cadastro',
@@ -208,9 +207,6 @@ export class CadastroComponent implements OnInit {
     if (this.validaFormulario(formCadInfo) == true) {
       var comprador2 = this.logicaService.adicionarComprador(comprador);
       comprador2.contatos = this.contato;
-  
-      //var a = sessionStorage.getItem('comprador');
-      //this.logicaService.compradorSessionStorage(JSON.parse(a));
   
       this.compradores.push(comprador2);
       this.disabled = false;
@@ -423,12 +419,6 @@ export class CadastroComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  /*formatarData(data) {
-    console.log(data);
-    let novaData = data.toLocaleString('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric'});
-    console.log(novaData);
-  }*/
-
   verificaCpfCnpj(formCadInfo) {
     let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
     let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
@@ -574,21 +564,9 @@ export class CadastroComponent implements OnInit {
     this.disabledButton = true;
   }
 
-  setCursor(){
-    var cep = (<HTMLInputElement>document.getElementById("cepcadastro"));
-    var len = cep.value.length;
-    cep.setSelectionRange(len, len);
-  }
-
-  setSelectionRange(input, selectionStart, selectionEnd) {
-    /*if (input.setSelectionRange) {
-      input.focus();
-      input.setSelectionRange(selectionStart, selectionEnd);
-    } else if (input.createTextRange) {
-      var range = input.createTextRange();
-      range.collapse(true);
-      range.moveEnd('character', selectionEnd);
-      range.moveStart('character', selectionStart);
-    }*/
+  setCursor(cepRecebido){
+    var cep = (<HTMLInputElement>document.getElementById(cepRecebido));
+    cep.focus();
+    cep.setSelectionRange(0, 0);
   }
 }
