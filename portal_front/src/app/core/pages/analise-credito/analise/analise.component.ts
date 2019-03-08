@@ -1,8 +1,10 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
+import { AnaliseCreditoComponent } from '../analise-credito.component';
 
 @Component({
   selector: 'app-analise',
@@ -26,7 +28,7 @@ export class AnaliseComponent implements OnInit {
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
   constructor( 
-    private service: AnaliseChamadasService
+    private service: AnaliseChamadasService, private router: Router, private analiseCred: AnaliseCreditoComponent
   ) { }
 
   ngOnInit() {
@@ -130,9 +132,16 @@ export class AnaliseComponent implements OnInit {
     this.analise.simulacoes= this.simulacaoLista;
     console.log(this.analise);
     console.log(JSON.stringify(this.analise));
+
+    this.analiseCred.selected = 1;
   }
 
   focusDropDown(input) {
     input.click();
+  }
+
+  recursoProprio() {
+    var calc = this.simulacoes.valoravaliacao - this.simulacoes.valordespesasfinanciadas - this.simulacoes.valorfgts;
+    this.simulacoes.valorrecursosproprios = calc;
   }
 }

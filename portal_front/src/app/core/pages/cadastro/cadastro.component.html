@@ -50,7 +50,7 @@
                       <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                       class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                       id="dataexpedicao" dateFormat="dd/mm/yy" ngModel name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"
-                      [locale]="br" required dataType="date"></p-calendar>
+                      [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,7 @@
                       <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                       class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                       id="dataNasc" dateFormat="dd/mm/yy" ngModel name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
-                      [locale]="br" required dataType="date"></p-calendar>
+                      [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
                     </div>
                   </div>
                 </div>
@@ -148,9 +148,9 @@
                     <label class="ajusteLabel" for="cep">CEP: </label>
                   </div>
                   <div class="p-col-8">
-                    <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
-                    slotChar=" "  (onBlur)="consultaCEP()" ngModel name="cepresidencial"  #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"
-                    required></p-inputMask>
+                    <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cepresidencial" mask="99999-999" 
+                    (onBlur)="consultaCEP()" ngModel name="cepresidencial" #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"
+                    required inputId="cepcadastro" (click)="setCursor('cepcadastro')"></p-inputMask>
                   </div>
                 </div>
 
@@ -280,7 +280,7 @@
 
         <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-secondary" 
         [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}"
-        icon="pi pi-save" iconPos="right" [hidden]="disabledButton" (click)="atualizarComprador()"></button>
+        icon="pi pi-save" iconPos="right" [hidden]="disabledButton" (click)="atualizarComprador(formCadInfo)"></button>
 
         <button pButton type="button" label="Limpar comprador" class="ui-button-raised ui-button-warning" 
         [ngStyle]="{'float': 'right', 'width': '15%', 'margin': '5px'}" (click)="limparCadInfo(formCadInfo)"
@@ -347,7 +347,7 @@
                   <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                   class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
                   id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="cadInfo.datacadastro"
-                  [locale]="br" showButtonBar="true" required dataType="date"></p-calendar>
+                  [locale]="br" showButtonBar="true" required dataType="date" rPCalendarMask></p-calendar>
                 </div>
               </div>
             </div>
@@ -410,7 +410,7 @@
                     <label class="ajusteLabel" for="vagaAutomovel">Vaga de automóvel: </label>
                   </div>
                   <div class="p-col-6">
-                    <input type="text" class="ajusteInput" pInputText id="vagaAutomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel" required>
+                    <input type="text" class="ajusteInput" pInputText id="vagaAutomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
                   </div>
                 </div>
               </div>
@@ -421,7 +421,7 @@
                     <label class="ajusteLabel" for="box">Box: </label>
                   </div>
                   <div class="p-col-6">
-                    <input type="text" class="ajusteInput" pInputText id="box"ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box" required>
+                    <input type="text" class="ajusteInput" pInputText id="box"ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box">
                   </div>
                 </div>
               </div>
@@ -441,18 +441,6 @@
                   </div>
                 </div>
               </div>
-
-              <div class="p-col-6">
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="apto">Apartamento: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="apto"ngModel name="numeroapartamento"  #numeroapartamento="ngModel" [(ngModel)]="cadInfo.numeroapartamento" required>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -467,8 +455,9 @@
                 <label class="ajusteLabel" for="cepImovel">CEP: </label>
               </div>
               <div class="p-col-8">
-                <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cepImovel" mask="99999-999" 
-                slotChar=" "ngModel name="cep"  #cep="ngModel" [(ngModel)]="cadInfo.cep" (onBlur)="consultaCEPImovel()" required></p-inputMask>
+                <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
+                ngModel name="cep" #cep="ngModel" [(ngModel)]="cadInfo.cep" (onBlur)="consultaCEPImovel()" required
+                inputId="cepImovel" (click)="setCursor('cepImovel')"></p-inputMask>
               </div>
             </div>
 

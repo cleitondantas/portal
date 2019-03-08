@@ -19,13 +19,13 @@ import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask'
-import { CadastroProposta } from 'src/app/models/cadastroPorposta';
-import { map, catchError } from 'rxjs/operators';
+
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })
+
 export class CadastroComponent implements OnInit {
   contato: any[] = [];
   contatoDisplay: any[] = [];
@@ -45,6 +45,7 @@ export class CadastroComponent implements OnInit {
   br: any;
   disabledButton: boolean = true;
   mask: Array<string | RegExp>;
+  mask2: Array<string | RegExp> = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/];
   disabledInput: boolean = true;
   msgs: Message[] = [];
   msgs2: Message[]= [];
@@ -78,10 +79,10 @@ export class CadastroComponent implements OnInit {
    // sessionStorage.clear();
     formulario.reset();
   }
-  
 
   incorpotradoras:any[];
   item: Incorporadoras;
+
   ngOnInit() {
     this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
     this.chamadasService.getEmpreendimentos().subscribe(dados => this.empreendimento = dados['data']);
@@ -112,7 +113,8 @@ export class CadastroComponent implements OnInit {
       clear: "Limpar",
       dateFormat: "dd/mm/yy"
     }
-     //Verifica se a tela está sendo carregada vinda do Campo de busca
+
+    //Verifica se a tela está sendo carregada vinda do Campo de busca
      if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
       let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
       let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
@@ -125,7 +127,7 @@ export class CadastroComponent implements OnInit {
       this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
       this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
       this.chamadasService.getEstadoCivil().subscribe(dados => {
-        this.estadoCivil = dados['data']
+      this.estadoCivil = dados['data']
         for (let item = 0; item < cadastroinformacaoCarregada.clientes.length; item ++) {
           for (let i = 0; i < this.estadoCivil.length; i ++) {
             if(Number(cadastroinformacaoCarregada.clientes[item].codestadocivil) == Number(this.estadoCivil[i].codestadocivil)){
@@ -137,13 +139,11 @@ export class CadastroComponent implements OnInit {
               };
             }
           }
-          }
-          this.compradores = cadastroinformacaoCarregada.clientes;
-          this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
-    });
+        }
+        this.compradores = cadastroinformacaoCarregada.clientes;
+        this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
+      });
       
-
-
       this.chamadasService.getEmpreendimentos().subscribe(dados => {
         this.empreendimento = dados['data']
         for (let item = 0; item < this.empreendimento.length; item ++) {
@@ -179,7 +179,6 @@ export class CadastroComponent implements OnInit {
 
       this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
       this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
-      this.cadInfo.numeroapartamento = cadastroinformacaoCarregada.numeroapartamento;
       this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
       this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
       this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
@@ -187,8 +186,7 @@ export class CadastroComponent implements OnInit {
       this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
       sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
       this.controle = true;
-    }
-  
+    }    
   }
 
   adicionarContato (contato: Contatos) {
@@ -209,9 +207,6 @@ export class CadastroComponent implements OnInit {
     if (this.validaFormulario(formCadInfo) == true) {
       var comprador2 = this.logicaService.adicionarComprador(comprador);
       comprador2.contatos = this.contato;
-  
-      //var a = sessionStorage.getItem('comprador');
-      //this.logicaService.compradorSessionStorage(JSON.parse(a));
   
       this.compradores.push(comprador2);
       this.disabled = false;
@@ -400,7 +395,6 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-
   atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any){
     cadInfo.uf = cadInfo.uf.uf;
     cadInfo.clientes = this.compradores;
@@ -424,12 +418,6 @@ export class CadastroComponent implements OnInit {
     formulario.reset();
     this.router.navigate(['/home']);
   }
-
-  /*formatarData(data) {
-    console.log(data);
-    let novaData = data.toLocaleString('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric'});
-    console.log(novaData);
-  }*/
 
   verificaCpfCnpj(formCadInfo) {
     let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
@@ -489,6 +477,7 @@ export class CadastroComponent implements OnInit {
         cadInfo.reset();
         this.contato = [];
         this.contatoDisplay = [];
+        this.disabledButton = true;
       },
       reject: () => {
       }
@@ -504,17 +493,15 @@ export class CadastroComponent implements OnInit {
     this.comprador.orgaoexpedidor = comprador.orgaoexpedidor;
     this.comprador.dataexpedicao = new Date(comprador.dataexpedicao);
     this.comprador.datanascimento = new Date(comprador.datanascimento);
-    
 
     for (let item = 0; item < this.estadoCivil.length; item++) {
-      if(Number(this.comprador.codestadocivil) == Number(this.estadoCivil[item].codestadocivil)){
+      if(comprador.codestadocivil == this.estadoCivil[item].codestadocivil){
         comprador.codestadocivil = {
-          value: this.estadoCivil[item].codestadocivil,
+          codestadocivil: this.estadoCivil[item].codestadocivil,
           descestadocivil: this.estadoCivil[item].descestadocivil  
         };
       }
     }
-
     this.comprador.codestadocivil = comprador.codestadocivil;
 
     this.comprador.nacionalidade = comprador.nacionalidade;
@@ -545,7 +532,7 @@ export class CadastroComponent implements OnInit {
     
   }
   
-  atualizarComprador() {
+  atualizarComprador(formCadInfo) {
     for (let item = 0; item < this.compradores.length; item++) {
       if (this.compradores[item].cpfcnpj == this.comprador.cpfcnpj) {
         this.compradores[item].cpfcnpj = this.comprador.cpfcnpj;
@@ -555,9 +542,7 @@ export class CadastroComponent implements OnInit {
         this.compradores[item].orgaoexpedidor = this.comprador.orgaoexpedidor;
         this.compradores[item].dataexpedicao = this.comprador.dataexpedicao;
         this.compradores[item].datanascimento = this.comprador.datanascimento;
-        
-        this.compradores[item].codestadocivil = this.comprador.codestadocivil.codestadocivil
-
+        this.compradores[item].codestadocivil = this.comprador.codestadocivil.codestadocivil;
         this.compradores[item].nacionalidade = this.comprador.nacionalidade;
         this.compradores[item].profissao = this.comprador.profissao;
         this.compradores[item].cepresidencial = this.comprador.cepresidencial;
@@ -573,5 +558,15 @@ export class CadastroComponent implements OnInit {
         this.compradores[item].principal = this.comprador.principal;
       }
     }
+    formCadInfo.reset();
+    this.contatoDisplay = [];
+    this.contato = [];
+    this.disabledButton = true;
+  }
+
+  setCursor(cepRecebido){
+    var cep = (<HTMLInputElement>document.getElementById(cepRecebido));
+    cep.focus();
+    cep.setSelectionRange(0, 0);
   }
 }

@@ -20,7 +20,7 @@ export class CadastroLogicaService {
     comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
     comprador2.dataexpedicao = comprador.dataexpedicao;
     comprador2.datanascimento = comprador.datanascimento;
-    comprador2.codestadocivil = comprador.codestadocivil.codEstadoCivil; 
+    comprador2.codestadocivil = comprador.codestadocivil.codestadocivil; 
     comprador2.nacionalidade = comprador.nacionalidade;
     comprador2.profissao = comprador.profissao;
     comprador2.cepresidencial = comprador.cepresidencial;

@@ -59,7 +59,8 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataenviobanco" dateFormat="dd/mm/yy" [locale]="br" ngModel name="dataenviobanco"  #dataenviobanco="ngModel" [(ngModel)]="simulacoes.dataenviobanco" ></p-calendar>
+            id="dataenviobanco" dateFormat="dd/mm/yy" [locale]="br" ngModel name="dataenviobanco" #dataenviobanco="ngModel" [(ngModel)]="simulacoes.dataenviobanco"
+            rPCalendarMask></p-calendar>
           </div>
         </div>
       </div>
@@ -159,7 +160,7 @@
           </div>
           <div class="p-col-8">
             <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="fgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts"/>
+            id="fgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio()"/>
           </div>
         </div>
 
@@ -298,7 +299,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataMae" dateFormat="dd/mm/yy" [locale]="br"
-            name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" showButtonBar="true"></p-calendar>
+            name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" showButtonBar="true" rPCalendarMask></p-calendar>
           </div>
         </div>
       </div>
@@ -312,7 +313,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"
-            name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" showButtonBar="true"></p-calendar>
+            name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" showButtonBar="true" rPCalendarMask></p-calendar>
           </div>
         </div>
       </div>
@@ -326,7 +327,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"
-            name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" showButtonBar="true"></p-calendar>
+            name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" showButtonBar="true" rPCalendarMask></p-calendar>
           </div>
         </div>
       </div>

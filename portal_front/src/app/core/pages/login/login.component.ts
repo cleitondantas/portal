@@ -29,16 +29,21 @@ user = new Usuario();
   }
 
   fazerLogin(from : NgForm){
+    this.msgs = [];
     this.authService.fazerLogin(from,this.user);
-    if (this.shared.getToken() == null || undefined) {
-      this.msgs = [];
-      this.msgs.push({
-        severity: 'error',
-        summary: 'Erro ao logar!',
-        detail: 'Usúario ou senha estão incorretos.'
-      });
-    } else {
-      this.msgs = [];
-    }
+    
+    setTimeout(() => {
+      if (this.authService.isUsuarioAutenticado() == false) {
+        this.msgs = [];
+        this.msgs.push({
+          severity: 'error',
+          summary: 'Erro ao logar!',
+          detail: 'Usúario ou senha estão incorretos.'
+        });
+      } else {
+        this.msgs = [];
+      }
+      
+    }, 1000);
   }
 }
