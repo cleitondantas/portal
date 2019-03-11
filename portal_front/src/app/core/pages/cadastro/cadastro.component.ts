@@ -248,7 +248,7 @@ export class CadastroComponent implements OnInit {
  
   removerContato (contatoC) {
     console.log(contatoC);
-    let index = this.contato.indexOf(contatoC);
+    let index = this.contatoDisplay.indexOf(contatoC);
     console.log(this.contato)
 
     this.contato.splice(index, 1);
