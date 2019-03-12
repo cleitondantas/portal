@@ -1,3 +1,4 @@
+import { Message } from 'primeng/api';
 import { Component, OnInit ,isDevMode } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Usuario } from '../../../models/usuario';
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit {
 private usuario: Usuario = new Usuario();
 shared : SharedService;
 mensagemErro ='';
+msgs: Message[] = [];
+hidden: boolean = true;
 
 user = new Usuario();
   constructor(private authService: AuthService) {
@@ -23,13 +26,29 @@ user = new Usuario();
     )
    }
 
-
   ngOnInit() {
   }
 
-
   fazerLogin(from : NgForm){
-    this.authService.fazerLogin(from,this.user)
+    this.msgs = [];
+    setTimeout(() => {
+      this.hidden = false;
+    }, 301);
+    this.authService.fazerLogin(from,this.user);
+    
+    setTimeout(() => {
+      this.hidden = true;
+      if (this.authService.isUsuarioAutenticado() == false) {
+        this.msgs = [];
+        this.msgs.push({
+          severity: 'error',
+          summary: 'Erro ao logar!',
+          detail: 'Usúario ou senha estão incorretos.'
+        });
+      } else {
+        this.msgs = [];
+      }
+      
+    }, 1500);
   }
-
 }

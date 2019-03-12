@@ -1,6 +1,6 @@
 <p-menubar  [model]="items"  class="menubarstyle" >
      <h6   #mushroom2 > {{nomeUsuario}}  
-        <button (click)="doIt()" >
+        <button (click)="doIt()" class="buttoncss" >
            <i class="fa fa-user"></i>
         </button>
      </h6>
@@ -22,7 +22,49 @@
      </div>
 </p-menubar>
 
+<p-dialog header="Buscar Cadastro" [(visible)]="display" draggable="false" positionTop="100"  baseZIndex="1000" width="750" height ="900"  >
+  
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+                    <p-autoComplete [suggestions]="nomeClienteFiltrado" (completeMethod)="searchPorNome($event)" field="nomecliente"  placeholder="Nome"
+                     id="idBuscaNome" size="90" [minLength]="3" (onBlur)="blurNomeSelect($event)"
+                      [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"></p-autoComplete>
+                    <p-button  icon="pi pi-search" (onClick)="clickBuscaPorNome($event)"></p-button>
+                </div>
+               <br>
+                <div class="ui-inputgroup" >
+                    <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+                    <p-autoComplete  [suggestions]="nomeClienteFiltrado" (completeMethod)="searchPorCPF($event)" field="cpfcnpj"  placeholder="CPF"
+                    id="idBuscacpf" size="90" (onBlur)="blurCPFSelect($event)" ngModel [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"></p-autoComplete>
+                    <p-button  icon="pi pi-search" (onClick)="clickBuscaPorCPF($event)"></p-button>        
+                </div>
+               <br>
+               <br>    
+                <p-table   [value]="cadastrosTabelaBusca"   >
+                    <ng-template pTemplate="header">
+                         <tr>
+                              <th>Cod cadastro</th>
+                              <th>Fid</th>
+                              <th>Endereço</th>
+                              <th>Cidade</th>
+                              <th>Número</th>
+                              <th></th>
+                          </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-cadastro>
+                         <tr>
+                              <td>{{cadastro.codcadastro}}</td>
+                              <td>{{cadastro.numerocadastroincorporadorafid}}</td>
+                              <td>{{cadastro.endereco}}</td>
+                              <td>{{cadastro.cidade}}</td>
+                              <td>{{cadastro.numero}}</td>
+                              <td><p-button label="IR >>" (onClick)="irCadastro(cadastro.codcadastro)" ></p-button></td>
+                          </tr>
+                    </ng-template>
+                </p-table>
+   
+ </p-dialog>
 
-
+ 
 <p-toast [style]="{marginTop: '80px'}" position="top-center" key="er" [modal]="true" [baseZIndex]="100" ></p-toast>
 <p-toast [style]="{marginTop: '80px'}" key="ok"></p-toast>

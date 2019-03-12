@@ -17,10 +17,10 @@ export class CadastroLogicaService {
     comprador2.codtipocliente = Number(comprador.codtipocliente); 
     comprador2.nomecliente = comprador.nomecliente;
     comprador2.ndocumento = comprador.ndocumento;
-    comprador2.orgaoexpedidor = comprador.orgaoexpedidor.sigla;
+    comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
     comprador2.dataexpedicao = comprador.dataexpedicao;
     comprador2.datanascimento = comprador.datanascimento;
-    comprador2.codestadocivil = comprador.codestadocivil.codEstadoCivil; 
+    comprador2.codestadocivil = comprador.codestadocivil.codestadocivil; 
     comprador2.nacionalidade = comprador.nacionalidade;
     comprador2.profissao = comprador.profissao;
     comprador2.cepresidencial = comprador.cepresidencial;
@@ -36,32 +36,6 @@ export class CadastroLogicaService {
     comprador2.principal = comprador.principal;
 
     return comprador2;
-  }
-
-  limparComprador(comprador: Compradores) {
-    comprador.cpfcnpj = null;
-    comprador.codtipocliente = null;
-    comprador.nomecliente = null;
-    comprador.ndocumento = null;
-    comprador.orgaoexpedidor = null;
-    comprador.dataexpedicao = null;
-    comprador.datanascimento = null;
-    comprador.codestadocivil = null; 
-    comprador.nacionalidade = null;
-    comprador.profissao = null;
-    comprador.cepresidencial = null;
-    comprador.uf = null;
-    comprador.cidade = null; 
-    comprador.bairro = null;
-    comprador.endereco = null;
-    comprador.complemento = null;
-    comprador.numeroendereco = null;
-    comprador.codusuario = null;
-    comprador.datacadastro = null;
-    comprador.valorrenda = null;
-    comprador.principal = false;
-
-    return comprador;
   }
 
   adicionarContatosDisplay(contato: Contatos) {

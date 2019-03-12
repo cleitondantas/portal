@@ -1,9 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output } from '@angular/core';
 import {MenuItem, Message, MessageService} from 'primeng/api';
 import { AuthService } from '../../../../services/auth.service';
 import { Usuario } from 'src/app/models/usuario';
 import {Power1,Back} from 'gsap/all';
 import { Router } from '@angular/router';
+import { CadastroChamadasService } from 'src/app/services/cadastro-chamadas.service';
+import { Cliente } from 'src/app/models/cliente';
+import { Compradores } from 'src/app/models/compradores';
+import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
+
+
 
 declare var TweenMax: any;
 
@@ -15,11 +21,21 @@ declare var TweenMax: any;
 })
 
 export class MenuBarComponent implements OnInit {
+    
     @ViewChild('mushroom') box: ElementRef;
     @ViewChild('mushroom2') box2: ElementRef;
 
     @ViewChild('navmenuuser') navmenuuser: ElementRef;
 
+    display: boolean = false;
+    text: string;
+    results: string[];
+    nomeClienteFiltrado: any[];
+
+    nomeclienteSelecionado:string;
+    cpfclienteSelecionado:string
+
+    cadastrosTabelaBusca:CadastroInformacao[];
 
     items: MenuItem[];
     itemsmenu: MenuItem[];
@@ -28,12 +44,81 @@ export class MenuBarComponent implements OnInit {
     nomeUsuario: string;
     profileUser: string;
 
-    constructor(private router: Router,private authService: AuthService,private messageService: MessageService) {
+    constructor(
+        private router: Router,
+        private authService: AuthService,
+        private messageService: MessageService,
+        private chamadasService: CadastroChamadasService,) {
         authService.shared.messengerService = messageService;
         this.nomeUsuario = localStorage.getItem('nome_usuario');
         this.profileUser = localStorage.getItem('profile');
     }
 
+    blurNomeSelect(item:any){
+        this.nomeclienteSelecionado = item.target.value;
+    }
+    blurCPFSelect(item:any){
+        this.cpfclienteSelecionado = item.target.value;
+ 
+    }
+    clickBuscaPorNome(event:any){
+        this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado,null).then(data => {
+            this.cadastrosTabelaBusca = data['data'] 
+        });
+    
+    }
+
+    clickBuscaPorCPF(event:any){
+        this.chamadasService.getBuscaCadastrado(null,this.cpfclienteSelecionado).then(data => {
+            this.cadastrosTabelaBusca = data['data'] 
+
+        });
+      
+    }
+    searchPorNome(event) {
+        let query = event.query;
+        this.chamadasService.getBuscaClienteCadastrado().then(clienteQuery => {
+            this.nomeClienteFiltrado = this.filtroClientePorNome(query, clienteQuery['data']);
+        });  
+      }
+
+    irCadastro(codcadastro:number){
+        
+        for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
+            if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
+            sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i]));
+            }
+        }
+        this.hideDialog();
+        this.router.navigate(['/cadastro']);
+    }
+
+      filtroClientePorNome(query,clienteQuery:Compradores[]) {
+        let filtered: any[] = [];
+        for (let i = 0; i < clienteQuery.length; i++) {
+          if(clienteQuery[i].nomecliente.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+            filtered.push(clienteQuery[i]);
+          }
+      }
+      return filtered;
+      }
+
+      searchPorCPF(event) {
+        let query = event.query;
+        this.chamadasService.getBuscaClienteCadastrado().then(clienteQuery => {
+            this.nomeClienteFiltrado = this.filtroClientePorCPF(query, clienteQuery['data']);
+        });  
+      }
+
+      filtroClientePorCPF(query,clienteQuery:Compradores[]) {
+        let filtered: any[] = [];
+        for (let i = 0; i < clienteQuery.length; i++) {
+          if(clienteQuery[i].cpfcnpj.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+            filtered.push(clienteQuery[i]);
+          }
+      }
+      return filtered;
+      }
   ngOnInit() {
     
     this.itemsmenu = [{
@@ -61,7 +146,11 @@ export class MenuBarComponent implements OnInit {
             label: 'Cadastro',
             routerLink: '/cadastro',
             icon: 'pi pi-fw pi-plus',
-            visible: true
+            visible: true,
+            items: [
+                {label: 'Novo ', icon: 'pi pi-fw pi-plus',routerLink:'/cadastro'},
+                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialog()}}
+              ]
           },
           {
             label: 'Análise de crédito',
@@ -101,7 +190,12 @@ export class MenuBarComponent implements OnInit {
           }
       ];
   }
-
+  showDialog() {
+    this.display = true;
+}
+  hideDialog(){
+    this.display = false;
+  }
 
 logOut(){
     this.doIt();
@@ -112,13 +206,13 @@ conts:boolean = false;
 doIt(){
    if(this.conts){
         this.conts=false; 
-        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft:313}, {paddingLeft:0,delay:0.5, ease: Power1.easeOut});
+        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft:209}, {paddingLeft:0,delay:0.5, ease: Power1.easeOut});
         TweenMax.fromTo(this.navmenuuser.nativeElement,0.3,{height:'auto'},{height:0,display:'none', ease:  Power1.easeOut});
         TweenMax.fromTo(this.box.nativeElement, 0.5, {height:'auto'}, {height:0, ease: Power1.easeOut});
         
     }else{
         this.conts=true;
-        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft:0}, {paddingLeft:313, ease:  Back.easeOut.config(1.7)});
+        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft:0}, {paddingLeft:209, ease:  Back.easeOut.config(1.7)});
         TweenMax.fromTo(this.box.nativeElement,0.8, {height: 0}, {height:'auto',delay:1, ease: Back.easeOut.config(1.7)});
         TweenMax.fromTo(this.navmenuuser.nativeElement,0.8,{height: 0},{height:'auto',delay:1,display:'block', ease: Back.easeOut.config(1.7)});
         TweenMax.fromTo(this.box.nativeElement,1.5, {width: 325}, {width:325,delay:1, ease: Power1.easeOut}); 

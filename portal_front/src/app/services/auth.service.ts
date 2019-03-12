@@ -14,7 +14,7 @@ let url: string = '/api/auth';
 
 export class AuthService {
   
-  private usuarioAutenticado: boolean = false;
+  usuarioAutenticado: boolean = false;
   mostrarsistema = new EventEmitter<boolean>();
   shared : SharedService;
   constructor(private http: HttpClient,private router: Router) {
@@ -39,7 +39,6 @@ export class AuthService {
       this.shared.removeSessionUsuario();
       this.usuarioAutenticado = false;
       console.log('ERRO AO TENTAR LOGAR');
-      window.location.reload();
     });
   }
 
@@ -58,6 +57,4 @@ export class AuthService {
     }
     return false;
   }
-
-
 }

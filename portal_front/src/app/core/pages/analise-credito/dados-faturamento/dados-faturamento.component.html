@@ -34,8 +34,8 @@
           <label class="ajusteLabel" for="primeiraParcela">1° Parcela: </label>
         </div>
         <div class="p-col-9">
-          <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="primeiraParcela"
-          mask="R$ 999.999,99?" slotChar=" "></p-inputMask>
+          <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+          id="primeiraParcela"/>
         </div>
       </div>
 
@@ -44,8 +44,8 @@
           <label class="ajusteLabel" for="segundaParcela">2° Parcela: </label>
         </div>
         <div class="p-col-9">
-          <p-inputMask  [style]="{'width': '100%', 'margin-left': '5px'}" id="segundaParcela"
-          mask="R$ 999.999,99?" slotChar=" "></p-inputMask>
+          <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+          id="segundaParcela"/>
         </div>
       </div>
 
@@ -79,9 +79,9 @@
         </div>
         <div class="p-col-8">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            id="dataAssin" dateFormat="mm" [locale]="br" view="month"></p-calendar>
           </div>    
         </div>
       </div>
@@ -92,9 +92,9 @@
         </div>
         <div class="p-col-8">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"></p-calendar>
+            id="dataAssin" dateFormat="mm" [locale]="br" view="month"></p-calendar>
           </div>
         </div>
       </div>

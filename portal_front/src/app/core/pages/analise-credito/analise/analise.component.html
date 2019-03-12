@@ -16,7 +16,7 @@
           <label class="ajusteLabel" for="valorAvali">Valor de Avaliação: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
           id="valorAvali" name="valoravaliacao" #valoravaliacao='ngModel' [(ngModel)]="simulacoes.valoravaliacao" >
         </div>
       </div>
@@ -26,7 +26,7 @@
           <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
           id="valorComVem" name="valorcompravenda" #valorcompravenda='ngModel' [(ngModel)]="simulacoes.valorcompravenda" >
         </div>
       </div>
@@ -36,7 +36,7 @@
           <label class="ajusteLabel" for="valorcredito">Valor do Crédito: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
           id="valorcredito" name="valorcredito" #valorcredito="ngModel" [(ngModel)]="simulacoes.valorcredito">
         </div>
       </div>
@@ -59,7 +59,8 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataenviobanco" dateFormat="dd/mm/yy" [locale]="br" ngModel name="dataenviobanco"  #dataenviobanco="ngModel" [(ngModel)]="simulacoes.dataenviobanco" ></p-calendar>
+            id="dataenviobanco" dateFormat="dd/mm/yy" [locale]="br" ngModel name="dataenviobanco" #dataenviobanco="ngModel" [(ngModel)]="simulacoes.dataenviobanco"
+            rPCalendarMask></p-calendar>
           </div>
         </div>
       </div>
@@ -69,7 +70,8 @@
           <label class="ajusteLabel" for="codsicaq">SICAQ: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="codsicaq" name="codsicaq" #codsicaq="ngModel" [(ngModel)]="simulacoes.codsicaq">
+          <input type="text" class="ajusteInput" pInputText id="codsicaq" name="codsicaq" #codsicaq="ngModel" [(ngModel)]="simulacoes.codsicaq"
+          pKeyFilter="pint">
         </div>
       </div>
 
@@ -86,7 +88,16 @@
 
     <div class="p-col-6">
 
-      <div class="espaco" [ngStyle]="{'width': '741px', 'height': '42px'}"></div>
+     <!-- <div class="espaco" [ngStyle]="{'width': '741px', 'height': '42px'}"></div> -->
+
+     <div class="p-grid">
+      <div class="p-col-4">
+        <label class="ajusteLabel" >COD CADASTRO: </label>
+      </div>
+      <div class="p-col-8">
+          {{codcadastro}}
+      </div>
+    </div>
 
       <div class="p-grid">
         <div class="p-col-4">
@@ -112,7 +123,7 @@
           <label class="ajusteLabel" for="valorsubsidio">Valor subsidio: </label>
         </div>
         <div class="p-col-8">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
           id="valorsubsidio" name="valorsubsidio" #valorsubsidio="ngModel" [(ngModel)]="simulacoes.valorsubsidio">
         </div>
       </div>
@@ -128,7 +139,7 @@
             <label class="ajusteLabel" for="valordespesasfinanciadas">Despesas financiadas: </label>
           </div>
           <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" 
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" 
             id="valordespesasfinanciadas" name="valordespesasfinanciadas" #valordespesasfinanciadas="ngModel" [(ngModel)]="simulacoes.valordespesasfinanciadas"/>
           </div>
         </div>
@@ -138,7 +149,7 @@
             <label class="ajusteLabel" for="finanTotal">Financiamento total: </label>
           </div>
           <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
             id="finanTotal"  name="valorfinanciamento"  [(ngModel)]="simulacoes.valorfinanciamento"/>
           </div>
         </div>
@@ -148,8 +159,8 @@
             <label class="ajusteLabel" for="fgts">FGTS: </label>
           </div>
           <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-            id="fgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts"/>
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+            id="fgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio()"/>
           </div>
         </div>
 
@@ -161,7 +172,7 @@
             <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
           </div>
           <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
             id="recProp" name="valorrecursosproprios"  [(ngModel)]="simulacoes.valorrecursosproprios"/>
           </div>
         </div>
@@ -171,7 +182,7 @@
             <label class="ajusteLabel" for="saldoDev">Saldo devedor: </label>
           </div>
           <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
             id="saldoDev" name="saldodevedor"  [(ngModel)]="simulacoes.saldodevedor"/>
           </div>
         </div>
@@ -217,47 +228,53 @@
         <tr [pSelectableRow]="rowData">
           <td><button pButton icon="pi pi-trash" (click)="removerSimulacao(rowData)"></button></td>
           <td> {{simul.codinstituicaofinanceira.descInstituicaoFinanceira}} </td>
-          <td> 
-            <p-dropdown placeholder="Selecione..." [options]="statussimulacao" optionLabel="descstatussimulacao" [autoWidth]="false" [style]="{'width': '100%'}" 
-            class="ajusteInput" id="codstatussimulacao" name="codstatussimulacao" #codstatussimulacao="ngModel" [(ngModel)]="rowData.codstatussimulacao"></p-dropdown>  
+          <td [pEditableColumn]="rowData" [pEditableColumnField]="'Aprovação'">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-dropdown placeholder="Selecione..." [options]="statussimulacao" optionLabel="descstatussimulacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+                class="ajusteInput" id="codstatussimulacao" name="codstatussimulacao" #codstatussimulacao="ngModel" [(ngModel)]="rowData.codstatussimulacao"></p-dropdown>
+              </ng-template>
+              <ng-template pTemplate="output">
+                <input pInputText class="ajusteInput" value="{{rowData.codstatussimulacao.descstatussimulacao}}" 
+                *ngIf="rowData.codstatussimulacao != undefined" (mouseover)="focusDropDown(inputDropdown)" #inputDropdown/>
+                <input pInputText class="ajusteInput" value="Selecione..." *ngIf="rowData.codstatussimulacao == undefined" 
+                #inputDropdown (mouseover)="focusDropDown(inputDropdown)"/>
+              </ng-template>
+            </p-cellEditor>
           </td>
           <td [pEditableColumn]="rowData" [pEditableColumnField]="'Valor Total'">
             <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
                   id="valoravaliacaoinstfinanc" name="valoravaliacaoinstfinanc" #valoravaliacaoinstfinanc="ngModel" [(ngModel)]="rowData.valoravaliacaoinstfinanc"
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/>    
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <label pInputText class="labelStyle">{{rowData.valoravaliacaoinstfinanc}}</label>
+                  <input pInputText class="ajusteInput" value="R$ {{rowData.valoravaliacaoinstfinanc}}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
           <td [pEditableColumn]="rowData" [pEditableColumnField]="'Taxa de Juros'">
             <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: '% ', thousands: '.', decimal: ',' }"
+                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: '% ', thousands: '.', decimal: ',', align: 'left' }"
                   id="taxadejuros" name="taxadejuros" #taxadejuros="ngModel" [(ngModel)]="rowData.taxadejuros"
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/>    
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: '% ', thousands: '.', decimal: ',' }"
-                  id="taxadejuros" name="taxadejuros" #taxadejuros="ngModel" [(ngModel)]="rowData.taxadejuros"
-                  [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/>    
+                  <input pInputText class="ajusteInput" value="% {{rowData.taxadejuros}}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
           <td [pEditableColumn]="rowData" [pEditableColumnField]="'Valor 1° Parcela'">
             <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
                   id="valorprimeiraparcela" name="valorprimeiraparcela" #valorprimeiraparcela="ngModel" [(ngModel)]="rowData.valorprimeiraparcela"
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/> 
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-                  id="valorprimeiraparcela" name="valorprimeiraparcela" #valorprimeiraparcela="ngModel" [(ngModel)]="rowData.valorprimeiraparcela"
-                  [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/> 
+                  <input pInputText class="ajusteInput" value="R$ {{rowData.valorprimeiraparcela}}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
@@ -282,7 +299,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataMae" dateFormat="dd/mm/yy" [locale]="br"
-            name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" ></p-calendar>
+            name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" showButtonBar="true" rPCalendarMask></p-calendar>
           </div>
         </div>
       </div>
@@ -296,7 +313,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"
-            name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" ></p-calendar>
+            name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" showButtonBar="true" rPCalendarMask></p-calendar>
           </div>
         </div>
       </div>
@@ -310,7 +327,7 @@
             <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"
-            name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" ></p-calendar>
+            name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" showButtonBar="true" rPCalendarMask></p-calendar>
           </div>
         </div>
       </div>
@@ -334,3 +351,5 @@
   </p-fieldset>
 </form>
 <br><br>
+
+

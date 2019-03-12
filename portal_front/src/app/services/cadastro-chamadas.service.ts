@@ -10,6 +10,8 @@ import { Injectable } from '@angular/core';
 import { TipoContato } from '../models/tipo-contato';
 import { TipoClientes } from '../models/tipo-clientes';
 import { environment } from '../../environments/environment';
+import { Cliente } from '../models/cliente';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -44,15 +46,15 @@ export class CadastroChamadasService {
     return this.http.get<TipoClientes[]>(environment.urlpath +'/api/tipoclientes');
   }
 
-  getIncorporadoras() {
-  
-    return this.http.get<Incorporadoras[]>(environment.urlpath +'/api/incorporadoras')
+  getIncorporadoras(){
+    return this.http.get<Incorporadoras[]>(environment.urlpath +'/api/incorporadoras');
   }
 
   createUser(cadInfo: CadastroInformacao) {
     console.log(JSON.stringify(cadInfo));
     return this.http.post<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo)
   }
+  
 
   getOrgaoExpedidor() {
     return this.http.get(`./../../assets/orgao-expedidor.json`)
@@ -60,6 +62,14 @@ export class CadastroChamadasService {
     .then(res => <any[]> res)
     .then(data => {return data;});
   }
+
+  getBuscaClienteCadastrado() {
+    return this.http.get<Cliente[]>(environment.urlpath +'/api/clientes')
+    .toPromise()
+    .then(res => <any[]> res)
+    .then(data => {return data;});
+  }
+
 
   getCep(cep) {
     // CRIEI UM REDIRECIONAMENTO INTERNO NO BACKEND PARA TRATAR NO SERVIDOR O CEP ANTES DE ENVIAR PARA O FRONT
@@ -69,5 +79,17 @@ export class CadastroChamadasService {
 
   getCalendarioBr() {
     return this.http.get<CalendarioBr[]>(`./../../assets/calendario-br.json`);
+  }
+
+  getBuscaCadastrado(nome: string,cpf: string){
+  if(nome!=null){
+  return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/nome/'+nome).toPromise().then(res => <any[]> res).then(data => {data;  return data;});
+  } else if(cpf !=null){
+    return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/cpf/'+cpf).toPromise().then(res => <any[]> res).then(data => {data;  return data;});
+  }
+  }
+
+  putCadastro(cadInfo: CadastroInformacao) {
+   return this.http.put<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo);
   }
 }

@@ -47,8 +47,8 @@ public class Analise  implements Serializable{
 	@Column(name="cod_sub_status_analise")
 	private Integer codsubstatusanalise;
 	
-	@Column(name="cod_simulacao")
-	private Integer codsimulacao;
+	@Column(name="cod_simulacao_financiado")
+	private Integer codsimulacaofinanciado; // CODIGO (ID) DO QUAL O USUARIO SELECIONOU PARA REALIZAR O FINANCIAMENTO
 	
 	@Column(name="obs")
 	private String obs;
@@ -123,12 +123,13 @@ public class Analise  implements Serializable{
 		this.codsubstatusanalise = codsubstatusanalise;
 	}
 
-	public Integer getCodsimulacao() {
-		return codsimulacao;
+
+	public Integer getCodsimulacaofinanciado() {
+		return codsimulacaofinanciado;
 	}
 
-	public void setCodsimulacao(Integer codsimulacao) {
-		this.codsimulacao = codsimulacao;
+	public void setCodsimulacaofinanciado(Integer codsimulacaofinanciado) {
+		this.codsimulacaofinanciado = codsimulacaofinanciado;
 	}
 
 	public String getObs() {

@@ -23,26 +23,28 @@ public class EstadoCivil implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod_estado_civil")
-	private Integer codEstadoCivil;
+	private Integer codestadocivil;
 	
 	@Column(name="desc_estado_civil")
-	private String descEstadoCivil;
+	private String descestadocivil;
 
-	public Integer getCodEstadoCivil() {
-		return codEstadoCivil;
+	public Integer getCodestadocivil() {
+		return codestadocivil;
 	}
 
-	public void setCodEstadoCivil(Integer codEstadoCivil) {
-		this.codEstadoCivil = codEstadoCivil;
+	public void setCodestadocivil(Integer codestadocivil) {
+		this.codestadocivil = codestadocivil;
 	}
 
-	public String getDescEstadoCivil() {
-		return descEstadoCivil;
+	public String getDescestadocivil() {
+		return descestadocivil;
 	}
 
-	public void setDescEstadoCivil(String descEstadoCivil) {
-		this.descEstadoCivil = descEstadoCivil;
+	public void setDescestadocivil(String descestadocivil) {
+		this.descestadocivil = descestadocivil;
 	}
+
+
 	
 	
 	
