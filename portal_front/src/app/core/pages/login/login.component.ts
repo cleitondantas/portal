@@ -16,6 +16,7 @@ private usuario: Usuario = new Usuario();
 shared : SharedService;
 mensagemErro ='';
 msgs: Message[] = [];
+hidden: boolean = true;
 
 user = new Usuario();
   constructor(private authService: AuthService) {
@@ -30,9 +31,13 @@ user = new Usuario();
 
   fazerLogin(from : NgForm){
     this.msgs = [];
+    setTimeout(() => {
+      this.hidden = false;
+    }, 301);
     this.authService.fazerLogin(from,this.user);
     
     setTimeout(() => {
+      this.hidden = true;
       if (this.authService.isUsuarioAutenticado() == false) {
         this.msgs = [];
         this.msgs.push({
@@ -44,6 +49,6 @@ user = new Usuario();
         this.msgs = [];
       }
       
-    }, 1000);
+    }, 1500);
   }
 }

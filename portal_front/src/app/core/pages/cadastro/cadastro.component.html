@@ -23,11 +23,11 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
+                    <label class="ajusteLabel" for="codtipocliente">Tipo de pessoa: </label>
                   </div>
-                  <div class="p-col-8" id="tipoP">
+                  <div class="p-col-8">
                     <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codtipocliente}}" label="{{tipo.desctipocliente}}" name="codtipocliente" class="radio" ngModel #codtipocliente="ngModel" [(ngModel)]="comprador.codtipocliente"
-                    required></p-radioButton>
+                    required id="codtipocliente"></p-radioButton>
                   </div>
                 </div>
 
@@ -57,10 +57,10 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="estadoCivil">Estado civil: </label>
+                    <label class="ajusteLabel" for="codestadocivil">Estado civil: </label>
                   </div>
-                  <div class="p-col-8" id="estadoCivil">
-                    <p-dropdown placeholder="Selecione..." optionLabel="descestadocivil" [options]="estadoCivil" [autoWidth]="false"
+                  <div class="p-col-8">
+                    <p-dropdown placeholder="Selecione..." optionLabel="descestadocivil" [options]="estadoCivil" [autoWidth]="false" id="codestadocivil"
                     [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codestadocivil" #codestadocivil="ngModel" [(ngModel)]="comprador.codestadocivil"
                     required></p-dropdown>
                   </div>
@@ -68,11 +68,11 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="renda">Renda: </label>
+                    <label class="ajusteLabel" for="valorrenda">Renda: </label>
                   </div>
                   <div class="p-col-8">
                     <input currencyMask pInputText class="ajusteInput" name="valorrenda" [(ngModel)]="comprador.valorrenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-                    required/>
+                    required id="valorrenda"/>
                   </div>
                 </div>
 
@@ -82,23 +82,23 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="nomeC">Nome do cliente: </label>
+                    <label class="ajusteLabel" for="nomecliente">Nome do cliente: </label>
                   </div>
                   <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="nomeC" ngModel  name="nomecliente"  #nomecliente="ngModel" [(ngModel)]="comprador.nomecliente"
+                    <input type="text" class="ajusteInput" pInputText id="nomecliente" ngModel  name="nomecliente"  #nomecliente="ngModel" [(ngModel)]="comprador.nomecliente"
                     required>
                   </div>
                 </div>
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="dataNasc">Data de nascimento: </label>
+                    <label class="ajusteLabel" for="datanascimento">Data de nascimento: </label>
                   </div>
                   <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
                     <div class="ui-inputgroup">
                       <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                       class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                      id="dataNasc" dateFormat="dd/mm/yy" ngModel name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
+                      id="datanascimento" dateFormat="dd/mm/yy" ngModel name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
                       [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
                     </div>
                   </div>
@@ -106,7 +106,7 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="orgExp">Órgão expedidor: </label>
+                    <label class="ajusteLabel" for="orgaoexpedidor">Órgão expedidor: </label>
                   </div>
                   <div class="p-col-8">
                     <input type="text" class="ajusteInput" pInputText id="orgaoexpedidor" ngModel name="orgaoexpedidor"  #orgaoexpedidor="ngModel" [(ngModel)]="comprador.orgaoexpedidor"
@@ -145,7 +145,7 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="cep">CEP: </label>
+                    <label class="ajusteLabel" for="cepresidencial">CEP: </label>
                   </div>
                   <div class="p-col-8">
                     <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cepresidencial" mask="99999-999" 
@@ -156,30 +156,30 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="numero">Número: </label>
+                    <label class="ajusteLabel" for="numeroendereco">Número: </label>
                   </div>
                   <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="numero" ngModel name="numeroendereco"  #numeroendereco="ngModel" [(ngModel)]="comprador.numeroendereco"
+                    <input type="text" class="ajusteInput" pInputText id="numeroendereco" ngModel name="numeroendereco"  #numeroendereco="ngModel" [(ngModel)]="comprador.numeroendereco"
                     required>
                   </div>
                 </div>
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="bairro">Bairro: </label>
+                    <label class="ajusteLabel" for="bairroresidencial">Bairro: </label>
                   </div>
                   <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="bairro" ngModel name="bairroresidencial"  #bairroresidencial="ngModel" [(ngModel)]="comprador.bairro"
+                    <input type="text" class="ajusteInput" pInputText id="bairroresidencial" ngModel name="bairroresidencial"  #bairroresidencial="ngModel" [(ngModel)]="comprador.bairro"
                     required>
                   </div>
                 </div>
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="cidade">Cidade: </label>
+                    <label class="ajusteLabel" for="cidaderesidencial">Cidade: </label>
                   </div>
                   <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="cidade" ngModel name="cidaderesidencial"  #cidaderesidencial="ngModel" [(ngModel)]="comprador.cidade"
+                    <input type="text" class="ajusteInput" pInputText id="cidaderesidencial" ngModel name="cidaderesidencial"  #cidaderesidencial="ngModel" [(ngModel)]="comprador.cidade"
                     required>
                   </div>
                 </div>
@@ -199,19 +199,19 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="complemento">Complemento: </label>
+                    <label class="ajusteLabel" for="complementoresidencial">Complemento: </label>
                   </div>
                   <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="complemento" ngModel name="complementoresidencial"  #complementoresidencial="ngModel" [(ngModel)]="comprador.complemento">
+                    <input type="text" class="ajusteInput" pInputText id="complementoresidencial" ngModel name="complementoresidencial"  #complementoresidencial="ngModel" [(ngModel)]="comprador.complemento">
                   </div>
                 </div>
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="estado">Estado: </label>
+                    <label class="ajusteLabel" for="ufresidencial">Estado: </label>
                   </div>
-                  <div class="p-col-8" id="estado">
-                    <p-dropdown placeholder="Selecione..." optionLabel="uf" [options]="estado" 
+                  <div class="p-col-8">
+                    <p-dropdown placeholder="Selecione..." optionLabel="uf" [options]="estado" id="ufresidencial"
                     [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="ufresidencial"  #ufresidencial="ngModel" [(ngModel)]="comprador.uf"
                     required></p-dropdown>
                   </div>
@@ -247,13 +247,13 @@
               </div>
 
               <br><br>
-              <p><button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" 
+              <p><button pButton type="button" label="Adicionar contato" class="ui-button-raised ui-button-secondary" 
               [ngStyle]="{'float': 'right'}" (click)="adicionarContato(contatos)" icon="pi pi-plus-circle" iconPos="right"></button>
             </div>
 
             <br><br>
             <div class="p-col-6">
-              <p-table [value]="contatoDisplay" [scrollable]="true" [(selection)]="contatoSelecionado" dataKey="contato" scrollHeight="200px">
+              <p-table [value]="contatoDisplay" [scrollable]="true" scrollHeight="200px">
                 <ng-template pTemplate="header">
                   <tr>
                     <th><strong>Excluir</strong></th>
@@ -274,11 +274,11 @@
           </div>
         </p-fieldset>
 
-        <button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" 
+        <button pButton type="button" label="Adicionar comprador" class="ui-button-raised ui-button-secondary" 
         [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}" (click)="adicionarCompradorLista(comprador, formCadInfo)"
         icon="pi pi-plus-circle" iconPos="right" [hidden]="!disabledButton"></button>
 
-        <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-secondary" 
+        <button pButton type="button" label="Salvar alterações" class="ui-button-raised ui-button-secondary" 
         [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}"
         icon="pi pi-save" iconPos="right" [hidden]="disabledButton" (click)="atualizarComprador(formCadInfo)"></button>
 
@@ -326,10 +326,10 @@
       
       <div class="p-grid">
         <div class="p-col-1">
-          <label class="ajusteLabel" for="fid">FID: </label>
+          <label class="ajusteLabel" for="numerocadastroincorporadorafid">FID: </label>
         </div>
         <div class="p-col-3">
-          <input type="text" pInputText id="fid-input" class="ajusteInput" ngModel name="numerocadastroincorporadorafid" 
+          <input type="text" pInputText id="numerocadastroincorporadorafid" class="ajusteInput" ngModel name="numerocadastroincorporadorafid" 
           #numerocadastroincorporadorafid="ngModel" [(ngModel)]="cadInfo.numerocadastroincorporadorafid" pKeyFilter="pint" required>
         </div>
       </div>
@@ -357,11 +357,11 @@
 
             <div class="p-grid">
               <div class="p-col-3">
-                <label class="ajusteLabel" for="incorporadora">Incorporadora: </label>
+                <label class="ajusteLabel" for="codincorporadora">Incorporadora: </label>
               </div>
-              <div class="p-col-7" id="incorporadora">
+              <div class="p-col-7">
                 <p-dropdown placeholder="Selecione..." optionLabel="descincorporadora" [options]="incorp" [autoWidth]="false" [style]="{'width': '100%'}" 
-                ngModel name="codincorporadora" #codincorporadora="ngModel" [(ngModel)]="cadInfo.codincorporadora" required></p-dropdown>
+                ngModel name="codincorporadora" #codincorporadora="ngModel" [(ngModel)]="cadInfo.codincorporadora" required id="codincorporadora"></p-dropdown>
               </div>
             </div>
 
@@ -372,9 +372,9 @@
               <div class="p-col-3">
                 <label class="ajusteLabel" for="codoriginacao">Originação: </label>
               </div>
-              <div class="p-col-7" id="origin">
+              <div class="p-col-7">
                 <p-dropdown placeholder="Selecione..." optionLabel="descoriginacao" [options]="originacao" [autoWidth]="false" [style]="{'width': '100%'}" 
-                ngModel name="codoriginacao"  #codoriginacao="ngModel" [(ngModel)]="cadInfo.codoriginacao" required></p-dropdown>
+                ngModel name="codoriginacao"  #codoriginacao="ngModel" [(ngModel)]="cadInfo.codoriginacao" required id="codoriginacao"></p-dropdown>
               </div>
             </div>
 
@@ -388,12 +388,12 @@
 
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="empreend">Empreendimento: </label>
+                <label class="ajusteLabel" for="codempreendimento">Empreendimento: </label>
               </div>
-              <div class="p-col-4" id="empreend">
+              <div class="p-col-4">
                 <p-dropdown placeholder="Selecione..." optionLabel="descempreendimento" [options]="empreendimento" [autoWidth]="false" 
                 [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="codempreendimento"  #codempreendimento="ngModel" 
-                [(ngModel)]="cadInfo.codempreendimento" filter="true" required></p-dropdown>
+                [(ngModel)]="cadInfo.codempreendimento" filter="true" required id="codempreendimento"></p-dropdown>
               </div>
               <div class="p-col-2">
                 <label class="ajusteLabel" for="unidade">Unidade: </label>
@@ -407,10 +407,10 @@
               <div class="p-col-8">
                 <div class="p-grid">
                   <div class="p-col-6">
-                    <label class="ajusteLabel" for="vagaAutomovel">Vaga de automóvel: </label>
+                    <label class="ajusteLabel" for="vagaautomovel">Vaga de automóvel: </label>
                   </div>
                   <div class="p-col-6">
-                    <input type="text" class="ajusteInput" pInputText id="vagaAutomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
+                    <input type="text" class="ajusteInput" pInputText id="vagaautomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
                   </div>
                 </div>
               </div>
@@ -421,7 +421,7 @@
                     <label class="ajusteLabel" for="box">Box: </label>
                   </div>
                   <div class="p-col-6">
-                    <input type="text" class="ajusteInput" pInputText id="box"ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box">
+                    <input type="text" class="ajusteInput" pInputText id="box" ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box">
                   </div>
                 </div>
               </div>
@@ -434,10 +434,10 @@
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="bloco">Bloco: </label>
+                    <label class="ajusteLabel" for="blocotorre">Bloco: </label>
                   </div>
                   <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="bloco"ngModel name="blocotorre"  #blocotorre="ngModel" [(ngModel)]="cadInfo.blocotorre" required>
+                    <input type="text" class="ajusteInput" pInputText id="blocotorre" ngModel name="blocotorre"  #blocotorre="ngModel" [(ngModel)]="cadInfo.blocotorre" required>
                   </div>
                 </div>
               </div>
@@ -452,7 +452,7 @@
 
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="cepImovel">CEP: </label>
+                <label class="ajusteLabel" for="cep">CEP: </label>
               </div>
               <div class="p-col-8">
                 <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
@@ -463,28 +463,28 @@
 
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="numeroImovel">Número: </label>
+                <label class="ajusteLabel" for="numero">Número: </label>
               </div>
               <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="numeroImovel"ngModel name="numero"  #numero="ngModel" [(ngModel)]="cadInfo.numero" required>
+                <input type="text" class="ajusteInput" pInputText id="numero" ngModel name="numero"  #numero="ngModel" [(ngModel)]="cadInfo.numero" required>
               </div>
             </div>
 
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="bairroImovel">Bairro: </label>
+                <label class="ajusteLabel" for="bairro">Bairro: </label>
               </div>
               <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="bairroImovel"ngModel name="bairro"  #bairro="ngModel" [(ngModel)]="cadInfo.bairro" required>
+                <input type="text" class="ajusteInput" pInputText id="bairro" ngModel name="bairro"  #bairro="ngModel" [(ngModel)]="cadInfo.bairro" required>
               </div>
             </div>
 
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="cidadeImovel">Cidade: </label>
+                <label class="ajusteLabel" for="cidade">Cidade: </label>
               </div>
               <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="cidadeImovel"ngModel name="cidade"  #cidade="ngModel" [(ngModel)]="cadInfo.cidade" required>
+                <input type="text" class="ajusteInput" pInputText id="cidade" ngModel name="cidade"  #cidade="ngModel" [(ngModel)]="cadInfo.cidade" required>
               </div>
             </div>
 
@@ -493,28 +493,28 @@
 
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="enderecoImovel">Endereço: </label>
+                <label class="ajusteLabel" for="endereco">Endereço: </label>
               </div>
               <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="enderecoImovel"ngModel name="endereco"  #endereco="ngModel" [(ngModel)]="cadInfo.endereco" required>
+                <input type="text" class="ajusteInput" pInputText id="endereco" ngModel name="endereco"  #endereco="ngModel" [(ngModel)]="cadInfo.endereco" required>
               </div>
             </div>
 
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="complementoImovel">Complemento: </label>
+                <label class="ajusteLabel" for="complemento">Complemento: </label>
               </div>
               <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="complementoImovel"ngModel name="complemento"  #complemento="ngModel" [(ngModel)]="cadInfo.complemento">
+                <input type="text" class="ajusteInput" pInputText id="complemento" ngModel name="complemento"  #complemento="ngModel" [(ngModel)]="cadInfo.complemento">
               </div>
             </div>
 
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="estadoImovel">Estado: </label>
+                <label class="ajusteLabel" for="uf">Estado: </label>
               </div>
-              <div class="p-col-8" id="estadoImovel">
-                <p-dropdown placeholder="Selecione..." optionLabel="uf" [options]="estado" 
+              <div class="p-col-8">
+                <p-dropdown placeholder="Selecione..." optionLabel="uf" [options]="estado" id="uf"
                 [autoWidth]="false" [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="uf"  #uf="ngModel" [(ngModel)]="cadInfo.uf" required></p-dropdown>
               </div>
             </div>

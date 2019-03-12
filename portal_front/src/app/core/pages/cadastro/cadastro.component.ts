@@ -29,9 +29,8 @@ import emailMask from 'text-mask-addons/dist/emailMask'
 export class CadastroComponent implements OnInit {
   contato: any[] = [];
   contatoDisplay: any[] = [];
-  compradores: Compradores[] = [];
-  listaContato: any[];
   contatoSelecionado: any;
+  compradores: Compradores[] = [];
   disabled: boolean = false;
 
   estadoCivil: EstadoCivil[];
@@ -220,15 +219,19 @@ export class CadastroComponent implements OnInit {
       this.msgs = [];
     } else {
       this.msgs = [];
+      let camposInvalidos: any[] = [];
 
       for (var _i in formCadInfo.controls) {
         if (formCadInfo.controls[_i].status == "INVALID") {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
           formCadInfo.controls[_i].pristine = false;
           this.msgs = [];
           this.msgs.push({
             severity: 'error',
             summary: 'Erro ao adicionar comprador!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente.`
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
           })
         }
       }
@@ -244,8 +247,10 @@ export class CadastroComponent implements OnInit {
   }
  
   removerContato (contatoC) {
-    let index = this.contato.indexOf(contatoC);
-    
+    console.log(contatoC);
+    let index = this.contatoDisplay.indexOf(contatoC);
+    console.log(this.contato)
+
     this.contato.splice(index, 1);
     this.contatoDisplay.splice(index, 1);
   }
@@ -372,15 +377,19 @@ export class CadastroComponent implements OnInit {
       })
     } else {
       this.msgs2 = [];
+      let camposInvalidos: any[] = [];
 
       for (var _i in formulario.controls) {
         if (formulario.controls[_i].status == "INVALID") {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
           formulario.controls[_i].pristine = false;
           this.msgs2 = [];
           this.msgs2.push({
             severity: 'error',
             summary: 'Erro ao avançar!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente.`
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
           })
         }
       }
@@ -396,27 +405,55 @@ export class CadastroComponent implements OnInit {
   }
 
   atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any){
-    cadInfo.uf = cadInfo.uf.uf;
-    cadInfo.clientes = this.compradores;
-    
-    cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
-    cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
-    cadInfo.codoriginacao = cadInfo.codoriginacao['codoriginacao'];
-    for (let index = 0; index < cadInfo.clientes.length; index++) {
-      cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
-    
-      if(typeof  cadInfo.clientes[index].codestadocivil.codestadocivil !== 'undefined'){
-        cadInfo.clientes[index].codestadocivil = cadInfo.clientes[index].codestadocivil.codestadocivil;  
+    if (this.validaFormImovel(formulario) == true) {
+      cadInfo.uf = cadInfo.uf.uf;
+      cadInfo.clientes = this.compradores;
+      
+      cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
+      cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
+      cadInfo.codoriginacao = cadInfo.codoriginacao['codoriginacao'];
+      for (let index = 0; index < cadInfo.clientes.length; index++) {
+        cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
+      
+        if(typeof  cadInfo.clientes[index].codestadocivil.codestadocivil !== 'undefined'){
+          cadInfo.clientes[index].codestadocivil = cadInfo.clientes[index].codestadocivil.codestadocivil;  
+        }
+      }
+      cadInfo.cep = cadInfo.cep.replace('-', '');
+      cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+      this.compradores = [];
+  
+      console.log(JSON.stringify(cadInfo))
+      this.chamadasService.putCadastro(cadInfo).subscribe(dados => this.retornocadastro = dados['data']);
+      formulario.reset();
+      this.router.navigate(['/home']);
+    } else {
+      this.msgs2 = [];
+      let camposInvalidos: any[] = [];
+
+      for (var _i in formulario.controls) {
+        if (formulario.controls[_i].status == "INVALID") {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
+          formulario.controls[_i].pristine = false;
+          this.msgs2 = [];
+          this.msgs2.push({
+            severity: 'error',
+            summary: 'Erro ao salvar alterações!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+          })
+        }
+      }
+
+      if (this.compradores.length == 0) {
+        this.msgs2.push({
+          severity: 'error',
+          summary: 'Erro ao salvar alterações!',
+          detail: `Cadastre pelo menos 1 comprador.`
+        })
       }
     }
-    cadInfo.cep = cadInfo.cep.replace('-', '');
-    cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
-    this.compradores = [];
-
-    console.log(JSON.stringify(cadInfo))
-    this.chamadasService.putCadastro(cadInfo).subscribe(dados => this.retornocadastro = dados['data']);
-    formulario.reset();
-    this.router.navigate(['/home']);
   }
 
   verificaCpfCnpj(formCadInfo) {
@@ -533,35 +570,66 @@ export class CadastroComponent implements OnInit {
   }
   
   atualizarComprador(formCadInfo) {
-    for (let item = 0; item < this.compradores.length; item++) {
-      if (this.compradores[item].cpfcnpj == this.comprador.cpfcnpj) {
-        this.compradores[item].cpfcnpj = this.comprador.cpfcnpj;
-        this.compradores[item].codtipocliente = Number(this.comprador.codtipocliente);
-        this.compradores[item].nomecliente = this.comprador.nomecliente;
-        this.compradores[item].ndocumento = this.comprador.ndocumento;
-        this.compradores[item].orgaoexpedidor = this.comprador.orgaoexpedidor;
-        this.compradores[item].dataexpedicao = this.comprador.dataexpedicao;
-        this.compradores[item].datanascimento = this.comprador.datanascimento;
-        this.compradores[item].codestadocivil = this.comprador.codestadocivil.codestadocivil;
-        this.compradores[item].nacionalidade = this.comprador.nacionalidade;
-        this.compradores[item].profissao = this.comprador.profissao;
-        this.compradores[item].cepresidencial = this.comprador.cepresidencial;
-        this.compradores[item].uf = this.comprador.uf.uf
-        this.compradores[item].cidade = this.comprador.cidade;
-        this.compradores[item].bairro = this.comprador.bairro;
-        this.compradores[item].endereco = this.comprador.endereco;
-        this.compradores[item].complemento = this.comprador.complemento;
-        this.compradores[item].numeroendereco = this.comprador.numeroendereco;
-        this.compradores[item].codusuario = this.comprador.codusuario;
-        this.compradores[item].datacadastro = this.comprador.datacadastro;
-        this.compradores[item].valorrenda = this.comprador.valorrenda;
-        this.compradores[item].principal = this.comprador.principal;
+    if (this.validaFormulario(formCadInfo) == true) {
+      for (let item = 0; item < this.compradores.length; item++) {
+        if (this.compradores[item].cpfcnpj == this.comprador.cpfcnpj) {
+          this.compradores[item].cpfcnpj = this.comprador.cpfcnpj;
+          this.compradores[item].codtipocliente = Number(this.comprador.codtipocliente);
+          this.compradores[item].nomecliente = this.comprador.nomecliente;
+          this.compradores[item].ndocumento = this.comprador.ndocumento;
+          this.compradores[item].orgaoexpedidor = this.comprador.orgaoexpedidor;
+          this.compradores[item].dataexpedicao = this.comprador.dataexpedicao;
+          this.compradores[item].datanascimento = this.comprador.datanascimento;
+          this.compradores[item].codestadocivil = this.comprador.codestadocivil.codestadocivil;
+          this.compradores[item].nacionalidade = this.comprador.nacionalidade;
+          this.compradores[item].profissao = this.comprador.profissao;
+          this.compradores[item].contatos = this.contato;
+          this.compradores[item].cepresidencial = this.comprador.cepresidencial;
+          this.compradores[item].uf = this.comprador.uf.uf
+          this.compradores[item].cidade = this.comprador.cidade;
+          this.compradores[item].bairro = this.comprador.bairro;
+          this.compradores[item].endereco = this.comprador.endereco;
+          this.compradores[item].complemento = this.comprador.complemento;
+          this.compradores[item].numeroendereco = this.comprador.numeroendereco;
+          this.compradores[item].codusuario = this.comprador.codusuario;
+          this.compradores[item].datacadastro = this.comprador.datacadastro;
+          this.compradores[item].valorrenda = this.comprador.valorrenda;
+          this.compradores[item].principal = this.comprador.principal;
+        }
+      }
+          
+      formCadInfo.reset();
+      this.contatoDisplay = [];
+      this.contato = [];
+      this.msgs = [];
+      this.disabledButton = true;
+    } else {
+      this.msgs = [];
+      let camposInvalidos: any[] = [];
+
+      for (var _i in formCadInfo.controls) {
+        if (formCadInfo.controls[_i].status == "INVALID") {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
+          formCadInfo.controls[_i].pristine = false;
+          this.msgs = [];
+          this.msgs.push({
+            severity: 'error',
+            summary: 'Erro ao salvar alterações!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+          })
+        }
+      }
+
+      if (this.contato.length == 0) {
+        this.msgs.push({
+          severity: 'error',
+          summary: 'Erro ao salvar alterações!',
+          detail: `Adicione pelo menos 1 contato.`
+        })
       }
     }
-    formCadInfo.reset();
-    this.contatoDisplay = [];
-    this.contato = [];
-    this.disabledButton = true;
   }
 
   setCursor(cepRecebido){
