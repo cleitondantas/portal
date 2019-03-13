@@ -11,17 +11,20 @@
 	 SAIDA
 	 Porta de http 8100
 	 
-------------------Montando imagem com Docker --------------------------	 
+	 
+*Montando imagem com Docker 
+
 FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 COPY /*.jar portal.jar
 EXPOSE 8100
+
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/portal.jar"]
-----------------------------------------------------------------------
+
 docker build -t mci/portal .
 
 docker run -dit -p 8100:8100 mci/portal:latest
-----------------------------------------------------------------------
+
 
 
 *CHAMADAS REST
