@@ -59,7 +59,7 @@ public class Analise  implements Serializable{
 	@Column(name="data_simulacao")
 	private Date datasimulacao;
 	
-	@ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_relac_analise_simulacao", 
 	joinColumns = @JoinColumn(name = "cod_analise", referencedColumnName = "cod_analise"),
 	inverseJoinColumns = @JoinColumn(name = "cod_simulacao", referencedColumnName = "cod_simulacao"))
