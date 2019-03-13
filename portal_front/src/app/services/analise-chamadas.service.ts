@@ -5,6 +5,9 @@ import { Modalidades } from '../models/modalidades';
 import { TipoAmortizacao } from '../models/tipo-amortizacao';
 import { environment } from 'src/environments/environment';
 import { StatusSimulacao } from '../models/status-simulacao';
+import { Analise } from 'src/app/models/analise';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +32,9 @@ export class AnaliseChamadasService {
 
   getStatusSimulacao () {
     return this.http.get<StatusSimulacao[]>(environment.urlpath + '/api/statussimulacao');
+  }
+
+  postAnaliseSimulacaoContrato(analise: Analise){
+   return this.http.post<Analise>(environment.urlpath + '/api/analise', analise);
   }
 }

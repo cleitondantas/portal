@@ -5,6 +5,7 @@ import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.servic
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
 import { AnaliseCreditoComponent } from '../analise-credito.component';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-analise',
@@ -27,8 +28,10 @@ export class AnaliseComponent implements OnInit {
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
+  
   constructor( 
-    private service: AnaliseChamadasService, private router: Router, private analiseCred: AnaliseCreditoComponent
+    private confirmationService: ConfirmationService,private service: AnaliseChamadasService, private router: Router, private analiseCred: AnaliseCreditoComponent
+
   ) { }
 
   ngOnInit() {
@@ -91,28 +94,7 @@ export class AnaliseComponent implements OnInit {
 
     console.log(this.simulacaoLista);
     console.log(JSON.stringify(this.simulacaoLista));
-  /*
-    this.simulacoes.valoravaliacao = null;
-    this.simulacoes.valorcompravenda = null;
-    this.simulacoes.valorcredito = null;
-    this.simulacoes.codmodalidadesimulacao = null;
-    this.simulacoes.dataenviobanco = null;
-    this.simulacoes.codsicaq = null;
-    this.simulacoes.correspondente = null;
-    this.simulacoes.prazofinanciamento = null;
-    this.simulacoes.codtipoamortizacao = null;
-    this.simulacoes.valorsubsidio = null;
-    this.simulacoes.valordespesasfinanciadas = null;
-    this.simulacoes.valorfinanciamento = null;
-    this.simulacoes.valorfgts = null;
-    this.simulacoes.valorrecursosproprios = null;
-    this.simulacoes.saldodevedor = null;
-    this.simulacoes.codinstituicaofinanceira = null;
-    this.simulacoes.codstatussimulacao = null;
-    this.simulacoes.valoravaliacaoinstfinanc = null;
-    this.simulacoes.taxadejuros = null;
-    this.simulacoes.valorprimeiraparcela = null;
-  */
+
   }
 
   removerSimulacao(simul) {
@@ -121,6 +103,7 @@ export class AnaliseComponent implements OnInit {
   }
 
   salvar() {
+
     this.analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     this.analise.codcadastro  = this.codcadastro;
     for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
@@ -130,10 +113,10 @@ export class AnaliseComponent implements OnInit {
       this.simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
     }
     this.analise.simulacoes= this.simulacaoLista;
-    console.log(this.analise);
+    
+    this.salvarAnalise(this.analise);
     console.log(JSON.stringify(this.analise));
-
-    this.analiseCred.selected = 1;
+   // this.analiseCred.selected = 1;
   }
 
   focusDropDown(input) {
@@ -144,4 +127,22 @@ export class AnaliseComponent implements OnInit {
     var calc = this.simulacoes.valoravaliacao - this.simulacoes.valordespesasfinanciadas - this.simulacoes.valorfgts;
     this.simulacoes.valorrecursosproprios = calc;
   }
+
+salvarAnalise(analise: Analise){
+  this.confirmationService.confirm({
+    message: 'Tem certeza que deseja salvar essas informações?',
+    header: 'Confirmação',
+    icon: 'pi pi-exclamation-triangle',
+    acceptLabel: 'Sim',
+    rejectLabel: 'Não',
+    accept: () => {
+      this.service.postAnaliseSimulacaoContrato(this.analise);
+      console.log("PERSISTINDO NA BASE")
+    },
+    reject: () => {
+      console.log("NAO PERSISTINDO NA BASE")
+    }
+    
+  });
+}
 }
