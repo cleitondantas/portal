@@ -22,8 +22,9 @@ Montando imagem com Docker
     COPY /*.jar portal.jar
     EXPOSE 8100
     ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/portal.jar"]
-    mci/portal:latest
-
+    
+    docker build -t mci/portal .
+  
     docker run -dit -p 8100:8100 mci/portal:latest
 
 
