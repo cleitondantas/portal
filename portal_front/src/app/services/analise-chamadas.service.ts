@@ -1,3 +1,4 @@
+import { CadastroInformacao } from './../models/cadastro-informacao';
 import { InstFinan } from './../models/inst-finan';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -36,5 +37,9 @@ export class AnaliseChamadasService {
 
   postAnaliseSimulacaoContrato(analise: Analise){
    return this.http.post<Analise>(environment.urlpath + '/api/analise', analise);
+  }
+
+  getCodCadastro() {
+    return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastros');
   }
 }

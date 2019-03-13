@@ -203,53 +203,56 @@ export class CadastroComponent implements OnInit {
   }
 
   adicionarCompradorLista (comprador: Compradores, formCadInfo) {
-    if (this.validaFormulario(formCadInfo) == true) {
-      var comprador2 = this.logicaService.adicionarComprador(comprador);
-      comprador2.contatos = this.contato;
+    this.msgs = [];
+    setTimeout(() => {
+      if (this.validaFormulario(formCadInfo) == true) {
+        var comprador2 = this.logicaService.adicionarComprador(comprador);
+        comprador2.contatos = this.contato;
+    
+        this.compradores.push(comprador2);
+        this.disabled = false;
+    
+        comprador = new Compradores();
+    
+        formCadInfo.reset();
+    
+        this.contato = [];
+        this.contatoDisplay = [];
+        this.msgs = [];
+        console.log(this.compradores);
+      } else {
+        this.msgs = [];
+        let camposInvalidos: any[] = [];
   
-      this.compradores.push(comprador2);
-      this.disabled = false;
+        for (var _i in formCadInfo.controls) {
+          if (formCadInfo.controls[_i].status == "INVALID") {
+            let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+            campoInvalido = campoInvalido.replace(': ', '');
+            camposInvalidos.push(` ` + campoInvalido);
+            formCadInfo.controls[_i].pristine = false;
+            this.msgs = [];
+            this.msgs.push({
+              severity: 'error',
+              summary: 'Erro ao adicionar comprador!',
+              detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+            })
+          }
+        }
   
-      comprador = new Compradores();
-  
-      formCadInfo.reset();
-  
-      this.contato = [];
-      this.contatoDisplay = [];
-      this.msgs = [];
-    } else {
-      this.msgs = [];
-      let camposInvalidos: any[] = [];
-
-      for (var _i in formCadInfo.controls) {
-        if (formCadInfo.controls[_i].status == "INVALID") {
-          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
-          campoInvalido = campoInvalido.replace(': ', '');
-          camposInvalidos.push(` ` + campoInvalido);
-          formCadInfo.controls[_i].pristine = false;
-          this.msgs = [];
+        if (this.contato.length == 0) {
           this.msgs.push({
             severity: 'error',
             summary: 'Erro ao adicionar comprador!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+            detail: `Adicione pelo menos 1 contato.`
           })
         }
       }
-
-      if (this.contato.length == 0) {
-        this.msgs.push({
-          severity: 'error',
-          summary: 'Erro ao adicionar comprador!',
-          detail: `Adicione pelo menos 1 contato.`
-        })
-      }
-    }
+    }, 301);
+    
   }
  
   removerContato (contatoC) {
-    console.log(contatoC);
     let index = this.contatoDisplay.indexOf(contatoC);
-    console.log(this.contato)
 
     this.contato.splice(index, 1);
     this.contatoDisplay.splice(index, 1);

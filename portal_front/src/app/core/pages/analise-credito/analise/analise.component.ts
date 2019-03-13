@@ -1,3 +1,4 @@
+import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
@@ -6,6 +7,10 @@ import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
 import { AnaliseCreditoComponent } from '../analise-credito.component';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { InstiruicaoFinanceiras } from 'src/app/models/instituicaoFinanceira';
+import { Modalidade } from 'src/app/models/modalidade';
+import { TipoAmortizacao } from 'src/app/models/tipo-amortizacao';
+import { StatusSimulacao } from 'src/app/models/status-simulacao';
 
 @Component({
   selector: 'app-analise',
@@ -18,12 +23,12 @@ export class AnaliseComponent implements OnInit {
   codcadastro: any;
   simulacaoLista: any[] = [];
   
-  instFinan: any[] = [];
-  modalidade: any[] = [];
-  tipoAmortizacao: any[] = [];
+  instFinan: InstiruicaoFinanceiras[];
+  modalidade: Modalidade[];
+  tipoAmortizacao: TipoAmortizacao[];
   simul: any;
   br: any;
-  statussimulacao: any[] = [];
+  statussimulacao: StatusSimulacao[];
   
 
   simulacoes: Simulacoes = new Simulacoes();
@@ -103,7 +108,6 @@ export class AnaliseComponent implements OnInit {
   }
 
   salvar() {
-
     this.analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     this.analise.codcadastro  = this.codcadastro;
     for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
@@ -114,7 +118,8 @@ export class AnaliseComponent implements OnInit {
     }
     this.analise.simulacoes= this.simulacaoLista;
     
-    this.salvarAnalise(this.analise);
+    this.service.postAnaliseSimulacaoContrato(this.analise);
+    console.log("PERSISTINDO NA BASE");
     console.log(JSON.stringify(this.analise));
    // this.analiseCred.selected = 1;
   }
@@ -128,21 +133,32 @@ export class AnaliseComponent implements OnInit {
     this.simulacoes.valorrecursosproprios = calc;
   }
 
-salvarAnalise(analise: Analise){
-  this.confirmationService.confirm({
-    message: 'Tem certeza que deseja salvar essas informações?',
-    header: 'Confirmação',
-    icon: 'pi pi-exclamation-triangle',
-    acceptLabel: 'Sim',
-    rejectLabel: 'Não',
-    accept: () => {
-      this.service.postAnaliseSimulacaoContrato(this.analise);
-      console.log("PERSISTINDO NA BASE")
-    },
-    reject: () => {
-      console.log("NAO PERSISTINDO NA BASE")
-    }
-    
-  });
-}
+  salvarAnalise(analise: Analise){
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja salvar essas informações?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+        this.salvar();
+      },
+      reject: () => {
+        console.log("NAO PERSISTINDO NA BASE")
+      }
+    });
+  }
+
+  buscarFid() {
+    let fid = this.numfid;
+    let codCadastro: CadastroInformacao[];
+    this.service.getCodCadastro().subscribe(dados => {
+      codCadastro = dados['data'];
+      for (let _i = 0; _i < codCadastro.length; _i++) {
+        if (fid == codCadastro[_i].numerocadastroincorporadorafid) {
+          this.codcadastro = codCadastro[_i].codcadastro;
+        }
+      }
+    });
+  }
 }

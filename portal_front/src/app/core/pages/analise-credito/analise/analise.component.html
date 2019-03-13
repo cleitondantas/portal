@@ -7,7 +7,7 @@
           <label class="ajusteLabel" for="fid">FID: </label>
         </div>
         <div class="p-col-10">
-          <input type="text" class="ajusteInput" pInputText id="fid" [(ngModel)]="numfid" name="fid"> 
+          <input type="text" class="ajusteInput" pInputText id="fid" [(ngModel)]="numfid" name="fid" (blur)="buscarFid()"> 
         </div>
       </div>
 
@@ -344,7 +344,7 @@
         <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-refresh" iconPos="right"></button>
       </div>
       <div class="p-col-1">
-        <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvar()"
+        <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvarAnalise()"
         icon="pi pi-save" iconPos="right"></button>
       </div>
     </div>   
