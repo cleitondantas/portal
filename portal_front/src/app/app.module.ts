@@ -14,8 +14,7 @@ import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
-    AppComponent,
-
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +23,7 @@ import { ConfirmationService } from 'primeng/api';
     BrowserAnimationsModule,
     HttpClientModule,
     TableModule
+  
   ],
   providers: [
     AuthService,

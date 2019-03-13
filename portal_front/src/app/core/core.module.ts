@@ -37,7 +37,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { TextMaskModule } from 'angular2-text-mask';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import { PrimeNgCalendarMaskDirective } from '../../assets/maskInput.directive';
+
 
 import { DadosCadastraisComponent } from './pages/informacoes/dados-cadastrais/dados-cadastrais.component';
 import { HistoricoComponent } from './pages/informacoes/historico/historico.component';
@@ -45,6 +45,7 @@ import { AnaliseCreditoComponent } from './pages/analise-credito/analise-credito
 import { DadosFaturamentoComponent } from './pages/analise-credito/dados-faturamento/dados-faturamento.component';
 import { AnaliseComponent } from './pages/analise-credito/analise/analise.component';
 
+import { PrimeNgCalendarMaskDirective } from 'src/app/directive/maskInput.directive';
 
 @NgModule({
   imports: [
@@ -105,6 +106,7 @@ import { AnaliseComponent } from './pages/analise-credito/analise/analise.compon
     RelatorioListaComponent,
     InformacoesComponent,
     PrimeNgCalendarMaskDirective
+
   ],
 })
 export class CoreModule { }
