@@ -1,3 +1,4 @@
+import { CadastroInformacao } from './../models/cadastro-informacao';
 import { InstFinan } from './../models/inst-finan';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -34,13 +35,17 @@ export class AnaliseChamadasService {
   getStatusSimulacao () {
     return this.http.get<StatusSimulacao[]>(environment.urlpath + '/api/statussimulacao');
   }
-  async getRegistroAnalise (cod:number) {
+  
+  getRegistroAnalise (cod:number) {
     console.log("getRegistroAnalise");
-    return await  this.http.get<Analise[]>(environment.urlpath + '/api/analises/'+cod)
-    .toPromise()
-    .then(data => {data;  return data;});
+    console.log(environment.urlpath + '/api/analises/'+cod)
+    return this.http.get<Analise[]>(environment.urlpath + '/api/analises/'+cod);
   }
   postAnaliseSimulacaoContrato(analise: Analise){
    return this.http.post<Analise>(environment.urlpath + '/api/analise', analise);
+  }
+
+  getCodCadastro() {
+    return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastros');
   }
 }

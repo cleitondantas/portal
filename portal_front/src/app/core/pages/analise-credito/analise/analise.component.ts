@@ -1,3 +1,4 @@
+import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
@@ -5,7 +6,11 @@ import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.servic
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
 import { AnaliseCreditoComponent } from '../analise-credito.component';
-import { ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { InstiruicaoFinanceiras } from 'src/app/models/instituicaoFinanceira';
+import { Modalidade } from 'src/app/models/modalidade';
+import { TipoAmortizacao } from 'src/app/models/tipo-amortizacao';
+import { StatusSimulacao } from 'src/app/models/status-simulacao';
 
 @Component({
   selector: 'app-analise',
@@ -17,12 +22,15 @@ export class AnaliseComponent implements OnInit {
   numfid: any;
   codcadastro: any;
   simulacaoLista: any[] = [];
-  instFinan: any[] = [];
-  modalidade: any[] = [];
-  tipoAmortizacao: any[] = [];
   
+  instFinan: InstiruicaoFinanceiras[];
+  modalidade: Modalidade[];
+  tipoAmortizacao: TipoAmortizacao[];
+  simul: any;
   br: any;
-  statussimulacao: any[] = [];
+  statussimulacao: StatusSimulacao[];
+  
+
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
   
@@ -37,15 +45,52 @@ export class AnaliseComponent implements OnInit {
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
     this.service.getStatusSimulacao().subscribe(dados => this.statussimulacao = dados['data']);
 
-    if(sessionStorage.getItem('ANALISESELECIONADA')!=null){
+    this.br = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
+      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
+      today: 'Hoje',
+      clear: 'Limpar',
+      dateFormat: 'dd/mm/yy'
+    }
+
+    console.log(sessionStorage.getItem('ANALISESELECIONADA'));
+    
+    if(sessionStorage.getItem('ANALISESELECIONADA') != null || sessionStorage.getItem('ANALISESELECIONADA') !== undefined){
       let jsonObj: any = JSON.parse(sessionStorage.getItem('ANALISESELECIONADA'));// Recebe os dados enviados pela busca de cadastro
       let analise: Analise = <Analise>jsonObj;
+
+      analise.datapastamae = new Date(analise.datapastamae);
+      analise.dataemissao = new Date(analise.dataemissao);
+      analise.dataassinatura = new Date(analise.dataassinatura);
+      analise.datasimulacao = new Date(analise.datasimulacao);
+      
       this.analise = analise;
       this.codcadastro =   analise.codcadastro;
       this.simulacoes.codcadastro = this.codcadastro;
       
       for (var _i = 0; _i < analise.simulacoes.length; _i++) {
-        //this.adicionarSimulacao(analise.simulacoes[_i]);
+        analise.simulacoes[_i].datasimulacao = new Date(analise.simulacoes[_i].datasimulacao);
+        analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
+
+        this.service.getStatusSimulacao().subscribe(dados => {
+          this.statussimulacao.push(dados['data'])
+          console.log(this.statussimulacao)
+          /*for (let item = 0; item < this.statussimulacao.length; item++) {
+            console.log(analise.simulacoes[_i]);
+            if(analise.simulacoes[_i].codstatussimulacao == this.statussimulacao[item].codstatussimulacao){
+                analise.simulacoes[_i].codstatussimulacao = {
+                codestadocivil: this.statussimulacao[item].codstatussimulacao,
+                descestadocivil: this.statussimulacao[item].descstatussimulacao  
+              };
+            }
+          }*/
+        });
+        
+        console.log(this.statussimulacao)
         this.simulacaoLista.push(analise.simulacoes[_i]);
       }
 /*      
@@ -65,19 +110,8 @@ export class AnaliseComponent implements OnInit {
     this.numfid = SharedService.getInstance().temporario[1];
     }
     sessionStorage.removeItem('ANALISESELECIONADA');
-    SharedService.getInstance().temporario[1] = null;
-    SharedService.getInstance().temporario[0] = null;
-
-    this.br = {
-      firstDayOfWeek: 0,
-      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
-      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
-      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
-      today: 'Hoje',
-      clear: 'Limpar',
-      dateFormat: 'dd/mm/yy'
+    if (SharedService.getInstance().temporario != null) {
+      SharedService.getInstance().temporario = null;
     }
 
   }
@@ -121,7 +155,6 @@ export class AnaliseComponent implements OnInit {
   }
 
   salvar() {
-
     this.analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     this.analise.codcadastro  = this.codcadastro;
     for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
@@ -132,7 +165,8 @@ export class AnaliseComponent implements OnInit {
     }
     this.analise.simulacoes= this.simulacaoLista;
     
-    this.salvarAnalise(this.analise);
+    this.service.postAnaliseSimulacaoContrato(this.analise);
+    console.log("PERSISTINDO NA BASE");
     console.log(JSON.stringify(this.analise));
    // this.analiseCred.selected = 1;
   }
@@ -146,21 +180,33 @@ export class AnaliseComponent implements OnInit {
     this.simulacoes.valorrecursosproprios = calc;
   }
 
-salvarAnalise(analise: Analise){
-  this.confirmationService.confirm({
-    message: 'Tem certeza que deseja salvar essas informações?',
-    header: 'Confirmação',
-    icon: 'pi pi-exclamation-triangle',
-    acceptLabel: 'Sim',
-    rejectLabel: 'Não',
-    accept: () => {
-      this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data = data['data']));
-      console.log("PERSISTINDO NA BASE")
-    },
-    reject: () => {
-      console.log("NAO PERSISTINDO NA BASE")
-    }
-    
-  });
-}
+  salvarAnalise(analise: Analise){
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja salvar essas informações?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+        this.salvar();
+      },
+      reject: () => {
+        console.log("NAO PERSISTINDO NA BASE")
+      }
+    });
+  }
+
+  buscarFid() {
+    let fid = this.numfid;
+    let codCadastro: CadastroInformacao[];
+    this.service.getCodCadastro().subscribe(dados => {
+      codCadastro = dados['data'];
+      for (let _i = 0; _i < codCadastro.length; _i++) {
+        if (fid == codCadastro[_i].numerocadastroincorporadorafid) {
+          this.codcadastro = codCadastro[_i].codcadastro;
+        }
+      }
+    });
+  }
+    //this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data = data['data']));
 }

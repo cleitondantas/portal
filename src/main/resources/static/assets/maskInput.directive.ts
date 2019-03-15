@@ -158,4 +158,5 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
             this.input = this.host.inputfieldViewChild;
         }
     }
+
 }

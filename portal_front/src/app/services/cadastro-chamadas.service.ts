@@ -6,7 +6,7 @@ import { Originacao } from './../models/originacao';
 import { Empreendimento } from './../models/empreendimento';
 import { Estadobr } from './../models/estadobr';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { TipoContato } from '../models/tipo-contato';
 import { TipoClientes } from '../models/tipo-clientes';
 import { environment } from '../../environments/environment';
@@ -17,6 +17,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CadastroChamadasService {
+
+  buscarCadastro = new EventEmitter<any>();
 
   constructor(
     private http: HttpClient
