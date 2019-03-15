@@ -10,6 +10,7 @@ import { Compradores } from 'src/app/models/compradores';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { Analise } from 'src/app/models/analise';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -91,27 +92,23 @@ export class MenuBarComponent implements OnInit {
             }
         }
         this.hideDialog();
+        this.router.navigate(['/cadastro']);
 
-        if (this.router.url === "/cadastro") {
-            this.chamadasService.buscarCadastro.emit('aaaaa')
-            console.log('aaa');
-        } else {
-            this.router.navigate(['/cadastro']);
-            console.log(this.router.url);
-        }
     }
 
     async irAnalise(codcadastro:number){
         await this.selectFor(codcadastro);
-        await this.hideDialogDisplay();
-        await this.router.navigate(['/analise']);
     }
 
     selectFor(codcadastro:number){
         for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
             if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
-                this.analiseService.getRegistroAnalise(codcadastro).then(data => {
-                    sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(data['data'][0]));
+                this.analiseService.getRegistroAnalise(codcadastro).subscribe(data => {
+                    sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(data['data'][0]))
+                    console.log(data)
+                    this.hideDialogDisplay();
+                    this.router.navigate(['/analise']);;
+                    //window.open(environment.urlpath + '/analise')
                 });
             }
         }
@@ -179,11 +176,9 @@ export class MenuBarComponent implements OnInit {
           },
           {
             label: 'Análise de crédito',
-            routerLink: '/analise',
             icon: 'pi pi-fw pi-plus',
             visible: true,
             items: [
-                {label: 'Novo ', icon: 'pi pi-fw pi-plus',routerLink:'/analise'},
                 {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialogDisplay()}}
               ]
           },

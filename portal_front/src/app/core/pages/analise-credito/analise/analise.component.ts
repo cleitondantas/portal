@@ -45,15 +45,52 @@ export class AnaliseComponent implements OnInit {
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
     this.service.getStatusSimulacao().subscribe(dados => this.statussimulacao = dados['data']);
 
-    if(sessionStorage.getItem('ANALISESELECIONADA')!=null){
+    this.br = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
+      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
+      today: 'Hoje',
+      clear: 'Limpar',
+      dateFormat: 'dd/mm/yy'
+    }
+
+    console.log(sessionStorage.getItem('ANALISESELECIONADA'));
+    
+    if(sessionStorage.getItem('ANALISESELECIONADA') != null || sessionStorage.getItem('ANALISESELECIONADA') !== undefined){
       let jsonObj: any = JSON.parse(sessionStorage.getItem('ANALISESELECIONADA'));// Recebe os dados enviados pela busca de cadastro
       let analise: Analise = <Analise>jsonObj;
+
+      analise.datapastamae = new Date(analise.datapastamae);
+      analise.dataemissao = new Date(analise.dataemissao);
+      analise.dataassinatura = new Date(analise.dataassinatura);
+      analise.datasimulacao = new Date(analise.datasimulacao);
+      
       this.analise = analise;
       this.codcadastro =   analise.codcadastro;
       this.simulacoes.codcadastro = this.codcadastro;
       
       for (var _i = 0; _i < analise.simulacoes.length; _i++) {
-        //this.adicionarSimulacao(analise.simulacoes[_i]);
+        analise.simulacoes[_i].datasimulacao = new Date(analise.simulacoes[_i].datasimulacao);
+        analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
+
+        this.service.getStatusSimulacao().subscribe(dados => {
+          this.statussimulacao.push(dados['data'])
+          console.log(this.statussimulacao)
+          /*for (let item = 0; item < this.statussimulacao.length; item++) {
+            console.log(analise.simulacoes[_i]);
+            if(analise.simulacoes[_i].codstatussimulacao == this.statussimulacao[item].codstatussimulacao){
+                analise.simulacoes[_i].codstatussimulacao = {
+                codestadocivil: this.statussimulacao[item].codstatussimulacao,
+                descestadocivil: this.statussimulacao[item].descstatussimulacao  
+              };
+            }
+          }*/
+        });
+        
+        console.log(this.statussimulacao)
         this.simulacaoLista.push(analise.simulacoes[_i]);
       }
 /*      
@@ -73,19 +110,8 @@ export class AnaliseComponent implements OnInit {
     this.numfid = SharedService.getInstance().temporario[1];
     }
     sessionStorage.removeItem('ANALISESELECIONADA');
-    SharedService.getInstance().temporario[1] = null;
-    SharedService.getInstance().temporario[0] = null;
-
-    this.br = {
-      firstDayOfWeek: 0,
-      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
-      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
-      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
-      today: 'Hoje',
-      clear: 'Limpar',
-      dateFormat: 'dd/mm/yy'
+    if (SharedService.getInstance().temporario != null) {
+      SharedService.getInstance().temporario = null;
     }
 
   }
