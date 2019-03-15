@@ -111,8 +111,10 @@ export class CadastroComponent implements OnInit {
       dateFormat: "dd/mm/yy"
     }
 
-    //this.visualizarInfoImovel();
-    this.chamadasService.buscarCadastro.subscribe(dado => console.log(dado))
+    this.visualizarInfoImovel();
+    /*this.chamadasService.buscarCadastro.subscribe(dado => {
+    this.visualizarInfoImovel()
+    console.log(dado)});*/
   }
 
   adicionarContato (contato: Contatos) {

@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class CadastroChamadasService {
 
-  buscarCadastro = new EventEmitter();
+  buscarCadastro = new EventEmitter<any>();
 
   constructor(
     private http: HttpClient
