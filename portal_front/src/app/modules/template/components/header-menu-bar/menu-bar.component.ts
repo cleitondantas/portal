@@ -8,6 +8,8 @@ import { CadastroChamadasService } from 'src/app/services/cadastro-chamadas.serv
 import { Cliente } from 'src/app/models/cliente';
 import { Compradores } from 'src/app/models/compradores';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
+import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
+import { Analise } from 'src/app/models/analise';
 
 
 
@@ -28,15 +30,14 @@ export class MenuBarComponent implements OnInit {
     @ViewChild('navmenuuser') navmenuuser: ElementRef;
 
     display: boolean = false;
+    displayAnalise: boolean = false;
     text: string;
     results: string[];
     nomeClienteFiltrado: any[];
 
     nomeclienteSelecionado:string;
     cpfclienteSelecionado:string
-
     cadastrosTabelaBusca:CadastroInformacao[];
-
     items: MenuItem[];
     itemsmenu: MenuItem[];
     msgs: Message[] = [];
@@ -48,6 +49,7 @@ export class MenuBarComponent implements OnInit {
         private router: Router,
         private authService: AuthService,
         private messageService: MessageService,
+        private analiseService: AnaliseChamadasService,
         private chamadasService: CadastroChamadasService,) {
         authService.shared.messengerService = messageService;
         this.nomeUsuario = localStorage.getItem('nome_usuario');
@@ -92,6 +94,23 @@ export class MenuBarComponent implements OnInit {
         this.hideDialog();
         this.router.navigate(['/cadastro']);
     }
+
+    async irAnalise(codcadastro:number){
+        await this.selectFor(codcadastro);
+        await this.hideDialogDisplay();
+        await this.router.navigate(['/analise']);
+    }
+
+    selectFor(codcadastro:number){
+        for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
+            if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
+                this.analiseService.getRegistroAnalise(codcadastro).then(data => {
+                    sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(data['data'][0]));
+                });
+            }
+        }
+    }
+
 
       filtroClientePorNome(query,clienteQuery:Compradores[]) {
         let filtered: any[] = [];
@@ -156,7 +175,11 @@ export class MenuBarComponent implements OnInit {
             label: 'Análise de crédito',
             routerLink: '/analise',
             icon: 'pi pi-fw pi-plus',
-            visible: true
+            visible: true,
+            items: [
+                {label: 'Novo ', icon: 'pi pi-fw pi-plus',routerLink:'/analise'},
+                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialogDisplay()}}
+              ]
           },
           {
               label: 'Informações',
@@ -195,6 +218,13 @@ export class MenuBarComponent implements OnInit {
 }
   hideDialog(){
     this.display = false;
+  }
+
+  showDialogDisplay() {
+    this.displayAnalise = true;
+}
+  hideDialogDisplay(){
+    this.displayAnalise = false;
   }
 
 logOut(){

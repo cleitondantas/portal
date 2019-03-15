@@ -1,5 +1,7 @@
 package com.montreal.portal.controler;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.montreal.portal.entity.Analise;
+import com.montreal.portal.entity.Simulacao;
 import com.montreal.portal.repository.AnaliseRepositoy;
 import com.montreal.portal.response.Response;
 
@@ -43,12 +46,31 @@ public class AnaliseControler {
 		return ResponseEntity.ok(response);
     }
 	
+	@GetMapping(value = "/analises/{codcadastro}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+    public ResponseEntity<Response<Iterable<Analise>>> findAnaliseJuridicaWithFid(@PathVariable String codcadastro) {
+		Response<Iterable<Analise>> response = new Response<Iterable<Analise>>();
+		Iterable<Analise> analises = analiseRepositoy.findCadastroWithPartOfFid(Integer.parseInt(codcadastro));
+		if (analises == null) {
+			response.getErrors().add("Not Fund:");
+			return ResponseEntity.badRequest().body(response);
+		}
+		response.setData(analises);
+		return ResponseEntity.ok(response);
+    }
+	
 	
 	@PostMapping(value = "/analise")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Analise>> create(HttpServletRequest request, @RequestBody Analise  analise,BindingResult result) {
 		Response<Analise> response = new Response<Analise>();
 		try {
+			Date  now  = new Date();
+			analise.setDatasimulacao(now);
+			for(Simulacao item: analise.getSimulacoes()) {
+				item.setDatasimulacao(now);
+			}
+			
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 				return ResponseEntity.badRequest().body(response);
