@@ -6,6 +6,7 @@ import { TipoAmortizacao } from '../models/tipo-amortizacao';
 import { environment } from 'src/environments/environment';
 import { StatusSimulacao } from '../models/status-simulacao';
 import { Analise } from 'src/app/models/analise';
+import { pipe } from 'rxjs';
 
 
 
@@ -33,7 +34,12 @@ export class AnaliseChamadasService {
   getStatusSimulacao () {
     return this.http.get<StatusSimulacao[]>(environment.urlpath + '/api/statussimulacao');
   }
-
+  async getRegistroAnalise (cod:number) {
+    console.log("getRegistroAnalise");
+    return await  this.http.get<Analise[]>(environment.urlpath + '/api/analises/'+cod)
+    .toPromise()
+    .then(data => {data;  return data;});
+  }
   postAnaliseSimulacaoContrato(analise: Analise){
    return this.http.post<Analise>(environment.urlpath + '/api/analise', analise);
   }

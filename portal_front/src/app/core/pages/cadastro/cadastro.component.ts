@@ -69,12 +69,10 @@ export class CadastroComponent implements OnInit {
         console.log(JSON.stringify(dados['data']));
         console.log("COD "+this.retornocadastro.codcadastro);
         console.log("FID "+this.retornocadastro.numerocadastroincorporadorafid);
-        sessionStorage.setItem('FID',this.retornocadastro.numerocadastroincorporadorafid+"");
-        sessionStorage.setItem('COD',this.retornocadastro.codcadastro+"");
+        SharedService.getInstance().temporario[0] = this.retornocadastro.codcadastro;
+        SharedService.getInstance().temporario[1] = this.retornocadastro.numerocadastroincorporadorafid;
+        this.router.navigate(['/analise']);
       });
-
-    console.log(JSON.stringify(this.cadInfo), cadInfo);
-    
    // sessionStorage.clear();
     formulario.reset();
   }
@@ -370,7 +368,7 @@ export class CadastroComponent implements OnInit {
 
           this.OnSubmit(cadInfo, formulario);
           
-        this.router.navigate(['/analise']);
+        
         },
         reject: () => {
         }

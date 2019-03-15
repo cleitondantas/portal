@@ -13,6 +13,8 @@ export class SharedService {
   public static instance: SharedService = null;
   private user : Usuario;
   role : Role;
+  temporario: any[] = [];
+  
   @Output() messengerService = new MessageService();
   @Output() showError = new EventEmitter<string>();
   showTemplate = new EventEmitter<boolean>();
@@ -84,6 +86,5 @@ isLoggedIn():boolean {
   }
   return true;
 }
-
 
 }

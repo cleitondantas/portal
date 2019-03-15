@@ -5,7 +5,7 @@ import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.servic
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
 import { AnaliseCreditoComponent } from '../analise-credito.component';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-analise',
@@ -17,15 +17,12 @@ export class AnaliseComponent implements OnInit {
   numfid: any;
   codcadastro: any;
   simulacaoLista: any[] = [];
-  
   instFinan: any[] = [];
   modalidade: any[] = [];
   tipoAmortizacao: any[] = [];
-  simul: any;
+  
   br: any;
   statussimulacao: any[] = [];
-  
-
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
   
@@ -40,14 +37,36 @@ export class AnaliseComponent implements OnInit {
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
     this.service.getStatusSimulacao().subscribe(dados => this.statussimulacao = dados['data']);
 
-    var a = sessionStorage.getItem('cadastro');
-    this.numfid  = sessionStorage.getItem('FID');
-    this.codcadastro = sessionStorage.getItem('COD');
-    console.log('ANALISE FID'+this.numfid);
-    console.log('ANALISE COD'+this.codcadastro);
-    if(a !== null) {
-      this.simul = JSON.parse(a);
+    if(sessionStorage.getItem('ANALISESELECIONADA')!=null){
+      let jsonObj: any = JSON.parse(sessionStorage.getItem('ANALISESELECIONADA'));// Recebe os dados enviados pela busca de cadastro
+      let analise: Analise = <Analise>jsonObj;
+      this.analise = analise;
+      this.codcadastro =   analise.codcadastro;
+      this.simulacoes.codcadastro = this.codcadastro;
+      
+      for (var _i = 0; _i < analise.simulacoes.length; _i++) {
+        //this.adicionarSimulacao(analise.simulacoes[_i]);
+        this.simulacaoLista.push(analise.simulacoes[_i]);
+      }
+/*      
+      this.simulacoes.codinstituicaofinanceira =  analise.simulacoes[0].codinstituicaofinanceira
+      this.simulacoes.codmodalidadesimulacao = analise.simulacoes[0].codmodalidadesimulacao;
+      this.simulacoes.codsicaq = analise.simulacoes[0].codsicaq;
+      this.simulacoes.codsimulacao = analise.simulacoes[0].codsimulacao;
+      this.simulacoes.codstatussimulacao = analise.simulacoes[0].codmodalidadesimulacao;
+      this.simulacoes.codtipoamortizacao = analise.simulacoes[0].codtipoamortizacao;
+      this.simulacoes.codusuario= analise.simulacoes[0].codusuario;
+      this.simulacoes.correspondente = analise.simulacoes[0].correspondente;
+      this.simulacoes.dataenviobanco= analise.simulacoes[0].dataenviobanco;
+      this.simulacoes.datasimulacao = analise.simulacoes[0].datasimulacao;
+  */    
+    }else{
+    this.codcadastro = SharedService.getInstance().temporario[0];
+    this.numfid = SharedService.getInstance().temporario[1];
     }
+    sessionStorage.removeItem('ANALISESELECIONADA');
+    SharedService.getInstance().temporario[1] = null;
+    SharedService.getInstance().temporario[0] = null;
 
     this.br = {
       firstDayOfWeek: 0,
@@ -61,7 +80,6 @@ export class AnaliseComponent implements OnInit {
       dateFormat: 'dd/mm/yy'
     }
 
-    console.log(this.simul);
   }
 
   adicionarSimulacao(simulacao: Simulacoes) {
@@ -136,7 +154,7 @@ salvarAnalise(analise: Analise){
     acceptLabel: 'Sim',
     rejectLabel: 'Não',
     accept: () => {
-      this.service.postAnaliseSimulacaoContrato(this.analise);
+      this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data = data['data']));
       console.log("PERSISTINDO NA BASE")
     },
     reject: () => {
