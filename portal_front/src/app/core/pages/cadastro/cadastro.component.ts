@@ -111,79 +111,8 @@ export class CadastroComponent implements OnInit {
       dateFormat: "dd/mm/yy"
     }
 
-    //Verifica se a tela está sendo carregada vinda do Campo de busca
-     if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
-      let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
-      let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
-      //Codigo de parce do objeto carregado para os dados da tela
-      this.cadInfo = cadastroinformacaoCarregada;
-      this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
-      this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
-      this.cadInfo.box = cadastroinformacaoCarregada.box;
-      this.cadInfo.cep = cadastroinformacaoCarregada.cep;
-      this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
-      this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
-      this.chamadasService.getEstadoCivil().subscribe(dados => {
-      this.estadoCivil = dados['data']
-        for (let item = 0; item < cadastroinformacaoCarregada.clientes.length; item ++) {
-          for (let i = 0; i < this.estadoCivil.length; i ++) {
-            if(Number(cadastroinformacaoCarregada.clientes[item].codestadocivil) == Number(this.estadoCivil[i].codestadocivil)){
-       
-              let descricao = this.estadoCivil[i].descestadocivil;
-              cadastroinformacaoCarregada.clientes[item].codestadocivil = {
-                codestadocivil: cadastroinformacaoCarregada.clientes[item].codestadocivil,
-                descestadocivil: descricao  
-              };
-            }
-          }
-        }
-        this.compradores = cadastroinformacaoCarregada.clientes;
-        this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
-      });
-      
-      this.chamadasService.getEmpreendimentos().subscribe(dados => {
-        this.empreendimento = dados['data']
-        for (let item = 0; item < this.empreendimento.length; item ++) {
-          if (this.empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
-            this.cadInfo.codempreendimento = {codempreendimento: cadastroinformacaoCarregada.codempreendimento, cnpjspe: this.empreendimento[item].cnpjspe, descempreendimento: this.empreendimento[item].descempreendimento};
-          }
-        }        
-      });
-
-      this.chamadasService.getOriginacao().subscribe(dados => { 
-        this.originacao = dados['data']
-        for (let item = 0; item < this.originacao.length; item ++) {
-          if (Number(this.originacao[item].codoriginacao) == Number(cadastroinformacaoCarregada.codoriginacao)) {
-            this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
-          }
-        }  
-      });
-
-      this.cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
-      this.cadInfo.complemento = cadastroinformacaoCarregada.complemento;
-      this.cadInfo.numero = cadastroinformacaoCarregada.numero;
-      this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
-      this.cadInfo.uf = {uf: cadastroinformacaoCarregada.uf};
-
-      this.chamadasService.getIncorporadoras().subscribe(dados => {
-        this.incorp = dados['data']
-        for (let item = 0; item < this.incorp.length; item ++) {
-          if (this.incorp[item].codincorporadora == cadastroinformacaoCarregada.codincorporadora) {
-            this.cadInfo.codincorporadora = {codincorporadora: cadastroinformacaoCarregada.codincorporadora, descincorporadora: this.incorp[item].descincorporadora};
-          }
-        }
-      });
-
-      this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
-      this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
-      this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
-      this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
-      this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
-      this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
-      this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
-      sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
-      this.controle = true;
-    }    
+    //this.visualizarInfoImovel();
+    this.chamadasService.buscarCadastro.subscribe(dado => console.log(dado))
   }
 
   adicionarContato (contato: Contatos) {
@@ -333,6 +262,7 @@ export class CadastroComponent implements OnInit {
         cadInfo.reset();
         this.contato = [];
         this.contatoDisplay = [];
+        this.compradores = [];
       },
       reject: () => {
           
@@ -567,7 +497,82 @@ export class CadastroComponent implements OnInit {
         }
       }
     }
-    
+  }
+
+  visualizarInfoImovel() {
+    //Verifica se a tela está sendo carregada vinda do Campo de busca
+    if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
+      let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
+      let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
+      //Codigo de parce do objeto carregado para os dados da tela
+      this.cadInfo = cadastroinformacaoCarregada;
+      this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
+      this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
+      this.cadInfo.box = cadastroinformacaoCarregada.box;
+      this.cadInfo.cep = cadastroinformacaoCarregada.cep;
+      this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
+      this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
+      this.chamadasService.getEstadoCivil().subscribe(dados => {
+      this.estadoCivil = dados['data']
+        for (let item = 0; item < cadastroinformacaoCarregada.clientes.length; item ++) {
+          for (let i = 0; i < this.estadoCivil.length; i ++) {
+            if(Number(cadastroinformacaoCarregada.clientes[item].codestadocivil) == Number(this.estadoCivil[i].codestadocivil)){
+       
+              let descricao = this.estadoCivil[i].descestadocivil;
+              cadastroinformacaoCarregada.clientes[item].codestadocivil = {
+                codestadocivil: cadastroinformacaoCarregada.clientes[item].codestadocivil,
+                descestadocivil: descricao  
+              };
+            }
+          }
+        }
+        this.compradores = cadastroinformacaoCarregada.clientes;
+        this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
+      });
+      
+      this.chamadasService.getEmpreendimentos().subscribe(dados => {
+        this.empreendimento = dados['data']
+        for (let item = 0; item < this.empreendimento.length; item ++) {
+          if (this.empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
+            this.cadInfo.codempreendimento = {codempreendimento: cadastroinformacaoCarregada.codempreendimento, cnpjspe: this.empreendimento[item].cnpjspe, descempreendimento: this.empreendimento[item].descempreendimento};
+          }
+        }        
+      });
+
+      this.chamadasService.getOriginacao().subscribe(dados => { 
+        this.originacao = dados['data']
+        for (let item = 0; item < this.originacao.length; item ++) {
+          if (Number(this.originacao[item].codoriginacao) == Number(cadastroinformacaoCarregada.codoriginacao)) {
+            this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
+          }
+        }  
+      });
+
+      this.cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
+      this.cadInfo.complemento = cadastroinformacaoCarregada.complemento;
+      this.cadInfo.numero = cadastroinformacaoCarregada.numero;
+      this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
+      this.cadInfo.uf = {uf: cadastroinformacaoCarregada.uf};
+
+      this.chamadasService.getIncorporadoras().subscribe(dados => {
+        this.incorp = dados['data']
+        for (let item = 0; item < this.incorp.length; item ++) {
+          if (this.incorp[item].codincorporadora == cadastroinformacaoCarregada.codincorporadora) {
+            this.cadInfo.codincorporadora = {codincorporadora: cadastroinformacaoCarregada.codincorporadora, descincorporadora: this.incorp[item].descincorporadora};
+          }
+        }
+      });
+
+      this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
+      this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
+      this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
+      this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
+      this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
+      this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
+      this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
+      sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
+      this.controle = true;
+    }
   }
   
   atualizarComprador(formCadInfo) {

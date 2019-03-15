@@ -85,14 +85,20 @@ export class MenuBarComponent implements OnInit {
       }
 
     irCadastro(codcadastro:number){
-        
         for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
             if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
             sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i]));
             }
         }
         this.hideDialog();
-        this.router.navigate(['/cadastro']);
+
+        if (this.router.url === "/cadastro") {
+            this.chamadasService.buscarCadastro.emit('aaaaa')
+            console.log('aaa');
+        } else {
+            this.router.navigate(['/cadastro']);
+            console.log(this.router.url);
+        }
     }
 
     async irAnalise(codcadastro:number){
