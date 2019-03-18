@@ -112,9 +112,10 @@ export class CadastroComponent implements OnInit {
     }
 
     this.visualizarInfoImovel();
-    /*this.chamadasService.buscarCadastro.subscribe(dado => {
-    this.visualizarInfoImovel()
-    console.log(dado)});*/
+    this.chamadasService.buscarCadastro.subscribe(dado => {
+      if (dado == true) {
+        this.visualizarInfoImovel();
+      }});
   }
 
   adicionarContato (contato: Contatos) {

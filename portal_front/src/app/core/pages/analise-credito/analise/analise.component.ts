@@ -73,8 +73,10 @@ export class AnaliseComponent implements OnInit {
       dateFormat: 'dd/mm/yy'
     }
 
-    if(sessionStorage.getItem('ANALISESELECIONADA') != null || sessionStorage.getItem('ANALISESELECIONADA') !== undefined){
-      let jsonObj: any = JSON.parse(sessionStorage.getItem('ANALISESELECIONADA'));// Recebe os dados enviados pela busca de cadastro
+    let AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');    
+
+    if (AnaliseSelecionada !== null || undefined) {
+      let jsonObj: any = JSON.parse(AnaliseSelecionada);// Recebe os dados enviados pela busca de cadastro
       let analise: Analise = <Analise>jsonObj;
 
       if(analise==null){
@@ -134,11 +136,11 @@ export class AnaliseComponent implements OnInit {
     this.codcadastro = SharedService.getInstance().temporario[0];
     this.numfid = SharedService.getInstance().temporario[1];
     }
+
     sessionStorage.removeItem('ANALISESELECIONADA');
     if (SharedService.getInstance().temporario != null) {
       SharedService.getInstance().temporario = null;
     }
-
   }
 
   addItemStatusSimulacao(items:StatusSimulacao[]){
@@ -194,7 +196,7 @@ export class AnaliseComponent implements OnInit {
     }
     this.analise.simulacoes= this.simulacaoLista;
     
-    this.service.postAnaliseSimulacaoContrato(this.analise);
+    this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data = data['data']));
     console.log("PERSISTINDO NA BASE");
     console.log(JSON.stringify(this.analise));
    // this.analiseCred.selected = 1;
@@ -237,5 +239,4 @@ export class AnaliseComponent implements OnInit {
       }
     });
   }
-    //this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data = data['data']));
 }
