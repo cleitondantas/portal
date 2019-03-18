@@ -217,6 +217,7 @@
           <th><strong>Excluir</strong></th>
           <th><strong>Instituição</strong></th>
           <th><strong>Aprovação</strong></th>
+          <th><strong>Aprovação Selecionada</strong></th>
           <th><strong>Valor Total</strong></th>
           <th><strong>Taxa de Juros</strong></th>
           <th><strong>Valor 1º Parcela</strong></th>
@@ -240,7 +241,12 @@
                 <input pInputText class="ajusteInput" value="Selecione..." *ngIf="rowData.codstatussimulacao == undefined" 
                 #inputDropdown (mouseover)="focusDropDown(inputDropdown)"/>
               </ng-template>
+              
             </p-cellEditor>
+            
+          </td>
+          <td [pEditableColumn]="rowData" [pEditableColumnField]="'Valor Total'">
+            {{rowData.codstatussimulacao.descstatussimulacao}}
           </td>
           <td [pEditableColumn]="rowData" [pEditableColumnField]="'Valor Total'">
             <p-cellEditor>
