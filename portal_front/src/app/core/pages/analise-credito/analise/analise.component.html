@@ -7,7 +7,7 @@
           <label class="ajusteLabel" for="fid">FID: </label>
         </div>
         <div class="p-col-10">
-          <input type="text" class="ajusteInput" pInputText id="fid" [(ngModel)]="numfid" name="fid"> 
+          <input type="text" class="ajusteInput" pInputText id="fid" [(ngModel)]="numfid" name="fid" (blur)="buscarFid()"> 
         </div>
       </div>
 
@@ -217,6 +217,7 @@
           <th><strong>Excluir</strong></th>
           <th><strong>Instituição</strong></th>
           <th><strong>Aprovação</strong></th>
+          <th><strong>Aprovação Selecionada</strong></th>
           <th><strong>Valor Total</strong></th>
           <th><strong>Taxa de Juros</strong></th>
           <th><strong>Valor 1º Parcela</strong></th>
@@ -240,7 +241,12 @@
                 <input pInputText class="ajusteInput" value="Selecione..." *ngIf="rowData.codstatussimulacao == undefined" 
                 #inputDropdown (mouseover)="focusDropDown(inputDropdown)"/>
               </ng-template>
+              
             </p-cellEditor>
+            
+          </td>
+          <td [pEditableColumn]="rowData" [pEditableColumnField]="'Valor Total'">
+            {{rowData.codstatussimulacao.descstatussimulacao}}
           </td>
           <td [pEditableColumn]="rowData" [pEditableColumnField]="'Valor Total'">
             <p-cellEditor>
@@ -344,12 +350,14 @@
         <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-refresh" iconPos="right"></button>
       </div>
       <div class="p-col-1">
-        <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvar()"
+        <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvarAnalise()"
         icon="pi pi-save" iconPos="right"></button>
       </div>
     </div>   
   </p-fieldset>
+
 </form>
+<p-confirmDialog [ngStyle]="{width: '425px'}"></p-confirmDialog>
 <br><br>
 
 

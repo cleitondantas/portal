@@ -160,19 +160,3 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
     }
 
 }
-
-@NgModule({
-    imports: [
-        CalendarModule
-    ],
-    declarations: [
-        PrimeNgCalendarMaskDirective
-    ],
-    exports: [
-        PrimeNgCalendarMaskDirective
-    ]
-})
-export class PrimeNgCalendarMaskModule {
-
-
-}

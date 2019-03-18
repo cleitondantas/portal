@@ -12,11 +12,9 @@ import { CadastroGuard } from './guards/cadastro.guard';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ConfirmationService } from 'primeng/api';
 
-
 @NgModule({
   declarations: [
-    AppComponent,
-
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +22,8 @@ import { ConfirmationService } from 'primeng/api';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    TableModule,
+    TableModule
+  
   ],
   providers: [
     AuthService,

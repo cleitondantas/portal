@@ -1,10 +1,19 @@
+import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
 import { AnaliseCreditoComponent } from '../analise-credito.component';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { InstiruicaoFinanceiras } from 'src/app/models/instituicaoFinanceira';
+import { Modalidade } from 'src/app/models/modalidade';
+import { TipoAmortizacao } from 'src/app/models/tipo-amortizacao';
+import { StatusSimulacao } from 'src/app/models/status-simulacao';
+import { async } from '@angular/core/testing';
+import { pipe } from '@angular/core/src/render3';
+import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-analise',
@@ -16,36 +25,27 @@ export class AnaliseComponent implements OnInit {
   numfid: any;
   codcadastro: any;
   simulacaoLista: any[] = [];
+  statusSimulEvent = new EventEmitter<any>();
+  instFinanEvent = new EventEmitter<any>();
   
-  instFinan: any[] = [];
-  modalidade: any[] = [];
-  tipoAmortizacao: any[] = [];
+  instFinan: InstiruicaoFinanceiras[];
+  modalidade: Modalidade[];
+  tipoAmortizacao: TipoAmortizacao[];
   simul: any;
   br: any;
-  statussimulacao: any[] = [];
+  statussimulacao: StatusSimulacao[] = [];
+  statussimulacaoTemp: StatusSimulacao[];
   
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
+  
   constructor( 
-    private service: AnaliseChamadasService, private router: Router, private analiseCred: AnaliseCreditoComponent
+    private confirmationService: ConfirmationService,private service: AnaliseChamadasService, private router: Router, private analiseCred: AnaliseCreditoComponent
+
   ) { }
-
+    items:any[];
   ngOnInit() {
-    this.service.getInstFinan().subscribe(dados => this.instFinan = dados['data'])
-    this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
-    this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
-    this.service.getStatusSimulacao().subscribe(dados => this.statussimulacao = dados['data']);
-
-    var a = sessionStorage.getItem('cadastro');
-    this.numfid  = sessionStorage.getItem('FID');
-    this.codcadastro = sessionStorage.getItem('COD');
-    console.log('ANALISE FID'+this.numfid);
-    console.log('ANALISE COD'+this.codcadastro);
-    if(a !== null) {
-      this.simul = JSON.parse(a);
-    }
-
     this.br = {
       firstDayOfWeek: 0,
       dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
@@ -58,7 +58,100 @@ export class AnaliseComponent implements OnInit {
       dateFormat: 'dd/mm/yy'
     }
 
-    console.log(this.simul);
+    this.service.getInstFinan().subscribe(dados => {
+      this.instFinan = dados['data']
+      this.instFinanEvent.emit(true)
+    })
+    this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
+    this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
+    this.service.getStatusSimulacao().subscribe(data => {
+    this.statussimulacaoTemp =  data['data'] 
+      for (var _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
+        //(data['data'][_i] as StatusSimulacao).descstatussimulacao
+        let item: StatusSimulacao = new StatusSimulacao();
+        item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
+        item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
+        this.statussimulacao[_i] = item;
+      }
+      this.statusSimulEvent.emit(true);
+     });
+
+    let AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');    
+
+    if (AnaliseSelecionada !== null || undefined) {
+      let jsonObj: any = JSON.parse(AnaliseSelecionada);// Recebe os dados enviados pela busca de cadastro
+      let analise: Analise = <Analise>jsonObj;
+
+      analise.datapastamae = new Date(analise.datapastamae);
+      analise.dataemissao = new Date(analise.dataemissao);
+      analise.dataassinatura = new Date(analise.dataassinatura);
+      analise.datasimulacao = new Date(analise.datasimulacao);
+
+      this.analise = analise;
+      this.codcadastro = analise.codcadastro;
+      this.simulacoes.codcadastro = this.codcadastro;
+
+      this.statusSimulEvent.subscribe(dado => {
+        if (dado == true) {
+          for (var _i = 0; _i  < analise.simulacoes.length; _i++) {
+            for(var item = 0; item < this.statussimulacao.length; item++){
+              if(analise.simulacoes[_i].codstatussimulacao === this.statussimulacao[item].codstatussimulacao){
+                  analise.simulacoes[_i].codstatussimulacao = {
+                  codstatussimulacao: this.statussimulacao[item].codstatussimulacao,
+                  descstatussimulacao: this.statussimulacao[item].descstatussimulacao              
+                };
+              }
+            }
+          }
+        }
+      })
+
+      this.instFinanEvent.subscribe(dado => {
+        if (dado == true) {
+          for (var _i = 0; _i < analise.simulacoes.length; _i++) {
+            for (var item = 0; item < this.instFinan.length; item++) {
+              if (analise.simulacoes[_i].codinstituicaofinanceira == this.instFinan[item].codInstituicaoFinanceira) {
+                analise.simulacoes[_i].codinstituicaofinanceira = {
+                  codInstituicaoFinanceira: this.instFinan[item].codInstituicaoFinanceira,
+                  descInstituicaoFinanceira: this.instFinan[item].descInstituicaoFinanceira
+                }
+              }
+            }
+          }
+        }
+      })
+   
+      for (var _i = 0; _i < analise.simulacoes.length; _i++) {
+        analise.simulacoes[_i].datasimulacao = new Date(analise.simulacoes[_i].datasimulacao);
+        analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
+
+        this.simulacaoLista.push(analise.simulacoes[_i]);
+      }
+     
+      this.simulacoes.codinstituicaofinanceira =  analise.simulacoes[0].codinstituicaofinanceira
+      this.simulacoes.codmodalidadesimulacao = analise.simulacoes[0].codmodalidadesimulacao;
+      this.simulacoes.codsicaq = analise.simulacoes[0].codsicaq;
+      this.simulacoes.codsimulacao = analise.simulacoes[0].codsimulacao;
+      this.simulacoes.codstatussimulacao = analise.simulacoes[0].codmodalidadesimulacao;
+      this.simulacoes.codtipoamortizacao = analise.simulacoes[0].codtipoamortizacao;
+      this.simulacoes.codusuario= analise.simulacoes[0].codusuario;
+      this.simulacoes.correspondente = analise.simulacoes[0].correspondente;
+      this.simulacoes.dataenviobanco= analise.simulacoes[0].dataenviobanco;
+      this.simulacoes.datasimulacao = analise.simulacoes[0].datasimulacao;
+   
+    }else{
+    this.codcadastro = SharedService.getInstance().temporario[0];
+    this.numfid = SharedService.getInstance().temporario[1];
+    }
+
+    sessionStorage.removeItem('ANALISESELECIONADA');
+    if (SharedService.getInstance().temporario != null) {
+      SharedService.getInstance().temporario = null;
+    }
+  }
+
+  addItemStatusSimulacao(items:StatusSimulacao[]){
+    this.statussimulacao = items;
   }
 
   adicionarSimulacao(simulacao: Simulacoes) {
@@ -91,28 +184,7 @@ export class AnaliseComponent implements OnInit {
 
     console.log(this.simulacaoLista);
     console.log(JSON.stringify(this.simulacaoLista));
-  /*
-    this.simulacoes.valoravaliacao = null;
-    this.simulacoes.valorcompravenda = null;
-    this.simulacoes.valorcredito = null;
-    this.simulacoes.codmodalidadesimulacao = null;
-    this.simulacoes.dataenviobanco = null;
-    this.simulacoes.codsicaq = null;
-    this.simulacoes.correspondente = null;
-    this.simulacoes.prazofinanciamento = null;
-    this.simulacoes.codtipoamortizacao = null;
-    this.simulacoes.valorsubsidio = null;
-    this.simulacoes.valordespesasfinanciadas = null;
-    this.simulacoes.valorfinanciamento = null;
-    this.simulacoes.valorfgts = null;
-    this.simulacoes.valorrecursosproprios = null;
-    this.simulacoes.saldodevedor = null;
-    this.simulacoes.codinstituicaofinanceira = null;
-    this.simulacoes.codstatussimulacao = null;
-    this.simulacoes.valoravaliacaoinstfinanc = null;
-    this.simulacoes.taxadejuros = null;
-    this.simulacoes.valorprimeiraparcela = null;
-  */
+
   }
 
   removerSimulacao(simul) {
@@ -130,10 +202,11 @@ export class AnaliseComponent implements OnInit {
       this.simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
     }
     this.analise.simulacoes= this.simulacaoLista;
-    console.log(this.analise);
+    
+    this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data = data['data']));
+    console.log("PERSISTINDO NA BASE");
     console.log(JSON.stringify(this.analise));
-
-    this.analiseCred.selected = 1;
+   // this.analiseCred.selected = 1;
   }
 
   focusDropDown(input) {
@@ -143,5 +216,34 @@ export class AnaliseComponent implements OnInit {
   recursoProprio() {
     var calc = this.simulacoes.valoravaliacao - this.simulacoes.valordespesasfinanciadas - this.simulacoes.valorfgts;
     this.simulacoes.valorrecursosproprios = calc;
+  }
+
+  salvarAnalise(analise: Analise){
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja salvar essas informações?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+        this.salvar();
+      },
+      reject: () => {
+        console.log("NAO PERSISTINDO NA BASE")
+      }
+    });
+  }
+
+  buscarFid() {
+    let fid = this.numfid;
+    let codCadastro: CadastroInformacao[];
+    this.service.getCodCadastro().subscribe(dados => {
+      codCadastro = dados['data'];
+      for (let _i = 0; _i < codCadastro.length; _i++) {
+        if (fid == codCadastro[_i].numerocadastroincorporadorafid) {
+          this.codcadastro = codCadastro[_i].codcadastro;
+        }
+      }
+    });
   }
 }
