@@ -29,7 +29,7 @@ public class StatusSimulacaoControler {
 	
 	
 	@GetMapping(value = "/statussimulacao")	
-	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+	//@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<StatusSimulacao>>> findAllSubStatusAnalise() {
 		Response<Iterable<StatusSimulacao>> response = new Response<Iterable<StatusSimulacao>>();
 		Iterable<StatusSimulacao> users = statusSimulacaoRepository.findAll();

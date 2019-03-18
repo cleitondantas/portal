@@ -7,7 +7,8 @@ import { TipoAmortizacao } from '../models/tipo-amortizacao';
 import { environment } from 'src/environments/environment';
 import { StatusSimulacao } from '../models/status-simulacao';
 import { Analise } from 'src/app/models/analise';
-import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { pipe, Observable } from 'rxjs';
 
 
 
@@ -32,10 +33,10 @@ export class AnaliseChamadasService {
     return this.http.get<TipoAmortizacao[]>(environment.urlpath + '/api/tipoamortizacao');
   }
 
-  getStatusSimulacao () {
+  getStatusSimulacao(){
     return this.http.get<StatusSimulacao[]>(environment.urlpath + '/api/statussimulacao');
   }
-  
+
   getRegistroAnalise (cod:number) {
     console.log("getRegistroAnalise");
     console.log(environment.urlpath + '/api/analises/'+cod)
