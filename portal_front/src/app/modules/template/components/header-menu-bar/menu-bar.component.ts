@@ -92,8 +92,12 @@ export class MenuBarComponent implements OnInit {
             }
         }
         this.hideDialog();
-        this.router.navigate(['/cadastro']);
 
+        if (this.router.url == '/cadastro') {
+            this.chamadasService.buscarCadastro.emit(true);
+        } else {
+            this.router.navigate(['/cadastro']);
+        }
     }
 
     async irAnalise(codcadastro:number){
