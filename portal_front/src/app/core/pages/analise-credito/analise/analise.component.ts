@@ -11,6 +11,9 @@ import { InstiruicaoFinanceiras } from 'src/app/models/instituicaoFinanceira';
 import { Modalidade } from 'src/app/models/modalidade';
 import { TipoAmortizacao } from 'src/app/models/tipo-amortizacao';
 import { StatusSimulacao } from 'src/app/models/status-simulacao';
+import { async } from '@angular/core/testing';
+import { pipe } from '@angular/core/src/render3';
+import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-analise',
@@ -28,7 +31,8 @@ export class AnaliseComponent implements OnInit {
   tipoAmortizacao: TipoAmortizacao[];
   simul: any;
   br: any;
-  statussimulacao: StatusSimulacao[];
+  statussimulacao: StatusSimulacao[] = [];
+  statussimulacaoTemp: StatusSimulacao[];
   
 
   simulacoes: Simulacoes = new Simulacoes();
@@ -38,13 +42,25 @@ export class AnaliseComponent implements OnInit {
     private confirmationService: ConfirmationService,private service: AnaliseChamadasService, private router: Router, private analiseCred: AnaliseCreditoComponent
 
   ) { }
-
+    items:any[];
   ngOnInit() {
     this.service.getInstFinan().subscribe(dados => this.instFinan = dados['data'])
     this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
-    this.service.getStatusSimulacao().subscribe(dados => this.statussimulacao = dados['data']);
+    this.service.getStatusSimulacao().subscribe(data => {
+    this.statussimulacaoTemp =  data['data'] 
+      for (var _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
+        //(data['data'][_i] as StatusSimulacao).descstatussimulacao
+        let item: StatusSimulacao = new StatusSimulacao();
+        item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
+        item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
+        this.statussimulacao[_i] = item;
+      }
+     });
 
+    console.log(this.statussimulacao);
+    console.log(this.statussimulacao.length);
+    console.log("this.statussimulacao");
     this.br = {
       firstDayOfWeek: 0,
       dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
@@ -57,43 +73,52 @@ export class AnaliseComponent implements OnInit {
       dateFormat: 'dd/mm/yy'
     }
 
-    console.log(sessionStorage.getItem('ANALISESELECIONADA'));
-    
     if(sessionStorage.getItem('ANALISESELECIONADA') != null || sessionStorage.getItem('ANALISESELECIONADA') !== undefined){
       let jsonObj: any = JSON.parse(sessionStorage.getItem('ANALISESELECIONADA'));// Recebe os dados enviados pela busca de cadastro
       let analise: Analise = <Analise>jsonObj;
+
+      if(analise==null){
+        return;
+      }
 
       analise.datapastamae = new Date(analise.datapastamae);
       analise.dataemissao = new Date(analise.dataemissao);
       analise.dataassinatura = new Date(analise.dataassinatura);
       analise.datasimulacao = new Date(analise.datasimulacao);
-      
       this.analise = analise;
       this.codcadastro =   analise.codcadastro;
       this.simulacoes.codcadastro = this.codcadastro;
-      
+
+
+      console.log(this.statussimulacao);
+      console.log(this.statussimulacao.length)
+
+
+    for(var item = 0; item < this.statussimulacao.length; item++){
+        console.log(item);
+    }
+     for (var _i = 0; _i  < analise.simulacoes.length; _i++) {
+
+      /*
+      for(var item = 0; item < this.statussimulacao.length; item++){
+        if(analise.simulacoes[_i].codstatussimulacao === this.statussimulacao[item].codstatussimulacao){
+            analise.simulacoes[_i].codstatussimulacao = {
+            codstatussimulacao: this.statussimulacao[item].codstatussimulacao,
+            descstatussimulacao: this.statussimulacao[item].descstatussimulacao              
+          };
+          
+        }
+      }
+*/
+
+    }    
+
       for (var _i = 0; _i < analise.simulacoes.length; _i++) {
         analise.simulacoes[_i].datasimulacao = new Date(analise.simulacoes[_i].datasimulacao);
         analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
-
-        this.service.getStatusSimulacao().subscribe(dados => {
-          this.statussimulacao.push(dados['data'])
-          console.log(this.statussimulacao)
-          /*for (let item = 0; item < this.statussimulacao.length; item++) {
-            console.log(analise.simulacoes[_i]);
-            if(analise.simulacoes[_i].codstatussimulacao == this.statussimulacao[item].codstatussimulacao){
-                analise.simulacoes[_i].codstatussimulacao = {
-                codestadocivil: this.statussimulacao[item].codstatussimulacao,
-                descestadocivil: this.statussimulacao[item].descstatussimulacao  
-              };
-            }
-          }*/
-        });
-        
-        console.log(this.statussimulacao)
         this.simulacaoLista.push(analise.simulacoes[_i]);
       }
-/*      
+     
       this.simulacoes.codinstituicaofinanceira =  analise.simulacoes[0].codinstituicaofinanceira
       this.simulacoes.codmodalidadesimulacao = analise.simulacoes[0].codmodalidadesimulacao;
       this.simulacoes.codsicaq = analise.simulacoes[0].codsicaq;
@@ -104,7 +129,7 @@ export class AnaliseComponent implements OnInit {
       this.simulacoes.correspondente = analise.simulacoes[0].correspondente;
       this.simulacoes.dataenviobanco= analise.simulacoes[0].dataenviobanco;
       this.simulacoes.datasimulacao = analise.simulacoes[0].datasimulacao;
-  */    
+   
     }else{
     this.codcadastro = SharedService.getInstance().temporario[0];
     this.numfid = SharedService.getInstance().temporario[1];
@@ -114,6 +139,10 @@ export class AnaliseComponent implements OnInit {
       SharedService.getInstance().temporario = null;
     }
 
+  }
+
+  addItemStatusSimulacao(items:StatusSimulacao[]){
+    this.statussimulacao = items;
   }
 
   adicionarSimulacao(simulacao: Simulacoes) {
