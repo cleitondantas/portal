@@ -1,6 +1,6 @@
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -25,6 +25,8 @@ export class AnaliseComponent implements OnInit {
   numfid: any;
   codcadastro: any;
   simulacaoLista: any[] = [];
+  statusSimulEvent = new EventEmitter<any>();
+  instFinanEvent = new EventEmitter<any>();
   
   instFinan: InstiruicaoFinanceiras[];
   modalidade: Modalidade[];
@@ -44,23 +46,6 @@ export class AnaliseComponent implements OnInit {
   ) { }
     items:any[];
   ngOnInit() {
-    this.service.getInstFinan().subscribe(dados => this.instFinan = dados['data'])
-    this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
-    this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
-    this.service.getStatusSimulacao().subscribe(data => {
-    this.statussimulacaoTemp =  data['data'] 
-      for (var _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
-        //(data['data'][_i] as StatusSimulacao).descstatussimulacao
-        let item: StatusSimulacao = new StatusSimulacao();
-        item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
-        item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
-        this.statussimulacao[_i] = item;
-      }
-     });
-
-    console.log(this.statussimulacao);
-    console.log(this.statussimulacao.length);
-    console.log("this.statussimulacao");
     this.br = {
       firstDayOfWeek: 0,
       dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
@@ -73,51 +58,73 @@ export class AnaliseComponent implements OnInit {
       dateFormat: 'dd/mm/yy'
     }
 
+    this.service.getInstFinan().subscribe(dados => {
+      this.instFinan = dados['data']
+      this.instFinanEvent.emit(true)
+    })
+    this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
+    this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
+    this.service.getStatusSimulacao().subscribe(data => {
+    this.statussimulacaoTemp =  data['data'] 
+      for (var _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
+        //(data['data'][_i] as StatusSimulacao).descstatussimulacao
+        let item: StatusSimulacao = new StatusSimulacao();
+        item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
+        item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
+        this.statussimulacao[_i] = item;
+      }
+      this.statusSimulEvent.emit(true);
+     });
+
     let AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');    
 
     if (AnaliseSelecionada !== null || undefined) {
       let jsonObj: any = JSON.parse(AnaliseSelecionada);// Recebe os dados enviados pela busca de cadastro
       let analise: Analise = <Analise>jsonObj;
 
-      if(analise==null){
-        return;
-      }
-
       analise.datapastamae = new Date(analise.datapastamae);
       analise.dataemissao = new Date(analise.dataemissao);
       analise.dataassinatura = new Date(analise.dataassinatura);
       analise.datasimulacao = new Date(analise.datasimulacao);
+
       this.analise = analise;
-      this.codcadastro =   analise.codcadastro;
+      this.codcadastro = analise.codcadastro;
       this.simulacoes.codcadastro = this.codcadastro;
 
-
-      console.log(this.statussimulacao);
-      console.log(this.statussimulacao.length)
-
-
-    for(var item = 0; item < this.statussimulacao.length; item++){
-        console.log(item);
-    }
-     for (var _i = 0; _i  < analise.simulacoes.length; _i++) {
-
-      /*
-      for(var item = 0; item < this.statussimulacao.length; item++){
-        if(analise.simulacoes[_i].codstatussimulacao === this.statussimulacao[item].codstatussimulacao){
-            analise.simulacoes[_i].codstatussimulacao = {
-            codstatussimulacao: this.statussimulacao[item].codstatussimulacao,
-            descstatussimulacao: this.statussimulacao[item].descstatussimulacao              
-          };
-          
+      this.statusSimulEvent.subscribe(dado => {
+        if (dado == true) {
+          for (var _i = 0; _i  < analise.simulacoes.length; _i++) {
+            for(var item = 0; item < this.statussimulacao.length; item++){
+              if(analise.simulacoes[_i].codstatussimulacao === this.statussimulacao[item].codstatussimulacao){
+                  analise.simulacoes[_i].codstatussimulacao = {
+                  codstatussimulacao: this.statussimulacao[item].codstatussimulacao,
+                  descstatussimulacao: this.statussimulacao[item].descstatussimulacao              
+                };
+              }
+            }
+          }
         }
-      }
-*/
+      })
 
-    }    
-
+      this.instFinanEvent.subscribe(dado => {
+        if (dado == true) {
+          for (var _i = 0; _i < analise.simulacoes.length; _i++) {
+            for (var item = 0; item < this.instFinan.length; item++) {
+              if (analise.simulacoes[_i].codinstituicaofinanceira == this.instFinan[item].codInstituicaoFinanceira) {
+                analise.simulacoes[_i].codinstituicaofinanceira = {
+                  codInstituicaoFinanceira: this.instFinan[item].codInstituicaoFinanceira,
+                  descInstituicaoFinanceira: this.instFinan[item].descInstituicaoFinanceira
+                }
+              }
+            }
+          }
+        }
+      })
+   
       for (var _i = 0; _i < analise.simulacoes.length; _i++) {
         analise.simulacoes[_i].datasimulacao = new Date(analise.simulacoes[_i].datasimulacao);
         analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
+
         this.simulacaoLista.push(analise.simulacoes[_i]);
       }
      
