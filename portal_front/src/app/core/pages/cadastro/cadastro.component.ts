@@ -59,9 +59,7 @@ export class CadastroComponent implements OnInit {
     private chamadasService: CadastroChamadasService,
     private logicaService: CadastroLogicaService,
     private router: Router
-  ) {
-
-  }
+  ) { }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
       this.chamadasService.createUser(cadInfo).subscribe(dados => {
@@ -112,10 +110,10 @@ export class CadastroComponent implements OnInit {
     }
 
     this.visualizarInfoImovel();
+
     this.chamadasService.buscarCadastro.subscribe(dado => {
-      if (dado == true) {
-        this.visualizarInfoImovel();
-      }});
+      console.log(dado)
+    });
   }
 
   adicionarContato (contato: Contatos) {

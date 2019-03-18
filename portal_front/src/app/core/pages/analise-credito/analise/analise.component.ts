@@ -8,12 +8,12 @@ import { Analise } from 'src/app/models/analise';
 import { AnaliseCreditoComponent } from '../analise-credito.component';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { InstiruicaoFinanceiras } from 'src/app/models/instituicaoFinanceira';
-import { Modalidade } from 'src/app/models/modalidade';
 import { TipoAmortizacao } from 'src/app/models/tipo-amortizacao';
 import { StatusSimulacao } from 'src/app/models/status-simulacao';
 import { async } from '@angular/core/testing';
 import { pipe } from '@angular/core/src/render3';
 import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
+import { Modalidades } from 'src/app/models/modalidades';
 
 @Component({
   selector: 'app-analise',
@@ -27,15 +27,15 @@ export class AnaliseComponent implements OnInit {
   simulacaoLista: any[] = [];
   statusSimulEvent = new EventEmitter<any>();
   instFinanEvent = new EventEmitter<any>();
+  salvarAlteracoesButton: boolean = true;
   
   instFinan: InstiruicaoFinanceiras[];
-  modalidade: Modalidade[];
+  modalidade: Modalidades[];
   tipoAmortizacao: TipoAmortizacao[];
   simul: any;
   br: any;
   statussimulacao: StatusSimulacao[] = [];
   statussimulacaoTemp: StatusSimulacao[];
-  
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
@@ -45,6 +45,7 @@ export class AnaliseComponent implements OnInit {
 
   ) { }
     items:any[];
+
   ngOnInit() {
     this.br = {
       firstDayOfWeek: 0,
@@ -61,18 +62,20 @@ export class AnaliseComponent implements OnInit {
     this.service.getInstFinan().subscribe(dados => {
       this.instFinan = dados['data']
       this.instFinanEvent.emit(true)
-    })
+    });
+
     this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
+
     this.service.getStatusSimulacao().subscribe(data => {
-    this.statussimulacaoTemp =  data['data'] 
-      for (var _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
-        //(data['data'][_i] as StatusSimulacao).descstatussimulacao
-        let item: StatusSimulacao = new StatusSimulacao();
-        item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
-        item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
-        this.statussimulacao[_i] = item;
-      }
+      this.statussimulacaoTemp =  data['data'] 
+        for (var _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
+          //(data['data'][_i] as StatusSimulacao).descstatussimulacao
+          let item: StatusSimulacao = new StatusSimulacao();
+          item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
+          item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
+          this.statussimulacao[_i] = item;
+        }
       this.statusSimulEvent.emit(true);
      });
 
@@ -127,19 +130,7 @@ export class AnaliseComponent implements OnInit {
 
         this.simulacaoLista.push(analise.simulacoes[_i]);
       }
-     
-      this.simulacoes.codinstituicaofinanceira =  analise.simulacoes[0].codinstituicaofinanceira
-      this.simulacoes.codmodalidadesimulacao = analise.simulacoes[0].codmodalidadesimulacao;
-      this.simulacoes.codsicaq = analise.simulacoes[0].codsicaq;
-      this.simulacoes.codsimulacao = analise.simulacoes[0].codsimulacao;
-      this.simulacoes.codstatussimulacao = analise.simulacoes[0].codmodalidadesimulacao;
-      this.simulacoes.codtipoamortizacao = analise.simulacoes[0].codtipoamortizacao;
-      this.simulacoes.codusuario= analise.simulacoes[0].codusuario;
-      this.simulacoes.correspondente = analise.simulacoes[0].correspondente;
-      this.simulacoes.dataenviobanco= analise.simulacoes[0].dataenviobanco;
-      this.simulacoes.datasimulacao = analise.simulacoes[0].datasimulacao;
-   
-    }else{
+    } else {
     this.codcadastro = SharedService.getInstance().temporario[0];
     this.numfid = SharedService.getInstance().temporario[1];
     }
@@ -181,10 +172,6 @@ export class AnaliseComponent implements OnInit {
     simulacao2.valorprimeiraparcela = simulacao.taxadejuros;
 
     this.simulacaoLista.push(simulacao2);
-
-    console.log(this.simulacaoLista);
-    console.log(JSON.stringify(this.simulacaoLista));
-
   }
 
   removerSimulacao(simul) {
@@ -245,5 +232,78 @@ export class AnaliseComponent implements OnInit {
         }
       }
     });
+  }
+
+  visualizarSimulacao(simulacao: Simulacoes) {
+    this.salvarAlteracoesButton = false;
+
+    this.simulacoes.codsimulacao = simulacao.codsimulacao;
+    this.simulacoes.valoravaliacao = simulacao.valoravaliacao;
+    this.simulacoes.valorcompravenda = simulacao.valorcompravenda;
+    this.simulacoes.valorcredito = simulacao.valorcredito;
+    for (let item = 0; item < this.modalidade.length; item++) {
+      if(simulacao.codmodalidadesimulacao == this.modalidade[item].codModalidadeSimulacao){
+        simulacao.codmodalidadesimulacao = {
+          codModalidadeSimulacao: this.modalidade[item].codModalidadeSimulacao,
+          descModalidadeSimulacao: this.modalidade[item].descModalidadeSimulacao  
+        };
+      }
+    }
+    this.simulacoes.codmodalidadesimulacao = simulacao.codmodalidadesimulacao;
+
+    this.simulacoes.dataenviobanco = simulacao.dataenviobanco;
+    this.simulacoes.codsicaq = simulacao.codsicaq;
+    this.simulacoes.correspondente = simulacao.correspondente;
+    this.simulacoes.prazofinanciamento = simulacao.prazofinanciamento;
+
+    for (let item = 0; item < this.tipoAmortizacao.length; item++) {
+      if(simulacao.codtipoamortizacao == this.tipoAmortizacao[item].codtipoamortizacao){
+        simulacao.codtipoamortizacao = {
+          codtipoamortizacao: this.tipoAmortizacao[item].codtipoamortizacao,
+          desctipoamortizacao: this.tipoAmortizacao[item].desctipoamortizacao  
+        };
+      }
+    }
+    this.simulacoes.codtipoamortizacao = simulacao.codtipoamortizacao;
+
+    this.simulacoes.valorsubsidio = simulacao.valorsubsidio;
+    this.simulacoes.valordespesasfinanciadas = simulacao.valordespesasfinanciadas;
+    this.simulacoes.valorfinanciamento = simulacao.valorfinanciamento;
+    this.simulacoes.valorfgts = simulacao.valorfgts;
+    this.simulacoes.valorrecursosproprios = simulacao.valorrecursosproprios;
+    this.simulacoes.saldodevedor = simulacao.saldodevedor;
+    this.simulacoes.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
+    this.simulacoes.codstatussimulacao = simulacao.codstatussimulacao;
+    this.simulacoes.valoravaliacaoinstfinanc = simulacao.valoravaliacaoinstfinanc;
+    this.simulacoes.taxadejuros = simulacao.taxadejuros;
+    this.simulacoes.valorprimeiraparcela = simulacao.valorprimeiraparcela;
+  }
+
+  salvarAlteracoes() {
+    for (let item = 0; item < this.simulacaoLista.length; item++) {
+      if (this.simulacaoLista[item].codsimulacao == this.simulacoes.codsimulacao) {
+          this.simulacaoLista[item].codcadastro = this.simulacoes.codcadastro;
+          this.simulacaoLista[item].valoravaliacao = this.simulacoes.valoravaliacao;
+          this.simulacaoLista[item].valorcompravenda = this.simulacoes.valorcompravenda;
+          this.simulacaoLista[item].valorcredito = this.simulacoes.valorcredito;
+          this.simulacaoLista[item].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao.codModalidadeSimulacao
+          this.simulacaoLista[item].dataenviobanco = this.simulacoes.dataenviobanco;
+          this.simulacaoLista[item].codsicaq = this.simulacoes.codsicaq;
+          this.simulacaoLista[item].correspondente = this.simulacoes.correspondente;
+          this.simulacaoLista[item].prazofinanciamento = this.simulacoes.prazofinanciamento;
+          this.simulacaoLista[item].codtipoamortizacao = this.simulacoes.codtipoamortizacao.codtipoamortizacao
+          this.simulacaoLista[item].valorsubsidio = this.simulacoes.valorsubsidio;
+          this.simulacaoLista[item].valordespesasfinanciadas = this.simulacoes.valordespesasfinanciadas;
+          this.simulacaoLista[item].valorfinanciamento = this.simulacoes.valorfinanciamento;
+          this.simulacaoLista[item].valorfgts = this.simulacoes.valorfgts;
+          this.simulacaoLista[item].valorrecursosproprios = this.simulacoes.valorrecursosproprios;
+          this.simulacaoLista[item].saldodevedor = this.simulacoes.saldodevedor;
+          this.simulacaoLista[item].codinstituicaofinanceira = this.simulacoes.codinstituicaofinanceira;
+          this.simulacaoLista[item].codstatussimulacao = this.simulacoes.codstatussimulacao;
+          this.simulacaoLista[item].valoravaliacaoinstfinanc = this.simulacoes.valoravaliacaoinstfinanc;
+          this.simulacaoLista[item].taxadejuros = this.simulacoes.taxadejuros;
+          this.simulacaoLista[item].valorprimeiraparcela = this.simulacoes.taxadejuros;
+      }
+    }
   }
 }
