@@ -6,13 +6,11 @@ import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.servic
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
 import { AnaliseCreditoComponent } from '../analise-credito.component';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { InstiruicaoFinanceiras } from 'src/app/models/instituicaoFinanceira';
 import { TipoAmortizacao } from 'src/app/models/tipo-amortizacao';
 import { StatusSimulacao } from 'src/app/models/status-simulacao';
-import { async } from '@angular/core/testing';
-import { pipe } from '@angular/core/src/render3';
-import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
+
 import { Modalidades } from 'src/app/models/modalidades';
 
 @Component({
@@ -24,11 +22,11 @@ export class AnaliseComponent implements OnInit {
 
   numfid: any;
   codcadastro: any;
-  simulacaoLista: any[] = [];
+  simulacaoLista: Simulacoes[] = [];
   statusSimulEvent = new EventEmitter<any>();
   instFinanEvent = new EventEmitter<any>();
   salvarAlteracoesButton: boolean = true;
-  
+  selectedItem:any;
   instFinan: InstiruicaoFinanceiras[];
   modalidade: Modalidades[];
   tipoAmortizacao: TipoAmortizacao[];
@@ -127,6 +125,9 @@ export class AnaliseComponent implements OnInit {
       for (var _i = 0; _i < analise.simulacoes.length; _i++) {
         analise.simulacoes[_i].datasimulacao = new Date(analise.simulacoes[_i].datasimulacao);
         analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
+        if(analise.simulacoes[_i].simulacaoselecionado == true){
+          this.selectedItem = analise.simulacoes[_i];
+        }
 
         this.simulacaoLista.push(analise.simulacoes[_i]);
       }
@@ -153,7 +154,7 @@ export class AnaliseComponent implements OnInit {
     simulacao2.valoravaliacao = simulacao.valoravaliacao;
     simulacao2.valorcompravenda = simulacao.valorcompravenda;
     simulacao2.valorcredito = simulacao.valorcredito;
-    simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao.codModalidadeSimulacao;
+    simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao.codModalidadeSimulacao ;
     simulacao2.dataenviobanco = simulacao.dataenviobanco;
     simulacao2.codsicaq = simulacao.codsicaq;
     simulacao2.correspondente = simulacao.correspondente;
@@ -180,20 +181,23 @@ export class AnaliseComponent implements OnInit {
   }
 
   salvar() {
+    this.salvarAlteracoes();
     this.analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     this.analise.codcadastro  = this.codcadastro;
     for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
       var item = this.simulacaoLista[_i];
       this.simulacaoLista[_i].codinstituicaofinanceira = item.codinstituicaofinanceira ?  Number(item.codinstituicaofinanceira.codInstituicaoFinanceira):null;
-      console.log(this.simulacaoLista[_i].codinstituicaofinanceira)
       this.simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
+      this.simulacaoLista[_i].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao? Number(this.simulacoes.codmodalidadesimulacao.codModalidadeSimulacao):null
     }
+    
     this.analise.simulacoes= this.simulacaoLista;
     
-    this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data = data['data']));
-    console.log("PERSISTINDO NA BASE");
-    console.log(JSON.stringify(this.analise));
-   // this.analiseCred.selected = 1;
+    
+    
+    this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {data = data['data']} );
+    
+    this.analiseCred.selected = 1;
   }
 
   focusDropDown(input) {
@@ -216,9 +220,20 @@ export class AnaliseComponent implements OnInit {
         this.salvar();
       },
       reject: () => {
-        console.log("NAO PERSISTINDO NA BASE")
+        
       }
     });
+  }
+
+  simulacaoSelecionado(simulacao: Simulacoes){
+    for (let item = 0; item < this.simulacaoLista.length; item++) {
+      if (this.simulacaoLista[item].codinstituicaofinanceira == simulacao.codinstituicaofinanceira) {
+        this.simulacaoLista[item].simulacaoselecionado = true;
+      }else{
+       this.simulacaoLista[item].simulacaoselecionado = false;
+      }
+    }
+    
   }
 
   buscarFid() {

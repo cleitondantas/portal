@@ -100,6 +100,9 @@ public class Simulacao implements Serializable{
 	@Column(name="taxadejuros",precision=16, scale=2)
 	private BigDecimal taxadejuros;
 	
+	@Column(name="simulacaoselecionado")
+	private Boolean simulacaoselecionado;
+	
 	public Integer getCodsimulacao() {
 		return codsimulacao;
 	}
@@ -303,6 +306,15 @@ public class Simulacao implements Serializable{
 		this.obs = obs;
 	}
 
+	public Boolean getSimulacaoselecionado() {
+		return simulacaoselecionado;
+	}
+
+	public void setSimulacaoselecionado(Boolean simulacaoselecionado) {
+		this.simulacaoselecionado = simulacaoselecionado;
+	}
+
+	
 	
 	
 }

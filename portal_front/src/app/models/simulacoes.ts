@@ -26,4 +26,5 @@ export class Simulacoes {
     taxadejuros:number;
     valorprimeiraparcela: number;
     datasimulacao: Date;
+    simulacaoselecionado:Boolean;
 }
