@@ -1,4 +1,4 @@
 export interface TipoAmortizacao {
-    codTipoAmortizacao: number;
-    descTipoAmortizacao: string;
+    codtipoamortizacao: number;
+    desctipoamortizacao: string;
 }

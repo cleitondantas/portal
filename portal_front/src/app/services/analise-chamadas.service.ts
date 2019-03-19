@@ -34,8 +34,7 @@ export class AnaliseChamadasService {
   }
 
   getStatusSimulacao(){
-    console.log("getStatusSimulacao()");
-    return this.http.get(environment.urlpath + '/api/statussimulacao');
+    return this.http.get<StatusSimulacao[]>(environment.urlpath + '/api/statussimulacao');
   }
 
   getRegistroAnalise (cod:number) {
