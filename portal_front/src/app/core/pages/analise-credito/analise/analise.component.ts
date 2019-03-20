@@ -209,7 +209,7 @@ export class AnaliseComponent implements OnInit {
     this.simulacoes.valorrecursosproprios = calc;
   }
 
-  salvarAnalise(analise: Analise){
+  salvarAnalise(){
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja salvar essas informações?',
       header: 'Confirmação',
