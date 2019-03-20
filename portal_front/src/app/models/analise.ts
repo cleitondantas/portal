@@ -3,14 +3,14 @@ import { Simulacoes } from "./simulacoes";
 export class Analise {
 codanalise: number;
 codcadastro:number;
-datapastamae: Date;
-dataemissao: Date;
-dataassinatura: Date;
+datapastamae: any;
+dataemissao: any;
+dataassinatura: any;
 codstatusanalise:number;
 codsubstatusanalise:number;
 codsimulacaofinanciado:number;
 obs:string;
 codusuario:number;
-datasimulacao: Date;
+datasimulacao: any;
 simulacoes:Simulacoes[];
 }

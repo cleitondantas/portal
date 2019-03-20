@@ -34,6 +34,7 @@ export class AnaliseComponent implements OnInit {
   br: any;
   statussimulacao: StatusSimulacao[] = [];
   statussimulacaoTemp: StatusSimulacao[];
+  controle: boolean = this.service.controle;
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
@@ -170,7 +171,7 @@ export class AnaliseComponent implements OnInit {
     simulacao2.codstatussimulacao = simulacao.codstatussimulacao;
     simulacao2.valoravaliacaoinstfinanc = simulacao.valoravaliacaoinstfinanc;
     simulacao2.taxadejuros = simulacao.taxadejuros;
-    simulacao2.valorprimeiraparcela = simulacao.taxadejuros;
+    simulacao2.valorprimeiraparcela = simulacao.valorprimeiraparcela;
 
     this.simulacaoLista.push(simulacao2);
   }
@@ -188,14 +189,37 @@ export class AnaliseComponent implements OnInit {
       var item = this.simulacaoLista[_i];
       this.simulacaoLista[_i].codinstituicaofinanceira = item.codinstituicaofinanceira ?  Number(item.codinstituicaofinanceira.codInstituicaoFinanceira):null;
       this.simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
-      this.simulacaoLista[_i].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao? Number(this.simulacoes.codmodalidadesimulacao.codModalidadeSimulacao):null
     }
     
     this.analise.simulacoes= this.simulacaoLista;
     
-    
-    
-    this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {data = data['data']} );
+    if (this.controle == true) {
+      this.analise.dataassinatura = this.analise.dataassinatura.toISOString();
+      this.analise.dataemissao = this.analise.dataemissao.toISOString();
+      this.analise.datapastamae = this.analise.datapastamae.toISOString();
+      this.analise.datasimulacao = this.analise.datasimulacao.toISOString();
+
+      for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
+        this.analise.simulacoes[_i].dataenviobanco = this.analise.simulacoes[_i].dataenviobanco.toISOString();
+        this.analise.simulacoes[_i].datasimulacao = this.analise.simulacoes[_i].datasimulacao.toISOString();
+      }
+
+      console.log(this.analise);
+      console.log(JSON.stringify(this.analise));
+      this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data));
+
+      this.analise.dataassinatura = new Date(this.analise.dataassinatura);
+      this.analise.dataemissao = new Date(this.analise.dataemissao);
+      this.analise.datapastamae = new Date(this.analise.datapastamae);
+      this.analise.datasimulacao = new Date(this.analise.datasimulacao);
+
+      for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
+        this.analise.simulacoes[_i].dataenviobanco = new Date(this.analise.simulacoes[_i].dataenviobanco);
+        this.analise.simulacoes[_i].datasimulacao = new Date(this.analise.simulacoes[_i].datasimulacao);
+      }
+    } else {
+      this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data)});
+    }
     
     this.analiseCred.selected = 1;
   }
@@ -301,7 +325,7 @@ export class AnaliseComponent implements OnInit {
           this.simulacaoLista[item].valoravaliacao = this.simulacoes.valoravaliacao;
           this.simulacaoLista[item].valorcompravenda = this.simulacoes.valorcompravenda;
           this.simulacaoLista[item].valorcredito = this.simulacoes.valorcredito;
-          this.simulacaoLista[item].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao.codModalidadeSimulacao
+          this.simulacaoLista[item].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao.codModalidadeSimulacao;
           this.simulacaoLista[item].dataenviobanco = this.simulacoes.dataenviobanco;
           this.simulacaoLista[item].codsicaq = this.simulacoes.codsicaq;
           this.simulacaoLista[item].correspondente = this.simulacoes.correspondente;
@@ -317,7 +341,7 @@ export class AnaliseComponent implements OnInit {
           this.simulacaoLista[item].codstatussimulacao = this.simulacoes.codstatussimulacao;
           this.simulacaoLista[item].valoravaliacaoinstfinanc = this.simulacoes.valoravaliacaoinstfinanc;
           this.simulacaoLista[item].taxadejuros = this.simulacoes.taxadejuros;
-          this.simulacaoLista[item].valorprimeiraparcela = this.simulacoes.taxadejuros;
+          this.simulacaoLista[item].valorprimeiraparcela = this.simulacoes.valorprimeiraparcela;
       }
     }
   }

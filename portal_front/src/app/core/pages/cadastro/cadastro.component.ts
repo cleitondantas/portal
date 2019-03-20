@@ -112,7 +112,7 @@ export class CadastroComponent implements OnInit {
     this.visualizarInfoImovel();
 
     this.chamadasService.buscarCadastro.subscribe(dado => {
-      console.log(dado)
+      this.visualizarInfoImovel();
     });
   }
 
