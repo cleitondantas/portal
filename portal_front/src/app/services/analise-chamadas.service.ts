@@ -15,6 +15,8 @@ import { Analise } from 'src/app/models/analise';
 })
 export class AnaliseChamadasService {
 
+  controle: boolean = false;
+
   constructor(
     private http: HttpClient
   ) { }
@@ -40,11 +42,14 @@ export class AnaliseChamadasService {
     console.log(environment.urlpath + '/api/analises/'+cod)
     return this.http.get<Analise[]>(environment.urlpath + '/api/analises/'+cod);
   }
+
   postAnaliseSimulacaoContrato(analise: Analise){
    return this.http.post<Analise>(environment.urlpath + '/api/analise', analise);
   }
 
-  
+  putAnaliseSimulacaoContrato(analise: Analise) {
+    return this.http.put<Analise>(environment.urlpath + '/api/analise/' + analise.codanalise, analise);
+  }
 
   getCodCadastro() {
     return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastros');

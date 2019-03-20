@@ -94,7 +94,7 @@ export class MenuBarComponent implements OnInit {
         this.hideDialog();
 
         if (this.router.url == '/cadastro') {
-            this.chamadasService.buscarCadastro.emit(true);
+            this.chamadasService.buscarCadastro.emit('aaaaaa');
         } else {
             this.router.navigate(['/cadastro']);
         }
@@ -112,6 +112,7 @@ export class MenuBarComponent implements OnInit {
                     console.log(data)
                     this.hideDialogDisplay();
                     this.router.navigate(['/analise']);;
+                    this.analiseService.controle = true;
                     //window.open(environment.urlpath + '/analise')
                 });
             }
