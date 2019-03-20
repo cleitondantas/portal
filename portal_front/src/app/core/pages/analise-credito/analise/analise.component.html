@@ -213,7 +213,7 @@
       </div>
     </div>
     
-    <p-table [value]="simulacaoLista">
+    <p-table [value]="simulacaoLista" [(selection)]="selectedItem" >
       <ng-template pTemplate="header">
         <tr>
           <th><strong>Excluir</strong></th>
@@ -247,6 +247,7 @@
                 <input pInputText class="ajusteInput" value="Selecione..." *ngIf="rowData.codstatussimulacao == undefined" 
                 #inputDropdown (mouseover)="focusDropDown(inputDropdown)"/>
               </ng-template>
+              
             </p-cellEditor>
             
           </td>
@@ -290,8 +291,8 @@
             </p-cellEditor>
           </td>
 
-          <td> 
-            <p-tableRadioButton [value]="rowData"></p-tableRadioButton>  
+          <td > 
+            <p-tableRadioButton [value]="rowData"  (click)="simulacaoSelecionado(rowData)" ></p-tableRadioButton>  
           </td>
 
         </tr>
@@ -357,8 +358,7 @@
         <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-refresh" iconPos="right"></button>
       </div>
       <div class="p-col-1">
-        <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvarAnalise()"
-        icon="pi pi-save" iconPos="right"></button>
+        <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvarAnalise()" icon="pi pi-save" iconPos="right"></button>
       </div>
     </div>   
   </p-fieldset>

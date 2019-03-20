@@ -64,11 +64,16 @@ public class AnaliseControler {
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Analise>> create(HttpServletRequest request, @RequestBody Analise  analise,BindingResult result) {
 		Response<Analise> response = new Response<Analise>();
+		
+		
 		try {
 			Date  now  = new Date();
 			analise.setDatasimulacao(now);
 			for(Simulacao item: analise.getSimulacoes()) {
 				item.setDatasimulacao(now);
+				if(item.getSimulacaoselecionado()) {
+					analise.setCodsimulacaofinanciado(item.getCodsimulacao());
+				}
 			}
 			
 			if (result.hasErrors()) {
@@ -96,8 +101,15 @@ public class AnaliseControler {
 			try {
 				
 				//analiseRepositoy.findById(Integer.parseInt(id));
-				
 				analise.setCodanalise(Integer.parseInt(id));
+				Date  now  = new Date();
+				analise.setDatasimulacao(now);
+				for(Simulacao item: analise.getSimulacoes()) {
+					item.setDatasimulacao(now);
+					if(item.getSimulacaoselecionado()) {
+						analise.setCodsimulacaofinanciado(item.getCodcadastro());
+					}
+				}
 				if (result.hasErrors()) {
 					result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 					return ResponseEntity.badRequest().body(response);
