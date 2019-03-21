@@ -22,7 +22,7 @@
      </div>
 </p-menubar>
 
-<p-dialog header="Buscar Cadastro" [(visible)]="display" draggable="false" positionTop="100"  baseZIndex="1000" width="750" height ="900"  >
+<p-dialog header="Buscar Cadastro" [(visible)]="display" [draggable]="false" positionTop="100" width="750" [contentStyle]="{'height':'500px'}">
   
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
@@ -65,7 +65,7 @@
  </p-dialog>
 
 
- <p-dialog header="Buscar Analise" [(visible)]="displayAnalise" draggable="false" positionTop="100"  baseZIndex="1000" width="750" height ="900"  >
+ <p-dialog header="Buscar Analise" [(visible)]="displayAnalise" [draggable]="false" positionTop="100" width="750" [contentStyle]="{'height':'500px'}">
   
      <div class="ui-inputgroup">
          <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
