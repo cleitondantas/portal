@@ -168,12 +168,9 @@ export class AnaliseComponent implements OnInit {
     simulacao2.valorrecursosproprios = simulacao.valorrecursosproprios;
     simulacao2.saldodevedor = simulacao.saldodevedor;
     simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
-    simulacao2.codstatussimulacao = simulacao.codstatussimulacao;
-    simulacao2.valoravaliacaoinstfinanc = simulacao.valoravaliacaoinstfinanc;
-    simulacao2.taxadejuros = simulacao.taxadejuros;
-    simulacao2.valorprimeiraparcela = simulacao.valorprimeiraparcela;
 
     this.simulacaoLista.push(simulacao2);
+    console.log(this.simulacaoLista);
   }
 
   removerSimulacao(simul) {
@@ -201,7 +198,7 @@ export class AnaliseComponent implements OnInit {
 
       for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].dataenviobanco = this.analise.simulacoes[_i].dataenviobanco.toISOString();
-        this.analise.simulacoes[_i].datasimulacao = this.analise.simulacoes[_i].datasimulacao.toISOString();
+        this.analise.simulacoes[_i].datasimulacao = null;
       }
 
       console.log(this.analise);
@@ -215,7 +212,6 @@ export class AnaliseComponent implements OnInit {
 
       for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].dataenviobanco = new Date(this.analise.simulacoes[_i].dataenviobanco);
-        this.analise.simulacoes[_i].datasimulacao = new Date(this.analise.simulacoes[_i].datasimulacao);
       }
     } else {
       this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data)});
@@ -312,10 +308,6 @@ export class AnaliseComponent implements OnInit {
     this.simulacoes.valorrecursosproprios = simulacao.valorrecursosproprios;
     this.simulacoes.saldodevedor = simulacao.saldodevedor;
     this.simulacoes.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
-    this.simulacoes.codstatussimulacao = simulacao.codstatussimulacao;
-    this.simulacoes.valoravaliacaoinstfinanc = simulacao.valoravaliacaoinstfinanc;
-    this.simulacoes.taxadejuros = simulacao.taxadejuros;
-    this.simulacoes.valorprimeiraparcela = simulacao.valorprimeiraparcela;
   }
 
   salvarAlteracoes() {
@@ -338,11 +330,10 @@ export class AnaliseComponent implements OnInit {
           this.simulacaoLista[item].valorrecursosproprios = this.simulacoes.valorrecursosproprios;
           this.simulacaoLista[item].saldodevedor = this.simulacoes.saldodevedor;
           this.simulacaoLista[item].codinstituicaofinanceira = this.simulacoes.codinstituicaofinanceira;
-          this.simulacaoLista[item].codstatussimulacao = this.simulacoes.codstatussimulacao;
-          this.simulacaoLista[item].valoravaliacaoinstfinanc = this.simulacoes.valoravaliacaoinstfinanc;
-          this.simulacaoLista[item].taxadejuros = this.simulacoes.taxadejuros;
-          this.simulacaoLista[item].valorprimeiraparcela = this.simulacoes.valorprimeiraparcela;
       }
     }
+
+    this.salvarAlteracoesButton = true;
+    this.simulacoes.codinstituicaofinanceira = null;
   }
 }

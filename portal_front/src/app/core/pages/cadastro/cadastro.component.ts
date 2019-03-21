@@ -1,4 +1,3 @@
-import { OrgaoExpedidor } from './../../../models/orgao-expedidor';
 import { Component, OnInit} from '@angular/core';
 import { of } from 'rxjs';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
@@ -32,6 +31,7 @@ export class CadastroComponent implements OnInit {
   contatoSelecionado: any;
   compradores: Compradores[] = [];
   disabled: boolean = false;
+  selectedItem: any;
 
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
@@ -112,7 +112,7 @@ export class CadastroComponent implements OnInit {
     this.visualizarInfoImovel();
 
     this.chamadasService.buscarCadastro.subscribe(dado => {
-      this.visualizarInfoImovel();
+      this.ngOnInit();
     });
   }
 
@@ -529,6 +529,11 @@ export class CadastroComponent implements OnInit {
         }
         this.compradores = cadastroinformacaoCarregada.clientes;
         this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
+        for (let _i = 0; _i < this.compradores.length; _i++) {
+          if (this.cadInfo.clientes[_i].principal == true) {
+            this.selectedItem = this.cadInfo.clientes[_i];
+          }
+        }
       });
       
       this.chamadasService.getEmpreendimentos().subscribe(dados => {
@@ -571,8 +576,14 @@ export class CadastroComponent implements OnInit {
       this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
       this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
       this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
-      sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
+
+      for (var _i in this.comprador) {
+        this.comprador[_i] = null;
+      }
+      this.contatoDisplay = [];
+      this.contato = [];
       this.controle = true;
+      this.disabledButton = true;
     }
   }
   

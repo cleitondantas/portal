@@ -294,7 +294,7 @@
 
     <div class="p-grid">
       <p-fieldset legend="Compradores">
-        <p-table [value]="compradores" >
+        <p-table [value]="compradores" [(selection)]="selectedItem">
           <ng-template pTemplate="header">
             <tr>
               <th><strong>Excluir</strong></th>
