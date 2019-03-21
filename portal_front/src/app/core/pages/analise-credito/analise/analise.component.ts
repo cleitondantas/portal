@@ -214,6 +214,16 @@ export class AnaliseComponent implements OnInit {
         this.analise.simulacoes[_i].dataenviobanco = new Date(this.analise.simulacoes[_i].dataenviobanco);
       }
     } else {
+      for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
+        this.analise.simulacoes[_i].codcadastro = this.codcadastro;
+      }
+      this.analise.codcadastro = this.codcadastro;
+      console.log("this.analise objeto")
+      console.log(this.analise)
+
+      console.log("this.analise Json")
+      console.log(JSON.stringify(this.analise));
+      
       this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data)});
     }
     

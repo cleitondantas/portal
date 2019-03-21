@@ -88,7 +88,7 @@ public class Simulacao implements Serializable{
 	@Column(name="cod_usuario")
 	private Long codusuario;
 	
-	@Column(name="data_simulacao")
+	@Column(name="data_simulacao",updatable = false)
 	private Date datasimulacao;
 
 	@Column(name="data_envio_banco")
