@@ -564,8 +564,8 @@ export class CadastroComponent implements OnInit {
         }
       });
 
-      this.cadInfo.datacadastro = new Date(cadastroinformacaoCarregada.datacadastro);
-      this.cadInfo.dataentrada = cadastroinformacaoCarregada.dataentrada;
+      this.cadInfo.dtentrada = new Date(cadastroinformacaoCarregada.dtentrada);
+
       this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
       this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
       this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;

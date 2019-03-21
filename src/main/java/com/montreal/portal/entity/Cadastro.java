@@ -1,7 +1,6 @@
 package com.montreal.portal.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -60,8 +59,8 @@ public class Cadastro implements Serializable{
 	private Long codusuario;
 	
 	
-	@Column(name="data_cadastro")
-	private Date datacadastro;
+	@Column(name="dt_entrada")
+	private Date dtentrada;
 	
 	@Column(name="vaga_automovel")
 	private String vagaautomovel;
@@ -69,9 +68,7 @@ public class Cadastro implements Serializable{
 	@Column(name="box")
 	private String box;
 	
-	@Column(name="numero_apartamento")
-	private String numeroapartamento;
-	
+
 	@Column(name="cep")
 	private String cep;
 	
@@ -93,8 +90,12 @@ public class Cadastro implements Serializable{
 	@Column(name="uf")
 	private String uf;
 	
-	@Column(name="data_entrada")
-	private Date dataentrada;
+	@Column(name="dt_atividade")
+	private Date dtatividade; // para controle de inssercao no banco de dados
+	
+	
+	@Column(name="dt_atualizacao")
+	private Date dtatualizacao; // para controle de atualizacao no banco de dados
 	
     @ManyToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_cliente_cadastro", 
@@ -146,12 +147,14 @@ public class Cadastro implements Serializable{
 		this.codusuario = codusuario;
 	}
 
-	public Date getDatacadastro() {
-		return datacadastro;
+
+
+	public Date getDtentrada() {
+		return dtentrada;
 	}
 
-	public void setDatacadastro(Date datacadastro) {
-		this.datacadastro = datacadastro;
+	public void setDtentrada(Date dtentrada) {
+		this.dtentrada = dtentrada;
 	}
 
 	public String getVagaautomovel() {
@@ -170,13 +173,6 @@ public class Cadastro implements Serializable{
 		this.box = box;
 	}
 
-	public String getNumeroapartamento() {
-		return numeroapartamento;
-	}
-
-	public void setNumeroapartamento(String numeroapartamento) {
-		this.numeroapartamento = numeroapartamento;
-	}
 
 	public String getCep() {
 		return cep;
@@ -242,12 +238,13 @@ public class Cadastro implements Serializable{
 		this.clientes = clientes;
 	}
 
-	public Date getDataentrada() {
-		return dataentrada;
+
+	public Date getDtatividade() {
+		return dtatividade;
 	}
 
-	public void setDataentrada(Date dataentrada) {
-		this.dataentrada = dataentrada;
+	public void setDtatividade(Date dtatividade) {
+		this.dtatividade = dtatividade;
 	}
 
 	public String getCpfcnpj() {
@@ -281,6 +278,14 @@ public class Cadastro implements Serializable{
 
 	public void setCodempreendimento(Integer codempreendimento) {
 		this.codempreendimento = codempreendimento;
+	}
+
+	public Date getDtatualizacao() {
+		return dtatualizacao;
+	}
+
+	public void setDtatualizacao(Date dtatualizacao) {
+		this.dtatualizacao = dtatualizacao;
 	}
 
 

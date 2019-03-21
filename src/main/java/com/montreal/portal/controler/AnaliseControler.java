@@ -94,14 +94,13 @@ public class AnaliseControler {
 
 	
 	 
-	 @PutMapping("/analise/{id}")
+	 @PutMapping("/analise")
 	 @PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
-	 public ResponseEntity<Response<Analise>> update(@PathVariable String id, @RequestBody Analise analise,BindingResult result){
+	 public ResponseEntity<Response<Analise>> update(@RequestBody Analise analise,BindingResult result){
 			Response<Analise> response = new Response<Analise>();
 			try {
 				
 				//analiseRepositoy.findById(Integer.parseInt(id));
-				analise.setCodanalise(Integer.parseInt(id));
 				Date  now  = new Date();
 				analise.setDatasimulacao(now);
 				for(Simulacao item: analise.getSimulacoes()) {

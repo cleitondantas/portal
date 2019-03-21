@@ -2,26 +2,23 @@
   <div class="p-col-6">
 
     <div class="p-grid">
-      <div class="p-col-3">
-        <label class="ajusteLabel" for="faturarContrato">A faturar contrato: </label>
+      <div class="p-col-4">
+        <label class="ajusteLabel" for="faturarContrato">A FATURAR CONTRATO SPE:</label>
       </div>
-      <div class="p-col-9">
-        <input type="text" class="ajusteInput" pInputText id="faturarContrato" [ngStyle]="{'width': '50%'}">
+      <div class="p-col-8">
+        <input type="text" placeholder="razão social" class="ajusteInput" pInputText id="faturarContrato" [ngStyle]="{'width': '50%'}">
       </div>
     </div>
-
   </div>
   <div class="p-col-6">
-
     <div class="p-grid">
       <div class="p-col-2">
         <label class="ajusteLabel" for="cpf">CPF/CNPJ: </label>
       </div>
       <div class="p-col-10">
-        <input type="text" class="ajusteInput" pInputText id="cpf" [ngStyle]="{'width': '50%'}">
+        <input type="text" pKeyFilter="num" class="ajusteInput" pInputText id="cpf" [ngStyle]="{'width': '50%'}">
       </div>
     </div>
-
   </div>
 </div>
 
@@ -81,7 +78,7 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataAssin" dateFormat="mm" [locale]="br" view="month"></p-calendar>
+            id="dataAssin" dateFormat="mm/yy" [locale]="br" view="month"></p-calendar>
           </div>    
         </div>
       </div>
@@ -94,79 +91,69 @@
           <div class="ui-inputgroup">
             <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true" 
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataAssin" dateFormat="mm" [locale]="br" view="month"></p-calendar>
+            id="dataAssin" dateFormat="mm/yy" [locale]="br" view="month"></p-calendar>
           </div>
         </div>
       </div>
-
+    </div>
+    <div class="p-col-12">
+      <div class="p-grid">
+        <div class="p-col-9">
+          <label class="ajusteLabel" for="recebIncorp">TOTAL RECEBIDO DA INCORPORADORA: </label>
+        </div>
+        <div class="p-col-3">
+          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" id="recebIncorp">
+        </div>
+      </div>
     </div>
   </div>
 
   <br><br><br>
-
+  <p-fieldset >
   <div class="p-grid">
     <div class="p-col-6">
 
       <div class="p-grid">
-        <div class="p-col-3">
-          <label class="ajusteLabel" for="recebIncorp">TT RECEBE INCORP: </label>
+        <div class="p-col-5">
+          <label class="ajusteLabel" for="recebTeorico">RECEBIMENTO TEÓRICO DO BANCO: </label>
         </div>
-        <div class="p-col-9">
-          <input type="text" class="ajusteInput" pInputText id="recebIncorp">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-3">
-          <label class="ajusteLabel" for="prevReceb">RECEBIMENTO PREVISTO: </label>
-        </div>
-        <div class="p-col-9">
-          <input type="text" class="ajusteInput" pInputText id="prevReceb">
+        <div class="p-col-7">
+          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" pInputText id="recebTeorico">
         </div>
       </div>
 
       <div class="p-grid">
-        <div class="p-col-3">
-          <label class="ajusteLabel" for="notaFiscal">NOTA FISCAL: </label>
+        <div class="p-col-5">
+          <label class="ajusteLabel" for="notaFiscal">NÚMERO NOTA FISCAL: </label>
         </div>
-        <div class="p-col-9">
+        <div class="p-col-7">
           <input type="text" class="ajusteInput" pInputText id="notaFiscal">
         </div>
       </div>
-
-    </div>
-    <div class="p-col-6">
-
+</div>
+  
+          <div class="p-col-6">     
       <div class="p-grid">
-        <div class="p-col-3">
-          <label class="ajusteLabel" for="recebTeorico">RECEB TEÓRICO BCO: </label>
-        </div>
-        <div class="p-col-9">
-          <input type="text" class="ajusteInput" pInputText id="recebTeorico">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-3">
+        <div class="p-col-5">
           <label class="ajusteLabel" for="mesFaturado">MÊS FATURADO: </label>
         </div>
-        <div class="p-col-9">
-          <input type="text" class="ajusteInput" pInputText id="mesFaturado">
+        <div class="p-col-7">
+          <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true" 
+          class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+          id="mesFaturado" dateFormat="mm/yy" [locale]="br" view="month"></p-calendar>
         </div>
       </div>
-
       <div class="p-grid">
-        <div class="p-col-3">
+        <div class="p-col-5">
           <label class="ajusteLabel" for="totalReceb">TOTAL RECEBIDO: </label>
         </div>
-        <div class="p-col-9">
-          <input type="text" class="ajusteInput" pInputText id="totalReceb">
+        <div class="p-col-7">
+          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" id="totalReceb">
         </div>
       </div>
-
     </div>
   </div>
-
+</p-fieldset>
   <br><br><br>
 
   <div class="p-grid">

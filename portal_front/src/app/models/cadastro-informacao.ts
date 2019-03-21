@@ -11,7 +11,7 @@ export class CadastroInformacao {
     valorvenda: number;
     saldodevedor: number;
     codusuario: number;
-    datacadastro: Date;
+    dtentrada: Date;
     vagaautomovel: string;
     box: string;
     cep: string;
@@ -21,7 +21,6 @@ export class CadastroInformacao {
     endereco: string;
     complemento: string;
     uf: any;
-    dataentrada: string;
     clientes: Compradores[];
 
 }
