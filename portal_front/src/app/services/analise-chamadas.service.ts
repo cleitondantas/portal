@@ -48,7 +48,7 @@ export class AnaliseChamadasService {
   }
 
   putAnaliseSimulacaoContrato(analise: Analise) {
-    return this.http.put<Analise>(environment.urlpath + '/api/analise/' + analise.codanalise, analise);
+    return this.http.put<Analise>(environment.urlpath + '/api/analise', analise);
   }
 
   getCodCadastro() {

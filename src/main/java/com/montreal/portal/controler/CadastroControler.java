@@ -37,7 +37,7 @@ public class CadastroControler {
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Cadastro>> create(HttpServletRequest request, @RequestBody Cadastro cadastro, BindingResult result) {
 		Response<Cadastro> response = new Response<Cadastro>();
-		Date dataCadastro  = new Date();
+		Date dtatividade  = new Date();
 		try {
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
@@ -50,7 +50,7 @@ public class CadastroControler {
 
 			if (cadastro.getClientes() != null) {
 				for (Cliente item : cadastro.getClientes()) {
-					item.setDatacadastro(dataCadastro);
+					
 					item.setCodusuario(cadastro.getCodusuario());
 					for(Contato contato :item.getContatos()) {
 						contato.setCpfcnpj(item.getCpfcnpj());
@@ -62,7 +62,7 @@ public class CadastroControler {
 					}
 				}
 			}
-			cadastro.setDatacadastro(dataCadastro);
+			cadastro.setDtatividade(dtatividade);
 			Cadastro cs = (Cadastro) casdastroRepository.save(cadastro);
 			response.setData(cs);
 		} catch (Exception e) {
@@ -74,9 +74,10 @@ public class CadastroControler {
 
 	@PutMapping(value = "/cadastro")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
-	public ResponseEntity<Response<Cadastro>> update(HttpServletRequest request, @RequestBody Cadastro cadastro,
-			BindingResult result) {
+	public ResponseEntity<Response<Cadastro>> update(HttpServletRequest request, @RequestBody Cadastro cadastro, BindingResult result) {
 		Response<Cadastro> response = new Response<Cadastro>();
+		Date atualizacao  = new Date();
+		cadastro.setDtatualizacao(atualizacao);
 		try {
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
