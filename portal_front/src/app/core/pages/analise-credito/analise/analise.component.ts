@@ -87,11 +87,11 @@ export class AnaliseComponent implements OnInit {
       analise.datapastamae = new Date(analise.datapastamae);
       analise.dataemissao = new Date(analise.dataemissao);
       analise.dataassinatura = new Date(analise.dataassinatura);
-      analise.datasimulacao = new Date(analise.datasimulacao);
 
       this.analise = analise;
       this.codcadastro = analise.codcadastro;
       this.simulacoes.codcadastro = this.codcadastro;
+      this.numfid = analise.numerocadastroincorporadorafid
 
       this.statusSimulEvent.subscribe(dado => {
         if (dado == true) {
@@ -124,7 +124,6 @@ export class AnaliseComponent implements OnInit {
       })
    
       for (var _i = 0; _i < analise.simulacoes.length; _i++) {
-        analise.simulacoes[_i].datasimulacao = new Date(analise.simulacoes[_i].datasimulacao);
         analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
         if(analise.simulacoes[_i].simulacaoselecionado == true){
           this.selectedItem = analise.simulacoes[_i];
@@ -189,16 +188,14 @@ export class AnaliseComponent implements OnInit {
     }
     
     this.analise.simulacoes= this.simulacaoLista;
-    
+    this.analise.numerocadastroincorporadorafid = this.numfid;
     if (this.controle == true) {
       this.analise.dataassinatura = this.analise.dataassinatura.toISOString();
       this.analise.dataemissao = this.analise.dataemissao.toISOString();
       this.analise.datapastamae = this.analise.datapastamae.toISOString();
-      this.analise.datasimulacao = this.analise.datasimulacao.toISOString();
 
       for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].dataenviobanco = this.analise.simulacoes[_i].dataenviobanco.toISOString();
-        this.analise.simulacoes[_i].datasimulacao = null;
       }
 
       console.log(this.analise);
@@ -208,12 +205,21 @@ export class AnaliseComponent implements OnInit {
       this.analise.dataassinatura = new Date(this.analise.dataassinatura);
       this.analise.dataemissao = new Date(this.analise.dataemissao);
       this.analise.datapastamae = new Date(this.analise.datapastamae);
-      this.analise.datasimulacao = new Date(this.analise.datasimulacao);
 
       for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].dataenviobanco = new Date(this.analise.simulacoes[_i].dataenviobanco);
       }
     } else {
+      for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
+        this.analise.simulacoes[_i].codcadastro = this.codcadastro;
+      }
+      this.analise.codcadastro = this.codcadastro;
+      console.log("this.analise objeto")
+      console.log(this.analise)
+
+      console.log("this.analise Json")
+      console.log(JSON.stringify(this.analise));
+      
       this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data)});
     }
     
@@ -257,12 +263,11 @@ export class AnaliseComponent implements OnInit {
   }
 
   buscarFid() {
-    let fid = this.numfid;
     let codCadastro: CadastroInformacao[];
     this.service.getCodCadastro().subscribe(dados => {
       codCadastro = dados['data'];
       for (let _i = 0; _i < codCadastro.length; _i++) {
-        if (fid == codCadastro[_i].numerocadastroincorporadorafid) {
+        if (this.numfid == codCadastro[_i].numerocadastroincorporadorafid) {
           this.codcadastro = codCadastro[_i].codcadastro;
         }
       }
