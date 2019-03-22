@@ -32,6 +32,12 @@ public class Analise  implements Serializable{
 	@Column(name="COD_CADASTRO")
 	private Integer codcadastro;
 	
+	@Column(name="cod_instituicao_financeira")
+	private Integer codinstituicaofinanceira; // CODIGO (ID) DO QUAL O USUARIO SELECIONOU PARA REALIZAR O FINANCIAMENTO
+	
+	@Column(name="numero_cadastro_incorporadora_fid")
+	private Integer numerocadastroincorporadorafid;
+	
 	@Column(name="data_pasta_mae")
 	private Date datapastamae;
 	
@@ -46,18 +52,17 @@ public class Analise  implements Serializable{
 	
 	@Column(name="cod_sub_status_analise")
 	private Integer codsubstatusanalise;
-	
-	@Column(name="cod_simulacao_financiado")
-	private Integer codsimulacaofinanciado; // CODIGO (ID) DO QUAL O USUARIO SELECIONOU PARA REALIZAR O FINANCIAMENTO
-	
-	@Column(name="obs")
-	private String obs;
+
+
 	
 	@Column(name="cod_usuario")
 	private Long codusuario;
 	
 	@Column(name="data_simulacao")
 	private Date datasimulacao;
+	
+	@Column(name="dt_atividade")
+	private Date dtatividade;
 	
 	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_relac_analise_simulacao", 
@@ -124,20 +129,12 @@ public class Analise  implements Serializable{
 	}
 
 
-	public Integer getCodsimulacaofinanciado() {
-		return codsimulacaofinanciado;
+	public Integer getCodinstituicaofinanceira() {
+		return codinstituicaofinanceira;
 	}
 
-	public void setCodsimulacaofinanciado(Integer codsimulacaofinanciado) {
-		this.codsimulacaofinanciado = codsimulacaofinanciado;
-	}
-
-	public String getObs() {
-		return obs;
-	}
-
-	public void setObs(String obs) {
-		this.obs = obs;
+	public void setCodinstituicaofinanceira(Integer codinstituicaofinanceira) {
+		this.codinstituicaofinanceira = codinstituicaofinanceira;
 	}
 
 	public Long getCodusuario() {
@@ -162,6 +159,22 @@ public class Analise  implements Serializable{
 
 	public void setSimulacoes(List<Simulacao> simulacoes) {
 		this.simulacoes = simulacoes;
+	}
+
+	public Date getDtatividade() {
+		return dtatividade;
+	}
+
+	public void setDtatividade(Date dtatividade) {
+		this.dtatividade = dtatividade;
+	}
+
+	public Integer getNumerocadastroincorporadorafid() {
+		return numerocadastroincorporadorafid;
+	}
+
+	public void setNumerocadastroincorporadorafid(Integer numerocadastroincorporadorafid) {
+		this.numerocadastroincorporadorafid = numerocadastroincorporadorafid;
 	}
 
 

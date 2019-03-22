@@ -64,15 +64,13 @@ public class AnaliseControler {
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Analise>> create(HttpServletRequest request, @RequestBody Analise  analise,BindingResult result) {
 		Response<Analise> response = new Response<Analise>();
-		
-		
 		try {
 			Date  now  = new Date();
-			analise.setDatasimulacao(now);
+			analise.setDtatividade(now);
 			for(Simulacao item: analise.getSimulacoes()) {
-				item.setDatasimulacao(now);
+				item.setDtatividade(now);
 				if(item.getSimulacaoselecionado()) {
-					analise.setCodsimulacaofinanciado(item.getCodsimulacao());
+					analise.setCodinstituicaofinanceira(item.getCodinstituicaofinanceira());
 				}
 			}
 			
@@ -102,11 +100,11 @@ public class AnaliseControler {
 				
 				//analiseRepositoy.findById(Integer.parseInt(id));
 				Date  now  = new Date();
-				analise.setDatasimulacao(now);
+				analise.setDtatividade(now);
 				for(Simulacao item: analise.getSimulacoes()) {
-					item.setDatasimulacao(now);
+					item.setDtatividade(now);
 					if(item.getSimulacaoselecionado()) {
-						analise.setCodsimulacaofinanciado(item.getCodcadastro());
+						analise.setCodinstituicaofinanceira(item.getCodinstituicaofinanceira());
 					}
 				}
 				if (result.hasErrors()) {
