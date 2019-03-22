@@ -169,6 +169,7 @@ export class AnaliseComponent implements OnInit {
     simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
 
     this.simulacaoLista.push(simulacao2);
+    this.simulacoes.codinstituicaofinanceira = null;
     console.log(this.simulacaoLista);
   }
 
@@ -178,7 +179,6 @@ export class AnaliseComponent implements OnInit {
   }
 
   salvar() {
-    this.salvarAlteracoes();
     this.analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     this.analise.codcadastro  = this.codcadastro;
     for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
