@@ -12,7 +12,7 @@ import { Incorporadoras } from './../../../models/incorporadoras';
 import { CadastroChamadasService } from './../../../services/cadastro-chamadas.service';
 import { CadastroLogicaService } from './../../../services/cadastro-logica.service';
 import { Originacao } from './../../../models/originacao';
-import { ConfirmationService, Message } from 'primeng/api';
+import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
@@ -22,7 +22,8 @@ import emailMask from 'text-mask-addons/dist/emailMask'
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.css']
+  styleUrls: ['./cadastro.component.css'],
+  providers: [MessageService]
 })
 
 export class CadastroComponent implements OnInit {
@@ -58,7 +59,8 @@ export class CadastroComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private chamadasService: CadastroChamadasService,
     private logicaService: CadastroLogicaService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
@@ -69,10 +71,17 @@ export class CadastroComponent implements OnInit {
         console.log("FID "+this.retornocadastro.numerocadastroincorporadorafid);
         SharedService.getInstance().temporario[0] = this.retornocadastro.codcadastro;
         SharedService.getInstance().temporario[1] = this.retornocadastro.numerocadastroincorporadorafid;
-        this.router.navigate(['/analise']);
+        this.messageService.add({severity:'success', summary: 'Sucesso!', detail:'Cadastro feito com sucesso!'});
+        setTimeout(() => {
+          this.router.navigate(['/analise']);
+        }, 1000); 
       });
    // sessionStorage.clear();
     formulario.reset();
+  }
+
+  ngOnDestroy() {
+    sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
   }
 
   incorpotradoras:any[];
@@ -86,15 +95,6 @@ export class CadastroComponent implements OnInit {
     this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
     this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
     this.chamadasService.getIncorporadoras().subscribe(dados => {this.incorp = dados['data']});
-
-    var a = sessionStorage.getItem('comprador');
-    if(a !== null) {
-      this.comprador = JSON.parse(a);
-    }
-    var b = sessionStorage.getItem('compraImovel');
-    if(b !== null) {
-      this.cadInfo = JSON.parse(b);
-    }
 
     this.br = 
     {
@@ -147,7 +147,7 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.msgs = [];
-        console.log(this.compradores);
+        this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Comprador adicionado!'});
       } else {
         this.msgs = [];
         let camposInvalidos: any[] = [];
@@ -195,6 +195,7 @@ export class CadastroComponent implements OnInit {
     } else {
       this.disabled = false;
     }
+    this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Comprador removido!'});
   }
 
   consultaCEP() {
@@ -264,6 +265,7 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.compradores = [];
+        this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Formulário limpo!'});
       },
       reject: () => {
           
@@ -302,7 +304,7 @@ export class CadastroComponent implements OnInit {
 
           this.OnSubmit(cadInfo, formulario);
           
-        
+          this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Cadastro feito com sucesso!'});
         },
         reject: () => {
         }
@@ -356,9 +358,15 @@ export class CadastroComponent implements OnInit {
       this.compradores = [];
   
       console.log(JSON.stringify(cadInfo))
-      this.chamadasService.putCadastro(cadInfo).subscribe(dados => this.retornocadastro = dados['data']);
+      this.chamadasService.putCadastro(cadInfo).subscribe(dados => {
+        this.retornocadastro = dados['data']
+        console.log(dados)
+      });
       formulario.reset();
-      this.router.navigate(['/home']);
+      this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 1000); 
     } else {
       this.msgs2 = [];
       let camposInvalidos: any[] = [];
@@ -447,6 +455,7 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.disabledButton = true;
+        this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Formulário limpo!'});
       },
       reject: () => {
       }
@@ -455,6 +464,8 @@ export class CadastroComponent implements OnInit {
 
   visualizarComprador(comprador:Compradores) {
     this.disabledButton = false;
+
+    this.comprador.codusuario = comprador.codusuario;
     this.comprador.cpfcnpj = comprador.cpfcnpj;
     this.comprador.codtipocliente = comprador.codtipocliente;
     this.comprador.nomecliente = comprador.nomecliente;
@@ -484,6 +495,7 @@ export class CadastroComponent implements OnInit {
     this.comprador.numeroendereco = comprador.numeroendereco;
     this.comprador.datacadastro = new Date(comprador.datacadastro);
     this.comprador.valorrenda = comprador.valorrenda;
+    this.comprador.principal = comprador.principal;
 
     this.comprador.contatos = comprador.contatos;
     this.contato = comprador.contatos;
@@ -612,7 +624,6 @@ export class CadastroComponent implements OnInit {
           this.compradores[item].codusuario = this.comprador.codusuario;
           this.compradores[item].datacadastro = this.comprador.datacadastro;
           this.compradores[item].valorrenda = this.comprador.valorrenda;
-          this.compradores[item].principal = this.comprador.principal;
         }
       }
           
@@ -621,6 +632,7 @@ export class CadastroComponent implements OnInit {
       this.contato = [];
       this.msgs = [];
       this.disabledButton = true;
+      this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Informações do comprador alteradas!'});
     } else {
       this.msgs = [];
       let camposInvalidos: any[] = [];
