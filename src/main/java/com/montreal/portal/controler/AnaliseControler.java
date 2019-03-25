@@ -66,9 +66,12 @@ public class AnaliseControler {
 		Response<Analise> response = new Response<Analise>();
 		try {
 			Date  now  = new Date();
-			analise.setDatasimulacao(now);
+			analise.setDtatividade(now);
 			for(Simulacao item: analise.getSimulacoes()) {
-				item.setDatasimulacao(now);
+				item.setDtatividade(now);
+				if(item.getSimulacaoselecionado()) {
+					analise.setCodinstituicaofinanceira(item.getCodinstituicaofinanceira());
+				}
 			}
 			
 			if (result.hasErrors()) {
@@ -89,15 +92,21 @@ public class AnaliseControler {
 
 	
 	 
-	 @PutMapping("/analise/{id}")
+	 @PutMapping("/analise")
 	 @PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
-	 public ResponseEntity<Response<Analise>> update(@PathVariable String id, @RequestBody Analise analise,BindingResult result){
+	 public ResponseEntity<Response<Analise>> update(@RequestBody Analise analise,BindingResult result){
 			Response<Analise> response = new Response<Analise>();
 			try {
 				
 				//analiseRepositoy.findById(Integer.parseInt(id));
-				
-				analise.setCodanalise(Integer.parseInt(id));
+				Date  now  = new Date();
+				analise.setDtatividade(now);
+				for(Simulacao item: analise.getSimulacoes()) {
+					item.setDtatividade(now);
+					if(item.getSimulacaoselecionado()) {
+						analise.setCodinstituicaofinanceira(item.getCodinstituicaofinanceira());
+					}
+				}
 				if (result.hasErrors()) {
 					result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 					return ResponseEntity.badRequest().body(response);

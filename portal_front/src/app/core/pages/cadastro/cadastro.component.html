@@ -1,4 +1,5 @@
 <form novalidate #formulario="ngForm" >
+  <p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
   <p-panel>
     <p-header>
       Cadastro de informação
@@ -294,7 +295,7 @@
 
     <div class="p-grid">
       <p-fieldset legend="Compradores">
-        <p-table [value]="compradores" >
+        <p-table [value]="compradores" [(selection)]="selectedItem">
           <ng-template pTemplate="header">
             <tr>
               <th><strong>Excluir</strong></th>
@@ -340,21 +341,20 @@
             
             <div class="p-grid">
               <div class="p-col-4">
-                <label class="ajusteLabel" for="datacadastro">Entrada: </label>
+                <label class="ajusteLabel" for="datacadastro">Entrada: </label> 
+                <!-- TB.CADASTRO.DT_CADASTRO -->
               </div>
               <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
                 <div class="ui-inputgroup">
                   <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
                   class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                  id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="datacadastro"  #datacadastro="ngModel" [(ngModel)]="cadInfo.datacadastro"
+                  id="datacadastro" dateFormat="dd/mm/yy" ngModel  name="dtentrada"  #dtentrada="ngModel" [(ngModel)]="cadInfo.dtentrada"
                   [locale]="br" showButtonBar="true" required dataType="date" rPCalendarMask></p-calendar>
                 </div>
               </div>
             </div>
-
           </div>
           <div class="p-col-5">
-
             <div class="p-grid">
               <div class="p-col-3">
                 <label class="ajusteLabel" for="codincorporadora">Incorporadora: </label>

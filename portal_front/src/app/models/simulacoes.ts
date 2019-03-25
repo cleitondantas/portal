@@ -9,7 +9,7 @@ export class Simulacoes {
     valorcompravenda:number;
     valorcredito : number;
     codmodalidadesimulacao: any;
-    dataenviobanco: Date;
+    dataenviobanco: any;
     codsicaq: number;
     correspondente: string;
     prazofinanciamento: number;
@@ -25,5 +25,6 @@ export class Simulacoes {
     valoravaliacaoinstfinanc:number; 
     taxadejuros:number;
     valorprimeiraparcela: number;
-    datasimulacao: Date;
+    datasimulacao: any;
+    simulacaoselecionado:Boolean;
 }

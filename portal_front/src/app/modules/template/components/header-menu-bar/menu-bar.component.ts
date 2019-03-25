@@ -86,6 +86,11 @@ export class MenuBarComponent implements OnInit {
       }
 
     irCadastro(codcadastro:number){
+        let session = sessionStorage.getItem('CADASTROSELECIONADO');
+        if (session !== null || undefined || "") {
+            sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
+        }
+
         for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
             if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
             sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i]));
@@ -93,11 +98,8 @@ export class MenuBarComponent implements OnInit {
         }
         this.hideDialog();
 
-        if (this.router.url == '/cadastro') {
-            this.chamadasService.buscarCadastro.emit(true);
-        } else {
-            this.router.navigate(['/cadastro']);
-        }
+        this.chamadasService.buscarCadastro.emit(true);
+        this.router.navigate(['/cadastro']);
     }
 
     async irAnalise(codcadastro:number){
@@ -112,6 +114,7 @@ export class MenuBarComponent implements OnInit {
                     console.log(data)
                     this.hideDialogDisplay();
                     this.router.navigate(['/analise']);;
+                    this.analiseService.controle = true;
                     //window.open(environment.urlpath + '/analise')
                 });
             }

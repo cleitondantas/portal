@@ -7,8 +7,6 @@ import { TipoAmortizacao } from '../models/tipo-amortizacao';
 import { environment } from 'src/environments/environment';
 import { StatusSimulacao } from '../models/status-simulacao';
 import { Analise } from 'src/app/models/analise';
-import { map } from 'rxjs/operators';
-import { pipe, Observable } from 'rxjs';
 
 
 
@@ -16,6 +14,8 @@ import { pipe, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AnaliseChamadasService {
+
+  controle: boolean = false;
 
   constructor(
     private http: HttpClient
@@ -34,8 +34,7 @@ export class AnaliseChamadasService {
   }
 
   getStatusSimulacao(){
-    console.log("getStatusSimulacao()");
-    return this.http.get(environment.urlpath + '/api/statussimulacao');
+    return this.http.get<StatusSimulacao[]>(environment.urlpath + '/api/statussimulacao');
   }
 
   getRegistroAnalise (cod:number) {
@@ -43,8 +42,13 @@ export class AnaliseChamadasService {
     console.log(environment.urlpath + '/api/analises/'+cod)
     return this.http.get<Analise[]>(environment.urlpath + '/api/analises/'+cod);
   }
+
   postAnaliseSimulacaoContrato(analise: Analise){
    return this.http.post<Analise>(environment.urlpath + '/api/analise', analise);
+  }
+
+  putAnaliseSimulacaoContrato(analise: Analise) {
+    return this.http.put<Analise>(environment.urlpath + '/api/analise', analise);
   }
 
   getCodCadastro() {

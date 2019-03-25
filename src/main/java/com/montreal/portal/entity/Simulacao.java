@@ -29,6 +29,8 @@ public class Simulacao implements Serializable{
 
 	@Column(name="cod_cadastro")
 	private Integer codcadastro;
+
+
 	
 	@Column(name="cod_instituicao_financeira")
 	private Integer codinstituicaofinanceira;
@@ -87,9 +89,6 @@ public class Simulacao implements Serializable{
 
 	@Column(name="cod_usuario")
 	private Long codusuario;
-	
-	@Column(name="data_simulacao")
-	private Date datasimulacao;
 
 	@Column(name="data_envio_banco")
 	private Date dataenviobanco;
@@ -99,6 +98,12 @@ public class Simulacao implements Serializable{
 	
 	@Column(name="taxadejuros",precision=16, scale=2)
 	private BigDecimal taxadejuros;
+	
+	@Column(name="simulacaoselecionado")
+	private Boolean simulacaoselecionado;
+	
+	@Column(name="dt_atividade",updatable = false)
+	private Date dtatividade;
 	
 	public Integer getCodsimulacao() {
 		return codsimulacao;
@@ -229,14 +234,6 @@ public class Simulacao implements Serializable{
 		this.codusuario = codusuario;
 	}
 
-	public Date getDatasimulacao() {
-		return datasimulacao;
-	}
-
-	public void setDatasimulacao(Date datasimulacao) {
-		this.datasimulacao = datasimulacao;
-	}
-
 	public BigDecimal getSaldodevedor() {
 		return saldodevedor;
 	}
@@ -303,6 +300,23 @@ public class Simulacao implements Serializable{
 		this.obs = obs;
 	}
 
+	public Boolean getSimulacaoselecionado() {
+		return simulacaoselecionado;
+	}
+
+	public void setSimulacaoselecionado(Boolean simulacaoselecionado) {
+		this.simulacaoselecionado = simulacaoselecionado;
+	}
+
+	public Date getDtatividade() {
+		return dtatividade;
+	}
+
+	public void setDtatividade(Date dtatividade) {
+		this.dtatividade = dtatividade;
+	}
+
+	
 	
 	
 }
