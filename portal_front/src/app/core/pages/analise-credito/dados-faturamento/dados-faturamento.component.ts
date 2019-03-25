@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DadosFaturamentoComponent implements OnInit {
   br: any;
+  valorParcela1: any;
+  valorParcela2: any;
 
   constructor() { }
 
