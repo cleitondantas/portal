@@ -26,6 +26,10 @@ Montando imagem com Docker
     docker build -t mci/portal .
   
     docker run -dit -p 8100:8100 mci/portal:latest
+    
+    Build e Deploy semi automatizado
+    git clone https://github.com/cleitondantas/portal.git && cd portal && mvn clean install && docker build -t mci/portal . && docker stop $(docker ps -q --filter ancestor=mci/portal ); docker run -dit -p 8100:8100 mci/portal:latest && docker ps
+
 
 
 
