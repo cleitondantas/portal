@@ -1,3 +1,4 @@
+<form novalidate #formulario="ngForm" >
 <div class="p-grid">
   <div class="p-col-6">
 
@@ -6,7 +7,7 @@
         <label class="ajusteLabel" for="faturarContrato">A FATURAR CONTRATO SPE:</label>
       </div>
       <div class="p-col-8">
-        <input type="text" placeholder="razão social" class="ajusteInput" pInputText id="faturarContrato" [ngStyle]="{'width': '50%'}">
+        <input type="text" name="razaosocialspe"  [(ngModel)]="dadosfaturamento.razaosocialspe" placeholder="razão social" class="ajusteInput" pInputText id="faturarContrato" [ngStyle]="{'width': '50%'}">
       </div>
     </div>
   </div>
@@ -16,7 +17,7 @@
         <label class="ajusteLabel" for="cpf">CPF/CNPJ: </label>
       </div>
       <div class="p-col-10">
-        <input type="text" pKeyFilter="num" class="ajusteInput" pInputText id="cpf" [ngStyle]="{'width': '50%'}">
+        <input type="text" name="cpfcnpj"  [(ngModel)]="dadosfaturamento.cpfcnpj" pKeyFilter="num" class="ajusteInput" pInputText id="cpf" [ngStyle]="{'width': '50%'}">
       </div>
     </div>
   </div>
@@ -31,7 +32,7 @@
           <label class="ajusteLabel" for="primeiraParcela">1° Parcela: </label>
         </div>
         <div class="p-col-9">
-          <input currencyMask pInputText class="ajusteInput" name="valorParcela1" [(ngModel)]="valorParcela1" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+          <input currencyMask pInputText class="ajusteInput" name="parcela1" [(ngModel)]="dadosfaturamento.parcela1" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
           id="primeiraParcela"/>
         </div>
       </div>
@@ -41,7 +42,7 @@
           <label class="ajusteLabel" for="segundaParcela">2° Parcela: </label>
         </div>
         <div class="p-col-9">
-          <input currencyMask pInputText class="ajusteInput" name="valorParcela2" [(ngModel)]="valorParcela2" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+          <input currencyMask pInputText class="ajusteInput" name="parcela2" [(ngModel)]="dadosfaturamento.parcela2" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
           id="segundaParcela"/>
         </div>
       </div>
@@ -54,7 +55,7 @@
           <label class="ajusteLabel" for="primeiraNotaFiscal">Nota fiscal: </label>
         </div>
         <div class="p-col-9">
-          <input type="text" class="ajusteInput" pInputText id="primeiraNotaFiscal">
+          <input type="text" name="notafiscal1" [(ngModel)]="dadosfaturamento.notafiscal1" class="ajusteInput" pInputText id="primeiraNotaFiscal">
         </div>
       </div>
 
@@ -63,7 +64,7 @@
           <label class="ajusteLabel" for="segundaNotaFiscal">Nota fiscal: </label>
         </div>
         <div class="p-col-9">
-          <input type="text" class="ajusteInput" pInputText id="segundaNotaFiscal">
+          <input type="text" name="notafiscal2" [(ngModel)]="dadosfaturamento.notafiscal2" class="ajusteInput" pInputText id="segundaNotaFiscal">
         </div>
       </div>
 
@@ -76,7 +77,7 @@
         </div>
         <div class="p-col-8">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true"  ngModel name="mesfaturamento1" #mesfaturamento1="ngModel" [(ngModel)]="dadosfaturamento.mesfaturamento1"
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="mm/yy" [locale]="br" view="month"></p-calendar>
           </div>    
@@ -89,7 +90,7 @@
         </div>
         <div class="p-col-8">
           <div class="ui-inputgroup">
-            <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true" 
+            <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true"  ngModel name="mesfaturamento2" #mesfaturamento2="ngModel" [(ngModel)]="dadosfaturamento.mesfaturamento2"
             class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
             id="dataAssin" dateFormat="mm/yy" [locale]="br" view="month"></p-calendar>
           </div>
@@ -102,7 +103,7 @@
           <label class="ajusteLabel" for="recebIncorp">TOTAL RECEBIDO DA INCORPORADORA: </label>
         </div>
         <div class="p-col-3">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" id="recebIncorp">
+          <input type="text" name="totalrecebimentoincorporadora" [(ngModel)]="dadosfaturamento.totalrecebimentoincorporadora" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" id="recebIncorp">
         </div>
       </div>
     </div>
@@ -118,7 +119,7 @@
           <label class="ajusteLabel" for="recebTeorico">RECEBIMENTO TEÓRICO DO BANCO: </label>
         </div>
         <div class="p-col-7">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" pInputText id="recebTeorico">
+          <input type="text"  name="recebimentoteoricobanco" [(ngModel)]="dadosfaturamento.recebimentoteoricobanco" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" pInputText id="recebTeorico">
         </div>
       </div>
 
@@ -127,7 +128,7 @@
           <label class="ajusteLabel" for="notaFiscal">NÚMERO NOTA FISCAL: </label>
         </div>
         <div class="p-col-7">
-          <input type="text" class="ajusteInput" pInputText id="notaFiscal">
+          <input type="text" name="numeronotafiscal" [(ngModel)]="dadosfaturamento.numeronotafiscal" class="ajusteInput" pInputText id="notaFiscal">
         </div>
       </div>
 </div>
@@ -138,7 +139,7 @@
           <label class="ajusteLabel" for="mesFaturado">MÊS FATURADO: </label>
         </div>
         <div class="p-col-7">
-          <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true" 
+          <p-calendar [showIcon]="true" yearRange="1900:2019" [monthNavigator]="true"   ngModel name="mesfaturado" #mesfaturado="ngModel" [(ngModel)]="dadosfaturamento.mesfaturado"
           class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
           id="mesFaturado" dateFormat="mm/yy" [locale]="br" view="month"></p-calendar>
         </div>
@@ -148,7 +149,7 @@
           <label class="ajusteLabel" for="totalReceb">TOTAL RECEBIDO: </label>
         </div>
         <div class="p-col-7">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" id="totalReceb">
+          <input type="text" name="totalrecebido" [(ngModel)]="dadosfaturamento.totalrecebido"  currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" id="totalReceb">
         </div>
       </div>
     </div>
@@ -158,7 +159,7 @@
 
   <div class="p-grid">
     <label class="ajusteLabel" for="observacao" [ngStyle]="{'padding-left': '14px'}">Observação:</label>
-    <textarea pInputTextarea [rows]="4" id="observacao" [ngStyle]="{'margin': '0px 14px 14px 14px'}" style="width: 100%"></textarea>
+    <textarea pInputTextarea [rows]="4" id="observacao" ngModel name="observacao" #observacao="ngModel" [(ngModel)]="dadosfaturamento.observacao" [ngStyle]="{'margin': '0px 14px 14px 14px'}" style="width: 100%"></textarea>
   </div>
 
 </p-fieldset>
@@ -167,11 +168,13 @@
         <div class="p-col-10">
         </div> 
       <div class="p-col-1">
-          <button pButton type="button" label="Cancelar" class="ui-button-danger" ></button>
+          <button pButton type="button" label="Cancelar"  (click)="cancelar()" class="ui-button-danger" ></button>
         </div>
         <div class="p-col-1">
-            <button pButton type="button" label="Salvar" class="ui-button-success" ></button>
-          </div>
+            <button pButton type="button" (click)="salvar(formulario)" label="Salvar" class="ui-button-success" ></button>
+        </div>
     </div>   
   </p-fieldset>
 <br><br>
+
+</form>

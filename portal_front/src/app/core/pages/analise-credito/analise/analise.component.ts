@@ -54,6 +54,7 @@ export class AnaliseComponent implements OnInit {
 
   ngOnDestroy() {
     sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
+    console.log("ngOnDestroy()")
   }
 
   ngOnInit() {

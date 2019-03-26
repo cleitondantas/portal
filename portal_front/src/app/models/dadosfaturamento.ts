@@ -2,7 +2,7 @@ export class DadosFaturamento {
    
     coddadosfaturamento:number;
     codanalise:number
-
+    codcadastro:number;
     cpfcnpj:String;
     razaosocialspe:String;
     parcela1:number;
@@ -15,7 +15,7 @@ export class DadosFaturamento {
     totalrecebimentoincorporadora:number;
     recebimentoteoricobanco:number;
     totalrecebido:number;
-    observacao:number;
+    observacao:String;
     totalrecebidoincorporadora:number;
     numeronotafiscal:String;
 

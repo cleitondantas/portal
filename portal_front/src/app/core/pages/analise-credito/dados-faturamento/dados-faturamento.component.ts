@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DadosFaturamento } from 'src/app/models/dadosfaturamento';
+import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
+import { Analise } from 'src/app/models/analise';
 
 @Component({
   selector: 'app-dados-faturamento',
@@ -7,11 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DadosFaturamentoComponent implements OnInit {
   br: any;
-  valorParcela1: any;
-  valorParcela2: any;
+  
+  constructor(private analiseChamadasService: AnaliseChamadasService) { }
 
-  constructor() { }
+  dadosfaturamento: DadosFaturamento  = new DadosFaturamento()
 
+  ngOnDestroy() {
+    sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
+    console.log("ngOnDestroy()")
+  }
   ngOnInit() {
     this.br = {
       firstDayOfWeek: 0,
@@ -24,6 +31,25 @@ export class DadosFaturamentoComponent implements OnInit {
       clear: 'Limpar',
       dateFormat: 'dd/mm/yy'
     }
+
+    let analiseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');    
+    if (analiseSelecionada !== null || undefined) {
+      let jsonObj: any = JSON.parse(analiseSelecionada);// Recebe os dados enviados pela busca de cadastro
+      let analise: Analise = <Analise>jsonObj;
+      this.dadosfaturamento.codanalise= analise.codanalise;
+      this.dadosfaturamento.codcadastro = analise.codcadastro;
+    }
   }
 
+  salvar(formulario){
+    console.log("formulario");
+    console.log(formulario);
+    console.log("this.dadosfaturamento");
+    console.log(this.dadosfaturamento);
+    this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => (console.log(dados['data'])));
+  }
+
+  cancelar(){
+    this.dadosfaturamento =  new DadosFaturamento();
+  }
 }
