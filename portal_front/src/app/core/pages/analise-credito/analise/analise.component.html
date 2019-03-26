@@ -1,194 +1,203 @@
 <form novalidate>
-  <div class="p-grid">
-    <div class="p-col-6">
+  <p-toast [style]="{marginTop: '80px'}" key="popupAnalise"></p-toast>
 
-      <div class="p-grid">
-        <div class="p-col-2">
-          <label class="ajusteLabel" for="fid">FID: </label>
-        </div>
-        <div class="p-col-10">
-          <input type="text" class="ajusteInput" pInputText id="fid" [(ngModel)]="numfid" name="fid" (blur)="buscarFid()"> 
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorAvali">Valor de Avaliação: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-          id="valorAvali" name="valoravaliacao" #valoravaliacao='ngModel' [(ngModel)]="simulacoes.valoravaliacao" >
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-          id="valorComVem" name="valorcompravenda" #valorcompravenda='ngModel' [(ngModel)]="simulacoes.valorcompravenda" >
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorcredito">Valor do Crédito: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-          id="valorcredito" name="valorcredito" #valorcredito="ngModel" [(ngModel)]="simulacoes.valorcredito">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="codmodalidadesimulacao">Modalidade: </label>
-        </div>
-        <div class="p-col-8" id="codmodalidadesimulacao">
-          <p-dropdown placeholder="Selecione..." [options]="modalidade" optionLabel="descModalidadeSimulacao" [autoWidth]="false" [style]="{'width': '100%'}" 
-          class="ajusteInput" ngModel name="codmodalidadesimulacao" #codmodalidadesimulacao="ngModel" [(ngModel)]="simulacoes.codmodalidadesimulacao"></p-dropdown>
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="dataEnv">Data envio ao Banco: </label>
-        </div>
-        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
-          <div class="ui-inputgroup">
-            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataenviobanco" dateFormat="dd/mm/yy" [locale]="br" ngModel name="dataenviobanco" #dataenviobanco="ngModel" [(ngModel)]="simulacoes.dataenviobanco"
-            rPCalendarMask></p-calendar>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="codsicaq">SICAQ: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="codsicaq" name="codsicaq" #codsicaq="ngModel" [(ngModel)]="simulacoes.codsicaq"
-          pKeyFilter="pint">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="correspondente">Correspondente: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="correspondente" name="correspondente" #correspondente="ngModel" [(ngModel)]="simulacoes.correspondente">
-        </div>
-      </div>
-
-    </div>
-
-    <div class="p-col-6">
-
-     <!-- <div class="espaco" [ngStyle]="{'width': '741px', 'height': '42px'}"></div> -->
-
-     <div class="p-grid">
-      <div class="p-col-4">
-        <label class="ajusteLabel" >COD CADASTRO: </label>
-      </div>
-      <div class="p-col-8">
-          {{codcadastro}}
-      </div>
-    </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="prazofinanciamento">Prazo financiamento: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" class="ajusteInput" pInputText id="prazofinanciamento" name="prazofinanciamento" #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento" pKeyFilter="pint">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="codtipoamortizacao">Tipo Amortização: </label>
-        </div>
-        <div class="p-col-8" id="codtipoamortizacao">
-          <p-dropdown placeholder="Selecione..." [options]="tipoAmortizacao" optionLabel="desctipoamortizacao" [autoWidth]="false" [style]="{'width': '100%'}" 
-          class="ajusteInput" name="codtipoamortizacao" #codtipoamortizacao="ngModel" [(ngModel)]="simulacoes.codtipoamortizacao"></p-dropdown>
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorsubsidio">Valor subsidio: </label>
-        </div>
-        <div class="p-col-8">
-          <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-          id="valorsubsidio" name="valorsubsidio" #valorsubsidio="ngModel" [(ngModel)]="simulacoes.valorsubsidio">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <p-fieldset legend="Valores do processo">
+  <form #formSimulacao="ngForm">
     <div class="p-grid">
       <div class="p-col-6">
 
         <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="valordespesasfinanciadas">Despesas financiadas: </label>
+          <div class="p-col-2">
+            <label class="ajusteLabel" for="fid">FID: </label>
           </div>
-          <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" 
-            id="valordespesasfinanciadas" name="valordespesasfinanciadas" #valordespesasfinanciadas="ngModel" [(ngModel)]="simulacoes.valordespesasfinanciadas"/>
-          </div>
-        </div>
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="finanTotal">Financiamento total: </label>
-          </div>
-          <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="finanTotal"  name="valorfinanciamento"  [(ngModel)]="simulacoes.valorfinanciamento"/>
+          <div class="p-col-10">
+            <input type="text" class="ajusteInput" pInputText id="fid" [(ngModel)]="numfid" name="fid" (blur)="buscarFid()"> 
           </div>
         </div>
 
         <div class="p-grid">
           <div class="p-col-4">
-            <label class="ajusteLabel" for="fgts">FGTS: </label>
+            <label class="ajusteLabel" for="valoravaliacao">Valor de Avaliação: </label>
           </div>
           <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="fgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio()"/>
+            <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+            id="valoravaliacao" name="valoravaliacao" #valoravaliacao='ngModel' [(ngModel)]="simulacoes.valoravaliacao" required>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorcompravenda">Valor de compra e venda: </label>
+          </div>
+          <div class="p-col-8">
+            <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+            id="valorcompravenda" name="valorcompravenda" #valorcompravenda='ngModel' [(ngModel)]="simulacoes.valorcompravenda" required>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorcredito">Valor do Crédito: </label>
+          </div>
+          <div class="p-col-8">
+            <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+            id="valorcredito" name="valorcredito" #valorcredito="ngModel" [(ngModel)]="simulacoes.valorcredito" required>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="codmodalidadesimulacao">Modalidade: </label>
+          </div>
+          <div class="p-col-8">
+            <p-dropdown placeholder="Selecione..." [options]="modalidade" optionLabel="descModalidadeSimulacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+            class="ajusteInput" ngModel name="codmodalidadesimulacao" #codmodalidadesimulacao="ngModel" [(ngModel)]="simulacoes.codmodalidadesimulacao"
+            id="codmodalidadesimulacao" required></p-dropdown>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="dataenviobanco">Data envio ao Banco: </label>
+          </div>
+          <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+            <div class="ui-inputgroup">
+              <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+              class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+              id="dataenviobanco" dateFormat="dd/mm/yy" [locale]="br" ngModel name="dataenviobanco" #dataenviobanco="ngModel" [(ngModel)]="simulacoes.dataenviobanco"
+              rPCalendarMask required></p-calendar>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="codsicaq">SICAQ: </label>
+          </div>
+          <div class="p-col-8">
+            <input type="text" class="ajusteInput" pInputText id="codsicaq" name="codsicaq" #codsicaq="ngModel" [(ngModel)]="simulacoes.codsicaq"
+            pKeyFilter="pint" required>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="correspondente">Correspondente: </label>
+          </div>
+          <div class="p-col-8">
+            <input type="text" class="ajusteInput" pInputText id="correspondente" name="correspondente" #correspondente="ngModel" [(ngModel)]="simulacoes.correspondente"
+            required>
           </div>
         </div>
 
       </div>
+
       <div class="p-col-6">
+
+      <!-- <div class="espaco" [ngStyle]="{'width': '741px', 'height': '42px'}"></div> -->
+
+      <div class="p-grid">
+        <div class="p-col-4">
+          <label class="ajusteLabel" >COD CADASTRO: </label>
+        </div>
+        <div class="p-col-8">
+            {{codcadastro}}
+        </div>
+      </div>
 
         <div class="p-grid">
           <div class="p-col-4">
-            <label class="ajusteLabel" for="recProp">Recurso próprio: </label>
+            <label class="ajusteLabel" for="prazofinanciamento">Prazo financiamento: </label>
           </div>
           <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="recProp" name="valorrecursosproprios"  [(ngModel)]="simulacoes.valorrecursosproprios"/>
+            <input type="text" class="ajusteInput" pInputText id="prazofinanciamento" name="prazofinanciamento" #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento" pKeyFilter="pint"
+            required>
           </div>
         </div>
 
         <div class="p-grid">
           <div class="p-col-4">
-            <label class="ajusteLabel" for="saldoDev">Saldo devedor: </label>
+            <label class="ajusteLabel" for="codtipoamortizacao">Tipo Amortização: </label>
           </div>
           <div class="p-col-8">
-            <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="saldoDev" name="saldodevedor"  [(ngModel)]="simulacoes.saldodevedor"/>
+            <p-dropdown placeholder="Selecione..." [options]="tipoAmortizacao" optionLabel="desctipoamortizacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+            class="ajusteInput" name="codtipoamortizacao" #codtipoamortizacao="ngModel" [(ngModel)]="simulacoes.codtipoamortizacao"
+            id="codtipoamortizacao" required></p-dropdown>
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorsubsidio">Valor subsidio: </label>
+          </div>
+          <div class="p-col-8">
+            <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+            id="valorsubsidio" name="valorsubsidio" #valorsubsidio="ngModel" [(ngModel)]="simulacoes.valorsubsidio" required>
           </div>
         </div>
       </div>
     </div>
-  </p-fieldset>
+
+    <p-fieldset legend="Valores do processo">
+      <div class="p-grid">
+        <div class="p-col-6">
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="valordespesasfinanciadas">Despesas financiadas: </label>
+            </div>
+            <div class="p-col-8">
+              <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" 
+              id="valordespesasfinanciadas" name="valordespesasfinanciadas" #valordespesasfinanciadas="ngModel" [(ngModel)]="simulacoes.valordespesasfinanciadas"
+              required/>
+            </div>
+          </div>
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="valorfinanciamento">Financiamento total: </label>
+            </div>
+            <div class="p-col-8">
+              <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+              id="valorfinanciamento"  name="valorfinanciamento"  [(ngModel)]="simulacoes.valorfinanciamento" required/>
+            </div>
+          </div>
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="valorfgts">FGTS: </label>
+            </div>
+            <div class="p-col-8">
+              <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+              id="valorfgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio()" required/>
+            </div>
+          </div>
+
+        </div>
+        <div class="p-col-6">
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="valorrecursosproprios">Recurso próprio: </label>
+            </div>
+            <div class="p-col-8">
+              <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+              id="valorrecursosproprios" name="valorrecursosproprios"  [(ngModel)]="simulacoes.valorrecursosproprios" required/>
+            </div>
+          </div>
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="saldodevedor">Saldo devedor: </label>
+            </div>
+            <div class="p-col-8">
+              <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+              id="saldodevedor" name="saldodevedor"  [(ngModel)]="simulacoes.saldodevedor" required/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-fieldset>
+  </form>
 
   <p-fieldset legend="Simulação">
     <div class="p-grid">
@@ -204,15 +213,16 @@
           </div>
           <div class="p-col-4">
             <button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" [hidden]="!salvarAlteracoesButton"
-            [ngStyle]="{'width': '100%'}" (click)="adicionarSimulacao(simulacoes)" icon="pi pi-plus" iconPos="right"></button>
+            [ngStyle]="{'width': '100%'}" (click)="adicionarSimulacao(simulacoes, formSimulacao)" icon="pi pi-plus" iconPos="right"></button>
             <button pButton type="button" label="Salvar alterações" class="ui-button-raised ui-button-secondary" [hidden]="salvarAlteracoesButton"
-            [ngStyle]="{'width': '100%'}" icon="pi pi-save" iconPos="right" (click)="salvarAlteracoes()"></button>
+            [ngStyle]="{'width': '100%'}" icon="pi pi-save" iconPos="right" (click)="salvarAlteracoes(formSimulacao)"></button>
           </div>
         </div>
         
       </div>
     </div>
-    
+    <p-messages [(value)]="msgs"></p-messages>
+
     <p-table [value]="simulacaoLista" [(selection)]="selectedItem" >
       <ng-template pTemplate="header">
         <tr>
@@ -301,69 +311,72 @@
   </p-fieldset>
 
   <p-fieldset legend="Datas do processo">
-    <div class="p-grid">
-      <div class="p-col-6">
-
+    <form #formDatasDoProcesso="ngForm">
       <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="dataMae">Data da pasta mãe: </label>
-        </div>
-        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
-          <div class="ui-inputgroup">
-            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataMae" dateFormat="dd/mm/yy" [locale]="br"
-            name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" showButtonBar="true" rPCalendarMask></p-calendar>
+        <div class="p-col-6">
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="datapastamae">Data da pasta mãe: </label>
+          </div>
+          <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+            <div class="ui-inputgroup">
+              <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+              class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+              id="datapastamae" dateFormat="dd/mm/yy" [locale]="br"
+              name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" showButtonBar="true" rPCalendarMask required></p-calendar>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="dataEmissao">Data de Emissão: </label>
-        </div>
-        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
-          <div class="ui-inputgroup">
-            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataEmissao" dateFormat="dd/mm/yy" [locale]="br"
-            name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" showButtonBar="true" rPCalendarMask></p-calendar>
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="dataemissao">Data de Emissão: </label>
+          </div>
+          <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+            <div class="ui-inputgroup">
+              <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+              class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+              id="dataemissao" dateFormat="dd/mm/yy" [locale]="br"
+              name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" showButtonBar="true" rPCalendarMask required></p-calendar>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="dataAssin">Data de assinatura: </label>
-        </div>
-        <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
-          <div class="ui-inputgroup">
-            <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-            class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-            id="dataAssin" dateFormat="dd/mm/yy" [locale]="br"
-            name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" showButtonBar="true" rPCalendarMask></p-calendar>
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="dataassinatura">Data de assinatura: </label>
+          </div>
+          <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+            <div class="ui-inputgroup">
+              <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+              class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
+              id="dataassinatura" dateFormat="dd/mm/yy" [locale]="br"
+              name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" showButtonBar="true" rPCalendarMask required></p-calendar>
+            </div>
           </div>
         </div>
-      </div>
 
+        </div>
       </div>
-    </div>
+    </form>
 
-  </p-fieldset>
-  <p-fieldset >
-    <div class="p-grid">
-      <div class="p-col-9">
-      </div> 
-      <div class="p-col-1">
-        <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-refresh" iconPos="right"></button>
+    </p-fieldset>
+    <p-fieldset >
+      <div class="p-grid">
+        <div class="p-col-9">
+        </div> 
+        <div class="p-col-1">
+          <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-refresh" iconPos="right"></button>
+        </div>
+        <div class="p-col-2">
+          <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvarAnalise(formDatasDoProcesso)" icon="pi pi-save" iconPos="right"
+          [hidden]="controle"></button>
+          <button pButton type="button" label="Salvar alterações" class="ui-button-success" (click)="salvarAnalise(formDatasDoProcesso)" icon="pi pi-save" iconPos="right"
+          [ngStyle]="{'width': '100%'}" [hidden]="!controle"></button>
+        </div>
       </div>
-      <div class="p-col-2">
-        <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvarAnalise()" icon="pi pi-save" iconPos="right"
-        [hidden]="controle"></button>
-        <button pButton type="button" label="Salvar alterações" class="ui-button-success" (click)="salvarAnalise()" icon="pi pi-save" iconPos="right"
-        [ngStyle]="{'width': '100%'}" [hidden]="!controle"></button>
-      </div>
-    </div>   
+    <p-messages [(value)]="msgs2"></p-messages>
   </p-fieldset>
 
 </form>

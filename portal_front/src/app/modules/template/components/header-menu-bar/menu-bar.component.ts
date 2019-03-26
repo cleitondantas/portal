@@ -110,12 +110,15 @@ export class MenuBarComponent implements OnInit {
         for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
             if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
                 this.analiseService.getRegistroAnalise(codcadastro).subscribe(data => {
+                    if (sessionStorage.getItem('ANALISESELECIONADA') !== null || undefined || "") {
+                        sessionStorage.removeItem('ANALISESELECIONADA');
+                    }
                     sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(data['data'][0]))
                     console.log(data)
                     this.hideDialogDisplay();
                     this.router.navigate(['/analise']);;
+                    this.analiseService.buscarAnalise.emit(true);
                     this.analiseService.controle = true;
-                    //window.open(environment.urlpath + '/analise')
                 });
             }
         }
@@ -185,6 +188,7 @@ export class MenuBarComponent implements OnInit {
             label: 'Análise de crédito',
             icon: 'pi pi-fw pi-plus',
             visible: true,
+            command: (event: Event) => {this.showDialogDisplay()},
             items: [
                 {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialogDisplay()}}
               ]
