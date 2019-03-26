@@ -29,6 +29,9 @@ public class DadosFaturamento implements Serializable {
 	@Column(name="cod_analise")
 	private Integer codanalise;
 	
+	@Column(name="cod_cadastro")
+	private Integer codcadastro;
+	
 	@Column(name="cpf_cnpj")
 	private String cpfcnpj;
 	

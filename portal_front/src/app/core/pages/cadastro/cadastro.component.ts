@@ -117,17 +117,21 @@ export class CadastroComponent implements OnInit {
   }
 
   adicionarContato (contato: Contatos) {
-    var contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
-    var contato2 = this.logicaService.adicionarContatosLista(contato);
-
-    contato2.cpfcnpj = this.comprador.cpfcnpj;
-
-    this.contatoDisplay.push(contatoDisplay);
-    this.contato.push(contato2);
-
-    this.contatos = this.logicaService.limparContatos(this.contatos);
-    document.getElementById("desccontato").removeAttribute('placeholder');
-    this.disabledInput = true;
+    if ((this.disabledInput == false) && (contato.desccontato !== "")) {
+      var contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
+      var contato2 = this.logicaService.adicionarContatosLista(contato);
+  
+      contato2.cpfcnpj = this.comprador.cpfcnpj;
+  
+      this.contatoDisplay.push(contatoDisplay);
+      this.contato.push(contato2);
+  
+      this.contatos = this.logicaService.limparContatos(this.contatos);
+      document.getElementById("desccontato").removeAttribute('placeholder');
+      this.disabledInput = true;
+    } else {
+      this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'Preencha os campos para adicionar o contato!'});
+    }
   }
 
   adicionarCompradorLista (comprador: Compradores, formCadInfo) {
@@ -208,7 +212,14 @@ export class CadastroComponent implements OnInit {
         const  validacep = /^[0-9]{8}$/;
 
         if (validacep.test(cep)) {
-          return this.chamadasService.getCep(cep).subscribe(dados => this.populaDadosForm(dados));
+          return this.chamadasService.getCep(cep).subscribe(dados => {
+            if (!("erro" in dados)) {
+              this.populaDadosForm(dados)
+            } else {
+              this.comprador.cepresidencial = null;
+              this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'CEP não encontrado!'});
+            }
+          });
         }
       }
     }
@@ -235,7 +246,14 @@ export class CadastroComponent implements OnInit {
       const  validacep = /^[0-9]{8}$/;
 
       if (validacep.test(cep)) {
-        return this.chamadasService.getCep(cep).subscribe(dados => this.populaDadosFormImovel(dados));
+        return this.chamadasService.getCep(cep).subscribe(dados => {
+          if (!("erro" in dados)) {
+            this.populaDadosFormImovel(dados)
+          } else {
+            this.cadInfo.cep = null;
+            this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'CEP não encontrado!'});
+          }
+        });
       }
     }
   }
@@ -281,8 +299,19 @@ export class CadastroComponent implements OnInit {
     rowData.principal = true;
   }
 
+  verificarSelecionado() {
+    for (let _i = 0; _i < this.compradores.length; _i++) {
+      if (this.compradores[_i].principal == true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
   confirmacao(cadInfo: CadastroInformacao, formulario) {
-    if (this.validaFormImovel(formulario) == true) {
+    let principal = this.verificarSelecionado();
+    if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
       this.confirmationService.confirm({
         message: 'Tem certeza que deseja continuar?',
         header: 'Confirmação',
@@ -333,6 +362,14 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao avançar!',
           detail: `Cadastre pelo menos 1 comprador.`
+        })
+      }
+
+      if (principal == false) {
+        this.msgs2.push({
+          severity: 'error',
+          summary: 'Erro ao avançar!',
+          detail: `Selecione o comprador principal.`
         })
       }
     }

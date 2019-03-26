@@ -6,7 +6,7 @@ import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.servic
 import { SharedService } from 'src/app/services/shared.service';
 import { Analise } from 'src/app/models/analise';
 import { AnaliseCreditoComponent } from '../analise-credito.component';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService, Message } from 'primeng/api';
 import { InstiruicaoFinanceiras } from 'src/app/models/instituicaoFinanceira';
 import { TipoAmortizacao } from 'src/app/models/tipo-amortizacao';
 import { StatusSimulacao } from 'src/app/models/status-simulacao';
@@ -16,7 +16,8 @@ import { Modalidades } from 'src/app/models/modalidades';
 @Component({
   selector: 'app-analise',
   templateUrl: './analise.component.html',
-  styleUrls: ['./analise.component.css']
+  styleUrls: ['./analise.component.css'],
+  providers: [MessageService]
 })
 export class AnaliseComponent implements OnInit {
 
@@ -35,17 +36,30 @@ export class AnaliseComponent implements OnInit {
   statussimulacao: StatusSimulacao[] = [];
   statussimulacaoTemp: StatusSimulacao[];
   controle: boolean = this.service.controle;
+  msgs: Message[] = [];
+  msgs2: Message[] = [];
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
   
   constructor( 
-    private confirmationService: ConfirmationService,private service: AnaliseChamadasService, private router: Router, private analiseCred: AnaliseCreditoComponent
+    private confirmationService: ConfirmationService,
+    private service: AnaliseChamadasService,
+    private router: Router,
+    private analiseCred: AnaliseCreditoComponent,
+    private messageService: MessageService
 
   ) { }
     items:any[];
 
+  ngOnDestroy() {
+    sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
+    console.log("ngOnDestroy()")
+  }
+
   ngOnInit() {
+    this.simulacaoLista = [];
+
     this.br = {
       firstDayOfWeek: 0,
       dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
@@ -136,41 +150,81 @@ export class AnaliseComponent implements OnInit {
     this.numfid = SharedService.getInstance().temporario[1];
     }
 
-    sessionStorage.removeItem('ANALISESELECIONADA');
     if (SharedService.getInstance().temporario != null) {
       SharedService.getInstance().temporario = null;
     }
+
+    this.service.buscarAnalise.subscribe(dado => {
+      this.ngOnInit()
+    })
   }
 
   addItemStatusSimulacao(items:StatusSimulacao[]){
     this.statussimulacao = items;
   }
 
-  adicionarSimulacao(simulacao: Simulacoes) {
-    var simulacao2: Simulacoes = new Simulacoes();
+  validaFormulario(form) {
+    if (form.valid == false ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-    simulacao2.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
-    simulacao2.codcadastro = this.codcadastro;
-    simulacao2.valoravaliacao = simulacao.valoravaliacao;
-    simulacao2.valorcompravenda = simulacao.valorcompravenda;
-    simulacao2.valorcredito = simulacao.valorcredito;
-    simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao.codModalidadeSimulacao ;
-    simulacao2.dataenviobanco = simulacao.dataenviobanco;
-    simulacao2.codsicaq = simulacao.codsicaq;
-    simulacao2.correspondente = simulacao.correspondente;
-    simulacao2.prazofinanciamento = simulacao.prazofinanciamento;
-    simulacao2.codtipoamortizacao = simulacao.codtipoamortizacao.codtipoamortizacao;
-    simulacao2.valorsubsidio = simulacao.valorsubsidio;
-    simulacao2.valordespesasfinanciadas = simulacao.valordespesasfinanciadas;
-    simulacao2.valorfinanciamento = simulacao.valorfinanciamento;
-    simulacao2.valorfgts = simulacao.valorfgts;
-    simulacao2.valorrecursosproprios = simulacao.valorrecursosproprios;
-    simulacao2.saldodevedor = simulacao.saldodevedor;
-    simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
+  adicionarSimulacao(simulacao: Simulacoes, formSimulacao) {
+    this.msgs = [];
+    if ((this.validaFormulario(formSimulacao) == true) && (this.simulacoes.codinstituicaofinanceira !== undefined)) {
+      var simulacao2: Simulacoes = new Simulacoes();
 
-    this.simulacaoLista.push(simulacao2);
-    this.simulacoes.codinstituicaofinanceira = null;
-    console.log(this.simulacaoLista);
+      simulacao2.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+      simulacao2.codcadastro = this.codcadastro;
+      simulacao2.valoravaliacao = simulacao.valoravaliacao;
+      simulacao2.valorcompravenda = simulacao.valorcompravenda;
+      simulacao2.valorcredito = simulacao.valorcredito;
+      simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao.codModalidadeSimulacao ;
+      simulacao2.dataenviobanco = simulacao.dataenviobanco;
+      simulacao2.codsicaq = simulacao.codsicaq;
+      simulacao2.correspondente = simulacao.correspondente;
+      simulacao2.prazofinanciamento = simulacao.prazofinanciamento;
+      simulacao2.codtipoamortizacao = simulacao.codtipoamortizacao.codtipoamortizacao;
+      simulacao2.valorsubsidio = simulacao.valorsubsidio;
+      simulacao2.valordespesasfinanciadas = simulacao.valordespesasfinanciadas;
+      simulacao2.valorfinanciamento = simulacao.valorfinanciamento;
+      simulacao2.valorfgts = simulacao.valorfgts;
+      simulacao2.valorrecursosproprios = simulacao.valorrecursosproprios;
+      simulacao2.saldodevedor = simulacao.saldodevedor;
+      simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
+  
+      this.simulacaoLista.push(simulacao2);
+      this.simulacoes.codinstituicaofinanceira = null;
+      console.log(this.simulacaoLista);
+    } else {
+      this.msgs = [];
+      let camposInvalidos: any[] = [];
+
+      for (var _i in formSimulacao.controls) {
+        if (formSimulacao.controls[_i].status == "INVALID") {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
+          formSimulacao.controls[_i].pristine = false;
+          this.msgs = [];
+          this.msgs.push({
+            severity: 'error',
+            summary: 'Erro ao adicionar comprador!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+          })
+        }
+      }
+
+      if (this.simulacoes.codinstituicaofinanceira == undefined) {
+        this.msgs.push({
+          severity: 'error',
+          summary: 'Erro ao adicionar!',
+          detail: `Selecione a instituição financeira.`
+        })
+      }
+    }
   }
 
   removerSimulacao(simul) {
@@ -235,20 +289,59 @@ export class AnaliseComponent implements OnInit {
     this.simulacoes.valorrecursosproprios = calc;
   }
 
-  salvarAnalise(){
-    this.confirmationService.confirm({
-      message: 'Tem certeza que deseja salvar essas informações?',
-      header: 'Confirmação',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Sim',
-      rejectLabel: 'Não',
-      accept: () => {
-        this.salvar();
-      },
-      reject: () => {
-        
+  salvarAnalise(formDatasDoProcesso){
+    this.msgs2 = [];
+    let simulacaoSelecionado = this.verificarSelecionado();
+
+    if ((this.validaFormulario(formDatasDoProcesso) == true) && (this.simulacaoLista.length !== 0) && (simulacaoSelecionado == true)) {
+      this.confirmationService.confirm({
+        message: 'Tem certeza que deseja salvar essas informações?',
+        header: 'Confirmação',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Sim',
+        rejectLabel: 'Não',
+        accept: () => {
+          this.salvar();
+        },
+        reject: () => {
+          
+        }
+      });
+    } else {
+      this.msgs2 = [];
+      let camposInvalidos: any[] = [];
+
+      for (var _i in formDatasDoProcesso.controls) {
+        if (formDatasDoProcesso.controls[_i].status == "INVALID") {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
+          formDatasDoProcesso.controls[_i].pristine = false;
+          this.msgs2 = [];
+          this.msgs2.push({
+            severity: 'error',
+            summary: 'Erro ao salvar!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+          })
+        }
       }
-    });
+
+      if (this.simulacaoLista.length == 0) {
+        this.msgs2.push({
+          severity: 'error',
+          summary: 'Erro ao salvar!',
+          detail: `Adicione pelo menos 1 simulação.`
+        })
+      }
+
+      if (simulacaoSelecionado == false) {
+        this.msgs2.push({
+          severity: 'error',
+          summary: 'Erro ao salvar!',
+          detail: `Selecione a simulação financiada.`
+        })
+      }
+    }
   }
 
   simulacaoSelecionado(simulacao: Simulacoes){
@@ -259,7 +352,16 @@ export class AnaliseComponent implements OnInit {
        this.simulacaoLista[item].simulacaoselecionado = false;
       }
     }
-    
+  }
+
+  verificarSelecionado() {
+    for (let _i = 0; _i < this.simulacaoLista.length; _i++) {
+      if (this.simulacaoLista[_i].simulacaoselecionado == true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   buscarFid() {
@@ -315,7 +417,7 @@ export class AnaliseComponent implements OnInit {
     this.simulacoes.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
   }
 
-  salvarAlteracoes() {
+  salvarAlteracoes(formSimulacao) {
     for (let item = 0; item < this.simulacaoLista.length; item++) {
       if (this.simulacaoLista[item].codsimulacao == this.simulacoes.codsimulacao) {
           this.simulacaoLista[item].codcadastro = this.simulacoes.codcadastro;
