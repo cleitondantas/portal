@@ -57,8 +57,8 @@ export class AnaliseChamadasService {
     return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastros');
   }
 
-  getDadosFaturamento() {
-    return this.http.get<DadosFaturamento[]>(environment.urlpath + '/api/dadosfaturamentos');
+  getDadosFaturamento(codcadastro:any) {
+    return this.http.get<DadosFaturamento[]>(environment.urlpath + '/api/dadosfaturamento/'+codcadastro);
   }
 
   postDadosFaturamento(dadosFaturamento: DadosFaturamento) {

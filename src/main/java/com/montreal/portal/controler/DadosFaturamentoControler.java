@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,22 @@ public class DadosFaturamentoControler {
 		response.setData(dadosFaturamento);
 		return ResponseEntity.ok(response);
     }
+	
+	
+	
+	@GetMapping(value = "/dadosfaturamento/{codcadastro}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+    public ResponseEntity<Response<Iterable<DadosFaturamento>>> findAllDadosFaturamento(@PathVariable Integer codcadastro) {
+		Response<Iterable<DadosFaturamento>> response = new Response<>();
+		Iterable<DadosFaturamento> dadosFaturamento = dadosFaturamentoRepository.findAllDadosFaturamento(codcadastro);
+		if (dadosFaturamento == null) {
+			response.getErrors().add("Not Fund:");
+			return ResponseEntity.badRequest().body(response);
+		}
+		response.setData(dadosFaturamento);
+		return ResponseEntity.ok(response);
+    }
+	
 	
 	@PostMapping(value = "/dadosfaturamento")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")

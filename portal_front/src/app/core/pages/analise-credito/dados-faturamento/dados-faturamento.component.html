@@ -1,5 +1,17 @@
 <form novalidate #formulario="ngForm" >
 <div class="p-grid">
+    <div class="p-col-6">
+      </div>
+      <div class="p-col-6">
+          <div class="p-grid">
+              <div class="p-col-4">
+                <label class="ajusteLabel" >COD CADASTRO: </label>
+              </div>
+              <div class="p-col-8">
+                  {{dadosfaturamento.codcadastro}}
+              </div>
+            </div>
+        </div>
   <div class="p-col-6">
 
     <div class="p-grid">
@@ -103,7 +115,7 @@
           <label class="ajusteLabel" for="recebIncorp">TOTAL RECEBIDO DA INCORPORADORA: </label>
         </div>
         <div class="p-col-3">
-          <input type="text" name="totalrecebimentoincorporadora" [(ngModel)]="dadosfaturamento.totalrecebimentoincorporadora" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" id="recebIncorp">
+          <input type="text" name="totalrecebidoincorporadora" [(ngModel)]="dadosfaturamento.totalrecebidoincorporadora" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" id="recebIncorp">
         </div>
       </div>
     </div>
@@ -178,3 +190,4 @@
 <br><br>
 
 </form>
+

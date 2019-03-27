@@ -80,7 +80,7 @@ export class MenuBarComponent implements OnInit {
     }
     searchPorNome(event) {
         let query = event.query;
-        this.chamadasService.getBuscaClienteCadastrado().then(clienteQuery => {
+        this.chamadasService.getBuscaNomeClienteCadastrado(query).then(clienteQuery => {
             this.nomeClienteFiltrado = this.filtroClientePorNome(query, clienteQuery['data']);
         });  
       }
@@ -128,16 +128,16 @@ export class MenuBarComponent implements OnInit {
       filtroClientePorNome(query,clienteQuery:Compradores[]) {
         let filtered: any[] = [];
         for (let i = 0; i < clienteQuery.length; i++) {
-          if(clienteQuery[i].nomecliente.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+         // if(clienteQuery[i].nomecliente.toLowerCase().indexOf(query.toLowerCase()) == 0) {
             filtered.push(clienteQuery[i]);
-          }
+         // }
       }
       return filtered;
       }
 
       searchPorCPF(event) {
         let query = event.query;
-        this.chamadasService.getBuscaClienteCadastrado().then(clienteQuery => {
+        this.chamadasService.getBuscaCPFClienteCadastrado(query).then(clienteQuery => {
             this.nomeClienteFiltrado = this.filtroClientePorCPF(query, clienteQuery['data']);
         });  
       }

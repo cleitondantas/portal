@@ -42,6 +42,32 @@ public class ClientesControler {
 		response.setData(users);
 		return ResponseEntity.ok(response);
     }
+
+	@GetMapping(value = "/cliente/nome/{nome}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+    public ResponseEntity<Response<Iterable<Cliente>>> findAllNomeCliente(@PathVariable String nome) {
+		Response<Iterable<Cliente>> response = new Response<Iterable<Cliente>>();
+		Iterable<Cliente> users = clientesRepository.findAllNomeCliente(nome);
+		if (users == null) {
+			response.getErrors().add("Not Fund:");
+			return ResponseEntity.badRequest().body(response);
+		}
+		response.setData(users);
+		return ResponseEntity.ok(response);
+    }
+	
+	@GetMapping(value = "/cliente/cpf/{cpf}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+    public ResponseEntity<Response<Iterable<Cliente>>> findAllCPFCliente(@PathVariable String cpf) {
+		Response<Iterable<Cliente>> response = new Response<Iterable<Cliente>>();
+		Iterable<Cliente> users = clientesRepository.findAllCPFCliente(cpf);
+		if (users == null) {
+			response.getErrors().add("Not Fund:");
+			return ResponseEntity.badRequest().body(response);
+		}
+		response.setData(users);
+		return ResponseEntity.ok(response);
+    }
 	
 	
 	@PostMapping(value = "/cliente")

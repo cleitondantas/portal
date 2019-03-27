@@ -45,7 +45,7 @@ public class DadosFaturamento implements Serializable {
 	private String notafiscal1;
 	
 	@Column(name="mes_faturamento_1")
-	private Integer mesfaturamento1;
+	private Date mesfaturamento1;
 	
 	@Column(name="parcela_2", precision=16, scale=2)
 	private BigDecimal parcela2;
@@ -54,10 +54,10 @@ public class DadosFaturamento implements Serializable {
 	private String notafiscal2;
 	
 	@Column(name="mes_faturamento_2")
-	private Integer mesfaturamento2;
+	private Date mesfaturamento2;
 	
 	@Column(name="mes_faturado")
-	private Integer mesfaturado;
+	private Date mesfaturado;
 	
 	@Column(name="total_recebido_incorporadora", precision=16, scale=2)
 	private BigDecimal totalrecebidoincorporadora;
@@ -125,13 +125,6 @@ public class DadosFaturamento implements Serializable {
 		this.notafiscal1 = notafiscal1;
 	}
 
-	public Integer getMesfaturamento1() {
-		return mesfaturamento1;
-	}
-
-	public void setMesfaturamento1(Integer mesfaturamento1) {
-		this.mesfaturamento1 = mesfaturamento1;
-	}
 
 	public BigDecimal getParcela2() {
 		return parcela2;
@@ -147,22 +140,6 @@ public class DadosFaturamento implements Serializable {
 
 	public void setNotafiscal2(String notafiscal2) {
 		this.notafiscal2 = notafiscal2;
-	}
-
-	public Integer getMesfaturamento2() {
-		return mesfaturamento2;
-	}
-
-	public void setMesfaturamento2(Integer mesfaturamento2) {
-		this.mesfaturamento2 = mesfaturamento2;
-	}
-
-	public Integer getMesfaturado() {
-		return mesfaturado;
-	}
-
-	public void setMesfaturado(Integer mesfaturado) {
-		this.mesfaturado = mesfaturado;
 	}
 
 	public BigDecimal getTotalrecebidoincorporadora() {
@@ -211,6 +188,38 @@ public class DadosFaturamento implements Serializable {
 
 	public void setDtatividade(Date dtatividade) {
 		this.dtatividade = dtatividade;
+	}
+
+	public Integer getCodcadastro() {
+		return codcadastro;
+	}
+
+	public void setCodcadastro(Integer codcadastro) {
+		this.codcadastro = codcadastro;
+	}
+
+	public Date getMesfaturamento1() {
+		return mesfaturamento1;
+	}
+
+	public void setMesfaturamento1(Date mesfaturamento1) {
+		this.mesfaturamento1 = mesfaturamento1;
+	}
+
+	public Date getMesfaturamento2() {
+		return mesfaturamento2;
+	}
+
+	public void setMesfaturamento2(Date mesfaturamento2) {
+		this.mesfaturamento2 = mesfaturamento2;
+	}
+
+	public Date getMesfaturado() {
+		return mesfaturado;
+	}
+
+	public void setMesfaturado(Date mesfaturado) {
+		this.mesfaturado = mesfaturado;
 	}
 
 
