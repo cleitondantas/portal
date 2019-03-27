@@ -21,7 +21,6 @@ import { Modalidades } from 'src/app/models/modalidades';
 })
 export class AnaliseComponent implements OnInit {
 
-  numfid: any;
   codcadastro: any;
   simulacaoLista: Simulacoes[] = [];
   statusSimulEvent = new EventEmitter<any>();
@@ -92,9 +91,9 @@ export class AnaliseComponent implements OnInit {
       this.statusSimulEvent.emit(true);
      });
 
-    let AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');    
+    let AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
 
-    if (AnaliseSelecionada !== null || undefined) {
+    if (AnaliseSelecionada != "undefined") {
       let jsonObj: any = JSON.parse(AnaliseSelecionada);// Recebe os dados enviados pela busca de cadastro
       let analise: Analise = <Analise>jsonObj;
 
@@ -105,7 +104,7 @@ export class AnaliseComponent implements OnInit {
       this.analise = analise;
       this.codcadastro = analise.codcadastro;
       this.simulacoes.codcadastro = this.codcadastro;
-      this.numfid = analise.numerocadastroincorporadorafid
+      this.analise.numerocadastroincorporadorafid = analise.numerocadastroincorporadorafid
 
       this.statusSimulEvent.subscribe(dado => {
         if (dado == true) {
@@ -147,7 +146,7 @@ export class AnaliseComponent implements OnInit {
       }
     } else {
     this.codcadastro = SharedService.getInstance().temporario[0];
-    this.numfid = SharedService.getInstance().temporario[1];
+    this.analise.numerocadastroincorporadorafid = SharedService.getInstance().temporario[1];
     }
 
     if (SharedService.getInstance().temporario != null) {
@@ -242,7 +241,7 @@ export class AnaliseComponent implements OnInit {
     }
     
     this.analise.simulacoes= this.simulacaoLista;
-    this.analise.numerocadastroincorporadorafid = this.numfid;
+    this.analise.numerocadastroincorporadorafid = this.analise.numerocadastroincorporadorafid;
     if (this.controle == true) {
       this.analise.dataassinatura = this.analise.dataassinatura.toISOString();
       this.analise.dataemissao = this.analise.dataemissao.toISOString();
@@ -369,7 +368,7 @@ export class AnaliseComponent implements OnInit {
     this.service.getCodCadastro().subscribe(dados => {
       codCadastro = dados['data'];
       for (let _i = 0; _i < codCadastro.length; _i++) {
-        if (this.numfid == codCadastro[_i].numerocadastroincorporadorafid) {
+        if (this.analise.numerocadastroincorporadorafid == codCadastro[_i].numerocadastroincorporadorafid) {
           this.codcadastro = codCadastro[_i].codcadastro;
         }
       }
@@ -418,29 +417,50 @@ export class AnaliseComponent implements OnInit {
   }
 
   salvarAlteracoes(formSimulacao) {
-    for (let item = 0; item < this.simulacaoLista.length; item++) {
-      if (this.simulacaoLista[item].codsimulacao == this.simulacoes.codsimulacao) {
-          this.simulacaoLista[item].codcadastro = this.simulacoes.codcadastro;
-          this.simulacaoLista[item].valoravaliacao = this.simulacoes.valoravaliacao;
-          this.simulacaoLista[item].valorcompravenda = this.simulacoes.valorcompravenda;
-          this.simulacaoLista[item].valorcredito = this.simulacoes.valorcredito;
-          this.simulacaoLista[item].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao.codModalidadeSimulacao;
-          this.simulacaoLista[item].dataenviobanco = this.simulacoes.dataenviobanco;
-          this.simulacaoLista[item].codsicaq = this.simulacoes.codsicaq;
-          this.simulacaoLista[item].correspondente = this.simulacoes.correspondente;
-          this.simulacaoLista[item].prazofinanciamento = this.simulacoes.prazofinanciamento;
-          this.simulacaoLista[item].codtipoamortizacao = this.simulacoes.codtipoamortizacao.codtipoamortizacao
-          this.simulacaoLista[item].valorsubsidio = this.simulacoes.valorsubsidio;
-          this.simulacaoLista[item].valordespesasfinanciadas = this.simulacoes.valordespesasfinanciadas;
-          this.simulacaoLista[item].valorfinanciamento = this.simulacoes.valorfinanciamento;
-          this.simulacaoLista[item].valorfgts = this.simulacoes.valorfgts;
-          this.simulacaoLista[item].valorrecursosproprios = this.simulacoes.valorrecursosproprios;
-          this.simulacaoLista[item].saldodevedor = this.simulacoes.saldodevedor;
-          this.simulacaoLista[item].codinstituicaofinanceira = this.simulacoes.codinstituicaofinanceira;
+    this.msgs = [];
+    if (this.validaFormulario(formSimulacao) == true) {
+      for (let item = 0; item < this.simulacaoLista.length; item++) {
+        if (this.simulacaoLista[item].codsimulacao == this.simulacoes.codsimulacao) {
+            this.simulacaoLista[item].codcadastro = this.simulacoes.codcadastro;
+            this.simulacaoLista[item].valoravaliacao = this.simulacoes.valoravaliacao;
+            this.simulacaoLista[item].valorcompravenda = this.simulacoes.valorcompravenda;
+            this.simulacaoLista[item].valorcredito = this.simulacoes.valorcredito;
+            this.simulacaoLista[item].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao.codModalidadeSimulacao;
+            this.simulacaoLista[item].dataenviobanco = this.simulacoes.dataenviobanco;
+            this.simulacaoLista[item].codsicaq = this.simulacoes.codsicaq;
+            this.simulacaoLista[item].correspondente = this.simulacoes.correspondente;
+            this.simulacaoLista[item].prazofinanciamento = this.simulacoes.prazofinanciamento;
+            this.simulacaoLista[item].codtipoamortizacao = this.simulacoes.codtipoamortizacao.codtipoamortizacao
+            this.simulacaoLista[item].valorsubsidio = this.simulacoes.valorsubsidio;
+            this.simulacaoLista[item].valordespesasfinanciadas = this.simulacoes.valordespesasfinanciadas;
+            this.simulacaoLista[item].valorfinanciamento = this.simulacoes.valorfinanciamento;
+            this.simulacaoLista[item].valorfgts = this.simulacoes.valorfgts;
+            this.simulacaoLista[item].valorrecursosproprios = this.simulacoes.valorrecursosproprios;
+            this.simulacaoLista[item].saldodevedor = this.simulacoes.saldodevedor;
+            this.simulacaoLista[item].codinstituicaofinanceira = this.simulacoes.codinstituicaofinanceira;
+        }
+      }
+
+      this.salvarAlteracoesButton = true;
+      this.simulacoes.codinstituicaofinanceira = null;
+    } else {
+      this.msgs = [];
+      let camposInvalidos: any[] = [];
+
+      for (var _i in formSimulacao.controls) {
+        if (formSimulacao.controls[_i].status == "INVALID") {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
+          formSimulacao.controls[_i].pristine = false;
+          this.msgs = [];
+          this.msgs.push({
+            severity: 'error',
+            summary: 'Erro ao salvar alterações!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+          })
+        }
       }
     }
-
-    this.salvarAlteracoesButton = true;
-    this.simulacoes.codinstituicaofinanceira = null;
   }
 }

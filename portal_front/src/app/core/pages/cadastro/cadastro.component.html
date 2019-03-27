@@ -313,7 +313,7 @@
               <td> <button pButton icon="pi pi-search" (click)="visualizarComprador(rowData)"></button></td>
               <td> {{comp.nomecliente}} </td>
               <td> {{comp.cpfcnpj}} </td>
-              <td> {{comp.valorrenda}} </td>
+              <td> {{ comp.valorrenda.toLocaleString('pt-br', {minimumFractionDigits: 2}) }} </td>
               <td>
                   <p-tableRadioButton [value]="rowData" value=true name="principal" (click)="setarTrue(rowData)" ngDefaultControl="comprador.principal"></p-tableRadioButton>
               </td>

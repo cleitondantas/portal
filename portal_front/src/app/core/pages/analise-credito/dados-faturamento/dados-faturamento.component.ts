@@ -34,7 +34,7 @@ export class DadosFaturamentoComponent implements OnInit {
     }
 
     let analiseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');    
-    if (analiseSelecionada !== null || undefined) {
+    if (analiseSelecionada != "undefined") {
       let jsonObj: any = JSON.parse(analiseSelecionada);// Recebe os dados enviados pela busca de cadastro
       let analise: Analise = <Analise>jsonObj;
       this.dadosfaturamento.codanalise= analise.codanalise;

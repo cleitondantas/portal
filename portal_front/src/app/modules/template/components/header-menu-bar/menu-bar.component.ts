@@ -5,14 +5,10 @@ import { Usuario } from 'src/app/models/usuario';
 import {Power1,Back} from 'gsap/all';
 import { Router } from '@angular/router';
 import { CadastroChamadasService } from 'src/app/services/cadastro-chamadas.service';
-import { Cliente } from 'src/app/models/cliente';
+import { SharedService } from 'src/app/services/shared.service';
 import { Compradores } from 'src/app/models/compradores';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
-import { Analise } from 'src/app/models/analise';
-import { environment } from 'src/environments/environment';
-
-
 
 declare var TweenMax: any;
 
@@ -87,7 +83,7 @@ export class MenuBarComponent implements OnInit {
 
     irCadastro(codcadastro:number){
         let session = sessionStorage.getItem('CADASTROSELECIONADO');
-        if (session !== null || undefined || "") {
+        if (session !== null || undefined || "undefined") {
             sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
         }
 
@@ -109,6 +105,13 @@ export class MenuBarComponent implements OnInit {
     selectFor(codcadastro:number){
         for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
             if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
+                if (SharedService.getInstance().temporario == null) {
+                    SharedService.getInstance().temporario = [];
+                }
+
+                SharedService.getInstance().temporario[0] = this.cadastrosTabelaBusca[i].codcadastro;
+                SharedService.getInstance().temporario[1] = this.cadastrosTabelaBusca[i].numerocadastroincorporadorafid;
+
                 this.analiseService.getRegistroAnalise(codcadastro).subscribe(data => {
                     if (sessionStorage.getItem('ANALISESELECIONADA') !== null || undefined || "") {
                         sessionStorage.removeItem('ANALISESELECIONADA');

@@ -7,10 +7,10 @@
 
         <div class="p-grid">
           <div class="p-col-2">
-            <label class="ajusteLabel" for="fid">FID: </label>
+            <label class="ajusteLabel" for="numerocadastroincorporadorafid">FID: </label>
           </div>
           <div class="p-col-10">
-            <input type="text" class="ajusteInput" pInputText id="fid" [(ngModel)]="numfid" name="fid" (blur)="buscarFid()"> 
+            <input type="text" class="ajusteInput" pInputText id="numerocadastroincorporadorafid" [(ngModel)]="analise.numerocadastroincorporadorafid" name="numerocadastroincorporadorafid"> 
           </div>
         </div>
 
@@ -85,7 +85,7 @@
           </div>
           <div class="p-col-8">
             <input type="text" class="ajusteInput" pInputText id="correspondente" name="correspondente" #correspondente="ngModel" [(ngModel)]="simulacoes.correspondente"
-            required>
+            value="Montreal" required>
           </div>
         </div>
 
@@ -270,7 +270,7 @@
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/>    
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input pInputText class="ajusteInput" value="R$ {{rowData.valoravaliacaoinstfinanc}}"/>
+                  <input pInputText class="ajusteInput" value="R$ {{ rowData.valoravaliacaoinstfinanc.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
@@ -283,7 +283,7 @@
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/>    
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input pInputText class="ajusteInput" value="% {{rowData.taxadejuros}}"/>
+                  <input pInputText class="ajusteInput" value="% {{ rowData.taxadejuros.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
@@ -296,7 +296,7 @@
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/> 
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input pInputText class="ajusteInput" value="R$ {{rowData.valorprimeiraparcela}}"/>
+                  <input pInputText class="ajusteInput" value="R$ {{ rowData.valorprimeiraparcela.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
