@@ -65,8 +65,15 @@ export class CadastroChamadasService {
     .then(data => {return data;});
   }
 
-  getBuscaClienteCadastrado() {
-    return this.http.get<Cliente[]>(environment.urlpath +'/api/clientes')
+  getBuscaNomeClienteCadastrado(nome:any) {
+    return this.http.get<Cliente[]>(environment.urlpath +'/api/cliente/nome/'+nome)
+    .toPromise()
+    .then(res => <any[]> res)
+    .then(data => {return data;});
+  }
+
+  getBuscaCPFClienteCadastrado(cpf:any) {
+    return this.http.get<Cliente[]>(environment.urlpath +'/api/cliente/cpf/'+cpf)
     .toPromise()
     .then(res => <any[]> res)
     .then(data => {return data;});
