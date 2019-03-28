@@ -10,8 +10,8 @@ export class Simulacoes {
     valorcredito : number;
     codmodalidadesimulacao: any;
     dataenviobanco: any;
-    codsicaq: number;
-    correspondente: string;
+    codsicaq: boolean = false;
+    correspondente: string = "Montreal";
     prazofinanciamento: number;
     codtipoamortizacao: any;
     valorsubsidio: number;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DadosFaturamento } from 'src/app/models/dadosfaturamento';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { Analise } from 'src/app/models/analise';
+import { SPE } from 'src/app/models/spe';
 
 @Component({
   selector: 'app-dados-faturamento',
@@ -10,6 +11,7 @@ import { Analise } from 'src/app/models/analise';
 })
 export class DadosFaturamentoComponent implements OnInit {
   br: any;
+  spe: SPE[];
   
   constructor(private analiseChamadasService: AnaliseChamadasService) { }
 
@@ -32,6 +34,8 @@ export class DadosFaturamentoComponent implements OnInit {
       clear: 'Limpar',
       dateFormat: 'dd/mm/yy'
     }
+
+    this.analiseChamadasService.getSPE().subscribe(dados => this.spe = dados['data']);
 
     let analiseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');    
     if (analiseSelecionada != "undefined") {
@@ -75,5 +79,9 @@ export class DadosFaturamentoComponent implements OnInit {
 
   cancelar(){
     this.dadosfaturamento =  new DadosFaturamento();
+  }
+
+  preencherSPE(speRecebido: SPE) {
+    this.dadosfaturamento.cpfcnpj = speRecebido.cnpjspe;
   }
 }

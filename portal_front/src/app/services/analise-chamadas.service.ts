@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { StatusSimulacao } from '../models/status-simulacao';
 import { Analise } from 'src/app/models/analise';
 import { DadosFaturamento } from '../models/dadosfaturamento';
+import { SPE } from '../models/spe';
 
 
 
@@ -43,6 +44,10 @@ export class AnaliseChamadasService {
     console.log("getRegistroAnalise");
     console.log(environment.urlpath + '/api/analises/'+cod)
     return this.http.get<Analise[]>(environment.urlpath + '/api/analises/'+cod);
+  }
+
+  getSPE() {
+    return this.http.get<SPE[]>(environment.urlpath + '/api/spe');
   }
 
   postAnaliseSimulacaoContrato(analise: Analise){

@@ -38,6 +38,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 import { DadosCadastraisComponent } from './pages/informacoes/dados-cadastrais/dados-cadastrais.component';
 import { HistoricoComponent } from './pages/informacoes/historico/historico.component';
@@ -79,7 +80,8 @@ import { PrimeNgCalendarMaskDirective } from 'src/app/directive/maskInput.direct
     TextMaskModule,
     MessagesModule,
     MessageModule,
-    ToastModule
+    ToastModule,
+    ToggleButtonModule
   ],
   declarations: [
     HomeComponent,

@@ -20,7 +20,8 @@
           </div>
           <div class="p-col-8">
             <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="valoravaliacao" name="valoravaliacao" #valoravaliacao='ngModel' [(ngModel)]="simulacoes.valoravaliacao" required>
+            id="valoravaliacao" name="valoravaliacao" #valoravaliacao='ngModel' [(ngModel)]="simulacoes.valoravaliacao" 
+            (blur)="calcularValorCredito(); recursoProprio()" required>
           </div>
         </div>
 
@@ -30,7 +31,8 @@
           </div>
           <div class="p-col-8">
             <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="valorcompravenda" name="valorcompravenda" #valorcompravenda='ngModel' [(ngModel)]="simulacoes.valorcompravenda" required>
+            id="valorcompravenda" name="valorcompravenda" #valorcompravenda='ngModel' [(ngModel)]="simulacoes.valorcompravenda"
+            (blur)="calcularValorCredito(); recursoProprio()" required>
           </div>
         </div>
 
@@ -51,7 +53,7 @@
           <div class="p-col-8">
             <p-dropdown placeholder="Selecione..." [options]="modalidade" optionLabel="descModalidadeSimulacao" [autoWidth]="false" [style]="{'width': '100%'}" 
             class="ajusteInput" ngModel name="codmodalidadesimulacao" #codmodalidadesimulacao="ngModel" [(ngModel)]="simulacoes.codmodalidadesimulacao"
-            id="codmodalidadesimulacao" required></p-dropdown>
+            id="codmodalidadesimulacao" ></p-dropdown>
           </div>
         </div>
 
@@ -64,7 +66,7 @@
               <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
               class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
               id="dataenviobanco" dateFormat="dd/mm/yy" [locale]="br" ngModel name="dataenviobanco" #dataenviobanco="ngModel" [(ngModel)]="simulacoes.dataenviobanco"
-              rPCalendarMask required></p-calendar>
+              rPCalendarMask ></p-calendar>
             </div>
           </div>
         </div>
@@ -74,8 +76,10 @@
             <label class="ajusteLabel" for="codsicaq">SICAQ: </label>
           </div>
           <div class="p-col-8">
-            <input type="text" class="ajusteInput" pInputText id="codsicaq" name="codsicaq" #codsicaq="ngModel" [(ngModel)]="simulacoes.codsicaq"
-            pKeyFilter="pint" required>
+              <p-radioButton  [value]="true" label="Possui SICAQ" name="codsicaq" class="radio" [(ngModel)]="simulacoes.codsicaq"
+              id="codsicaq"></p-radioButton>
+              <p-radioButton  [value]="false" label="Não possui SICAQ" name="codsicaq" class="radio" [(ngModel)]="simulacoes.codsicaq"
+              id="codsicaq"></p-radioButton>
           </div>
         </div>
 
@@ -85,7 +89,7 @@
           </div>
           <div class="p-col-8">
             <input type="text" class="ajusteInput" pInputText id="correspondente" name="correspondente" #correspondente="ngModel" [(ngModel)]="simulacoes.correspondente"
-            value="Montreal" required>
+            >
           </div>
         </div>
 
@@ -110,7 +114,7 @@
           </div>
           <div class="p-col-8">
             <input type="text" class="ajusteInput" pInputText id="prazofinanciamento" name="prazofinanciamento" #prazofinanciamento="ngModel" [(ngModel)]="simulacoes.prazofinanciamento" pKeyFilter="pint"
-            required>
+            >
           </div>
         </div>
 
@@ -121,7 +125,7 @@
           <div class="p-col-8">
             <p-dropdown placeholder="Selecione..." [options]="tipoAmortizacao" optionLabel="desctipoamortizacao" [autoWidth]="false" [style]="{'width': '100%'}" 
             class="ajusteInput" name="codtipoamortizacao" #codtipoamortizacao="ngModel" [(ngModel)]="simulacoes.codtipoamortizacao"
-            id="codtipoamortizacao" required></p-dropdown>
+            id="codtipoamortizacao" ></p-dropdown>
           </div>
         </div>
 
@@ -131,7 +135,7 @@
           </div>
           <div class="p-col-8">
             <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-            id="valorsubsidio" name="valorsubsidio" #valorsubsidio="ngModel" [(ngModel)]="simulacoes.valorsubsidio" required>
+            id="valorsubsidio" name="valorsubsidio" #valorsubsidio="ngModel" [(ngModel)]="simulacoes.valorsubsidio" >
           </div>
         </div>
       </div>
@@ -148,7 +152,7 @@
             <div class="p-col-8">
               <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" 
               id="valordespesasfinanciadas" name="valordespesasfinanciadas" #valordespesasfinanciadas="ngModel" [(ngModel)]="simulacoes.valordespesasfinanciadas"
-              required/>
+              />
             </div>
           </div>
 
@@ -158,7 +162,7 @@
             </div>
             <div class="p-col-8">
               <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-              id="valorfinanciamento"  name="valorfinanciamento"  [(ngModel)]="simulacoes.valorfinanciamento" required/>
+              id="valorfinanciamento"  name="valorfinanciamento"  [(ngModel)]="simulacoes.valorfinanciamento" />
             </div>
           </div>
 
@@ -168,7 +172,7 @@
             </div>
             <div class="p-col-8">
               <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-              id="valorfgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio()" required/>
+              id="valorfgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio()" />
             </div>
           </div>
 
@@ -181,7 +185,7 @@
             </div>
             <div class="p-col-8">
               <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-              id="valorrecursosproprios" name="valorrecursosproprios"  [(ngModel)]="simulacoes.valorrecursosproprios" required/>
+              id="valorrecursosproprios" name="valorrecursosproprios"  [(ngModel)]="simulacoes.valorrecursosproprios" />
             </div>
           </div>
 
@@ -191,7 +195,7 @@
             </div>
             <div class="p-col-8">
               <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-              id="saldodevedor" name="saldodevedor"  [(ngModel)]="simulacoes.saldodevedor" required/>
+              id="saldodevedor" name="saldodevedor"  [(ngModel)]="simulacoes.saldodevedor" />
             </div>
           </div>
         </div>
@@ -270,7 +274,10 @@
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/>    
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input pInputText class="ajusteInput" value="R$ {{ rowData.valoravaliacaoinstfinanc.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
+                  <input pInputText class="ajusteInput" *ngIf="rowData.valoravaliacaoinstfinanc == undefined"
+                  value="R$ {{ rowData.valoravaliacaoinstfinanc }}"/>
+                  <input pInputText class="ajusteInput" *ngIf="rowData.valoravaliacaoinstfinanc != undefined"
+                  value="R$ {{ rowData.valoravaliacaoinstfinanc.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
@@ -283,7 +290,10 @@
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/>    
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input pInputText class="ajusteInput" value="% {{ rowData.taxadejuros.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
+                    <input pInputText class="ajusteInput" *ngIf="rowData.taxadejuros == undefined"
+                    value="% {{ rowData.taxadejuros }}"/>
+                    <input pInputText class="ajusteInput" *ngIf="rowData.taxadejuros != undefined"
+                    value="% {{ rowData.taxadejuros.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
@@ -296,7 +306,10 @@
                   [ngStyle]="{'border': '1px solid #a6a6a6', 'padding': '0.429em', 'font-size': '14px'}"/> 
                 </ng-template>
                 <ng-template pTemplate="output">
-                  <input pInputText class="ajusteInput" value="R$ {{ rowData.valorprimeiraparcela.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
+                    <input pInputText class="ajusteInput" *ngIf="rowData.valorprimeiraparcela == undefined"
+                    value="R$ {{ rowData.valorprimeiraparcela }}"/>
+                    <input pInputText class="ajusteInput" *ngIf="rowData.valorprimeiraparcela != undefined"
+                    value="R$ {{ rowData.valorprimeiraparcela.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}"/>
                 </ng-template>
             </p-cellEditor>
           </td>
@@ -324,7 +337,7 @@
               <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
               class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
               id="datapastamae" dateFormat="dd/mm/yy" [locale]="br"
-              name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" showButtonBar="true" rPCalendarMask required></p-calendar>
+              name="datapastamae" #datapastamae="ngModel" [(ngModel)]="analise.datapastamae" showButtonBar="true" rPCalendarMask ></p-calendar>
             </div>
           </div>
         </div>
@@ -338,7 +351,7 @@
               <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
               class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
               id="dataemissao" dateFormat="dd/mm/yy" [locale]="br"
-              name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" showButtonBar="true" rPCalendarMask required></p-calendar>
+              name="dataemissao" #dataemissao="ngModel" [(ngModel)]="analise.dataemissao" showButtonBar="true" rPCalendarMask ></p-calendar>
             </div>
           </div>
         </div>
@@ -352,7 +365,7 @@
               <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
               class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
               id="dataassinatura" dateFormat="dd/mm/yy" [locale]="br"
-              name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" showButtonBar="true" rPCalendarMask required></p-calendar>
+              name="dataassinatura" #dataassinatura="ngModel" [(ngModel)]="analise.dataassinatura" showButtonBar="true" rPCalendarMask ></p-calendar>
             </div>
           </div>
         </div>

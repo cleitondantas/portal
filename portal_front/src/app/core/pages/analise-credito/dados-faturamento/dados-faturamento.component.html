@@ -16,11 +16,13 @@
 
     <div class="p-grid">
       <div class="p-col-4">
-        <label class="ajusteLabel" for="faturarContrato">A FATURAR CONTRATO SPE:</label>
+        <label class="ajusteLabel" for="razaosocialspe">A FATURAR CONTRATO SPE:</label>
       </div>
       <div class="p-col-8">
-        <input type="text" name="razaosocialspe"  [(ngModel)]="dadosfaturamento.razaosocialspe" placeholder="razão social" class="ajusteInput" pInputText id="faturarContrato" [ngStyle]="{'width': '50%'}">
-      </div>
+          <p-dropdown placeholder="Selecione..." optionLabel="descspe" [options]="spe" [autoWidth]="false" 
+          [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="razaosocialspe" #razaosocialspe="ngModel" 
+          [(ngModel)]="dadosfaturamento.razaosocialspe" filter="true" required id="razaosocialspe" (onChange)="preencherSPE($event.value)"></p-dropdown>
+        </div>
     </div>
   </div>
   <div class="p-col-6">

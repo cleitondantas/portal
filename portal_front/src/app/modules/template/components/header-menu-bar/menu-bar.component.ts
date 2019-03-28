@@ -70,7 +70,6 @@ export class MenuBarComponent implements OnInit {
     clickBuscaPorCPF(event:any){
         this.chamadasService.getBuscaCadastrado(null,this.cpfclienteSelecionado).then(data => {
             this.cadastrosTabelaBusca = data['data'] 
-
         });
       
     }
@@ -103,24 +102,27 @@ export class MenuBarComponent implements OnInit {
     }
 
     selectFor(codcadastro:number){
+        if (SharedService.getInstance().temporario == null) {
+            SharedService.getInstance().temporario = [];
+        }
         for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
             if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
-                if (SharedService.getInstance().temporario == null) {
-                    SharedService.getInstance().temporario = [];
-                }
-
                 SharedService.getInstance().temporario[0] = this.cadastrosTabelaBusca[i].codcadastro;
                 SharedService.getInstance().temporario[1] = this.cadastrosTabelaBusca[i].numerocadastroincorporadorafid;
 
                 this.analiseService.getRegistroAnalise(codcadastro).subscribe(data => {
-                    if (sessionStorage.getItem('ANALISESELECIONADA') !== null || undefined || "") {
+                    if (sessionStorage.getItem('ANALISESELECIONADA') !== null || undefined || "undefined") {
                         sessionStorage.removeItem('ANALISESELECIONADA');
                     }
                     sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(data['data'][0]))
                     console.log(data)
                     this.hideDialogDisplay();
-                    this.router.navigate(['/analise']);;
-                    this.analiseService.buscarAnalise.emit(true);
+
+                    if (this.router.url == "/analise") {
+                        this.analiseService.buscarAnalise.emit(SharedService.getInstance().temporario);
+                    } else {
+                        this.router.navigate(['/analise']);
+                    }
                     this.analiseService.controle = true;
                 });
             }
