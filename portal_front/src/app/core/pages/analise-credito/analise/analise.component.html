@@ -227,7 +227,7 @@
     </div>
     <p-messages [(value)]="msgs"></p-messages>
 
-    <p-table [value]="simulacaoLista" [(selection)]="selectedItem" >
+    <p-table [value]="simulacaoLista" [(selection)]="selectedItem" (onRowUnselect)="tirarSelecionado($event)" (onRowSelect)="simulacaoSelecionado($event)">
       <ng-template pTemplate="header">
         <tr>
           <th><strong>Excluir</strong></th>
@@ -315,7 +315,7 @@
           </td>
 
           <td > 
-            <p-tableRadioButton [value]="rowData"  (click)="simulacaoSelecionado(rowData)"></p-tableRadioButton>  
+            <p-tableRadioButton [value]="rowData"></p-tableRadioButton>  
           </td>
 
         </tr>

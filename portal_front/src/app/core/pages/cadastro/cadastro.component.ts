@@ -291,11 +291,12 @@ export class CadastroComponent implements OnInit {
   });
   }
 
-  setarTrue(rowData: Compradores) {
+  setarTrue(dados) {
+    console.log(dados);
+    let rowData: Compradores = dados.data;
     for(var i = 0, len = this.compradores.length; i < len; ++i) {
       this.compradores[i].principal = false;
     }
-    
     rowData.principal = true;
   }
 
@@ -305,6 +306,16 @@ export class CadastroComponent implements OnInit {
         return true;
       } else {
         return false;
+      }
+    }
+  }
+
+  tirarSelecionado(rowData) {
+    console.log(rowData)
+    let row: Compradores = rowData.data;
+    for (let _i = 0; _i < this.compradores.length; _i++) {
+      if (row.cpfcnpj == this.compradores[_i].cpfcnpj) {
+        this.compradores[_i].principal = false;
       }
     }
   }
@@ -376,7 +387,9 @@ export class CadastroComponent implements OnInit {
   }
 
   atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any){
-    if (this.validaFormImovel(formulario) == true) {
+    let principal = this.verificarSelecionado();
+
+    if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
       cadInfo.uf = cadInfo.uf.uf;
       cadInfo.clientes = this.compradores;
       
@@ -428,6 +441,14 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao salvar alterações!',
           detail: `Cadastre pelo menos 1 comprador.`
+        })
+      }
+
+      if (principal == false) {
+        this.msgs2.push({
+          severity: 'error',
+          summary: 'Erro ao avançar!',
+          detail: `Selecione o comprador principal.`
         })
       }
     }

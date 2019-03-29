@@ -4,7 +4,7 @@ export class DadosFaturamento {
     codanalise:number
     codcadastro:number;
     cpfcnpj:String;
-    razaosocialspe:String;
+    razaosocialspe: any;
     parcela1:number;
     notafiscal1:String;
     mesfaturamento1:Date;

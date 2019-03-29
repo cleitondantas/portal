@@ -97,9 +97,15 @@ export class AnaliseComponent implements OnInit {
       let jsonObj: any = JSON.parse(AnaliseSelecionada);// Recebe os dados enviados pela busca de cadastro
       let analise: Analise = <Analise>jsonObj;
 
-      analise.datapastamae = new Date(analise.datapastamae);
-      analise.dataemissao = new Date(analise.dataemissao);
-      analise.dataassinatura = new Date(analise.dataassinatura);
+      if (analise.datapastamae != null) {
+        analise.datapastamae = new Date(analise.datapastamae);
+      }
+      if (analise.dataemissao != null) {
+        analise.dataemissao = new Date(analise.dataemissao);
+      }
+      if (analise.dataassinatura != null) {
+        analise.dataassinatura = new Date(analise.dataassinatura);
+      }
 
       this.analise = analise;
       this.codcadastro = analise.codcadastro;
@@ -253,14 +259,26 @@ export class AnaliseComponent implements OnInit {
       var item = this.simulacaoLista[_i];
       this.simulacaoLista[_i].codinstituicaofinanceira = item.codinstituicaofinanceira ?  Number(item.codinstituicaofinanceira.codInstituicaoFinanceira):null;
       this.simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
+      if (this.simulacaoLista[_i].codsicaq == true) {
+        this.simulacaoLista[_i].codsicaq = 0;
+      } else {
+        this.simulacaoLista[_i].codsicaq = 1;
+      }
     }
     
     this.analise.simulacoes= this.simulacaoLista;
     this.analise.numerocadastroincorporadorafid = this.analise.numerocadastroincorporadorafid;
     if (this.controle == true) {
-      this.analise.dataassinatura = this.analise.dataassinatura.toISOString();
-      this.analise.dataemissao = this.analise.dataemissao.toISOString();
-      this.analise.datapastamae = this.analise.datapastamae.toISOString();
+      
+      if (this.analise.dataassinatura != null) {
+        this.analise.dataassinatura = new Date(this.analise.dataassinatura);
+      }
+      if (this.analise.dataemissao != null) {
+        this.analise.dataemissao = new Date(this.analise.dataemissao);
+      }
+      if (this.analise.datapastamae != null) {
+        this.analise.datapastamae = new Date(this.analise.datapastamae);
+      }
 
       for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].dataenviobanco = this.analise.simulacoes[_i].dataenviobanco.toISOString();
@@ -269,18 +287,20 @@ export class AnaliseComponent implements OnInit {
       console.log(this.analise);
       console.log(JSON.stringify(this.analise));
 
-      if (this.controle == true) {
-        this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
-      } else {
-        this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Análise adicionada!'});
-      }
+      this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
       setTimeout(() => {
         this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data));
       }, 500);
 
-      this.analise.dataassinatura = new Date(this.analise.dataassinatura);
-      this.analise.dataemissao = new Date(this.analise.dataemissao);
-      this.analise.datapastamae = new Date(this.analise.datapastamae);
+      if (this.analise.dataassinatura != null) {
+        this.analise.dataassinatura = new Date(this.analise.dataassinatura);
+      }
+      if (this.analise.dataemissao != null) {
+        this.analise.dataemissao = new Date(this.analise.dataemissao);
+      }
+      if (this.analise.datapastamae != null) {
+        this.analise.datapastamae = new Date(this.analise.datapastamae);
+      }
 
       for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].dataenviobanco = new Date(this.analise.simulacoes[_i].dataenviobanco);
@@ -295,11 +315,20 @@ export class AnaliseComponent implements OnInit {
 
       console.log("this.analise Json")
       console.log(JSON.stringify(this.analise));
-      
-      this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data)});
+
+      this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Análise adicionada!'});
+
+      setTimeout(() => {
+        this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data)});
+      }, 500);
     }
     
-    this.analiseCred.selected = 1;
+    if (this.verificarSelecionado() == true) {
+      this.analiseCred.disabled = false;
+      this.analiseCred.selected = 1;
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 
   focusDropDown(input) {
@@ -334,9 +363,8 @@ export class AnaliseComponent implements OnInit {
 
   salvarAnalise(formDatasDoProcesso){
     this.msgs2 = [];
-    let simulacaoSelecionado = this.verificarSelecionado();
 
-    if ((this.validaFormulario(formDatasDoProcesso) == true) && (this.simulacaoLista.length !== 0) && (simulacaoSelecionado == true)) {
+    if ((this.validaFormulario(formDatasDoProcesso) == true) && (this.simulacaoLista.length !== 0)) {
       this.confirmationService.confirm({
         message: 'Tem certeza que deseja salvar essas informações?',
         header: 'Confirmação',
@@ -376,18 +404,11 @@ export class AnaliseComponent implements OnInit {
           detail: `Adicione pelo menos 1 simulação.`
         })
       }
-
-      if (simulacaoSelecionado == false) {
-        this.msgs2.push({
-          severity: 'error',
-          summary: 'Erro ao salvar!',
-          detail: `Selecione a simulação financiada.`
-        })
-      }
     }
   }
 
-  simulacaoSelecionado(simulacao: Simulacoes){
+  simulacaoSelecionado(rowData){
+    let simulacao: Simulacoes = rowData.data;
     for (let item = 0; item < this.simulacaoLista.length; item++) {
       if (this.simulacaoLista[item].codinstituicaofinanceira == simulacao.codinstituicaofinanceira) {
         this.simulacaoLista[item].simulacaoselecionado = true;
@@ -401,8 +422,15 @@ export class AnaliseComponent implements OnInit {
     for (let _i = 0; _i < this.simulacaoLista.length; _i++) {
       if (this.simulacaoLista[_i].simulacaoselecionado == true) {
         return true;
-      } else {
-        return false;
+      }
+    }
+  }
+
+  tirarSelecionado(rowData) {
+    let row: Simulacoes = rowData.data;
+    for (let _i = 0; _i < this.simulacaoLista.length; _i++) {
+      if (row.codsimulacao == this.simulacaoLista[_i].codsimulacao) {
+        this.simulacaoLista[_i].simulacaoselecionado = false;
       }
     }
   }
