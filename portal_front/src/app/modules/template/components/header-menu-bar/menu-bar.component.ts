@@ -37,7 +37,8 @@ export class MenuBarComponent implements OnInit {
     cadastrosTabelaBusca:CadastroInformacao[];
     items: MenuItem[];
     itemsmenu: MenuItem[];
-    msgs: Message[] = [];
+    msgsNome: Message[] = [];
+    msgsCpf: Message[] = [];
     user : Usuario;
     nomeUsuario: string;
     profileUser: string;
@@ -62,7 +63,15 @@ export class MenuBarComponent implements OnInit {
     }
     clickBuscaPorNome(event:any){
         this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado,null).then(data => {
+            this.msgsNome = [];
             this.cadastrosTabelaBusca = data['data'] 
+        }, error => {
+            this.msgsNome = [];
+            this.msgsNome.push({
+                severity: 'error',
+                summary: 'Erro ao buscar!',
+                detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + `</strong>. Verifique e tente novamente.`
+            })
         });
     
     }
@@ -70,6 +79,13 @@ export class MenuBarComponent implements OnInit {
     clickBuscaPorCPF(event:any){
         this.chamadasService.getBuscaCadastrado(null,this.cpfclienteSelecionado).then(data => {
             this.cadastrosTabelaBusca = data['data'] 
+        }, error => {
+            this.msgsCpf = [];
+            this.msgsCpf.push({
+                severity: 'error',
+                summary: 'Erro ao buscar!',
+                detail: `Não foi encontrado nenhum cadastro com o CPF: <strong>` + this.cpfclienteSelecionado + `</strong>. Verifique e tente novamente.`
+            })
         });
       
     }

@@ -294,10 +294,11 @@ export class CadastroComponent implements OnInit {
   setarTrue(dados) {
     console.log(dados);
     let rowData: Compradores = dados.data;
-    for(var i = 0, len = this.compradores.length; i < len; ++i) {
-      this.compradores[i].principal = false;
+    for (let _i = 0; _i < this.compradores.length; _i++) {
+      if (rowData.cpfcnpj == this.compradores[_i].cpfcnpj) {
+        this.compradores[_i].principal = true;
+      }
     }
-    rowData.principal = true;
   }
 
   verificarSelecionado() {

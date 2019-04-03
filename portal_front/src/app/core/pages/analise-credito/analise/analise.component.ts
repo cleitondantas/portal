@@ -12,6 +12,7 @@ import { TipoAmortizacao } from 'src/app/models/tipo-amortizacao';
 import { StatusSimulacao } from 'src/app/models/status-simulacao';
 
 import { Modalidades } from 'src/app/models/modalidades';
+import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 
 @Component({
   selector: 'app-analise',
@@ -46,7 +47,8 @@ export class AnaliseComponent implements OnInit {
     private service: AnaliseChamadasService,
     private router: Router,
     private analiseCred: AnaliseCreditoComponent,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private logicaService: AnaliseLogicaService
 
   ) { }
     items:any[];
@@ -165,6 +167,7 @@ export class AnaliseComponent implements OnInit {
       if (SharedService.getInstance().temporario == null) {
         SharedService.getInstance().temporario = temporario;
       }
+      this.simulacoes = new Simulacoes();
       this.ngOnInit();
     })
   }
@@ -183,40 +186,34 @@ export class AnaliseComponent implements OnInit {
 
   adicionarSimulacao(simulacao: Simulacoes, formSimulacao) {
     this.msgs = [];
-    if ((this.validaFormulario(formSimulacao) == true) && (this.simulacoes.codinstituicaofinanceira !== undefined)) {
-      var simulacao2: Simulacoes = new Simulacoes();
+    if ((this.validaFormulario(formSimulacao) == true) && (this.simulacoes.codinstituicaofinanceira != undefined || null)) {
+      let camposVazios: any[] = [];
 
-      simulacao2.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
-      simulacao2.codcadastro = this.codcadastro;
-      simulacao2.valoravaliacao = simulacao.valoravaliacao;
-      simulacao2.valorcompravenda = simulacao.valorcompravenda;
-      simulacao2.valorcredito = simulacao.valorcredito;
-      if (simulacao.codmodalidadesimulacao == undefined) {
-        simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao;
-      } else {
-        simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao.codModalidadeSimulacao ;
+      for (var _i in formSimulacao.controls) {
+        if (formSimulacao.controls[_i].value == undefined || null || "") {
+          let campoVazio = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoVazio = campoVazio.replace(': ', '');
+          camposVazios.push(` ` + campoVazio);
+        }
       }
-      simulacao2.dataenviobanco = simulacao.dataenviobanco;
-      simulacao2.codsicaq = simulacao.codsicaq;
-      simulacao2.correspondente = simulacao.correspondente;
-      simulacao2.prazofinanciamento = simulacao.prazofinanciamento;
-      if (simulacao.codtipoamortizacao == undefined) {
-        simulacao2.codtipoamortizacao = simulacao.codtipoamortizacao;
-      } else {
-        simulacao2.codtipoamortizacao = simulacao.codtipoamortizacao.codtipoamortizacao;
-      }
-      simulacao2.valorsubsidio = simulacao.valorsubsidio;
-      simulacao2.valordespesasfinanciadas = simulacao.valordespesasfinanciadas;
-      simulacao2.valorfinanciamento = simulacao.valorfinanciamento;
-      simulacao2.valorfgts = simulacao.valorfgts;
-      simulacao2.valorrecursosproprios = simulacao.valorrecursosproprios;
-      simulacao2.saldodevedor = simulacao.saldodevedor;
-      simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
-  
-      this.simulacaoLista.push(simulacao2);
-      this.simulacoes.codinstituicaofinanceira = null;
-      console.log(this.simulacaoLista);
-      this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Simulação adicionada!'});
+
+      this.confirmationService.confirm({
+        message: `As seguintes informações não estão preenchidas:<strong>` + camposVazios + ".</strong><br><br><p>Deseja continuar?</p>",
+        header: 'Confirmação',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Sim',
+        rejectLabel: 'Não',
+        accept: () => {
+          var simulacao2 = this.logicaService.adicionarSimulacao(simulacao, this.codcadastro);
+        
+          this.simulacaoLista.push(simulacao2);
+          this.simulacoes.codinstituicaofinanceira = null;
+          console.log(this.simulacaoLista);
+          this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Simulação adicionada!'});
+        },
+        reject: () => {
+
+        }})
     } else {
       this.msgs = [];
       let camposInvalidos: any[] = [];
@@ -259,6 +256,9 @@ export class AnaliseComponent implements OnInit {
       var item = this.simulacaoLista[_i];
       this.simulacaoLista[_i].codinstituicaofinanceira = item.codinstituicaofinanceira ?  Number(item.codinstituicaofinanceira.codInstituicaoFinanceira):null;
       this.simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
+      this.simulacaoLista[_i].codmodalidadesimulacao = item.codmodalidadesimulacao.codModalidadeSimulacao ? item.codmodalidadesimulacao.codModalidadeSimulacao: item.codmodalidadesimulacao;
+      this.simulacaoLista[_i].codtipoamortizacao = item.codtipoamortizacao.codtipoamortizacao ? item.codtipoamortizacao.codtipoamortizacao: item.codtipoamortizacao;
+
       if (this.simulacaoLista[_i].codsicaq == true) {
         this.simulacaoLista[_i].codsicaq = 0;
       } else {
@@ -268,6 +268,7 @@ export class AnaliseComponent implements OnInit {
     
     this.analise.simulacoes= this.simulacaoLista;
     this.analise.numerocadastroincorporadorafid = this.analise.numerocadastroincorporadorafid;
+
     if (this.controle == true) {
       
       if (this.analise.dataassinatura != null) {
@@ -289,22 +290,46 @@ export class AnaliseComponent implements OnInit {
 
       this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
       setTimeout(() => {
-        this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => console.log(data));
+        this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
+          console.log(data)
+          
+          if (this.analise.dataassinatura != null) {
+            this.analise.dataassinatura = new Date(this.analise.dataassinatura);
+          }
+          if (this.analise.dataemissao != null) {
+            this.analise.dataemissao = new Date(this.analise.dataemissao);
+          }
+          if (this.analise.datapastamae != null) {
+            this.analise.datapastamae = new Date(this.analise.datapastamae);
+          }
+        
+          for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
+            this.analise.simulacoes[_i].dataenviobanco = new Date(this.analise.simulacoes[_i].dataenviobanco);
+          }
+        
+          for (var _i = 0; _i  < this.simulacaoLista.length; _i++) {
+            for(let item = 0; item < this.statussimulacao.length; item++){
+              if(this.simulacaoLista[_i].codstatussimulacao === this.statussimulacao[item].codstatussimulacao){
+                this.simulacaoLista[_i].codstatussimulacao = {
+                  codstatussimulacao: this.statussimulacao[item].codstatussimulacao,
+                  descstatussimulacao: this.statussimulacao[item].descstatussimulacao              
+                };
+              }
+            }
+          }
+        
+          for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
+            for (let item = 0; item < this.instFinan.length; item++) {
+              if (this.simulacaoLista[_i].codinstituicaofinanceira == this.instFinan[item].codInstituicaoFinanceira) {
+                this.simulacaoLista[_i].codinstituicaofinanceira = {
+                  codInstituicaoFinanceira: this.instFinan[item].codInstituicaoFinanceira,
+                  descInstituicaoFinanceira: this.instFinan[item].descInstituicaoFinanceira
+                }
+              }
+            }
+          }  
+        });
       }, 500);
-
-      if (this.analise.dataassinatura != null) {
-        this.analise.dataassinatura = new Date(this.analise.dataassinatura);
-      }
-      if (this.analise.dataemissao != null) {
-        this.analise.dataemissao = new Date(this.analise.dataemissao);
-      }
-      if (this.analise.datapastamae != null) {
-        this.analise.datapastamae = new Date(this.analise.datapastamae);
-      }
-
-      for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
-        this.analise.simulacoes[_i].dataenviobanco = new Date(this.analise.simulacoes[_i].dataenviobanco);
-      }
     } else {
       for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].codcadastro = this.codcadastro;
@@ -493,32 +518,7 @@ export class AnaliseComponent implements OnInit {
     if (this.validaFormulario(formSimulacao) == true) {
       for (let item = 0; item < this.simulacaoLista.length; item++) {
         if (this.simulacaoLista[item].codsimulacao == this.simulacoes.codsimulacao) {
-            this.simulacaoLista[item].codcadastro = this.simulacoes.codcadastro;
-            this.simulacaoLista[item].valoravaliacao = this.simulacoes.valoravaliacao;
-            this.simulacaoLista[item].valorcompravenda = this.simulacoes.valorcompravenda;
-            this.simulacaoLista[item].valorcredito = this.simulacoes.valorcredito;
-            if (this.simulacoes.codmodalidadesimulacao == undefined) {
-              this.simulacaoLista[item].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao;
-            } else {
-              this.simulacaoLista[item].codmodalidadesimulacao = this.simulacoes.codmodalidadesimulacao.codModalidadeSimulacao;
-            }
-            this.simulacaoLista[item].dataenviobanco = this.simulacoes.dataenviobanco;
-            this.simulacaoLista[item].codsicaq = this.simulacoes.codsicaq;
-            this.simulacaoLista[item].correspondente = this.simulacoes.correspondente;
-            this.simulacaoLista[item].prazofinanciamento = this.simulacoes.prazofinanciamento;
-            if (this.simulacoes.codtipoamortizacao == undefined) {
-              this.simulacaoLista[item].codtipoamortizacao = this.simulacoes.codtipoamortizacao;
-            } else {
-              this.simulacaoLista[item].codtipoamortizacao = this.simulacoes.codtipoamortizacao.codtipoamortizacao;
-            }
-            this.simulacaoLista[item].codtipoamortizacao = this.simulacoes.codtipoamortizacao.codtipoamortizacao
-            this.simulacaoLista[item].valorsubsidio = this.simulacoes.valorsubsidio;
-            this.simulacaoLista[item].valordespesasfinanciadas = this.simulacoes.valordespesasfinanciadas;
-            this.simulacaoLista[item].valorfinanciamento = this.simulacoes.valorfinanciamento;
-            this.simulacaoLista[item].valorfgts = this.simulacoes.valorfgts;
-            this.simulacaoLista[item].valorrecursosproprios = this.simulacoes.valorrecursosproprios;
-            this.simulacaoLista[item].saldodevedor = this.simulacoes.saldodevedor;
-            this.simulacaoLista[item].codinstituicaofinanceira = this.simulacoes.codinstituicaofinanceira;
+          this.simulacaoLista[item] = this.logicaService.salvarAlteracoes(this.simulacaoLista, this.simulacoes);
         }
       }
 
