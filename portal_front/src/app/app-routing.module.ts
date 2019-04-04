@@ -11,10 +11,11 @@ import { GraficComponent } from './core/pages/grafic/grafic.component';
 import { ImportComponent } from './core/pages/import/import.component';
 import { InformacoesComponent } from './core/pages/informacoes/informacoes.component';
 import { AnaliseCreditoComponent } from './core/pages/analise-credito/analise-credito.component';
+import { AnaliseGuard } from './guards/analise.guard';
 
 const routes: Routes = [
   { path: 'informacoes', canActivate: [AuthGuard],component: InformacoesComponent},
-  { path: 'analise',canActivate: [AuthGuard], component: AnaliseCreditoComponent},
+  { path: 'analise',canActivate: [AuthGuard, AnaliseGuard], component: AnaliseCreditoComponent},
   { path: 'importar', canActivate: [AuthGuard],component: ImportComponent},
   { path: 'cadastrousuario', canActivate: [AuthGuard],  component: CadastrousuarioComponent},
   { path: 'home',  canActivate: [AuthGuard],  component: HomeComponent},

@@ -8,6 +8,7 @@ import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import {TableModule} from 'primeng/table';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { AnaliseGuard } from './guards/analise.guard';
 import { CadastroGuard } from './guards/cadastro.guard';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ConfirmationService } from 'primeng/api';
@@ -28,6 +29,7 @@ import { ConfirmationService } from 'primeng/api';
   providers: [
     AuthService,
     AuthGuard,
+    AnaliseGuard,
     CadastroGuard,
     { provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

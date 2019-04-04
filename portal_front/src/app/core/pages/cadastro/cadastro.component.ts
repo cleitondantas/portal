@@ -324,6 +324,7 @@ export class CadastroComponent implements OnInit {
   confirmacao(cadInfo: CadastroInformacao, formulario) {
     let principal = this.verificarSelecionado();
     if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
+      this.msgs, this.msgs2 = [];
       this.confirmationService.confirm({
         message: 'Tem certeza que deseja continuar?',
         header: 'Confirmação',

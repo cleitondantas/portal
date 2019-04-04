@@ -95,57 +95,15 @@ export class AnaliseComponent implements OnInit {
 
     let AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
 
-    if (AnaliseSelecionada != "undefined") {
-      let jsonObj: any = JSON.parse(AnaliseSelecionada);// Recebe os dados enviados pela busca de cadastro
-      let analise: Analise = <Analise>jsonObj;
-
-      if (analise.datapastamae != null) {
-        analise.datapastamae = new Date(analise.datapastamae);
-      }
-      if (analise.dataemissao != null) {
-        analise.dataemissao = new Date(analise.dataemissao);
-      }
-      if (analise.dataassinatura != null) {
-        analise.dataassinatura = new Date(analise.dataassinatura);
-      }
+    if (AnaliseSelecionada != "undefined" && AnaliseSelecionada != null) {
+      let analise: Analise = this.logicaService.receberAnalise(AnaliseSelecionada, this.statusSimulEvent, this.instFinanEvent, this.statussimulacao, this.instFinan)
 
       this.analise = analise;
       this.codcadastro = analise.codcadastro;
       this.simulacoes.codcadastro = this.codcadastro;
       this.analise.numerocadastroincorporadorafid = analise.numerocadastroincorporadorafid
-
-      this.statusSimulEvent.subscribe(dado => {
-        if (dado == true) {
-          for (var _i = 0; _i  < analise.simulacoes.length; _i++) {
-            for(var item = 0; item < this.statussimulacao.length; item++){
-              if(analise.simulacoes[_i].codstatussimulacao === this.statussimulacao[item].codstatussimulacao){
-                  analise.simulacoes[_i].codstatussimulacao = {
-                  codstatussimulacao: this.statussimulacao[item].codstatussimulacao,
-                  descstatussimulacao: this.statussimulacao[item].descstatussimulacao              
-                };
-              }
-            }
-          }
-        }
-      })
-
-      this.instFinanEvent.subscribe(dado => {
-        if (dado == true) {
-          for (var _i = 0; _i < analise.simulacoes.length; _i++) {
-            for (var item = 0; item < this.instFinan.length; item++) {
-              if (analise.simulacoes[_i].codinstituicaofinanceira == this.instFinan[item].codInstituicaoFinanceira) {
-                analise.simulacoes[_i].codinstituicaofinanceira = {
-                  codInstituicaoFinanceira: this.instFinan[item].codInstituicaoFinanceira,
-                  descInstituicaoFinanceira: this.instFinan[item].descInstituicaoFinanceira
-                }
-              }
-            }
-          }
-        }
-      })
    
       for (var _i = 0; _i < analise.simulacoes.length; _i++) {
-        analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
         if(analise.simulacoes[_i].simulacaoselecionado == true){
           this.selectedItem = analise.simulacoes[_i];
         }
@@ -197,41 +155,36 @@ export class AnaliseComponent implements OnInit {
         }
       }
 
-      this.confirmationService.confirm({
-        message: `As seguintes informações não estão preenchidas:<strong>` + camposVazios + ".</strong><br><br><p>Deseja continuar?</p>",
-        header: 'Confirmação',
-        icon: 'pi pi-exclamation-triangle',
-        acceptLabel: 'Sim',
-        rejectLabel: 'Não',
-        accept: () => {
-          var simulacao2 = this.logicaService.adicionarSimulacao(simulacao, this.codcadastro);
-        
-          this.simulacaoLista.push(simulacao2);
-          this.simulacoes.codinstituicaofinanceira = null;
-          console.log(this.simulacaoLista);
-          this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Simulação adicionada!'});
-        },
-        reject: () => {
-
-        }})
-    } else {
-      this.msgs = [];
-      let camposInvalidos: any[] = [];
-
-      for (var _i in formSimulacao.controls) {
-        if (formSimulacao.controls[_i].status == "INVALID") {
-          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
-          campoInvalido = campoInvalido.replace(': ', '');
-          camposInvalidos.push(` ` + campoInvalido);
-          formSimulacao.controls[_i].pristine = false;
-          this.msgs = [];
-          this.msgs.push({
-            severity: 'error',
-            summary: 'Erro ao adicionar comprador!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
-        }
+      if (camposVazios.length > 0) {
+        this.confirmationService.confirm({
+          message: `As seguintes informações não estão preenchidas:<strong>` + camposVazios + ".</strong><br><br><p>Deseja continuar?</p>",
+          header: 'Confirmação',
+          icon: 'pi pi-exclamation-triangle',
+          acceptLabel: 'Sim',
+          rejectLabel: 'Não',
+          accept: () => {
+            var simulacao2 = this.logicaService.adicionarSimulacao(simulacao, this.codcadastro);
+          
+            this.simulacaoLista.push(simulacao2);
+            this.simulacoes.codinstituicaofinanceira = null;
+            console.log(this.simulacaoLista);
+            this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Simulação adicionada!'});
+          },
+          reject: () => {
+  
+          }})
+      } else {
+        var simulacao2 = this.logicaService.adicionarSimulacao(simulacao, this.codcadastro);
+          
+        this.simulacaoLista.push(simulacao2);
+        this.simulacoes.codinstituicaofinanceira = null;
+        console.log(this.simulacaoLista);
+        this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Simulação adicionada!'});
       }
+
+      
+    } else {
+      this.adicionarMsgErro(formSimulacao);
 
       if (this.simulacoes.codinstituicaofinanceira == undefined) {
         this.msgs.push({
@@ -250,40 +203,9 @@ export class AnaliseComponent implements OnInit {
   }
 
   salvar() {
-    this.analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
-    this.analise.codcadastro  = this.codcadastro;
-    for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
-      var item = this.simulacaoLista[_i];
-      this.simulacaoLista[_i].codinstituicaofinanceira = item.codinstituicaofinanceira ?  Number(item.codinstituicaofinanceira.codInstituicaoFinanceira):null;
-      this.simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
-      this.simulacaoLista[_i].codmodalidadesimulacao = item.codmodalidadesimulacao.codModalidadeSimulacao ? item.codmodalidadesimulacao.codModalidadeSimulacao: item.codmodalidadesimulacao;
-      this.simulacaoLista[_i].codtipoamortizacao = item.codtipoamortizacao.codtipoamortizacao ? item.codtipoamortizacao.codtipoamortizacao: item.codtipoamortizacao;
-
-      if (this.simulacaoLista[_i].codsicaq == true) {
-        this.simulacaoLista[_i].codsicaq = 0;
-      } else {
-        this.simulacaoLista[_i].codsicaq = 1;
-      }
-    }
-    
-    this.analise.simulacoes= this.simulacaoLista;
-    this.analise.numerocadastroincorporadorafid = this.analise.numerocadastroincorporadorafid;
+    this.analise = this.logicaService.salvarAnalise(this.analise, this.simulacaoLista, this.codcadastro, this.controle);
 
     if (this.controle == true) {
-      
-      if (this.analise.dataassinatura != null) {
-        this.analise.dataassinatura = new Date(this.analise.dataassinatura);
-      }
-      if (this.analise.dataemissao != null) {
-        this.analise.dataemissao = new Date(this.analise.dataemissao);
-      }
-      if (this.analise.datapastamae != null) {
-        this.analise.datapastamae = new Date(this.analise.datapastamae);
-      }
-
-      for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
-        this.analise.simulacoes[_i].dataenviobanco = this.analise.simulacoes[_i].dataenviobanco.toISOString();
-      }
 
       console.log(this.analise);
       console.log(JSON.stringify(this.analise));
@@ -293,41 +215,8 @@ export class AnaliseComponent implements OnInit {
         this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
           console.log(data)
           
-          if (this.analise.dataassinatura != null) {
-            this.analise.dataassinatura = new Date(this.analise.dataassinatura);
-          }
-          if (this.analise.dataemissao != null) {
-            this.analise.dataemissao = new Date(this.analise.dataemissao);
-          }
-          if (this.analise.datapastamae != null) {
-            this.analise.datapastamae = new Date(this.analise.datapastamae);
-          }
-        
-          for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
-            this.analise.simulacoes[_i].dataenviobanco = new Date(this.analise.simulacoes[_i].dataenviobanco);
-          }
-        
-          for (var _i = 0; _i  < this.simulacaoLista.length; _i++) {
-            for(let item = 0; item < this.statussimulacao.length; item++){
-              if(this.simulacaoLista[_i].codstatussimulacao === this.statussimulacao[item].codstatussimulacao){
-                this.simulacaoLista[_i].codstatussimulacao = {
-                  codstatussimulacao: this.statussimulacao[item].codstatussimulacao,
-                  descstatussimulacao: this.statussimulacao[item].descstatussimulacao              
-                };
-              }
-            }
-          }
-        
-          for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
-            for (let item = 0; item < this.instFinan.length; item++) {
-              if (this.simulacaoLista[_i].codinstituicaofinanceira == this.instFinan[item].codInstituicaoFinanceira) {
-                this.simulacaoLista[_i].codinstituicaofinanceira = {
-                  codInstituicaoFinanceira: this.instFinan[item].codInstituicaoFinanceira,
-                  descInstituicaoFinanceira: this.instFinan[item].descInstituicaoFinanceira
-                }
-              }
-            }
-          }  
+          this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
+          this.simulacaoLista = this.analise.simulacoes;
         });
       }, 500);
     } else {
@@ -404,23 +293,7 @@ export class AnaliseComponent implements OnInit {
         }
       });
     } else {
-      this.msgs2 = [];
-      let camposInvalidos: any[] = [];
-
-      for (var _i in formDatasDoProcesso.controls) {
-        if (formDatasDoProcesso.controls[_i].status == "INVALID") {
-          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
-          campoInvalido = campoInvalido.replace(': ', '');
-          camposInvalidos.push(` ` + campoInvalido);
-          formDatasDoProcesso.controls[_i].pristine = false;
-          this.msgs2 = [];
-          this.msgs2.push({
-            severity: 'error',
-            summary: 'Erro ao salvar!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
-        }
-      }
+      this.adicionarMsgErro(formDatasDoProcesso);
 
       if (this.simulacaoLista.length == 0) {
         this.msgs2.push({
@@ -472,45 +345,9 @@ export class AnaliseComponent implements OnInit {
     });
   }
 
-  visualizarSimulacao(simulacao: Simulacoes) {
+  visualizarSimulacao(simulacao) {
     this.salvarAlteracoesButton = false;
-
-    this.simulacoes.codsimulacao = simulacao.codsimulacao;
-    this.simulacoes.valoravaliacao = simulacao.valoravaliacao;
-    this.simulacoes.valorcompravenda = simulacao.valorcompravenda;
-    this.simulacoes.valorcredito = simulacao.valorcredito;
-    for (let item = 0; item < this.modalidade.length; item++) {
-      if(simulacao.codmodalidadesimulacao == this.modalidade[item].codModalidadeSimulacao){
-        simulacao.codmodalidadesimulacao = {
-          codModalidadeSimulacao: this.modalidade[item].codModalidadeSimulacao,
-          descModalidadeSimulacao: this.modalidade[item].descModalidadeSimulacao  
-        };
-      }
-    }
-    this.simulacoes.codmodalidadesimulacao = simulacao.codmodalidadesimulacao;
-
-    this.simulacoes.dataenviobanco = simulacao.dataenviobanco;
-    this.simulacoes.codsicaq = simulacao.codsicaq;
-    this.simulacoes.correspondente = simulacao.correspondente;
-    this.simulacoes.prazofinanciamento = simulacao.prazofinanciamento;
-
-    for (let item = 0; item < this.tipoAmortizacao.length; item++) {
-      if(simulacao.codtipoamortizacao == this.tipoAmortizacao[item].codtipoamortizacao){
-        simulacao.codtipoamortizacao = {
-          codtipoamortizacao: this.tipoAmortizacao[item].codtipoamortizacao,
-          desctipoamortizacao: this.tipoAmortizacao[item].desctipoamortizacao  
-        };
-      }
-    }
-    this.simulacoes.codtipoamortizacao = simulacao.codtipoamortizacao;
-
-    this.simulacoes.valorsubsidio = simulacao.valorsubsidio;
-    this.simulacoes.valordespesasfinanciadas = simulacao.valordespesasfinanciadas;
-    this.simulacoes.valorfinanciamento = simulacao.valorfinanciamento;
-    this.simulacoes.valorfgts = simulacao.valorfgts;
-    this.simulacoes.valorrecursosproprios = simulacao.valorrecursosproprios;
-    this.simulacoes.saldodevedor = simulacao.saldodevedor;
-    this.simulacoes.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
+    this.simulacoes = this.logicaService.visualizarSimulacao(simulacao, this.modalidade, this.tipoAmortizacao);
   }
 
   salvarAlteracoes(formSimulacao) {
@@ -526,22 +363,26 @@ export class AnaliseComponent implements OnInit {
       this.simulacoes.codinstituicaofinanceira = null;
       this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
     } else {
-      this.msgs = [];
-      let camposInvalidos: any[] = [];
+      this.adicionarMsgErro(formSimulacao);
+    }
+  }
 
-      for (var _i in formSimulacao.controls) {
-        if (formSimulacao.controls[_i].status == "INVALID") {
-          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
-          campoInvalido = campoInvalido.replace(': ', '');
-          camposInvalidos.push(` ` + campoInvalido);
-          formSimulacao.controls[_i].pristine = false;
-          this.msgs = [];
-          this.msgs.push({
-            severity: 'error',
-            summary: 'Erro ao salvar alterações!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
-        }
+  adicionarMsgErro(form) {
+    this.msgs = [];
+    let camposInvalidos: any[] = [];
+
+    for (var _i in form.controls) {
+      if (form.controls[_i].status == "INVALID") {
+        let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+        campoInvalido = campoInvalido.replace(': ', '');
+        camposInvalidos.push(` ` + campoInvalido);
+        form.controls[_i].pristine = false;
+        this.msgs = [];
+        this.msgs.push({
+          severity: 'error',
+          summary: 'Erro ao salvar alterações!',
+          detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+        })
       }
     }
   }
