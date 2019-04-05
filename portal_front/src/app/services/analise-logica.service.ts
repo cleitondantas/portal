@@ -2,6 +2,7 @@ import { Simulacoes } from './../models/simulacoes';
 import { SharedService } from 'src/app/services/shared.service';
 import { Injectable } from '@angular/core';
 import { Analise } from '../models/analise';
+import { InstiruicaoFinanceiras } from '../models/instituicaoFinanceira';
 
 @Injectable({
   providedIn: 'root'
@@ -78,7 +79,7 @@ export class AnaliseLogicaService {
     }
   }
 
-  visualizarSimulacao(simulacao: Simulacoes, modalidade, amortizacao) {
+  visualizarSimulacao(simulacao: Simulacoes, modalidade, amortizacao, instFinan: InstiruicaoFinanceiras[]) {
     let simulacao2: Simulacoes = new Simulacoes();
 
     simulacao2.codsimulacao = simulacao.codsimulacao;
@@ -119,6 +120,14 @@ export class AnaliseLogicaService {
     simulacao2.valorfgts = simulacao.valorfgts;
     simulacao2.valorrecursosproprios = simulacao.valorrecursosproprios;
     simulacao2.saldodevedor = simulacao.saldodevedor;
+    for (let item = 0; item < instFinan.length; item++) {
+      if (simulacao.codinstituicaofinanceira == instFinan[item].codInstituicaoFinanceira) {
+        simulacao.codinstituicaofinanceira = {
+          codInstituicaoFinanceira: instFinan[item].codInstituicaoFinanceira,
+          descInstituicaoFinanceira: instFinan[item].descInstituicaoFinanceira
+        };
+      }
+    }
     simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
 
     return simulacao2;
@@ -209,7 +218,7 @@ export class AnaliseLogicaService {
     return analise;
   }
 
-  receberAnalise(analiseSelecionada, statusSimulEvent, instFinanEvent, statussimulacao, instFinan) {
+  receberAnalise(analiseSelecionada, statusSimulEvent, instFinanEvent, instFinan, statussimulacao) {
     let jsonObj: any = JSON.parse(analiseSelecionada);// Recebe os dados enviados pela busca de cadastro
     let analise: Analise = <Analise>jsonObj;
 

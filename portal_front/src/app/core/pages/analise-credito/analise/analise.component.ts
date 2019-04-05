@@ -28,7 +28,8 @@ export class AnaliseComponent implements OnInit {
   instFinanEvent = new EventEmitter<any>();
   salvarAlteracoesButton: boolean = true;
   selectedItem:any;
-  instFinan: InstiruicaoFinanceiras[];
+  instFinan: InstiruicaoFinanceiras[] = [];
+  instFinanTemp: InstiruicaoFinanceiras[];
   modalidade: Modalidades[];
   tipoAmortizacao: TipoAmortizacao[];
   simul: any;
@@ -48,7 +49,8 @@ export class AnaliseComponent implements OnInit {
     private router: Router,
     private analiseCred: AnaliseCreditoComponent,
     private messageService: MessageService,
-    private logicaService: AnaliseLogicaService
+    private logicaService: AnaliseLogicaService,
+    private sharedService: SharedService
 
   ) { }
     items:any[];
@@ -61,30 +63,26 @@ export class AnaliseComponent implements OnInit {
   ngOnInit() {
     this.simulacaoLista = [];
 
-    this.br = {
-      firstDayOfWeek: 0,
-      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
-      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
-      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
-      today: 'Hoje',
-      clear: 'Limpar',
-      dateFormat: 'dd/mm/yy'
-    }
+    this.br = this.sharedService.calendarioBr();
 
     this.service.getInstFinan().subscribe(dados => {
+      this.instFinanTemp = dados['data']
+      for (var _i = 0; _i < this.instFinanTemp.length; _i++) {
+        let item: InstiruicaoFinanceiras = new InstiruicaoFinanceiras();
+        item.codInstituicaoFinanceira =   this.instFinanTemp[_i].codInstituicaoFinanceira;
+        item.descInstituicaoFinanceira = this.instFinanTemp[_i].descInstituicaoFinanceira;
+        this.instFinan[_i] = item;
+      }
+      this.instFinanEvent.emit(true);
       this.instFinan = dados['data']
-      this.instFinanEvent.emit(true)
     });
 
     this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
 
-    this.service.getStatusSimulacao().subscribe(data => {
-      this.statussimulacaoTemp =  data['data'] 
+    this.service.getStatusSimulacao().subscribe(dados => {
+      this.statussimulacaoTemp =  dados['data'] 
         for (var _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
-          //(data['data'][_i] as StatusSimulacao).descstatussimulacao
           let item: StatusSimulacao = new StatusSimulacao();
           item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
           item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
@@ -96,7 +94,7 @@ export class AnaliseComponent implements OnInit {
     let AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
 
     if (AnaliseSelecionada != "undefined" && AnaliseSelecionada != null) {
-      let analise: Analise = this.logicaService.receberAnalise(AnaliseSelecionada, this.statusSimulEvent, this.instFinanEvent, this.statussimulacao, this.instFinan)
+      let analise: Analise = this.logicaService.receberAnalise(AnaliseSelecionada, this.statusSimulEvent, this.instFinanEvent, this.instFinan, this.statussimulacao )
 
       this.analise = analise;
       this.codcadastro = analise.codcadastro;
@@ -347,7 +345,7 @@ export class AnaliseComponent implements OnInit {
 
   visualizarSimulacao(simulacao) {
     this.salvarAlteracoesButton = false;
-    this.simulacoes = this.logicaService.visualizarSimulacao(simulacao, this.modalidade, this.tipoAmortizacao);
+    this.simulacoes = this.logicaService.visualizarSimulacao(simulacao, this.modalidade, this.tipoAmortizacao, this.instFinan);
   }
 
   salvarAlteracoes(formSimulacao) {
