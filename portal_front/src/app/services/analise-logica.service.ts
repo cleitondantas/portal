@@ -3,13 +3,16 @@ import { SharedService } from 'src/app/services/shared.service';
 import { Injectable } from '@angular/core';
 import { Analise } from '../models/analise';
 import { InstiruicaoFinanceiras } from '../models/instituicaoFinanceira';
+import { DadosFaturamento } from '../models/dadosfaturamento';
+import { AnaliseChamadasService } from './analise-chamadas.service';
+import { SPE } from '../models/spe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnaliseLogicaService {
 
-  constructor() { }
+  constructor(private analiseChamadasService: AnaliseChamadasService) { }
 
   adicionarSimulacao(simulacao: Simulacoes, cod: number) {
     var simulacao2: Simulacoes = new Simulacoes();
@@ -88,7 +91,9 @@ export class AnaliseLogicaService {
     simulacao2.valorcredito = simulacao.valorcredito;
 
     if (simulacao.dataenviobanco != null) {
-      simulacao2.dataenviobanco = simulacao.dataenviobanco;
+      simulacao2.dataenviobanco = new Date(simulacao.dataenviobanco);
+      simulacao2.dataenviobanco.toUTCString();
+      simulacao2.dataenviobanco = this.fixUTC(simulacao2.dataenviobanco);
     }
 
     for (let item = 0; item < modalidade.length; item++) {
@@ -224,12 +229,18 @@ export class AnaliseLogicaService {
 
     if (analise.datapastamae != null) {
       analise.datapastamae = new Date(analise.datapastamae);
+      analise.datapastamae.toUTCString();
+      analise.datapastamae = this.fixUTC(analise.datapastamae);
     }
     if (analise.dataemissao != null) {
       analise.dataemissao = new Date(analise.dataemissao);
+      analise.dataemissao.toUTCString();
+      analise.dataemissao = this.fixUTC(analise.dataemissao);
     }
     if (analise.dataassinatura != null) {
       analise.dataassinatura = new Date(analise.dataassinatura);
+      analise.dataassinatura.toUTCString();
+      analise.dataassinatura = this.fixUTC(analise.dataassinatura);
     }
 
     statusSimulEvent.subscribe(dado => {
@@ -269,5 +280,63 @@ export class AnaliseLogicaService {
     }
 
     return analise;
+  }
+
+  receberDadosFaturamento(analiseSelecionada, dadosfaturamento: DadosFaturamento, speEvent) {
+    let jsonObj: any = JSON.parse(analiseSelecionada);// Recebe os dados enviados pela busca de cadastro
+    let analise: Analise = <Analise>jsonObj;
+    dadosfaturamento.codanalise= analise.codanalise;
+    dadosfaturamento.codcadastro = analise.codcadastro;
+    speEvent.subscribe(dado => {
+      let spe: SPE[] = dado['data'];
+
+      this.analiseChamadasService.getDadosFaturamento(analise.codcadastro).subscribe(dados=> {
+        for (var _i = 0; _i < dados['data'].length; _i++) { 
+          dadosfaturamento.coddadosfaturamento = dados['data'][_i].coddadosfaturamento;
+          dadosfaturamento.codanalise = dados['data'][_i].codanalise;
+          dadosfaturamento.codcadastro = dados['data'][_i].codcadastro;
+          dadosfaturamento.cpfcnpj = dados['data'][_i].cpfcnpj;      
+          dadosfaturamento.parcela1 = dados['data'][_i].parcela1;
+          dadosfaturamento.notafiscal1   = dados['data'][_i].notafiscal1;
+
+          for (let item = 0; item < spe.length; item++) {
+            if (dados['data'][_i].razaosocialspe == spe[item].descspe) {
+              dados['data'][_i].razaosocialspe = {
+                cnpjspe: spe[item].cnpjspe,
+                codincorporadora: spe[item].codincorporadora,
+                descspe: spe[item].descspe
+              }
+            }
+          }
+          
+          dadosfaturamento.razaosocialspe = dados['data'][_i].razaosocialspe;
+
+          dadosfaturamento.mesfaturamento1 = new Date(dados['data'][_i].mesfaturamento1);
+          dadosfaturamento.parcela2 = dados['data'][_i].parcela2;
+          dadosfaturamento.notafiscal2 = dados['data'][_i].notafiscal2;
+          dadosfaturamento.mesfaturamento2 = new Date(dados['data'][_i].mesfaturamento2);
+          dadosfaturamento.mesfaturado = new Date(dados['data'][_i].mesfaturado);
+          dadosfaturamento.totalrecebimentoincorporadora = dados['data'][_i].totalrecebimentoincorporadora;
+          dadosfaturamento.recebimentoteoricobanco = dados['data'][_i].recebimentoteoricobanco;
+          dadosfaturamento.totalrecebido = dados['data'][_i].totalrecebido;
+          dadosfaturamento.observacao = dados['data'][_i].observacao;
+          dadosfaturamento.totalrecebidoincorporadora = dados['data'][_i].totalrecebidoincorporadora;
+          dadosfaturamento.numeronotafiscal = dados['data'][_i].numeronotafiscal;
+        }
+      }
+      );
+    })
+
+    return dadosfaturamento;
+  }
+
+  private fixUTC(date: Date) {
+    let ano  = date.getUTCFullYear();
+    let mes = date.getUTCMonth();
+    let dia = date.getUTCDate();
+    let hora = date.getUTCHours();
+    let novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3))
+
+    return novaData;
   }
 }

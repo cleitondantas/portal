@@ -12,10 +12,12 @@ import { AnaliseGuard } from './guards/analise.guard';
 import { CadastroGuard } from './guards/cadastro.guard';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ConfirmationService } from 'primeng/api';
+import { CalendarUTCDirective } from './directive/calendar-utc.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CalendarUTCDirective
   ],
   imports: [
     BrowserModule,

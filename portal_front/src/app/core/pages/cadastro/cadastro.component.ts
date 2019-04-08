@@ -519,8 +519,8 @@ export class CadastroComponent implements OnInit {
           this.selectedItem = this.cadInfo.clientes[_i];
         }
 
-      console.log(this.cadInfo)
       }
+      console.log(this.cadInfo)
 
       this.comprador = new Compradores();
       this.contatoDisplay = [];

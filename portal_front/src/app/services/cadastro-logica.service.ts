@@ -125,7 +125,11 @@ export class CadastroLogicaService {
     comprador.ndocumento = comprador2.ndocumento;
     comprador.orgaoexpedidor = comprador2.orgaoexpedidor;
     comprador.dataexpedicao = new Date(comprador2.dataexpedicao);
+    comprador.dataexpedicao.toUTCString();
+    comprador.dataexpedicao = this.fixUTC(comprador.dataexpedicao);
     comprador.datanascimento = new Date(comprador2.datanascimento);
+    comprador.datanascimento.toUTCString();
+    comprador.datanascimento = this.fixUTC(comprador.datanascimento);
 
     for (let item = 0; item < estadoCivil.length; item++) {
       if(comprador2.codestadocivil == estadoCivil[item].codestadocivil){
@@ -206,6 +210,8 @@ export class CadastroLogicaService {
     });
 
     cadInfo.dtentrada = new Date(cadastroinformacaoCarregada.dtentrada);
+    cadInfo.dtentrada.toUTCString();
+    cadInfo.dtentrada = this.fixUTC(cadInfo.dtentrada);
     cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
     cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
     cadInfo.unidade = cadastroinformacaoCarregada.unidade;
@@ -248,5 +254,17 @@ export class CadastroLogicaService {
     cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
 
     return cadInfo;
+  }
+
+  private fixUTC(date: Date) {
+    console.log(date)
+    let ano  = date.getUTCFullYear();
+    let mes = date.getUTCMonth();
+    console.log(mes)
+    let dia = date.getUTCDate();
+    let hora = date.getUTCHours();
+    let novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3))
+
+    return novaData;
   }
 }

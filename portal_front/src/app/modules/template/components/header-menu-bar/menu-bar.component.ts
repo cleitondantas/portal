@@ -28,6 +28,7 @@ export class MenuBarComponent implements OnInit {
 
     display: boolean = false;
     displayAnalise: boolean = false;
+    displayInfo: boolean = false;
     text: string;
     results: string[];
     nomeClienteFiltrado: any[];
@@ -111,6 +112,21 @@ export class MenuBarComponent implements OnInit {
 
         this.chamadasService.buscarCadastro.emit(true);
         this.router.navigate(['/cadastro']);
+    }
+
+    irInformacoes(codcadastro: number) {
+        for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
+            console.log(this.cadastrosTabelaBusca)
+            /*if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
+                for (let i = 0; i < this.cadastrosTabelaBusca[i].clientes[i]; i++) {}
+                if (this.nomeclienteSelecionado == this.cadastrosTabelaBusca[i].clientes) {
+                    sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i].clientes['nomecliente']))
+                }
+            }*/
+        }
+
+        this.router.navigate(['/informacoes']);
+        this.hideDialogInfo();
     }
 
     async irAnalise(codcadastro:number){
@@ -216,9 +232,12 @@ export class MenuBarComponent implements OnInit {
           },
           {
               label: 'Informações',
-              routerLink: '/informacoes',
               icon: 'pi pi-fw pi-search',
-              visible: true
+              visible: true,
+              command: (event: Event) => {this.showDialogInfo()},
+              items: [
+                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialogInfo()}}
+              ]
           },
           {
             label: 'Relatorio',
@@ -258,6 +277,14 @@ export class MenuBarComponent implements OnInit {
 }
   hideDialogDisplay(){
     this.displayAnalise = false;
+  }
+
+  showDialogInfo() {
+      this.displayInfo = true;
+  }
+
+  hideDialogInfo() {
+      this.displayInfo = false;
   }
 
 logOut(){
