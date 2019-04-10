@@ -7,6 +7,7 @@
           <label class="ajusteLabel" for="fid">FID: </label>
         </div>
         <div class="p-col-4">
+          {{fid}}
         </div>
       </div>
 
@@ -42,7 +43,7 @@
           <label class="ajusteLabel" for="dataExp">Data de expedição: </label>
         </div>
         <div class="p-col-4">
-          {{comprador.dataexpedicao}}
+          {{dataExpedicao}}
         </div>
       </div>
 
@@ -56,30 +57,21 @@
       </div>
 
       <p-fieldset legend="Contatos">
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="tipo">Tipo: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
+          <p-table [value]="contatoDisplay" [scrollable]="true" scrollHeight="200px" columnResizeMode="fit">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th><strong>Tipo</strong></th>
+                  <th><strong>Contato</strong></th>
+                </tr>
+              </ng-template>
 
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="contato">Contato: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="tipoC">Tipo contato: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
+              <ng-template pTemplate="body" let-contatoC let-cont>
+                <tr [pSelectableRow]="contatoC">
+                  <td> {{cont.tipocontato}} </td>
+                  <td> {{cont.desccontato}} </td>
+                </tr>
+              </ng-template>
+            </p-table>
       </p-fieldset>
 
     </div>
@@ -127,7 +119,7 @@
           <label class="ajusteLabel" for="dataNasc">Data de nascimento: </label>
         </div>
         <div class="p-col-4">
-          {{comprador.datanascimento}}
+          {{dataNascimento}}
         </div>
       </div>
       
@@ -184,7 +176,7 @@
           <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
         </div>
         <div class="p-col-4">
-          {{analise.valorcompravenda}}
+          R$ {{analise.valorcompravenda.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -193,6 +185,7 @@
           <label class="ajusteLabel" for="valorAprov">Valor aprovado: </label>
         </div>
         <div class="p-col-4">
+          R$ {{analise.valoravaliacao.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -210,7 +203,7 @@
           <label class="ajusteLabel" for="dataEnv">Data envio ao banco: </label>
         </div>
         <div class="p-col-4">
-          {{analise.dataenviobanco}}
+          {{dataEnvioAoBanco}}
         </div>
       </div>
 
@@ -219,6 +212,7 @@
           <label class="ajusteLabel" for="valorPrestAprov">Valor prestação aprovado: </label>
         </div>
         <div class="p-col-4">
+          R$ {{analise.valorprimeiraparcela.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -257,6 +251,7 @@
           <label class="ajusteLabel" for="banco">Banco: </label>
         </div>
         <div class="p-col-4">
+          {{analise.codinstituicaofinanceira}}
         </div>
       </div>
 
@@ -274,7 +269,7 @@
           <label class="ajusteLabel" for="valorSubs">Valor subsídio: </label>
         </div>
         <div class="p-col-4">
-          {{analise.valorsubsidio}}
+          R$ {{analise.valorsubsidio.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -283,7 +278,7 @@
           <label class="ajusteLabel" for="valorAvalBanco">Valor avaliação Banco: </label>
         </div>
         <div class="p-col-4">
-          {{analise.valoravaliacaoinstfinanc}}
+          R$ {{analise.valoravaliacaoinstfinanc.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -292,7 +287,7 @@
           <label class="ajusteLabel" for="fgts">FGTS: </label>
         </div>
         <div class="p-col-4">
-          {{analise.valorfgts}}
+          R$ {{analise.valorfgts.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -301,7 +296,7 @@
           <label class="ajusteLabel" for="recProprio">Recurso próprio: </label>
         </div>
         <div class="p-col-4">
-          {{analise.valorrecursosproprios}}
+          R$ {{analise.valorrecursosproprios.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 

@@ -9,6 +9,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { Compradores } from 'src/app/models/compradores';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
+import { Analise } from 'src/app/models/analise';
 
 declare var TweenMax: any;
 
@@ -115,18 +116,38 @@ export class MenuBarComponent implements OnInit {
     }
 
     irInformacoes(codcadastro: number) {
-        for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
-            console.log(this.cadastrosTabelaBusca)
-            /*if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
-                for (let i = 0; i < this.cadastrosTabelaBusca[i].clientes[i]; i++) {}
-                if (this.nomeclienteSelecionado == this.cadastrosTabelaBusca[i].clientes) {
-                    sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i].clientes['nomecliente']))
-                }
-            }*/
+        let storage = ['CADASTROSELECIONADO', 'ANALISESELECIONADA', 'fid'];
+        for (let i = 0; i < storage.length; i++) {
+            if (sessionStorage.getItem(storage[i]) !== null || undefined || "undefined") {
+                sessionStorage.removeItem(storage[i]);
+            }
         }
 
-        this.router.navigate(['/informacoes']);
-        this.hideDialogInfo();
+        for(let i=0; i < this.cadastrosTabelaBusca.length; i++){
+            console.log(this.cadastrosTabelaBusca)
+            if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
+                sessionStorage.setItem('fid', JSON.stringify(this.cadastrosTabelaBusca[i].numerocadastroincorporadorafid));
+                for (let item = 0; item < this.cadastrosTabelaBusca[i]['clientes'].length; item++) {
+                    if (this.nomeclienteSelecionado == this.cadastrosTabelaBusca[i]['clientes'][item].nomecliente) {{
+                        sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i]['clientes'][item]));
+                    }}
+                }
+
+                this.analiseService.getRegistroAnalise(codcadastro).subscribe(data => {
+                    let analise: Analise = data['data'][0];
+                    for (let item = 0; item < analise.simulacoes.length; item++) {
+                        if (analise.simulacoes[item].simulacaoselecionado == true) {
+                            sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(analise.simulacoes[item]));
+                        }
+                    }                    
+                    console.log(data)
+                    this.router.navigate(['/informacoes']);
+                    this.hideDialogInfo();
+                    this.analiseService.buscarInformacoes.emit(true);
+                });
+            }
+        }
+
     }
 
     async irAnalise(codcadastro:number){

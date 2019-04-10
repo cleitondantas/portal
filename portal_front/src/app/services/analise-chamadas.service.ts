@@ -19,6 +19,7 @@ export class AnaliseChamadasService {
 
   controle: boolean = false;
   buscarAnalise = new EventEmitter<any>();
+  buscarInformacoes = new EventEmitter<any>();
 
   constructor(
     private http: HttpClient

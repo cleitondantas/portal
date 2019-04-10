@@ -2,7 +2,7 @@ import { Contatos } from "./contatos";
 
 export class Compradores {
     cpfcnpj: string;
-    codtipocliente: number;
+    codtipocliente: any;
     nomecliente: string;
     ndocumento: string;
     orgaoexpedidor: any;

@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^7.1.0",
     "@angular/platform-browser-dynamic": "^7.1.0",
     "@angular/router": "^7.1.0",
+    "@brazilian-utils/format-cnpj": "^0.1.9",
+    "@brazilian-utils/format-cpf": "^0.1.8",
     "@brazilian-utils/is-valid-cnpj": "^0.1.11",
     "@brazilian-utils/is-valid-cpf": "^0.1.11",
     "angular2-text-mask": "^9.0.0",

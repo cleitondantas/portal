@@ -257,10 +257,8 @@ export class CadastroLogicaService {
   }
 
   private fixUTC(date: Date) {
-    console.log(date)
     let ano  = date.getUTCFullYear();
     let mes = date.getUTCMonth();
-    console.log(mes)
     let dia = date.getUTCDate();
     let hora = date.getUTCHours();
     let novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3))
