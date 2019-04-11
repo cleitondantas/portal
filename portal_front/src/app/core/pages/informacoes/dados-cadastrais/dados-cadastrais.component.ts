@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Compradores } from 'src/app/models/compradores';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
@@ -136,6 +136,8 @@ export class DadosCadastraisComponent implements OnInit {
 
     this.chamadaService.buscarInformacoes.subscribe(dado => {
       if (dado == true) {
+        this.analise = new Simulacoes();
+        this.dataEnvioAoBanco = ""
         this.ngOnInit();
       }
     })
@@ -165,5 +167,4 @@ export class DadosCadastraisComponent implements OnInit {
 
     return cpfcnpj;
   }
-
 }

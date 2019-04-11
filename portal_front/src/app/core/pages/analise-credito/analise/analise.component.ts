@@ -126,6 +126,9 @@ export class AnaliseComponent implements OnInit {
       this.simulacoes = new Simulacoes();
       this.ngOnInit();
     })
+
+    this.simulacoes.correspondente = "Montreal";
+    this.simulacoes.simulacaoselecionado = false;
   }
 
   addItemStatusSimulacao(items:StatusSimulacao[]){
@@ -180,7 +183,8 @@ export class AnaliseComponent implements OnInit {
         this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Simulação adicionada!'});
       }
 
-      
+      this.simulacoes.correspondente = "Montreal";
+      this.simulacoes.simulacaoselecionado = false;
     } else {
       this.adicionarMsgErro(formSimulacao);
 
@@ -360,6 +364,8 @@ export class AnaliseComponent implements OnInit {
       this.salvarAlteracoesButton = true;
       this.simulacoes.codinstituicaofinanceira = null;
       this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
+      this.simulacoes.correspondente = "Montreal";
+      this.simulacoes.simulacaoselecionado = false;
     } else {
       this.adicionarMsgErro(formSimulacao);
     }

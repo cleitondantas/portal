@@ -176,7 +176,7 @@
           <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
         </div>
         <div class="p-col-4">
-          R$ {{analise.valorcompravenda.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          {{analise.valorcompravenda ? 'R$' : ''}} {{analise.valorcompravenda?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -185,7 +185,7 @@
           <label class="ajusteLabel" for="valorAprov">Valor aprovado: </label>
         </div>
         <div class="p-col-4">
-          R$ {{analise.valoravaliacao.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          {{analise.valoravaliacao ? 'R$' : ''}} {{analise.valoravaliacao?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -212,7 +212,7 @@
           <label class="ajusteLabel" for="valorPrestAprov">Valor prestação aprovado: </label>
         </div>
         <div class="p-col-4">
-          R$ {{analise.valorprimeiraparcela.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          {{analise.valorrecursosproprios ? 'R$' : ''}} {{analise.valorprimeiraparcela?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -269,7 +269,7 @@
           <label class="ajusteLabel" for="valorSubs">Valor subsídio: </label>
         </div>
         <div class="p-col-4">
-          R$ {{analise.valorsubsidio.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          {{analise.valorsubsidio ? 'R$' : ''}} {{analise.valorsubsidio?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -278,7 +278,7 @@
           <label class="ajusteLabel" for="valorAvalBanco">Valor avaliação Banco: </label>
         </div>
         <div class="p-col-4">
-          R$ {{analise.valoravaliacaoinstfinanc.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          {{analise.valoravaliacaoinstfinanc ? 'R$' : ''}} {{analise.valoravaliacaoinstfinanc?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -287,7 +287,7 @@
           <label class="ajusteLabel" for="fgts">FGTS: </label>
         </div>
         <div class="p-col-4">
-          R$ {{analise.valorfgts.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          {{analise.valorfgts ? 'R$' : ''}} {{analise.valorfgts?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 
@@ -296,7 +296,7 @@
           <label class="ajusteLabel" for="recProprio">Recurso próprio: </label>
         </div>
         <div class="p-col-4">
-          R$ {{analise.valorrecursosproprios.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          {{analise.valorrecursosproprios ? 'R$' : ''}} {{analise.valorrecursosproprios?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
         </div>
       </div>
 

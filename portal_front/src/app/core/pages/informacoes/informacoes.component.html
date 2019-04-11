@@ -5,7 +5,9 @@
 
   <p-tabView>
     <p-tabPanel header="Dados cadastrais">
-      <app-dados-cadastrais></app-dados-cadastrais>
+        <ng-template pTemplate="content">
+            <app-dados-cadastrais></app-dados-cadastrais>
+        </ng-template>
     </p-tabPanel>
 
     <p-tabPanel header="Histórico">

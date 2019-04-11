@@ -135,11 +135,13 @@ export class MenuBarComponent implements OnInit {
 
                 this.analiseService.getRegistroAnalise(codcadastro).subscribe(data => {
                     let analise: Analise = data['data'][0];
-                    for (let item = 0; item < analise.simulacoes.length; item++) {
-                        if (analise.simulacoes[item].simulacaoselecionado == true) {
-                            sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(analise.simulacoes[item]));
-                        }
-                    }                    
+                    if (analise != undefined) {
+                        for (let item = 0; item < analise.simulacoes.length; item++) {
+                            if (analise.simulacoes[item].simulacaoselecionado == true) {
+                                sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(analise.simulacoes[item]));
+                            }
+                        }   
+                    }
                     console.log(data)
                     this.router.navigate(['/informacoes']);
                     this.hideDialogInfo();
