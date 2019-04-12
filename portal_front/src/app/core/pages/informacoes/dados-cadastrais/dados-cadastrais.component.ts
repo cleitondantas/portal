@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { Compradores } from 'src/app/models/compradores';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
@@ -8,6 +8,7 @@ import formatCnpj from '@brazilian-utils/format-cnpj';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { Contatos } from 'src/app/models/contatos';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-dados-cadastrais',
@@ -15,6 +16,15 @@ import { Contatos } from 'src/app/models/contatos';
   styleUrls: ['./dados-cadastrais.component.css']
 })
 export class DadosCadastraisComponent implements OnInit {
+  loader: boolean = false;
+
+  getTipoCliente: boolean = false;
+  getTipoContato: boolean = false;
+  getEstadoCivil: boolean = false;
+  getBanco: boolean = false;
+  getModalidade: boolean = false;
+  getAmortizacao: boolean = false;
+
   comprador: Compradores = new Compradores()
   analise: Simulacoes = new Simulacoes();
   fid: any;
@@ -24,7 +34,8 @@ export class DadosCadastraisComponent implements OnInit {
   contatoDisplay: any[] = [];
 
   constructor(private chamadaService: AnaliseChamadasService,
-              private cadastroChamadaService: CadastroChamadasService) { }
+              private cadastroChamadaService: CadastroChamadasService)
+  {}
 
   ngOnDestroy() {
     sessionStorage.removeItem('ANALISESELECIONADA');
@@ -33,6 +44,13 @@ export class DadosCadastraisComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAmortizacao = false;
+    this.getBanco = false;
+    this.getEstadoCivil = false;
+    this.getModalidade = false;
+    this.getTipoCliente = false;
+    this.getTipoContato = false;
+
     let cadastroSelecionado = sessionStorage.getItem('CADASTROSELECIONADO');
     let analiseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
 
@@ -46,20 +64,31 @@ export class DadosCadastraisComponent implements OnInit {
       let comecoCep = comprador.cepresidencial.slice(0, 5);
       comprador.cepresidencial = comecoCep + "-" + fimCep;
 
-      this.cadastroChamadaService.getTipoClientes().subscribe(dados => {
-        let dadosBaixados = dados['data'];
-        for (let i = 0; i < dadosBaixados.length; i++) {
-          if (comprador.codtipocliente == dadosBaixados[i].codtipocliente) {
-            comprador.codtipocliente = dadosBaixados[i].desctipocliente
+      this.cadastroChamadaService.getDadosCadastrais('tipoclientes').subscribe(event => {
+        if (event.type === HttpEventType.DownloadProgress) {
+        } else if (event instanceof HttpResponse) {
+          let dadosBaixados = event.body['data'];
+          for (let i = 0; i < dadosBaixados.length; i++) {
+            if (comprador.codtipocliente == dadosBaixados[i].codtipocliente) {
+              comprador.codtipocliente = dadosBaixados[i].desctipocliente
+            }
           }
+          this.getTipoCliente = true;
+          this.hiddenLoader();
         }
-      })
-      this.cadastroChamadaService.getEstadoCivil().subscribe(dados => {
-        let dadosBaixados = dados['data'];
-        for (let i = 0; i < dadosBaixados.length; i++) {
-          if (comprador.codestadocivil == dadosBaixados[i].codestadocivil) {
-            comprador.codestadocivil = dadosBaixados[i].descestadocivil
+      });
+
+      this.cadastroChamadaService.getDadosCadastrais('estadocivil').subscribe(event => {
+        if (event.type === HttpEventType.DownloadProgress) {
+        } else if (event instanceof HttpResponse) {
+          let dadosBaixados = event.body['data'];
+          for (let i = 0; i < dadosBaixados.length; i++) {
+            if (comprador.codestadocivil == dadosBaixados[i].codestadocivil) {
+              comprador.codestadocivil = dadosBaixados[i].descestadocivil
+            }
           }
+          this.getEstadoCivil = true;
+          this.hiddenLoader();
         }
       })
 
@@ -71,18 +100,23 @@ export class DadosCadastraisComponent implements OnInit {
       comprador.dataexpedicao.toUTCString();
       this.dataExpedicao = this.fixUTC(comprador.dataexpedicao);
 
-      this.cadastroChamadaService.getTipoContato().subscribe(dados => {
-        this.contatoDisplay = [];
-        let dadosBaixados = dados['data'];
-        for (let i = 0; i < comprador.contatos.length; i++) {
-          for (let item = 0; item < dadosBaixados.length; item++) {
-            if (comprador.contatos[i].codtipocontato == dadosBaixados[item].codtipocontato) {
-              var contatoDisplay: Contatos = new Contatos();
-              contatoDisplay.tipocontato = dadosBaixados[item].desctipocontato;
-              contatoDisplay.desccontato =  comprador.contatos[i].desccontato;
-              this.contatoDisplay.push(contatoDisplay);
+      this.cadastroChamadaService.getDadosCadastrais('tipocontatos').subscribe(event => {
+        if (event.type === HttpEventType.DownloadProgress) {
+        } else if (event instanceof HttpResponse) {
+          this.contatoDisplay = [];
+          let dadosBaixados = event.body['data'];
+          for (let i = 0; i < comprador.contatos.length; i++) {
+            for (let item = 0; item < dadosBaixados.length; item++) {
+              if (comprador.contatos[i].codtipocontato == dadosBaixados[item].codtipocontato) {
+                var contatoDisplay: Contatos = new Contatos();
+                contatoDisplay.tipocontato = dadosBaixados[item].desctipocontato;
+                contatoDisplay.desccontato =  comprador.contatos[i].desccontato;
+                this.contatoDisplay.push(contatoDisplay);
+              }
             }
           }
+          this.getTipoContato = true;
+          this.hiddenLoader();
         }
       })
     
@@ -94,30 +128,45 @@ export class DadosCadastraisComponent implements OnInit {
       let jsonObj: any = JSON.parse(analiseSelecionada);
       let analise: Simulacoes = <Simulacoes>jsonObj;
 
-      this.chamadaService.getInstFinan().subscribe(dados => {
-        let dadosBaixados = dados['data'];
-        for (let i = 0; i < dadosBaixados.length; i++) {
-          if (analise.codinstituicaofinanceira == dadosBaixados[i].codInstituicaoFinanceira) {
-            analise.codinstituicaofinanceira = dadosBaixados[i].descInstituicaoFinanceira
+      this.chamadaService.getDadosCadastrais('instituicoesfinanceiras').subscribe(event => {
+        if (event.type === HttpEventType.DownloadProgress) {
+        } else if (event instanceof HttpResponse) {
+          let dadosBaixados = event.body['data'];
+          for (let i = 0; i < dadosBaixados.length; i++) {
+            if (analise.codinstituicaofinanceira == dadosBaixados[i].codInstituicaoFinanceira) {
+                analise.codinstituicaofinanceira = dadosBaixados[i].descInstituicaoFinanceira
+            }
           }
+          this.getBanco = true;
+          this.hiddenLoader();
         }
       })
 
-      this.chamadaService.getModalidades().subscribe(dados => {
-        let dadosBaixados = dados['data'];
-        for (let i = 0; i < dadosBaixados.length; i++) {
-          if (analise.codmodalidadesimulacao == dadosBaixados[i].codModalidadeSimulacao) {
-            analise.codmodalidadesimulacao = dadosBaixados[i].descModalidadeSimulacao
+      this.chamadaService.getDadosCadastrais('modalidadesimulacoes').subscribe(event => {
+        if (event.type === HttpEventType.DownloadProgress) {
+        } else if (event instanceof HttpResponse) {
+          let dadosBaixados = event.body['data'];
+          for (let i = 0; i < dadosBaixados.length; i++) {
+            if (analise.codmodalidadesimulacao == dadosBaixados[i].codModalidadeSimulacao) {
+              analise.codmodalidadesimulacao = dadosBaixados[i].descModalidadeSimulacao
+            }
           }
+          this.getModalidade = true;
+          this.hiddenLoader();
         }
       })
 
-      this.chamadaService.getTipoAmortizacao().subscribe(dados => {
-        let dadosBaixados = dados['data'];
-        for (let i = 0; i < dadosBaixados.length; i++) {
-          if (analise.codtipoamortizacao == dadosBaixados[i].codtipoamortizacao) {
-            analise.codtipoamortizacao = dadosBaixados[i].desctipoamortizacao
+      this.chamadaService.getDadosCadastrais('tipoamortizacao').subscribe(event => {
+        if (event.type === HttpEventType.DownloadProgress) {
+        } else if (event instanceof HttpResponse) {
+          let dadosBaixados = event.body['data'];
+          for (let i = 0; i < dadosBaixados.length; i++) {
+            if (analise.codtipoamortizacao == dadosBaixados[i].codtipoamortizacao) {
+              analise.codtipoamortizacao = dadosBaixados[i].desctipoamortizacao
+            }
           }
+          this.getAmortizacao = true;
+          this.hiddenLoader();
         }
       })
 
@@ -141,6 +190,15 @@ export class DadosCadastraisComponent implements OnInit {
         this.ngOnInit();
       }
     })
+  }
+
+  hiddenLoader() {
+    if ((this.getAmortizacao == true) && (this.getBanco == true) && (this.getEstadoCivil == true) &&
+        (this.getModalidade == true) && (this.getTipoCliente == true) && (this.getTipoContato == true)) {
+          setTimeout(() => {
+            alert('aa')
+          }, 500);
+    }
   }
 
   private fixUTC(date: Date) {

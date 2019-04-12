@@ -1,6 +1,6 @@
 import { CadastroInformacao } from './../models/cadastro-informacao';
 import { InstFinan } from './../models/inst-finan';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Modalidades } from '../models/modalidades';
 import { TipoAmortizacao } from '../models/tipo-amortizacao';
@@ -75,4 +75,9 @@ export class AnaliseChamadasService {
     return this.http.put<DadosFaturamento>(environment.urlpath + '/api/dadosfaturamento',dadosFaturamento);
   }
 
+  getDadosCadastrais(chamada) {
+    return this.http.request(new HttpRequest('GET', environment.urlpath + '/api/' + chamada, {
+      reportProgress: true
+    }))
+  }
 }

@@ -5,7 +5,7 @@ import { EstadoCivil } from 'src/app/models/estado-civil';
 import { Originacao } from './../models/originacao';
 import { Empreendimento } from './../models/empreendimento';
 import { Estadobr } from './../models/estadobr';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import { TipoContato } from '../models/tipo-contato';
 import { TipoClientes } from '../models/tipo-clientes';
@@ -100,5 +100,11 @@ export class CadastroChamadasService {
 
   putCadastro(cadInfo: CadastroInformacao) {
    return this.http.put<CadastroInformacao>(environment.urlpath + '/api/cadastro', cadInfo);
+  }
+
+  getDadosCadastrais(chamada) {
+    return this.http.request(new HttpRequest('GET', environment.urlpath + '/api/' + chamada, {
+      reportProgress: true
+    }))
   }
 }
