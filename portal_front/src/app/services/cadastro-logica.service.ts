@@ -11,21 +11,21 @@ export class CadastroLogicaService {
   constructor() { }
 
   adicionarComprador(comprador: Compradores) {
-    var comprador2: Compradores = new Compradores();
+    let comprador2: Compradores = new Compradores();
 
     comprador2.cpfcnpj = comprador.cpfcnpj;
-    comprador2.codtipocliente = Number(comprador.codtipocliente); 
+    comprador2.codtipocliente = Number(comprador.codtipocliente);
     comprador2.nomecliente = comprador.nomecliente;
     comprador2.ndocumento = comprador.ndocumento;
     comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
     comprador2.dataexpedicao = comprador.dataexpedicao;
     comprador2.datanascimento = comprador.datanascimento;
-    comprador2.codestadocivil = comprador.codestadocivil.codestadocivil; 
+    comprador2.codestadocivil = comprador.codestadocivil.codestadocivil;
     comprador2.nacionalidade = comprador.nacionalidade;
     comprador2.profissao = comprador.profissao;
     comprador2.cepresidencial = comprador.cepresidencial;
     comprador2.uf = comprador.uf.uf;
-    comprador2.cidade = comprador.cidade; 
+    comprador2.cidade = comprador.cidade;
     comprador2.bairro = comprador.bairro;
     comprador2.endereco = comprador.endereco;
     comprador2.complemento = comprador.complemento;
@@ -39,7 +39,7 @@ export class CadastroLogicaService {
   }
 
   adicionarContatosDisplay(contato: Contatos) {
-    var contatoDisplay: Contatos = new Contatos();
+    let contatoDisplay: Contatos = new Contatos();
 
     this.contAny = contato.codtipocontato as any;
 
@@ -51,12 +51,12 @@ export class CadastroLogicaService {
   }
 
   adicionarContatosLista(contato: Contatos) {
-    var contato2: Contatos = new Contatos();
+    let contato2: Contatos = new Contatos();
 
     this.contAny = contato.codtipocontato as any;
 
     contato2.codtipocontato = this.contAny.codtipocontato;
-    contato2.desccontato = contato.desccontato; 
+    contato2.desccontato = contato.desccontato;
 
     return contato2;
   }

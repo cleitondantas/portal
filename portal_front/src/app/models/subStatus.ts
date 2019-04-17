@@ -1,10 +1,10 @@
-import { Area } from "./area";
+import { Area } from './area';
 
-export class SubStatus{
+export class SubStatus {
 
-    codSubStatus:number;
-    area:Area;
-    descSubStatus:string;
-    isAtivo:boolean;
-    
+    codSubStatus: number;
+    area: Area;
+    descSubStatus: string;
+    isAtivo: boolean;
+
 }

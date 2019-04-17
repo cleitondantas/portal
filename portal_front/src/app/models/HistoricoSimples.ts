@@ -1,13 +1,13 @@
-export class HistoricoSimples{
+export class HistoricoSimples {
 
-    constructor(id:number,nomeCliente: string,codCadastro:string,nContrato:string,numProposta:string,
-        area: string,status:string,subStatus:string,atividade:string,obs:string){
-        this.id= id;
+    constructor(id: number, nomeCliente: string, codCadastro: string, nContrato: string, numProposta: string,
+        area: string, status: string, subStatus: string, atividade: string, obs: string) {
+        this.id = id;
         this.nomeCliente = nomeCliente;
         this.area = area;
         this.codCadastro = codCadastro;
         this.nContrato = nContrato;
-        this.numProposta= numProposta;
+        this.numProposta = numProposta;
         this.subStatus = subStatus;
         this.status = status;
         this.atividade = atividade;
@@ -16,13 +16,13 @@ export class HistoricoSimples{
 
     id: number;
     nomeCliente: string;
-    codCadastro:string;
-    nContrato:string;
-    numProposta:string;
+    codCadastro: string;
+    nContrato: string;
+    numProposta: string;
     area: string;
-    status:string;
-    subStatus:string;
-    atividade:string;
-    obs:string;
+    status: string;
+    subStatus: string;
+    atividade: string;
+    obs: string;
 }
 

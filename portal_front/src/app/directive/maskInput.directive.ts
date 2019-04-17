@@ -1,8 +1,8 @@
-import { AfterViewChecked, Directive, ElementRef, HostListener, NgModule, OnInit } from "@angular/core";
-import { Calendar, CalendarModule } from "primeng/primeng";
+import { AfterViewChecked, Directive, ElementRef, HostListener, NgModule, OnInit } from '@angular/core';
+import { Calendar, CalendarModule } from 'primeng/primeng';
 
 @Directive({
-    selector: "[rPCalendarMask]",
+    selector: '[rPCalendarMask]',
 
 })
 export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
@@ -16,12 +16,12 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
     private oldValue: string;
 
     public caretPos: number;
-    public mask = "";
+    public mask = '';
     public input: ElementRef;
     public value: string;
 
     private static isNumeric(s: string) {
-        if (s === " ") {
+        if (s === ' ') {
             return false;
         }
         return !isNaN(Number(s));
@@ -40,10 +40,10 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
         if (!this.host.timeOnly) {
             const dateFormat = this.host.dateFormat;
             for (const dateFormatItem of dateFormat) {
-                if (dateFormatItem === "d" || dateFormatItem === "m" || dateFormatItem === "y") {
-                    this.mask += "9";
-                    if (dateFormatItem === "y") {
-                        this.mask += "9";
+                if (dateFormatItem === 'd' || dateFormatItem === 'm' || dateFormatItem === 'y') {
+                    this.mask += '9';
+                    if (dateFormatItem === 'y') {
+                        this.mask += '9';
                     }
                 } else {
                     this.mask += dateFormatItem;
@@ -52,16 +52,16 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
         }
         if (this.host.showTime || this.host.timeOnly) {
             if (!this.host.timeOnly) {
-                this.mask += " ";
+                this.mask += ' ';
             }
-            this.mask += "99:99";
+            this.mask += '99:99';
             if (this.host.showSeconds) {
-                this.mask += ":99";
+                this.mask += ':99';
             }
         }
     }
 
-    @HostListener("input")
+    @HostListener('input')
     private onInput() {
         if (this.input === null) {
             this.input = this.host.inputfieldViewChild;
@@ -75,7 +75,7 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
     }
 
     public maskValue() {
-        let maskedValue = "";
+        let maskedValue = '';
         let dif = 0;
         let caretDif = 0;
 
@@ -88,14 +88,14 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
                 this.value = this.value.substring(0, i) + this.value.substring(i + 1);
                 i--;
                 caretDif++;
-            } else if (maskChar === "9") {
+            } else if (maskChar === '9') {
                 if (PrimeNgCalendarMaskDirective.isNumeric(valueChar)) {
                     maskedValue += valueChar;
                 } else {
                     this.value = this.value.substring(0, i) + this.value.substring(i + 1);
                     i--;
                 }
-            } else if (maskChar === "A") {
+            } else if (maskChar === 'A') {
                 if (PrimeNgCalendarMaskDirective.isAlpha(this.value.charAt(i - dif))) {
                     maskedValue += valueChar;
                 } else {
@@ -138,8 +138,8 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
             caretPos = maskedValue.length;
         } else if (this.oldValue !== maskedValue) {
             while (caretPos < this.value.length &&
-            this.mask.charAt(caretPos) !== "9" &&
-            this.mask.charAt(caretPos) !== "A") {
+            this.mask.charAt(caretPos) !== '9' &&
+            this.mask.charAt(caretPos) !== 'A') {
                 caretPos++;
             }
         } else {

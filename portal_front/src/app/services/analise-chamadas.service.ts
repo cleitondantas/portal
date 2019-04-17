@@ -16,7 +16,7 @@ import { DadosFaturamento } from '../models/dadosfaturamento';
 })
 export class AnaliseChamadasService {
 
-  controle: boolean = false;
+  controle = false;
   buscarAnalise = new EventEmitter<any>();
 
   constructor(
@@ -35,17 +35,17 @@ export class AnaliseChamadasService {
     return this.http.get<TipoAmortizacao[]>(environment.urlpath + '/api/tipoamortizacao');
   }
 
-  getStatusSimulacao(){
+  getStatusSimulacao() {
     return this.http.get<StatusSimulacao[]>(environment.urlpath + '/api/statussimulacao');
   }
 
-  getRegistroAnalise (cod:number) {
-    console.log("getRegistroAnalise");
-    console.log(environment.urlpath + '/api/analises/'+cod)
-    return this.http.get<Analise[]>(environment.urlpath + '/api/analises/'+cod);
+  getRegistroAnalise (cod: number) {
+    console.log('getRegistroAnalise');
+    console.log(environment.urlpath + '/api/analises/' + cod);
+    return this.http.get<Analise[]>(environment.urlpath + '/api/analises/' + cod);
   }
 
-  postAnaliseSimulacaoContrato(analise: Analise){
+  postAnaliseSimulacaoContrato(analise: Analise) {
    return this.http.post<Analise>(environment.urlpath + '/api/analise', analise);
   }
 
@@ -57,16 +57,16 @@ export class AnaliseChamadasService {
     return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastros');
   }
 
-  getDadosFaturamento(codcadastro:any) {
-    return this.http.get<DadosFaturamento[]>(environment.urlpath + '/api/dadosfaturamento/'+codcadastro);
+  getDadosFaturamento(codcadastro: any) {
+    return this.http.get<DadosFaturamento[]>(environment.urlpath + '/api/dadosfaturamento/' + codcadastro);
   }
 
   postDadosFaturamento(dadosFaturamento: DadosFaturamento) {
-    return this.http.post<DadosFaturamento>(environment.urlpath + '/api/dadosfaturamento',dadosFaturamento);
+    return this.http.post<DadosFaturamento>(environment.urlpath + '/api/dadosfaturamento', dadosFaturamento);
   }
 
   putDadosFaturamento(dadosFaturamento: DadosFaturamento) {
-    return this.http.put<DadosFaturamento>(environment.urlpath + '/api/dadosfaturamento',dadosFaturamento);
+    return this.http.put<DadosFaturamento>(environment.urlpath + '/api/dadosfaturamento', dadosFaturamento);
   }
 
 }
