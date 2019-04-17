@@ -16,7 +16,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
   styleUrls: ['./dados-cadastrais.component.css']
 })
 export class DadosCadastraisComponent implements OnInit {
-  loader: boolean = false;
+  load: boolean = false;
 
   getTipoCliente: boolean = false;
   getTipoContato: boolean = false;
@@ -38,12 +38,13 @@ export class DadosCadastraisComponent implements OnInit {
   {}
 
   ngOnDestroy() {
-    sessionStorage.removeItem('ANALISESELECIONADA');
-    sessionStorage.removeItem('CADASTROSELECIONADO');
+    sessionStorage.removeItem('ANALISEDADOS');
+    sessionStorage.removeItem('CADASTRODADOS');
     sessionStorage.removeItem('fid');
   }
 
   ngOnInit() {
+    this.load = false;
     this.getAmortizacao = false;
     this.getBanco = false;
     this.getEstadoCivil = false;
@@ -51,8 +52,28 @@ export class DadosCadastraisComponent implements OnInit {
     this.getTipoCliente = false;
     this.getTipoContato = false;
 
-    let cadastroSelecionado = sessionStorage.getItem('CADASTROSELECIONADO');
-    let analiseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
+    this.visualizarDados();
+
+    this.chamadaService.buscarInformacoes.subscribe(dado => {
+      if (dado == true) {
+        this.analise = new Simulacoes();
+        this.dataEnvioAoBanco = ""
+        this.load = false;
+        this.getAmortizacao = false;
+        this.getBanco = false;
+        this.getEstadoCivil = false;
+        this.getModalidade = false;
+        this.getTipoCliente = false;
+        this.getTipoContato = false;
+    
+        this.visualizarDados();
+      }
+    })
+  }
+
+  visualizarDados() {
+    let cadastroSelecionado = sessionStorage.getItem('CADASTRODADOS');
+    let analiseSelecionada = sessionStorage.getItem('ANALISEDADOS');
 
     if (cadastroSelecionado != "undefined" && cadastroSelecionado != null) {
       let jsonObj: any = JSON.parse(cadastroSelecionado);
@@ -181,22 +202,19 @@ export class DadosCadastraisComponent implements OnInit {
       this.dataEnvioAoBanco = this.fixUTC(analise.dataenviobanco);
     
       this.analise = analise;
+    } else {
+      this.getAmortizacao = true;
+      this.getBanco = true;
+      this.getModalidade = true;
+      this.hiddenLoader();
     }
-
-    this.chamadaService.buscarInformacoes.subscribe(dado => {
-      if (dado == true) {
-        this.analise = new Simulacoes();
-        this.dataEnvioAoBanco = ""
-        this.ngOnInit();
-      }
-    })
   }
 
   hiddenLoader() {
     if ((this.getAmortizacao == true) && (this.getBanco == true) && (this.getEstadoCivil == true) &&
         (this.getModalidade == true) && (this.getTipoCliente == true) && (this.getTipoContato == true)) {
           setTimeout(() => {
-            alert('aa')
+            this.load = true;
           }, 500);
     }
   }

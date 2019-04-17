@@ -116,7 +116,7 @@ export class MenuBarComponent implements OnInit {
     }
 
     irInformacoes(codcadastro: number) {
-        let storage = ['CADASTROSELECIONADO', 'ANALISESELECIONADA', 'fid'];
+        let storage = ['CADASTRODADOS', 'ANALISEDADOS', 'fid'];
         for (let i = 0; i < storage.length; i++) {
             if (sessionStorage.getItem(storage[i]) !== null || undefined || "undefined") {
                 sessionStorage.removeItem(storage[i]);
@@ -128,9 +128,9 @@ export class MenuBarComponent implements OnInit {
             if(codcadastro == this.cadastrosTabelaBusca[i].codcadastro){
                 sessionStorage.setItem('fid', JSON.stringify(this.cadastrosTabelaBusca[i].numerocadastroincorporadorafid));
                 for (let item = 0; item < this.cadastrosTabelaBusca[i]['clientes'].length; item++) {
-                    if (this.nomeclienteSelecionado == this.cadastrosTabelaBusca[i]['clientes'][item].nomecliente) {{
-                        sessionStorage.setItem('CADASTROSELECIONADO',JSON.stringify(this.cadastrosTabelaBusca[i]['clientes'][item]));
-                    }}
+                    if (this.nomeclienteSelecionado == this.cadastrosTabelaBusca[i]['clientes'][item].nomecliente) {
+                        sessionStorage.setItem('CADASTRODADOS',JSON.stringify(this.cadastrosTabelaBusca[i]['clientes'][item]));
+                    }
                 }
 
                 this.analiseService.getRegistroAnalise(codcadastro).subscribe(data => {
@@ -138,22 +138,21 @@ export class MenuBarComponent implements OnInit {
                     if (analise != undefined) {
                         for (let item = 0; item < analise.simulacoes.length; item++) {
                             if (analise.simulacoes[item].simulacaoselecionado == true) {
-                                sessionStorage.setItem('ANALISESELECIONADA',JSON.stringify(analise.simulacoes[item]));
+                                sessionStorage.setItem('ANALISEDADOS',JSON.stringify(analise.simulacoes[item]));
                             }
                         }   
                     }
                     console.log(data)
                     this.router.navigate(['/informacoes']);
-                    this.hideDialogInfo();
                     this.analiseService.buscarInformacoes.emit(true);
                 });
             }
+            this.hideDialogInfo();
         }
-
     }
 
-    async irAnalise(codcadastro:number){
-        await this.selectFor(codcadastro);
+    irAnalise(codcadastro:number){
+    this.selectFor(codcadastro);
     }
 
     selectFor(codcadastro:number){
@@ -241,25 +240,45 @@ export class MenuBarComponent implements OnInit {
             visible: true,
             items: [
                 {label: 'Novo ', icon: 'pi pi-fw pi-plus',routerLink:'/cadastro'},
-                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialog()}}
+                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{
+                    this.showDialog();
+                    this.hideDialogInfo();
+                    this.hideDialogDisplay();
+                }}
               ]
           },
           {
             label: 'Análise de crédito',
             icon: 'pi pi-fw pi-plus',
             visible: true,
-            command: (event: Event) => {this.showDialogDisplay()},
+            command: (event: Event) => {
+                this.showDialogDisplay();
+                this.hideDialog();
+                this.hideDialogInfo()
+            },
             items: [
-                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialogDisplay()}}
+                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{
+                    this.showDialogDisplay();
+                    this.hideDialog();
+                    this.hideDialogInfo();
+                }}
               ]
           },
           {
               label: 'Informações',
               icon: 'pi pi-fw pi-search',
               visible: true,
-              command: (event: Event) => {this.showDialogInfo()},
+              command: (event: Event) => {
+                  this.showDialogInfo();
+                  this.hideDialog();
+                  this.hideDialogDisplay();
+                },
               items: [
-                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{this.showDialogInfo()}}
+                {label: 'Buscar', icon: 'pi pi-fw pi-search',command:(event:Event)=>{
+                    this.showDialogInfo();
+                    this.hideDialog();
+                    this.hideDialogDisplay();
+                }}
               ]
           },
           {

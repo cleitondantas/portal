@@ -47,6 +47,7 @@ import { DadosFaturamentoComponent } from './pages/analise-credito/dados-faturam
 import { AnaliseComponent } from './pages/analise-credito/analise/analise.component';
 
 import { PrimeNgCalendarMaskDirective } from 'src/app/directive/maskInput.directive';
+import { CoreRoutingModule } from './core-routing.module';
 
 @NgModule({
   imports: [
@@ -81,7 +82,8 @@ import { PrimeNgCalendarMaskDirective } from 'src/app/directive/maskInput.direct
     MessagesModule,
     MessageModule,
     ToastModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    CoreRoutingModule
   ],
   declarations: [
     HomeComponent,
