@@ -1,9 +1,9 @@
 export class Cliente {
 
-    numDocumento:string;
+    numDocumento: string;
     nomeCliente: string;
     numDocumentoCo: string;
     nomeClienteCo: string;
-    dtCadastro:string;
+    dtCadastro: string;
 
 }

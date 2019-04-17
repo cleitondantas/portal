@@ -7,15 +7,15 @@ import { AnaliseGuard } from './guards/analise.guard';
 
 const routes: Routes = [
   { path: 'informacoes', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
-  { path: 'analise',canActivate: [AuthGuard, AnaliseGuard], loadChildren: './core/core.module#CoreModule'},
+  { path: 'analise', canActivate: [AuthGuard, AnaliseGuard], loadChildren: './core/core.module#CoreModule'},
   { path: 'importar', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
   { path: 'cadastrousuario', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
   { path: 'home',  canActivate: [AuthGuard],  component: HomeComponent},
   { path: 'grafic', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
-  { path: 'cadastro',canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},  
-  { path: 'lista',canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
+  { path: 'cadastro', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
+  { path: 'lista', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
   { path: 'login', loadChildren: './core/core.module#CoreModule'},
-  { path: '',canActivate: [AuthGuard], pathMatch: 'full',redirectTo: 'home' }
+  { path: '', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: 'home' }
 ];
 
 

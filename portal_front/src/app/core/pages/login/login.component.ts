@@ -1,5 +1,5 @@
 import { Message } from 'primeng/api';
-import { Component, OnInit ,isDevMode } from '@angular/core';
+import { Component, OnInit , isDevMode } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Usuario } from '../../../models/usuario';
 import { NgForm } from '@angular/forms';
@@ -13,29 +13,29 @@ import { SharedService } from '../../../services/shared.service';
 export class LoginComponent implements OnInit {
 
 private usuario: Usuario = new Usuario();
-shared : SharedService;
-mensagemErro ='';
+shared: SharedService;
+mensagemErro = '';
 msgs: Message[] = [];
-hidden: boolean = true;
+hidden = true;
 
 user = new Usuario();
   constructor(private authService: AuthService) {
     this.shared = SharedService.getInstance();
     this.shared.showError.subscribe(
       erro => this.mensagemErro = erro
-    )
+    );
    }
 
   ngOnInit() {
   }
 
-  fazerLogin(from : NgForm){
+  fazerLogin(from: NgForm) {
     this.msgs = [];
     setTimeout(() => {
       this.hidden = false;
     }, 301);
-    this.authService.fazerLogin(from,this.user);
-    
+    this.authService.fazerLogin(from, this.user);
+
     setTimeout(() => {
       this.hidden = true;
       if (this.authService.isUsuarioAutenticado() == false) {
@@ -48,7 +48,7 @@ user = new Usuario();
       } else {
         this.msgs = [];
       }
-      
+
     }, 1500);
   }
 }

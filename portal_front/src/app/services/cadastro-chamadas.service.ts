@@ -92,9 +92,9 @@ export class CadastroChamadasService {
 
   getBuscaCadastrado(nome: string, cpf: string) {
   if (nome != null) {
-  return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/nome/' + nome).toPromise().then(res => <any[]> res).then(data => {return data; });
+  return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/nome/' + nome).toPromise().then(res => <any[]> res).then(data =>data);
   } else if (cpf != null) {
-    return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/cpf/' + cpf).toPromise().then(res => <any[]> res).then(data => {return data; });
+    return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/cpf/' + cpf).toPromise().then(res => <any[]> res).then(data =>data);
   }
   }
 
@@ -105,6 +105,6 @@ export class CadastroChamadasService {
   getDadosCadastrais(chamada) {
     return this.http.request(new HttpRequest('GET', environment.urlpath + '/api/' + chamada, {
       reportProgress: true
-    }))
+    }));
   }
 }

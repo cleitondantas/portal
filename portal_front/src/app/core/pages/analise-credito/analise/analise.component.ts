@@ -26,8 +26,8 @@ export class AnaliseComponent implements OnInit {
   simulacaoLista: Simulacoes[] = [];
   statusSimulEvent = new EventEmitter<any>();
   instFinanEvent = new EventEmitter<any>();
-  salvarAlteracoesButton: boolean = true;
-  selectedItem:any;
+  salvarAlteracoesButton = true;
+  selectedItem: any;
   instFinan: InstiruicaoFinanceiras[] = [];
   instFinanTemp: InstiruicaoFinanceiras[];
   modalidade: Modalidades[];
@@ -42,8 +42,8 @@ export class AnaliseComponent implements OnInit {
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
-  
-  constructor( 
+
+  constructor(
     private confirmationService: ConfirmationService,
     private service: AnaliseChamadasService,
     private router: Router,
@@ -53,11 +53,11 @@ export class AnaliseComponent implements OnInit {
     private sharedService: SharedService
 
   ) { }
-    items:any[];
+    items: any[];
 
   ngOnDestroy() {
     sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
-    console.log("ngOnDestroy()")
+    console.log('ngOnDestroy()');
   }
 
   ngOnInit() {
@@ -66,24 +66,24 @@ export class AnaliseComponent implements OnInit {
     this.br = this.sharedService.calendarioBr();
 
     this.service.getInstFinan().subscribe(dados => {
-      this.instFinanTemp = dados['data']
-      for (var _i = 0; _i < this.instFinanTemp.length; _i++) {
-        let item: InstiruicaoFinanceiras = new InstiruicaoFinanceiras();
+      this.instFinanTemp = dados['data'];
+      for (let _i = 0; _i < this.instFinanTemp.length; _i++) {
+        const item: InstiruicaoFinanceiras = new InstiruicaoFinanceiras();
         item.codInstituicaoFinanceira =   this.instFinanTemp[_i].codInstituicaoFinanceira;
         item.descInstituicaoFinanceira = this.instFinanTemp[_i].descInstituicaoFinanceira;
         this.instFinan[_i] = item;
       }
       this.instFinanEvent.emit(true);
-      this.instFinan = dados['data']
+      this.instFinan = dados['data'];
     });
 
     this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
     this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
 
     this.service.getStatusSimulacao().subscribe(dados => {
-      this.statussimulacaoTemp =  dados['data'] 
-        for (var _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
-          let item: StatusSimulacao = new StatusSimulacao();
+      this.statussimulacaoTemp =  dados['data'];
+        for (let _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
+          const item: StatusSimulacao = new StatusSimulacao();
           item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
           item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
           this.statussimulacao[_i] = item;
@@ -91,18 +91,18 @@ export class AnaliseComponent implements OnInit {
       this.statusSimulEvent.emit(true);
      });
 
-    let AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
+    const AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
 
-    if (AnaliseSelecionada != "undefined" && AnaliseSelecionada != null) {
-      let analise: Analise = this.logicaService.receberAnalise(AnaliseSelecionada, this.statusSimulEvent, this.instFinanEvent, this.instFinan, this.statussimulacao )
+    if (AnaliseSelecionada != 'undefined' && AnaliseSelecionada != null) {
+      const analise: Analise = this.logicaService.receberAnalise(AnaliseSelecionada, this.statusSimulEvent, this.instFinanEvent, this.instFinan, this.statussimulacao );
 
       this.analise = analise;
       this.codcadastro = analise.codcadastro;
       this.simulacoes.codcadastro = this.codcadastro;
-      this.analise.numerocadastroincorporadorafid = analise.numerocadastroincorporadorafid
-   
-      for (var _i = 0; _i < analise.simulacoes.length; _i++) {
-        if(analise.simulacoes[_i].simulacaoselecionado == true){
+      this.analise.numerocadastroincorporadorafid = analise.numerocadastroincorporadorafid;
+
+      for (let _i = 0; _i < analise.simulacoes.length; _i++) {
+        if (analise.simulacoes[_i].simulacaoselecionado == true) {
           this.selectedItem = analise.simulacoes[_i];
         }
 
@@ -125,13 +125,13 @@ export class AnaliseComponent implements OnInit {
       }
       this.simulacoes = new Simulacoes();
       this.ngOnInit();
-    })
+    });
 
-    this.simulacoes.correspondente = "Montreal";
+    this.simulacoes.correspondente = 'Montreal';
     this.simulacoes.simulacaoselecionado = false;
   }
 
-  addItemStatusSimulacao(items:StatusSimulacao[]){
+  addItemStatusSimulacao(items: StatusSimulacao[]) {
     this.statussimulacao = items;
   }
 
@@ -146,10 +146,10 @@ export class AnaliseComponent implements OnInit {
   adicionarSimulacao(simulacao: Simulacoes, formSimulacao) {
     this.msgs = [];
     if ((this.validaFormulario(formSimulacao) == true) && (this.simulacoes.codinstituicaofinanceira != undefined || null)) {
-      let camposVazios: any[] = [];
+      const camposVazios: any[] = [];
 
-      for (var _i in formSimulacao.controls) {
-        if (formSimulacao.controls[_i].value == undefined || null || "") {
+      for (const _i in formSimulacao.controls) {
+        if (formSimulacao.controls[_i].value == undefined || null || '') {
           let campoVazio = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
           campoVazio = campoVazio.replace(': ', '');
           camposVazios.push(` ` + campoVazio);
@@ -158,32 +158,32 @@ export class AnaliseComponent implements OnInit {
 
       if (camposVazios.length > 0) {
         this.confirmationService.confirm({
-          message: `As seguintes informações não estão preenchidas:<strong>` + camposVazios + ".</strong><br><br><p>Deseja continuar?</p>",
+          message: `As seguintes informações não estão preenchidas:<strong>` + camposVazios + '.</strong><br><br><p>Deseja continuar?</p>',
           header: 'Confirmação',
           icon: 'pi pi-exclamation-triangle',
           acceptLabel: 'Sim',
           rejectLabel: 'Não',
           accept: () => {
-            var simulacao2 = this.logicaService.adicionarSimulacao(simulacao, this.codcadastro);
-          
+            const simulacao2 = this.logicaService.adicionarSimulacao(simulacao, this.codcadastro);
+
             this.simulacaoLista.push(simulacao2);
             this.simulacoes.codinstituicaofinanceira = null;
             console.log(this.simulacaoLista);
-            this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Simulação adicionada!'});
+            this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Simulação adicionada!'});
           },
           reject: () => {
-  
-          }})
+
+          }});
       } else {
-        var simulacao2 = this.logicaService.adicionarSimulacao(simulacao, this.codcadastro);
-          
+        const simulacao2 = this.logicaService.adicionarSimulacao(simulacao, this.codcadastro);
+
         this.simulacaoLista.push(simulacao2);
         this.simulacoes.codinstituicaofinanceira = null;
         console.log(this.simulacaoLista);
-        this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Simulação adicionada!'});
+        this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Simulação adicionada!'});
       }
 
-      this.simulacoes.correspondente = "Montreal";
+      this.simulacoes.correspondente = 'Montreal';
       this.simulacoes.simulacaoselecionado = false;
     } else {
       this.adicionarMsgErro(formSimulacao);
@@ -193,15 +193,15 @@ export class AnaliseComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao adicionar!',
           detail: `Selecione a instituição financeira.`
-        })
+        });
       }
     }
   }
 
   removerSimulacao(simul) {
-    let index = this.simulacaoLista.indexOf(simul);
+    const index = this.simulacaoLista.indexOf(simul);
     this.simulacaoLista.splice(index, 1);
-    this.messageService.add({key: 'popupAnalise', severity:'warn', summary: 'Aviso!', detail:'Simulação removida!'});
+    this.messageService.add({key: 'popupAnalise', severity: 'warn', summary: 'Aviso!', detail: 'Simulação removida!'});
   }
 
   salvar() {
@@ -212,33 +212,33 @@ export class AnaliseComponent implements OnInit {
       console.log(this.analise);
       console.log(JSON.stringify(this.analise));
 
-      this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
+      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
       setTimeout(() => {
         this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(data)
-          
+          console.log(data);
+
           this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
           this.simulacaoLista = this.analise.simulacoes;
         });
       }, 500);
     } else {
-      for (var _i = 0; _i < this.simulacaoLista.length; _i++) {
+      for (let _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].codcadastro = this.codcadastro;
       }
       this.analise.codcadastro = this.codcadastro;
-      console.log("this.analise objeto")
-      console.log(this.analise)
+      console.log('this.analise objeto');
+      console.log(this.analise);
 
-      console.log("this.analise Json")
+      console.log('this.analise Json');
       console.log(JSON.stringify(this.analise));
 
-      this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Análise adicionada!'});
+      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
 
       setTimeout(() => {
-        this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data)});
+        this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data); });
       }, 500);
     }
-    
+
     if (this.verificarSelecionado() == true) {
       this.analiseCred.disabled = false;
       this.analiseCred.selected = 1;
@@ -252,7 +252,7 @@ export class AnaliseComponent implements OnInit {
   }
 
   recursoProprio() {
-    var calc;
+    let calc;
     if (this.simulacoes.valorfgts == undefined) {
       calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito;
     } else if (this.simulacoes.valorcredito == undefined) {
@@ -264,7 +264,7 @@ export class AnaliseComponent implements OnInit {
   }
 
   calcularValorCredito() {
-    var calc;
+    let calc;
     if (this.simulacoes.valoravaliacao == undefined) {
       calc = (80 * this.simulacoes.valorcompravenda) / 100;
     } else if (this.simulacoes.valorcompravenda == undefined) {
@@ -277,7 +277,7 @@ export class AnaliseComponent implements OnInit {
     this.simulacoes.valorcredito = calc;
   }
 
-  salvarAnalise(formDatasDoProcesso){
+  salvarAnalise(formDatasDoProcesso) {
     this.msgs2 = [];
 
     if ((this.validaFormulario(formDatasDoProcesso) == true) && (this.simulacaoLista.length !== 0)) {
@@ -291,7 +291,7 @@ export class AnaliseComponent implements OnInit {
           this.salvar();
         },
         reject: () => {
-          
+
         }
       });
     } else {
@@ -302,17 +302,17 @@ export class AnaliseComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao salvar!',
           detail: `Adicione pelo menos 1 simulação.`
-        })
+        });
       }
     }
   }
 
-  simulacaoSelecionado(rowData){
-    let simulacao: Simulacoes = rowData.data;
+  simulacaoSelecionado(rowData) {
+    const simulacao: Simulacoes = rowData.data;
     for (let item = 0; item < this.simulacaoLista.length; item++) {
       if (this.simulacaoLista[item].codinstituicaofinanceira == simulacao.codinstituicaofinanceira) {
         this.simulacaoLista[item].simulacaoselecionado = true;
-      }else{
+      } else {
        this.simulacaoLista[item].simulacaoselecionado = false;
       }
     }
@@ -327,7 +327,7 @@ export class AnaliseComponent implements OnInit {
   }
 
   tirarSelecionado(rowData) {
-    let row: Simulacoes = rowData.data;
+    const row: Simulacoes = rowData.data;
     for (let _i = 0; _i < this.simulacaoLista.length; _i++) {
       if (row.codsimulacao == this.simulacaoLista[_i].codsimulacao) {
         this.simulacaoLista[_i].simulacaoselecionado = false;
@@ -363,8 +363,8 @@ export class AnaliseComponent implements OnInit {
 
       this.salvarAlteracoesButton = true;
       this.simulacoes.codinstituicaofinanceira = null;
-      this.messageService.add({key: 'popupAnalise', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
-      this.simulacoes.correspondente = "Montreal";
+      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
+      this.simulacoes.correspondente = 'Montreal';
       this.simulacoes.simulacaoselecionado = false;
     } else {
       this.adicionarMsgErro(formSimulacao);
@@ -373,10 +373,10 @@ export class AnaliseComponent implements OnInit {
 
   adicionarMsgErro(form) {
     this.msgs = [];
-    let camposInvalidos: any[] = [];
+    const camposInvalidos: any[] = [];
 
-    for (var _i in form.controls) {
-      if (form.controls[_i].status == "INVALID") {
+    for (const _i in form.controls) {
+      if (form.controls[_i].status == 'INVALID') {
         let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
         campoInvalido = campoInvalido.replace(': ', '');
         camposInvalidos.push(` ` + campoInvalido);
@@ -386,7 +386,7 @@ export class AnaliseComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao salvar alterações!',
           detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-        })
+        });
       }
     }
   }

@@ -15,21 +15,21 @@ export class CadastroLogicaService {
   constructor(private chamadasService: CadastroChamadasService) { }
 
   adicionarComprador(comprador: Compradores) {
-    var comprador2: Compradores = new Compradores();
+    const comprador2: Compradores = new Compradores();
 
     comprador2.cpfcnpj = comprador.cpfcnpj;
-    comprador2.codtipocliente = Number(comprador.codtipocliente); 
+    comprador2.codtipocliente = Number(comprador.codtipocliente);
     comprador2.nomecliente = comprador.nomecliente;
     comprador2.ndocumento = comprador.ndocumento;
     comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
     comprador2.dataexpedicao = comprador.dataexpedicao;
     comprador2.datanascimento = comprador.datanascimento;
-    comprador2.codestadocivil = comprador.codestadocivil.codestadocivil; 
+    comprador2.codestadocivil = comprador.codestadocivil.codestadocivil;
     comprador2.nacionalidade = comprador.nacionalidade;
     comprador2.profissao = comprador.profissao;
     comprador2.cepresidencial = comprador.cepresidencial;
     comprador2.uf = comprador.uf.uf;
-    comprador2.cidade = comprador.cidade; 
+    comprador2.cidade = comprador.cidade;
     comprador2.bairro = comprador.bairro;
     comprador2.endereco = comprador.endereco;
     comprador2.complemento = comprador.complemento;
@@ -43,7 +43,7 @@ export class CadastroLogicaService {
   }
 
   adicionarContatosDisplay(contato: Contatos) {
-    var contatoDisplay: Contatos = new Contatos();
+    const contatoDisplay: Contatos = new Contatos();
 
     this.contAny = contato.codtipocontato as any;
 
@@ -55,12 +55,12 @@ export class CadastroLogicaService {
   }
 
   adicionarContatosLista(contato: Contatos) {
-    var contato2: Contatos = new Contatos();
+    const contato2: Contatos = new Contatos();
 
     this.contAny = contato.codtipocontato as any;
 
     contato2.codtipocontato = this.contAny.codtipocontato;
-    contato2.desccontato = contato.desccontato; 
+    contato2.desccontato = contato.desccontato;
 
     return contato2;
   }
@@ -102,7 +102,7 @@ export class CadastroLogicaService {
         compradores[item].profissao = comprador.profissao;
         compradores[item].contatos = contato;
         compradores[item].cepresidencial = comprador.cepresidencial;
-        compradores[item].uf = comprador.uf.uf
+        compradores[item].uf = comprador.uf.uf;
         compradores[item].cidade = comprador.cidade;
         compradores[item].bairro = comprador.bairro;
         compradores[item].endereco = comprador.endereco;
@@ -132,10 +132,10 @@ export class CadastroLogicaService {
     comprador.datanascimento = this.fixUTC(comprador.datanascimento);
 
     for (let item = 0; item < estadoCivil.length; item++) {
-      if(comprador2.codestadocivil == estadoCivil[item].codestadocivil){
+      if (comprador2.codestadocivil == estadoCivil[item].codestadocivil) {
         comprador2.codestadocivil = {
           codestadocivil: estadoCivil[item].codestadocivil,
-          descestadocivil: estadoCivil[item].descestadocivil  
+          descestadocivil: estadoCivil[item].descestadocivil
         };
       }
     }
@@ -144,7 +144,7 @@ export class CadastroLogicaService {
     comprador.profissao = comprador2.profissao;
     comprador.cepresidencial = comprador2.cepresidencial;
     comprador.uf = {uf: comprador2.uf};
-    comprador.cidade = comprador2.cidade
+    comprador.cidade = comprador2.cidade;
     comprador.bairro = comprador2.bairro;
     comprador.endereco = comprador2.endereco;
     comprador.complemento = comprador2.complemento;
@@ -157,9 +157,9 @@ export class CadastroLogicaService {
   }
 
   visualizarInfoImovel(cadInfo: CadastroInformacao) {
-    let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
-    let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
-    //Codigo de parce do objeto carregado para os dados da tela
+    const jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO')); // Recebe os dados enviados pela busca de cadastro
+    const cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
+    // Codigo de parce do objeto carregado para os dados da tela
     cadInfo = cadastroinformacaoCarregada;
     cadInfo.bairro = cadastroinformacaoCarregada.bairro;
     cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
@@ -168,28 +168,28 @@ export class CadastroLogicaService {
     cadInfo.cidade = cadastroinformacaoCarregada.cidade;
     cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
     cadInfo.clientes = cadastroinformacaoCarregada.clientes;
-    
+
     this.chamadasService.getEmpreendimentos().subscribe(dados => {
-      let empreendimento = dados['data']
+      const empreendimento = dados['data'];
       for (let item = 0; item < empreendimento.length; item ++) {
         if (empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
           cadInfo.codempreendimento = {
-            codempreendimento: cadastroinformacaoCarregada.codempreendimento, 
-            cnpjspe: empreendimento[item].cnpjspe, 
+            codempreendimento: cadastroinformacaoCarregada.codempreendimento,
+            cnpjspe: empreendimento[item].cnpjspe,
             descempreendimento: empreendimento[item].descempreendimento};
         }
-      }        
+      }
     });
 
-    this.chamadasService.getOriginacao().subscribe(dados => { 
-      let originacao = dados['data']
+    this.chamadasService.getOriginacao().subscribe(dados => {
+      const originacao = dados['data'];
       for (let item = 0; item < originacao.length; item ++) {
         if (Number(originacao[item].codoriginacao) == Number(cadastroinformacaoCarregada.codoriginacao)) {
           cadInfo.codoriginacao = {
-            codoriginacao: cadastroinformacaoCarregada.codoriginacao, 
+            codoriginacao: cadastroinformacaoCarregada.codoriginacao,
             descoriginacao: originacao[item].descoriginacao};
         }
-      }  
+      }
     });
 
     cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
@@ -199,11 +199,11 @@ export class CadastroLogicaService {
     cadInfo.uf = {uf: cadastroinformacaoCarregada.uf};
 
     this.chamadasService.getIncorporadoras().subscribe(dados => {
-      let incorp = dados['data']
+      const incorp = dados['data'];
       for (let item = 0; item < incorp.length; item ++) {
         if (incorp[item].codincorporadora == cadastroinformacaoCarregada.codincorporadora) {
           cadInfo.codincorporadora = {
-            codincorporadora: cadastroinformacaoCarregada.codincorporadora, 
+            codincorporadora: cadastroinformacaoCarregada.codincorporadora,
             descincorporadora: incorp[item].descincorporadora};
         }
       }
@@ -224,15 +224,15 @@ export class CadastroLogicaService {
   atualizarCadInfo(cadInfo: CadastroInformacao, compradores: Compradores[]) {
     cadInfo.uf = cadInfo.uf.uf;
     cadInfo.clientes = compradores;
-    
+
     cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
     cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
     cadInfo.codoriginacao = cadInfo.codoriginacao['codoriginacao'];
     for (let index = 0; index < cadInfo.clientes.length; index++) {
       cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
-    
-      if(typeof  cadInfo.clientes[index].codestadocivil.codestadocivil !== 'undefined'){
-        cadInfo.clientes[index].codestadocivil = cadInfo.clientes[index].codestadocivil.codestadocivil;  
+
+      if (typeof  cadInfo.clientes[index].codestadocivil.codestadocivil !== 'undefined') {
+        cadInfo.clientes[index].codestadocivil = cadInfo.clientes[index].codestadocivil.codestadocivil;
       }
     }
     cadInfo.cep = cadInfo.cep.replace('-', '');
@@ -257,11 +257,11 @@ export class CadastroLogicaService {
   }
 
   private fixUTC(date: Date) {
-    let ano  = date.getUTCFullYear();
-    let mes = date.getUTCMonth();
-    let dia = date.getUTCDate();
-    let hora = date.getUTCHours();
-    let novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3))
+    const ano  = date.getUTCFullYear();
+    const mes = date.getUTCMonth();
+    const dia = date.getUTCDate();
+    const hora = date.getUTCHours();
+    const novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3));
 
     return novaData;
   }

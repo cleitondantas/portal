@@ -15,7 +15,7 @@ const routes: Routes = [
 { path: 'importar', component: ImportComponent},
 { path: 'cadastrousuario', component: CadastrousuarioComponent},
 { path: 'grafic', component: GraficComponent},
-{ path: 'cadastro', component: CadastroComponent},  
+{ path: 'cadastro', component: CadastroComponent},
 { path: 'lista', component: RelatorioListaComponent},
 { path: 'login', component: LoginComponent},
 ];

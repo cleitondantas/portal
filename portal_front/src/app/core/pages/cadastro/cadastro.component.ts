@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
-import emailMask from 'text-mask-addons/dist/emailMask'
+import emailMask from 'text-mask-addons/dist/emailMask';
 
 @Component({
   selector: 'app-cadastro',
@@ -27,11 +27,20 @@ import emailMask from 'text-mask-addons/dist/emailMask'
 })
 
 export class CadastroComponent implements OnInit {
+
+  constructor(
+    private confirmationService: ConfirmationService,
+    private chamadasService: CadastroChamadasService,
+    private logicaService: CadastroLogicaService,
+    private router: Router,
+    private messageService: MessageService,
+    private sharedService: SharedService
+  ) { }
   contato: any[] = [];
   contatoDisplay: any[] = [];
   contatoSelecionado: any;
   compradores: Compradores[] = [];
-  disabled: boolean = false;
+  disabled = false;
   selectedItem: any;
 
   estadoCivil: EstadoCivil[];
@@ -43,39 +52,33 @@ export class CadastroComponent implements OnInit {
   tipocliente: TipoClientes[];
   retornocadastro: CadastroInformacao;
   br: any;
-  disabledButton: boolean = true;
+  disabledButton = true;
   mask: Array<string | RegExp>;
   mask2: Array<string | RegExp> = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/];
-  disabledInput: boolean = true;
+  disabledInput = true;
   msgs: Message[] = [];
-  msgs2: Message[]= [];
-  controle: boolean = false;
+  msgs2: Message[] = [];
+  controle = false;
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
   contatos: Contatos = new Contatos();
 
-  constructor(
-    private confirmationService: ConfirmationService,
-    private chamadasService: CadastroChamadasService,
-    private logicaService: CadastroLogicaService,
-    private router: Router,
-    private messageService: MessageService,
-    private sharedService: SharedService
-  ) { }
+  incorpotradoras: any[];
+  item: Incorporadoras;
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
       this.chamadasService.createUser(cadInfo).subscribe(dados => {
         this.retornocadastro = dados['data'];
         console.log(JSON.stringify(dados['data']));
-        console.log("COD "+this.retornocadastro.codcadastro);
-        console.log("FID "+this.retornocadastro.numerocadastroincorporadorafid);
+        console.log('COD ' + this.retornocadastro.codcadastro);
+        console.log('FID ' + this.retornocadastro.numerocadastroincorporadorafid);
         SharedService.getInstance().temporario[0] = this.retornocadastro.codcadastro;
         SharedService.getInstance().temporario[1] = this.retornocadastro.numerocadastroincorporadorafid;
-        this.messageService.add({severity:'success', summary: 'Sucesso!', detail:'Cadastro feito com sucesso!'});
+        this.messageService.add({severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
         setTimeout(() => {
           this.router.navigate(['/analise']);
-        }, 1000); 
+        }, 1000);
       });
    // sessionStorage.clear();
     formulario.reset();
@@ -85,9 +88,6 @@ export class CadastroComponent implements OnInit {
     sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
   }
 
-  incorpotradoras:any[];
-  item: Incorporadoras;
-
   ngOnInit() {
     this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
     this.chamadasService.getEmpreendimentos().subscribe(dados => this.empreendimento = dados['data']);
@@ -95,7 +95,7 @@ export class CadastroComponent implements OnInit {
     this.chamadasService.getEstadoCivil().subscribe(dados => this.estadoCivil = dados['data']);
     this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
     this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
-    this.chamadasService.getIncorporadoras().subscribe(dados => {this.incorp = dados['data']});
+    this.chamadasService.getIncorporadoras().subscribe(dados => {this.incorp = dados['data']; });
 
     this.br = this.sharedService.calendarioBr();
 
@@ -107,20 +107,20 @@ export class CadastroComponent implements OnInit {
   }
 
   adicionarContato (contato: Contatos) {
-    if ((this.disabledInput == false) && (contato.desccontato !== "")) {
-      var contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
-      var contato2 = this.logicaService.adicionarContatosLista(contato);
-  
+    if ((this.disabledInput == false) && (contato.desccontato !== '')) {
+      const contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
+      const contato2 = this.logicaService.adicionarContatosLista(contato);
+
       contato2.cpfcnpj = this.comprador.cpfcnpj;
-  
+
       this.contatoDisplay.push(contatoDisplay);
       this.contato.push(contato2);
-  
+
       this.contatos = this.logicaService.limparContatos(this.contatos);
-      document.getElementById("desccontato").removeAttribute('placeholder');
+      document.getElementById('desccontato').removeAttribute('placeholder');
       this.disabledInput = true;
     } else {
-      this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'Preencha os campos para adicionar o contato!'});
+      this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'Preencha os campos para adicionar o contato!'});
     }
   }
 
@@ -128,26 +128,26 @@ export class CadastroComponent implements OnInit {
     this.msgs = [];
     setTimeout(() => {
       if (this.validaFormulario(formCadInfo) == true) {
-        var comprador2 = this.logicaService.adicionarComprador(comprador);
+        const comprador2 = this.logicaService.adicionarComprador(comprador);
         comprador2.contatos = this.contato;
-    
+
         this.compradores.push(comprador2);
         this.disabled = false;
-    
+
         comprador = new Compradores();
-    
+
         formCadInfo.reset();
-    
+
         this.contato = [];
         this.contatoDisplay = [];
         this.msgs = [];
-        this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Comprador adicionado!'});
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Comprador adicionado!'});
       } else {
         this.msgs = [];
-        let camposInvalidos: any[] = [];
-  
-        for (var _i in formCadInfo.controls) {
-          if (formCadInfo.controls[_i].status == "INVALID") {
+        const camposInvalidos: any[] = [];
+
+        for (const _i in formCadInfo.controls) {
+          if (formCadInfo.controls[_i].status == 'INVALID') {
             let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
             campoInvalido = campoInvalido.replace(': ', '');
             camposInvalidos.push(` ` + campoInvalido);
@@ -157,31 +157,31 @@ export class CadastroComponent implements OnInit {
               severity: 'error',
               summary: 'Erro ao adicionar comprador!',
               detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-            })
+            });
           }
         }
-  
+
         if (this.contato.length == 0) {
           this.msgs.push({
             severity: 'error',
             summary: 'Erro ao adicionar comprador!',
             detail: `Adicione pelo menos 1 contato.`
-          })
+          });
         }
       }
     }, 301);
-    
+
   }
- 
+
   removerContato (contatoC) {
-    let index = this.contatoDisplay.indexOf(contatoC);
+    const index = this.contatoDisplay.indexOf(contatoC);
 
     this.contato.splice(index, 1);
     this.contatoDisplay.splice(index, 1);
   }
 
   removerComprador (comprador) {
-    let index = this.compradores.indexOf(comprador);
+    const index = this.compradores.indexOf(comprador);
     this.compradores.splice(index, 1);
 
     if (this.compradores.length <= 0) {
@@ -189,7 +189,7 @@ export class CadastroComponent implements OnInit {
     } else {
       this.disabled = false;
     }
-    this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Comprador removido!'});
+    this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Comprador removido!'});
   }
 
   consultaCEP() {
@@ -197,17 +197,17 @@ export class CadastroComponent implements OnInit {
 
     if (cep != null && cep !== '') {
       cep = cep.replace(/\D/g, '');
-    
+
       if (cep !== '') {
         const  validacep = /^[0-9]{8}$/;
 
         if (validacep.test(cep)) {
           return this.chamadasService.getCep(cep).subscribe(dados => {
-            if (!("erro" in dados)) {
-              this.populaDadosForm(dados)
+            if (!('erro' in dados)) {
+              this.populaDadosForm(dados);
             } else {
               this.comprador.cepresidencial = null;
-              this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'CEP não encontrado!'});
+              this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'CEP não encontrado!'});
             }
           });
         }
@@ -231,17 +231,17 @@ export class CadastroComponent implements OnInit {
 
   if (cep != null && cep !== '') {
     cep = cep.replace(/\D/g, '');
-  
+
     if (cep !== '') {
       const  validacep = /^[0-9]{8}$/;
 
       if (validacep.test(cep)) {
         return this.chamadasService.getCep(cep).subscribe(dados => {
-          if (!("erro" in dados)) {
-            this.populaDadosFormImovel(dados)
+          if (!('erro' in dados)) {
+            this.populaDadosFormImovel(dados);
           } else {
             this.cadInfo.cep = null;
-            this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'CEP não encontrado!'});
+            this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'CEP não encontrado!'});
           }
         });
       }
@@ -273,17 +273,17 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.compradores = [];
-        this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Formulário limpo!'});
+        this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Formulário limpo!'});
       },
       reject: () => {
-          
+
       }
   });
   }
 
   setarTrue(dados) {
     console.log(dados);
-    let rowData: Compradores = dados.data;
+    const rowData: Compradores = dados.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
       if (rowData.cpfcnpj == this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = true;
@@ -302,8 +302,8 @@ export class CadastroComponent implements OnInit {
   }
 
   tirarSelecionado(rowData) {
-    console.log(rowData)
-    let row: Compradores = rowData.data;
+    console.log(rowData);
+    const row: Compradores = rowData.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
       if (row.cpfcnpj == this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = false;
@@ -312,7 +312,7 @@ export class CadastroComponent implements OnInit {
   }
 
   confirmacao(cadInfo: CadastroInformacao, formulario) {
-    let principal = this.verificarSelecionado();
+    const principal = this.verificarSelecionado();
     if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
       this.msgs, this.msgs2 = [];
       this.confirmationService.confirm({
@@ -326,18 +326,18 @@ export class CadastroComponent implements OnInit {
           this.compradores = [];
 
           this.OnSubmit(cadInfo, formulario);
-          
-          this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Cadastro feito com sucesso!'});
+
+          this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
         },
         reject: () => {
         }
-      })
+      });
     } else {
       this.msgs2 = [];
-      let camposInvalidos: any[] = [];
+      const camposInvalidos: any[] = [];
 
-      for (var _i in formulario.controls) {
-        if (formulario.controls[_i].status == "INVALID") {
+      for (const _i in formulario.controls) {
+        if (formulario.controls[_i].status == 'INVALID') {
           let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
           campoInvalido = campoInvalido.replace(': ', '');
           camposInvalidos.push(` ` + campoInvalido);
@@ -347,7 +347,7 @@ export class CadastroComponent implements OnInit {
             severity: 'error',
             summary: 'Erro ao avançar!',
             detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
+          });
         }
       }
 
@@ -356,7 +356,7 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao avançar!',
           detail: `Cadastre pelo menos 1 comprador.`
-        })
+        });
       }
 
       if (principal == false) {
@@ -364,34 +364,34 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao avançar!',
           detail: `Selecione o comprador principal.`
-        })
+        });
       }
     }
   }
 
-  atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any){
-    let principal = this.verificarSelecionado();
+  atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any) {
+    const principal = this.verificarSelecionado();
 
     if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
       cadInfo = this.logicaService.atualizarCadInfo(cadInfo, this.compradores);
       this.compradores = [];
-  
-      console.log(JSON.stringify(cadInfo))
+
+      console.log(JSON.stringify(cadInfo));
       this.chamadasService.putCadastro(cadInfo).subscribe(dados => {
-        this.retornocadastro = dados['data']
-        console.log(dados)
+        this.retornocadastro = dados['data'];
+        console.log(dados);
       });
       formulario.reset();
-      this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
+      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
       setTimeout(() => {
         this.router.navigate(['/home']);
-      }, 1000); 
+      }, 1000);
     } else {
       this.msgs2 = [];
-      let camposInvalidos: any[] = [];
+      const camposInvalidos: any[] = [];
 
-      for (var _i in formulario.controls) {
-        if (formulario.controls[_i].status == "INVALID") {
+      for (const _i in formulario.controls) {
+        if (formulario.controls[_i].status == 'INVALID') {
           let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
           campoInvalido = campoInvalido.replace(': ', '');
           camposInvalidos.push(` ` + campoInvalido);
@@ -401,7 +401,7 @@ export class CadastroComponent implements OnInit {
             severity: 'error',
             summary: 'Erro ao salvar alterações!',
             detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
+          });
         }
       }
 
@@ -410,7 +410,7 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao salvar alterações!',
           detail: `Cadastre pelo menos 1 comprador.`
-        })
+        });
       }
 
       if (principal == false) {
@@ -418,16 +418,16 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao avançar!',
           detail: `Selecione o comprador principal.`
-        })
+        });
       }
     }
   }
 
   verificaCpfCnpj(formCadInfo) {
-    let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
-    let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
+    const cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
+    const cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
 
-    if((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
+    if ((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
       return true;
     } else {
       formCadInfo.controls['cpfcnpj'].status = 'INVALID';
@@ -436,7 +436,7 @@ export class CadastroComponent implements OnInit {
   }
 
   validaFormulario(formCadInfo) {
-    let cpfcnpj = this.verificaCpfCnpj(formCadInfo);
+    const cpfcnpj = this.verificaCpfCnpj(formCadInfo);
     if (formCadInfo.valid == false || this.contato.length == 0 || cpfcnpj == false) {
       return false;
     } else {
@@ -454,18 +454,18 @@ export class CadastroComponent implements OnInit {
 
   validContato(evento) {
     evento.value = evento.value.codtipocontato;
-    var input = document.getElementById("desccontato");
+    const input = document.getElementById('desccontato');
     this.contatos.desccontato = '';
     this.disabledInput = false;
 
-    if(evento.value == 1) {
+    if (evento.value == 1) {
       input.setAttribute('placeholder', '(XX) XXXX-XXXX');
       this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else if (evento.value == 2) {
       input.setAttribute('placeholder', '(XX) XXXXX-XXXX');
       this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else if (evento.value == 3) {
-      input.setAttribute('placeholder', 'email@email.com')
+      input.setAttribute('placeholder', 'email@email.com');
       this.mask = emailMask;
     }
   }
@@ -482,14 +482,14 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.disabledButton = true;
-        this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Formulário limpo!'});
+        this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Formulário limpo!'});
       },
       reject: () => {
       }
   });
   }
 
-  visualizarComprador(comprador:Compradores) {
+  visualizarComprador(comprador: Compradores) {
     this.disabledButton = false;
 
     this.comprador = this.logicaService.visualizarComprador(this.comprador, comprador, this.estadoCivil);
@@ -500,7 +500,7 @@ export class CadastroComponent implements OnInit {
     for (let item = 0; item < comprador.contatos.length; item++) {
       for (let item2 = 0; item2 <  this.tipoContato.length; item2++) {
         if (this.tipoContato[item2].codtipocontato == comprador.contatos[item].codtipocontato) {
-            var contatoDisplay: Contatos = new Contatos();
+            const contatoDisplay: Contatos = new Contatos();
             contatoDisplay.tipocontato = this.tipoContato[item2].desctipocontato;
             contatoDisplay.desccontato =  comprador.contatos[item].desccontato;
             this.contatoDisplay.push(contatoDisplay);
@@ -510,8 +510,8 @@ export class CadastroComponent implements OnInit {
   }
 
   visualizarInfoImovel() {
-    //Verifica se a tela está sendo carregada vinda do Campo de busca
-    if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
+    // Verifica se a tela está sendo carregada vinda do Campo de busca
+    if (sessionStorage.getItem('CADASTROSELECIONADO') != null) {
       this.cadInfo = this.logicaService.visualizarInfoImovel(this.cadInfo);
       this.compradores = this.cadInfo.clientes;
       for (let _i = 0; _i < this.compradores.length; _i++) {
@@ -520,7 +520,7 @@ export class CadastroComponent implements OnInit {
         }
 
       }
-      console.log(this.cadInfo)
+      console.log(this.cadInfo);
 
       this.comprador = new Compradores();
       this.contatoDisplay = [];
@@ -529,23 +529,23 @@ export class CadastroComponent implements OnInit {
       this.disabledButton = true;
     }
   }
-  
+
   atualizarComprador(formCadInfo) {
     if (this.validaFormulario(formCadInfo) == true) {
       this.compradores = this.logicaService.atualizarComprador(this.compradores, this.comprador, this.contato);
-          
+
       formCadInfo.reset();
       this.contatoDisplay = [];
       this.contato = [];
       this.msgs = [];
       this.disabledButton = true;
-      this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Informações do comprador alteradas!'});
+      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Informações do comprador alteradas!'});
     } else {
       this.msgs = [];
-      let camposInvalidos: any[] = [];
+      const camposInvalidos: any[] = [];
 
-      for (var _i in formCadInfo.controls) {
-        if (formCadInfo.controls[_i].status == "INVALID") {
+      for (const _i in formCadInfo.controls) {
+        if (formCadInfo.controls[_i].status == 'INVALID') {
           let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
           campoInvalido = campoInvalido.replace(': ', '');
           camposInvalidos.push(` ` + campoInvalido);
@@ -555,7 +555,7 @@ export class CadastroComponent implements OnInit {
             severity: 'error',
             summary: 'Erro ao salvar alterações!',
             detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
+          });
         }
       }
 
@@ -564,13 +564,13 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao salvar alterações!',
           detail: `Adicione pelo menos 1 contato.`
-        })
+        });
       }
     }
   }
 
-  setCursor(cepRecebido){
-    var cep = (<HTMLInputElement>document.getElementById(cepRecebido));
+  setCursor(cepRecebido) {
+    const cep = (<HTMLInputElement>document.getElementById(cepRecebido));
     cep.focus();
     cep.setSelectionRange(0, 0);
   }
