@@ -19,7 +19,7 @@ export class HistoricoComponent implements OnInit {
       {data: 'a', historico: 'b', usuario: 'c', fase: 'd', sintese: 'e'},
       {data: 'a', historico: 'b', usuario: 'c', fase: 'd', sintese: 'e'},
       {data: 'a', historico: 'b', usuario: 'c', fase: 'd', sintese: 'e'},
-    ]
+    ];
   }
 
 }

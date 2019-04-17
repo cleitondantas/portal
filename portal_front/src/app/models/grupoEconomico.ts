@@ -1,7 +1,7 @@
-export class GrupoEconomico{
-    codGrupoEconomico:number;
-    cnpjGrupoEconomico:string;
-    descGrupoEconomico:string;
+export class GrupoEconomico {
+    codGrupoEconomico: number;
+    cnpjGrupoEconomico: string;
+    descGrupoEconomico: string;
 
 
 }

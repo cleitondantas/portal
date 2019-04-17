@@ -1,5 +1,5 @@
 export class Area {
-    codArea:number;
-    descAreaCadastro:string;
-    isAtivo:boolean;
+    codArea: number;
+    descAreaCadastro: string;
+    isAtivo: boolean;
 }

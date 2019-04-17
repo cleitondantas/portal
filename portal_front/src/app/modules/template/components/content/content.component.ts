@@ -9,8 +9,8 @@ import { AuthService } from '../../../../services/auth.service';
 export class ContentComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
-  mostrarMenu: boolean = false;
-  
+  mostrarMenu = false;
+
   ngOnInit() {
     this.authService.mostrarsistema.subscribe(
       mostrar => this.mostrarMenu = mostrar
@@ -18,7 +18,7 @@ export class ContentComponent implements OnInit {
     );
   }
 
-  public logOut(){
+  public logOut() {
     this.authService.mostrarsistema.subscribe(
       mostrar => this.mostrarMenu = mostrar
 

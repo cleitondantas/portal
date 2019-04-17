@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./analise-credito.component.css']
 })
 export class AnaliseCreditoComponent implements OnInit {
-  selected: number = 0;
-  disabled: boolean = true;
+  selected = 0;
+  disabled = true;
 
   constructor() { }
 

@@ -15,7 +15,7 @@ export class AnaliseLogicaService {
   constructor(private analiseChamadasService: AnaliseChamadasService) { }
 
   adicionarSimulacao(simulacao: Simulacoes, cod: number) {
-    var simulacao2: Simulacoes = new Simulacoes();
+    const simulacao2: Simulacoes = new Simulacoes();
 
     simulacao2.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     simulacao2.codcadastro = cod;
@@ -68,7 +68,7 @@ export class AnaliseLogicaService {
           } else {
             simulacaoLista[item].codtipoamortizacao = simulacoes.codtipoamortizacao.codtipoamortizacao;
           }
-          simulacaoLista[item].codtipoamortizacao = simulacoes.codtipoamortizacao.codtipoamortizacao
+          simulacaoLista[item].codtipoamortizacao = simulacoes.codtipoamortizacao.codtipoamortizacao;
           simulacaoLista[item].valorsubsidio = simulacoes.valorsubsidio;
           simulacaoLista[item].valordespesasfinanciadas = simulacoes.valordespesasfinanciadas;
           simulacaoLista[item].valorfinanciamento = simulacoes.valorfinanciamento;
@@ -83,7 +83,7 @@ export class AnaliseLogicaService {
   }
 
   visualizarSimulacao(simulacao: Simulacoes, modalidade, amortizacao, instFinan: InstiruicaoFinanceiras[]) {
-    let simulacao2: Simulacoes = new Simulacoes();
+    const simulacao2: Simulacoes = new Simulacoes();
 
     simulacao2.codsimulacao = simulacao.codsimulacao;
     simulacao2.valoravaliacao = simulacao.valoravaliacao;
@@ -97,20 +97,20 @@ export class AnaliseLogicaService {
     }
 
     for (let item = 0; item < modalidade.length; item++) {
-      if(simulacao.codmodalidadesimulacao == modalidade[item].codModalidadeSimulacao){
+      if (simulacao.codmodalidadesimulacao == modalidade[item].codModalidadeSimulacao) {
         simulacao.codmodalidadesimulacao = {
           codModalidadeSimulacao: modalidade[item].codModalidadeSimulacao,
-          descModalidadeSimulacao: modalidade[item].descModalidadeSimulacao  
+          descModalidadeSimulacao: modalidade[item].descModalidadeSimulacao
         };
       }
     }
     simulacao2.codmodalidadesimulacao = simulacao.codmodalidadesimulacao;
 
     for (let item = 0; item < amortizacao.length; item++) {
-      if(simulacao.codtipoamortizacao == amortizacao[item].codtipoamortizacao){
+      if (simulacao.codtipoamortizacao == amortizacao[item].codtipoamortizacao) {
         simulacao.codtipoamortizacao = {
           codtipoamortizacao: amortizacao[item].codtipoamortizacao,
-          desctipoamortizacao: amortizacao[item].desctipoamortizacao  
+          desctipoamortizacao: amortizacao[item].desctipoamortizacao
         };
       }
     }
@@ -141,15 +141,15 @@ export class AnaliseLogicaService {
   salvarAnalise(analise: Analise, simulacaoLista: Simulacoes[], codcadastro, controle) {
     analise.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
     analise.codcadastro  = codcadastro;
-    for (var _i = 0; _i < simulacaoLista.length; _i++) {
-      var item = simulacaoLista[_i];
-      simulacaoLista[_i].codinstituicaofinanceira = item.codinstituicaofinanceira ?  Number(item.codinstituicaofinanceira.codInstituicaoFinanceira):null;
-      simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao? Number(item.codstatussimulacao.codstatussimulacao) :null;
-      if (item.codmodalidadesimulacao != undefined || item.codmodalidadesimulacao !=null) {
-        simulacaoLista[_i].codmodalidadesimulacao = item.codmodalidadesimulacao.codModalidadeSimulacao ? item.codmodalidadesimulacao.codModalidadeSimulacao: item.codmodalidadesimulacao;
+    for (let _i = 0; _i < simulacaoLista.length; _i++) {
+      const item = simulacaoLista[_i];
+      simulacaoLista[_i].codinstituicaofinanceira = item.codinstituicaofinanceira ?  Number(item.codinstituicaofinanceira.codInstituicaoFinanceira) : null;
+      simulacaoLista[_i].codstatussimulacao = item.codstatussimulacao ? Number(item.codstatussimulacao.codstatussimulacao) : null;
+      if (item.codmodalidadesimulacao != undefined || item.codmodalidadesimulacao != null) {
+        simulacaoLista[_i].codmodalidadesimulacao = item.codmodalidadesimulacao.codModalidadeSimulacao ? item.codmodalidadesimulacao.codModalidadeSimulacao : item.codmodalidadesimulacao;
       }
-      if (item.codtipoamortizacao != undefined || item.codtipoamortizacao !=null) {
-        simulacaoLista[_i].codtipoamortizacao = item.codtipoamortizacao.codtipoamortizacao ? item.codtipoamortizacao.codtipoamortizacao: item.codtipoamortizacao;
+      if (item.codtipoamortizacao != undefined || item.codtipoamortizacao != null) {
+        simulacaoLista[_i].codtipoamortizacao = item.codtipoamortizacao.codtipoamortizacao ? item.codtipoamortizacao.codtipoamortizacao : item.codtipoamortizacao;
       }
 
       if (simulacaoLista[_i].codsicaq == true) {
@@ -158,8 +158,8 @@ export class AnaliseLogicaService {
         simulacaoLista[_i].codsicaq = 1;
       }
     }
-    
-    analise.simulacoes= simulacaoLista;
+
+    analise.simulacoes = simulacaoLista;
     analise.numerocadastroincorporadorafid = analise.numerocadastroincorporadorafid;
 
     if (controle == true) {
@@ -173,7 +173,7 @@ export class AnaliseLogicaService {
         analise.datapastamae = new Date(analise.datapastamae);
       }
 
-      for (var _i = 0; _i < simulacaoLista.length; _i++) {
+      for (let _i = 0; _i < simulacaoLista.length; _i++) {
         if (analise.simulacoes[_i].dataenviobanco != undefined || analise.simulacoes[_i].dataenviobanco != null) {
           analise.simulacoes[_i].dataenviobanco = analise.simulacoes[_i].dataenviobanco.toISOString();
         }
@@ -193,29 +193,29 @@ export class AnaliseLogicaService {
     if (analise.datapastamae != null) {
       analise.datapastamae = new Date(analise.datapastamae);
     }
-  
-    for (var _i = 0; _i < simulacaoLista.length; _i++) {
+
+    for (let _i = 0; _i < simulacaoLista.length; _i++) {
       analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
     }
-  
-    for (var _i = 0; _i  < analise.simulacoes.length; _i++) {
-      for(let item = 0; item < statussimulacao.length; item++){
-        if(analise.simulacoes[_i].codstatussimulacao === statussimulacao[item].codstatussimulacao){
+
+    for (let _i = 0; _i  < analise.simulacoes.length; _i++) {
+      for (let item = 0; item < statussimulacao.length; item++) {
+        if (analise.simulacoes[_i].codstatussimulacao === statussimulacao[item].codstatussimulacao) {
           analise.simulacoes[_i].codstatussimulacao = {
             codstatussimulacao: statussimulacao[item].codstatussimulacao,
-            descstatussimulacao: statussimulacao[item].descstatussimulacao              
+            descstatussimulacao: statussimulacao[item].descstatussimulacao
           };
         }
       }
     }
-  
-    for (var _i = 0; _i < analise.simulacoes.length; _i++) {
+
+    for (let _i = 0; _i < analise.simulacoes.length; _i++) {
       for (let item = 0; item < instFinan.length; item++) {
         if (analise.simulacoes[_i].codinstituicaofinanceira == instFinan[item].codInstituicaoFinanceira) {
           analise.simulacoes[_i].codinstituicaofinanceira = {
             codInstituicaoFinanceira: instFinan[item].codInstituicaoFinanceira,
             descInstituicaoFinanceira: instFinan[item].descInstituicaoFinanceira
-          }
+          };
         }
       }
     }
@@ -224,8 +224,8 @@ export class AnaliseLogicaService {
   }
 
   receberAnalise(analiseSelecionada, statusSimulEvent, instFinanEvent, instFinan, statussimulacao) {
-    let jsonObj: any = JSON.parse(analiseSelecionada);// Recebe os dados enviados pela busca de cadastro
-    let analise: Analise = <Analise>jsonObj;
+    const jsonObj: any = JSON.parse(analiseSelecionada); // Recebe os dados enviados pela busca de cadastro
+    const analise: Analise = <Analise>jsonObj;
 
     if (analise.datapastamae != null) {
       analise.datapastamae = new Date(analise.datapastamae);
@@ -245,35 +245,35 @@ export class AnaliseLogicaService {
 
     statusSimulEvent.subscribe(dado => {
       if (dado == true) {
-        for (var _i = 0; _i  < analise.simulacoes.length; _i++) {
-          for(var item = 0; item < statussimulacao.length; item++){
-            if(analise.simulacoes[_i].codstatussimulacao === statussimulacao[item].codstatussimulacao){
+        for (let _i = 0; _i  < analise.simulacoes.length; _i++) {
+          for (let item = 0; item < statussimulacao.length; item++) {
+            if (analise.simulacoes[_i].codstatussimulacao === statussimulacao[item].codstatussimulacao) {
                 analise.simulacoes[_i].codstatussimulacao = {
                 codstatussimulacao: statussimulacao[item].codstatussimulacao,
-                descstatussimulacao: statussimulacao[item].descstatussimulacao              
+                descstatussimulacao: statussimulacao[item].descstatussimulacao
               };
             }
           }
         }
       }
-    })
+    });
 
     instFinanEvent.subscribe(dado => {
       if (dado == true) {
-        for (var _i = 0; _i < analise.simulacoes.length; _i++) {
-          for (var item = 0; item < instFinan.length; item++) {
+        for (let _i = 0; _i < analise.simulacoes.length; _i++) {
+          for (let item = 0; item < instFinan.length; item++) {
             if (analise.simulacoes[_i].codinstituicaofinanceira == instFinan[item].codInstituicaoFinanceira) {
               analise.simulacoes[_i].codinstituicaofinanceira = {
                 codInstituicaoFinanceira: instFinan[item].codInstituicaoFinanceira,
                 descInstituicaoFinanceira: instFinan[item].descInstituicaoFinanceira
-              }
+              };
             }
           }
         }
       }
-    })
- 
-    for (var _i = 0; _i < analise.simulacoes.length; _i++) {
+    });
+
+    for (let _i = 0; _i < analise.simulacoes.length; _i++) {
       if (analise.simulacoes[_i].dataenviobanco != null) {
         analise.simulacoes[_i].dataenviobanco = new Date(analise.simulacoes[_i].dataenviobanco);
       }
@@ -283,19 +283,19 @@ export class AnaliseLogicaService {
   }
 
   receberDadosFaturamento(analiseSelecionada, dadosfaturamento: DadosFaturamento, speEvent) {
-    let jsonObj: any = JSON.parse(analiseSelecionada);// Recebe os dados enviados pela busca de cadastro
-    let analise: Analise = <Analise>jsonObj;
-    dadosfaturamento.codanalise= analise.codanalise;
+    const jsonObj: any = JSON.parse(analiseSelecionada); // Recebe os dados enviados pela busca de cadastro
+    const analise: Analise = <Analise>jsonObj;
+    dadosfaturamento.codanalise = analise.codanalise;
     dadosfaturamento.codcadastro = analise.codcadastro;
     speEvent.subscribe(dado => {
-      let spe: SPE[] = dado['data'];
+      const spe: SPE[] = dado['data'];
 
-      this.analiseChamadasService.getDadosFaturamento(analise.codcadastro).subscribe(dados=> {
-        for (var _i = 0; _i < dados['data'].length; _i++) { 
+      this.analiseChamadasService.getDadosFaturamento(analise.codcadastro).subscribe(dados => {
+        for (let _i = 0; _i < dados['data'].length; _i++) {
           dadosfaturamento.coddadosfaturamento = dados['data'][_i].coddadosfaturamento;
           dadosfaturamento.codanalise = dados['data'][_i].codanalise;
           dadosfaturamento.codcadastro = dados['data'][_i].codcadastro;
-          dadosfaturamento.cpfcnpj = dados['data'][_i].cpfcnpj;      
+          dadosfaturamento.cpfcnpj = dados['data'][_i].cpfcnpj;
           dadosfaturamento.parcela1 = dados['data'][_i].parcela1;
           dadosfaturamento.notafiscal1   = dados['data'][_i].notafiscal1;
 
@@ -305,10 +305,10 @@ export class AnaliseLogicaService {
                 cnpjspe: spe[item].cnpjspe,
                 codincorporadora: spe[item].codincorporadora,
                 descspe: spe[item].descspe
-              }
+              };
             }
           }
-          
+
           dadosfaturamento.razaosocialspe = dados['data'][_i].razaosocialspe;
 
           dadosfaturamento.mesfaturamento1 = new Date(dados['data'][_i].mesfaturamento1);
@@ -325,17 +325,17 @@ export class AnaliseLogicaService {
         }
       }
       );
-    })
+    });
 
     return dadosfaturamento;
   }
 
   private fixUTC(date: Date) {
-    let ano  = date.getUTCFullYear();
-    let mes = date.getUTCMonth();
-    let dia = date.getUTCDate();
-    let hora = date.getUTCHours();
-    let novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3))
+    const ano  = date.getUTCFullYear();
+    const mes = date.getUTCMonth();
+    const dia = date.getUTCDate();
+    const hora = date.getUTCHours();
+    const novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3));
 
     return novaData;
   }

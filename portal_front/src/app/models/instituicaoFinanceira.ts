@@ -1,6 +1,6 @@
-export class InstiruicaoFinanceiras{
-    
-    codInstituicaoFinanceira:number;
-    descInstituicaoFinanceira:string;
+export class InstiruicaoFinanceiras {
+
+    codInstituicaoFinanceira: number;
+    descInstituicaoFinanceira: string;
 
 }

@@ -7,23 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GraficComponent implements OnInit {
   data: any;
-  constructor() { 
+  constructor() {
     this.data = {
-      labels: ['Malote','Conferencia','Liberação'],
+      labels: ['Malote', 'Conferencia', 'Liberação'],
       datasets: [
           {
               data: [50, 50, 50],
               backgroundColor: [
-                  "#FF6384",
-                  "#36A2EB",
-                  "#FFCE56"
+                  '#FF6384',
+                  '#36A2EB',
+                  '#FFCE56'
               ],
               hoverBackgroundColor: [
-                  "#FF6380",
-                  "#36A280",
-                  "#FFCE80"
+                  '#FF6380',
+                  '#36A280',
+                  '#FFCE80'
               ]
-          }]    
+          }]
       };
   }
 
