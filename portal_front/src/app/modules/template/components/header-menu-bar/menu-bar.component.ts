@@ -10,6 +10,10 @@ import { Compradores } from 'src/app/models/compradores';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { Analise } from 'src/app/models/analise';
+import formatCpf from '@brazilian-utils/format-cpf';
+import formatCnpj from '@brazilian-utils/format-cnpj';
+import isValidCpf from '@brazilian-utils/is-valid-cpf';
+import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 
 declare var TweenMax: any;
 
@@ -44,10 +48,13 @@ export class MenuBarComponent implements OnInit {
     text: string;
     results: string[];
     nomeClienteFiltrado: any[];
+    dataNascimento: string;
 
     nomeclienteSelecionado: string;
     cpfclienteSelecionado: string;
     cadastrosTabelaBusca: CadastroInformacao[];
+    cadastrosTabelaBuscaInfo: CadastroInformacao[];
+    clienteInformacao: Compradores[];
     items: MenuItem[];
     itemsmenu: MenuItem[];
     msgsNome: Message[] = [];
@@ -56,7 +63,7 @@ export class MenuBarComponent implements OnInit {
     nomeUsuario: string;
     profileUser: string;
 
-conts = false;
+    conts = false;
 
     blurNomeSelect(item: any) {
         this.nomeclienteSelecionado = item.target.value;
@@ -66,7 +73,7 @@ conts = false;
 
     }
     clickBuscaPorNome(event: any) {
-        this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado, null).then(data => {
+        this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado, null).subscribe(data => {
             this.msgsNome = [];
             this.cadastrosTabelaBusca = data['data'];
         }, error => {
@@ -77,11 +84,37 @@ conts = false;
                 detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
         });
+    }
 
+    clickBuscaPorNomeInfo(event: any) {
+        this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado, null).subscribe(data => {
+            this.msgsNome = [];
+            this.cadastrosTabelaBuscaInfo = data['data'];
+            for (let i = 0; i < this.cadastrosTabelaBuscaInfo.length; i++) {
+                for (let item = 0; item < this.cadastrosTabelaBuscaInfo[i].clientes.length; item++) {
+                    if (this.nomeclienteSelecionado == this.cadastrosTabelaBuscaInfo[i].clientes[item].nomecliente) {
+                        let data = this.cadastrosTabelaBuscaInfo[i].clientes[item].datanascimento;
+                        data = new Date(data);
+                        data.toUTCString();
+                        this.dataNascimento = this.fixUTC(data);
+                        this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj = this.formatCpfCnpj(this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj)
+                        this.clienteInformacao = [this.cadastrosTabelaBuscaInfo[i].clientes[item]];
+                    }
+                }
+            }
+            console.log(this.clienteInformacao);
+        }, error => {
+            this.msgsNome = [];
+            this.msgsNome.push({
+                severity: 'error',
+                summary: 'Erro ao buscar!',
+                detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + `</strong>. Verifique e tente novamente.`
+            });
+        });
     }
 
     clickBuscaPorCPF(event: any) {
-        this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).then(data => {
+        this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
             this.cadastrosTabelaBusca = data['data'];
         }, error => {
             this.msgsCpf = [];
@@ -125,13 +158,12 @@ conts = false;
             }
         }
 
-        for (let i = 0; i < this.cadastrosTabelaBusca.length; i++) {
-            console.log(this.cadastrosTabelaBusca);
-            if (codcadastro == this.cadastrosTabelaBusca[i].codcadastro) {
-                sessionStorage.setItem('fid', JSON.stringify(this.cadastrosTabelaBusca[i].numerocadastroincorporadorafid));
-                for (let item = 0; item < this.cadastrosTabelaBusca[i]['clientes'].length; item++) {
-                    if (this.nomeclienteSelecionado == this.cadastrosTabelaBusca[i]['clientes'][item].nomecliente) {
-                        sessionStorage.setItem('CADASTRODADOS', JSON.stringify(this.cadastrosTabelaBusca[i]['clientes'][item]));
+        for (let i = 0; i < this.cadastrosTabelaBuscaInfo.length; i++) {
+            console.log(this.cadastrosTabelaBuscaInfo);
+                sessionStorage.setItem('fid', JSON.stringify(this.cadastrosTabelaBuscaInfo[i].numerocadastroincorporadorafid));
+                for (let item = 0; item < this.cadastrosTabelaBuscaInfo[i]['clientes'].length; item++) {
+                    if (this.nomeclienteSelecionado == this.cadastrosTabelaBuscaInfo[i]['clientes'][item].nomecliente) {
+                        sessionStorage.setItem('CADASTRODADOS', JSON.stringify(this.cadastrosTabelaBuscaInfo[i]['clientes'][item]));
                     }
                 }
 
@@ -148,7 +180,7 @@ conts = false;
                     this.router.navigate(['/informacoes']);
                     this.analiseService.buscarInformacoes.emit(true);
                 });
-            }
+            
             this.hideDialogInfo();
         }
     }
@@ -211,6 +243,18 @@ conts = false;
           }
       }
       return filtered;
+      }
+
+      private fixUTC(date: Date) {
+        const ano  = date.getUTCFullYear();
+        const mes = date.getUTCMonth();
+        const dia = date.getUTCDate();
+        const hora = date.getHours();
+        const novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3));
+        const dataString = novaData.toLocaleString('pt-BR');
+        const dataSlice = dataString.indexOf(' ');
+    
+        return dataString.slice(0, dataSlice);
       }
   ngOnInit() {
 
@@ -364,5 +408,18 @@ showConfirm() {
     this.authService.shared.messengerService.clear();
     this.authService.shared.messengerService.add({key: 'ok', severity: 'success', summary: 'Ação Realizada', detail: 'Ação Realizada com Sucesso!'});
 }
+
+formatCpfCnpj(cpfcnpj: string) {
+    const cpf: boolean = isValidCpf(cpfcnpj);
+    const cnpj: boolean = isValidCnpj(cpfcnpj);
+
+    if (cpf == true) {
+      cpfcnpj = formatCpf(cpfcnpj);
+    } else if (cnpj == true) {
+      cpfcnpj = formatCnpj(cpfcnpj);
+    }
+
+    return cpfcnpj;
+  }
 
 }

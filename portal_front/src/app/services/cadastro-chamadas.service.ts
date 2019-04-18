@@ -92,9 +92,9 @@ export class CadastroChamadasService {
 
   getBuscaCadastrado(nome: string, cpf: string) {
   if (nome != null) {
-  return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/nome/' + nome).toPromise().then(res => <any[]> res).then(data =>data);
+  return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/nome/' + nome);
   } else if (cpf != null) {
-    return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/cpf/' + cpf).toPromise().then(res => <any[]> res).then(data =>data);
+    return this.http.get<CadastroInformacao[]>(environment.urlpath + '/api/cadastro/cpf/' + cpf);
   }
   }
 

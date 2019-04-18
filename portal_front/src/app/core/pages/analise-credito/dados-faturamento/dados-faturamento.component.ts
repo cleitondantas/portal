@@ -5,6 +5,7 @@ import { Analise } from 'src/app/models/analise';
 import { SPE } from 'src/app/models/spe';
 import { SharedService } from 'src/app/services/shared.service';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dados-faturamento',
@@ -19,7 +20,8 @@ export class DadosFaturamentoComponent implements OnInit {
 
   constructor(private analiseChamadasService: AnaliseChamadasService,
               private sharedService: SharedService,
-              private logicaService: AnaliseLogicaService) { }
+              private logicaService: AnaliseLogicaService,
+              private router: Router) { }
 
   dadosfaturamento: DadosFaturamento  = new DadosFaturamento();
 
@@ -57,6 +59,7 @@ export class DadosFaturamentoComponent implements OnInit {
     console.log('this.dadosfaturamento');
     console.log(this.dadosfaturamento);
     this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => (console.log(dados['data'])));
+    this.router.navigate(['/home']);
   }
 
   cancelar() {

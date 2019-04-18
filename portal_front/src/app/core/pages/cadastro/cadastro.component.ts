@@ -156,7 +156,8 @@ export class CadastroComponent implements OnInit {
             this.msgs.push({
               severity: 'error',
               summary: 'Erro ao adicionar comprador!',
-              detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+              detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` +
+               camposInvalidos + `</strong>.`
             });
           }
         }
@@ -314,7 +315,9 @@ export class CadastroComponent implements OnInit {
   confirmacao(cadInfo: CadastroInformacao, formulario) {
     const principal = this.verificarSelecionado();
     if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
-      this.msgs, this.msgs2 = [];
+      this.msgs = [];
+      this.msgs2 = [];
+
       this.confirmationService.confirm({
         message: 'Tem certeza que deseja continuar?',
         header: 'Confirmação',
@@ -346,7 +349,8 @@ export class CadastroComponent implements OnInit {
           this.msgs2.push({
             severity: 'error',
             summary: 'Erro ao avançar!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` +
+            camposInvalidos + `</strong>.`
           });
         }
       }
@@ -400,7 +404,8 @@ export class CadastroComponent implements OnInit {
           this.msgs2.push({
             severity: 'error',
             summary: 'Erro ao salvar alterações!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:`
+            + camposInvalidos + `</strong>.`
           });
         }
       }
@@ -554,7 +559,8 @@ export class CadastroComponent implements OnInit {
           this.msgs.push({
             severity: 'error',
             summary: 'Erro ao salvar alterações!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:`
+            + camposInvalidos + `</strong>.`
           });
         }
       }

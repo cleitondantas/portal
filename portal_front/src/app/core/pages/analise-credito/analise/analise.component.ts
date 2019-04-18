@@ -129,6 +129,7 @@ export class AnaliseComponent implements OnInit {
 
     this.simulacoes.correspondente = 'Montreal';
     this.simulacoes.simulacaoselecionado = false;
+    console.log(this.simulacoes)
   }
 
   addItemStatusSimulacao(items: StatusSimulacao[]) {
@@ -152,13 +153,13 @@ export class AnaliseComponent implements OnInit {
         if (formSimulacao.controls[_i].value == undefined || null || '') {
           let campoVazio = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
           campoVazio = campoVazio.replace(': ', '');
-          camposVazios.push(` ` + campoVazio);
+          camposVazios.push(`<p> -` + campoVazio);
         }
       }
-
       if (camposVazios.length > 0) {
         this.confirmationService.confirm({
-          message: `As seguintes informações não estão preenchidas:<strong>` + camposVazios + '.</strong><br><br><p>Deseja continuar?</p>',
+          message: `As seguintes informações não estão preenchidas:
+          <strong>` + camposVazios + '</p></strong><br><p>Deseja continuar?</p>',
           header: 'Confirmação',
           icon: 'pi pi-exclamation-triangle',
           acceptLabel: 'Sim',
@@ -179,7 +180,6 @@ export class AnaliseComponent implements OnInit {
 
         this.simulacaoLista.push(simulacao2);
         this.simulacoes.codinstituicaofinanceira = null;
-        console.log(this.simulacaoLista);
         this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Simulação adicionada!'});
       }
 

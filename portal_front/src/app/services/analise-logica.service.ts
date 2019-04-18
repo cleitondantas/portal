@@ -43,6 +43,7 @@ export class AnaliseLogicaService {
     simulacao2.valorrecursosproprios = simulacao.valorrecursosproprios;
     simulacao2.saldodevedor = simulacao.saldodevedor;
     simulacao2.codinstituicaofinanceira = simulacao.codinstituicaofinanceira;
+    simulacao2.simulacaoselecionado = simulacao.simulacaoselecionado;
 
     return simulacao2;
   }
