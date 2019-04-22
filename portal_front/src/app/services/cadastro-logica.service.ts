@@ -5,6 +5,11 @@ import { Injectable } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
 import { CadastroInformacao } from '../models/cadastro-informacao';
 import { CadastroChamadasService } from './cadastro-chamadas.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import formatCpf from '@brazilian-utils/format-cpf';
+import formatCnpj from '@brazilian-utils/format-cnpj';
+import isValidCpf from '@brazilian-utils/is-valid-cpf';
+import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +17,8 @@ import { CadastroChamadasService } from './cadastro-chamadas.service';
 export class CadastroLogicaService {
   contAny: any;
 
-  constructor(private chamadasService: CadastroChamadasService) { }
+  constructor(private chamadasService: CadastroChamadasService,
+              private sharedService: SharedService) { }
 
   adicionarComprador(comprador: Compradores) {
     const comprador2: Compradores = new Compradores();
@@ -71,21 +77,6 @@ export class CadastroLogicaService {
 
     return contato;
   }
-
-  /*compradorSessionStorage(formulario) {
-    var a: any = sessionStorage.getItem('compradorLista');
-    if (a != null) {
-      a = sessionStorage.length;
-    } else {
-      a = sessionStorage.setItem('compradorLista', JSON.stringify(formulario))
-    }
-    let i;
-    if(a > 0) {
-      for (i= a + 1; i > a; i) {
-        sessionStorage.setItem('compradorLista' + [i], JSON.stringify(formulario))
-      }
-    }
-  }*/
 
   atualizarComprador(compradores: Compradores[] = [], comprador: Compradores, contato: any[] = []) {
     for (let item = 0; item < compradores.length; item++) {
@@ -256,6 +247,77 @@ export class CadastroLogicaService {
     return cadInfo;
   }
 
+  getDadosCadastrais(cadastroSelecionado) {
+    const jsonObj: any = JSON.parse(cadastroSelecionado);
+    const comprador: Compradores = <Compradores>jsonObj;
+
+    comprador.cpfcnpj = this.formatCpfCnpj(comprador.cpfcnpj);
+
+    const fimCep = comprador.cepresidencial.slice(5, comprador.cepresidencial.length);
+    const comecoCep = comprador.cepresidencial.slice(0, 5);
+    comprador.cepresidencial = comecoCep + '-' + fimCep;
+
+    this.chamadasService.getDadosCadastrais('tipoclientes').subscribe(event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+      } else if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        for (let i = 0; i < dadosBaixados.length; i++) {
+          if (comprador.codtipocliente == dadosBaixados[i].codtipocliente) {
+            comprador.codtipocliente = dadosBaixados[i].desctipocliente;
+          }
+        }
+        this.sharedService.getTipoCliente = true;
+        this.sharedService.hiddenLoader();
+      }
+    });
+
+    this.chamadasService.getDadosCadastrais('estadocivil').subscribe(event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+      } else if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        for (let i = 0; i < dadosBaixados.length; i++) {
+          if (comprador.codestadocivil == dadosBaixados[i].codestadocivil) {
+            comprador.codestadocivil = dadosBaixados[i].descestadocivil;
+          }
+        }
+        this.sharedService.getEstadoCivil = true;
+        this.sharedService.hiddenLoader();
+      }
+    });
+
+    comprador.datanascimento = new Date(comprador.datanascimento);
+    comprador.datanascimento.toUTCString();
+
+    comprador.dataexpedicao = new Date(comprador.dataexpedicao);
+    comprador.dataexpedicao.toUTCString();
+
+    return comprador;
+  }
+
+  getContatoDisplay(comprador) {
+    let contDisplay: any[] = [];
+    this.chamadasService.getDadosCadastrais('tipocontatos').subscribe(event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+      } else if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        for (let i = 0; i < comprador.contatos.length; i++) {
+          for (let item = 0; item < dadosBaixados.length; item++) {
+            if (comprador.contatos[i].codtipocontato == dadosBaixados[item].codtipocontato) {
+              const contatoDisplay: Contatos = new Contatos();
+              contatoDisplay.tipocontato = dadosBaixados[item].desctipocontato;
+              contatoDisplay.desccontato = comprador.contatos[i].desccontato;
+
+              contDisplay.push(contatoDisplay);
+            }
+          }
+        }
+        this.sharedService.getTipoContato = true;
+        this.sharedService.hiddenLoader();
+      }
+    });
+    return contDisplay;
+  }
+
   private fixUTC(date: Date) {
     const ano  = date.getUTCFullYear();
     const mes = date.getUTCMonth();
@@ -264,5 +326,18 @@ export class CadastroLogicaService {
     const novaData: Date = new Date(Date.UTC(ano, mes, dia, hora + 3));
 
     return novaData;
+  }
+
+  formatCpfCnpj(cpfcnpj: string) {
+    const cpf: boolean = isValidCpf(cpfcnpj);
+    const cnpj: boolean = isValidCnpj(cpfcnpj);
+
+    if (cpf == true) {
+      cpfcnpj = formatCpf(cpfcnpj);
+    } else if (cnpj == true) {
+      cpfcnpj = formatCnpj(cpfcnpj);
+    }
+
+    return cpfcnpj;
   }
 }

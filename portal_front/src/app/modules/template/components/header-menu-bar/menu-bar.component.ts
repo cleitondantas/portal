@@ -31,7 +31,8 @@ export class MenuBarComponent implements OnInit {
         private authService: AuthService,
         private messageService: MessageService,
         private analiseService: AnaliseChamadasService,
-        private chamadasService: CadastroChamadasService, ) {
+        private chamadasService: CadastroChamadasService, 
+        private sharedService: SharedService) {
         authService.shared.messengerService = messageService;
         this.nomeUsuario = localStorage.getItem('nome_usuario');
         this.profileUser = localStorage.getItem('profile');
@@ -49,6 +50,7 @@ export class MenuBarComponent implements OnInit {
     results: string[];
     nomeClienteFiltrado: any[];
     dataNascimento: string;
+    codcadastro: number;
 
     nomeclienteSelecionado: string;
     cpfclienteSelecionado: string;
@@ -91,6 +93,7 @@ export class MenuBarComponent implements OnInit {
             this.msgsNome = [];
             this.cadastrosTabelaBuscaInfo = data['data'];
             for (let i = 0; i < this.cadastrosTabelaBuscaInfo.length; i++) {
+                this.codcadastro = this.cadastrosTabelaBuscaInfo[i].codcadastro;
                 for (let item = 0; item < this.cadastrosTabelaBuscaInfo[i].clientes.length; item++) {
                     if (this.nomeclienteSelecionado == this.cadastrosTabelaBuscaInfo[i].clientes[item].nomecliente) {
                         let data = this.cadastrosTabelaBuscaInfo[i].clientes[item].datanascimento;
@@ -150,7 +153,7 @@ export class MenuBarComponent implements OnInit {
         this.router.navigate(['/cadastro']);
     }
 
-    irInformacoes(codcadastro: number) {
+    irInformacoes() {
         const storage = ['CADASTRODADOS', 'ANALISEDADOS', 'fid'];
         for (let i = 0; i < storage.length; i++) {
             if (sessionStorage.getItem(storage[i]) !== null || undefined || 'undefined') {
@@ -162,12 +165,12 @@ export class MenuBarComponent implements OnInit {
             console.log(this.cadastrosTabelaBuscaInfo);
                 sessionStorage.setItem('fid', JSON.stringify(this.cadastrosTabelaBuscaInfo[i].numerocadastroincorporadorafid));
                 for (let item = 0; item < this.cadastrosTabelaBuscaInfo[i]['clientes'].length; item++) {
-                    if (this.nomeclienteSelecionado == this.cadastrosTabelaBuscaInfo[i]['clientes'][item].nomecliente) {
+                    if (this.clienteInformacao[0].nomecliente == this.cadastrosTabelaBuscaInfo[i]['clientes'][item].nomecliente) {
                         sessionStorage.setItem('CADASTRODADOS', JSON.stringify(this.cadastrosTabelaBuscaInfo[i]['clientes'][item]));
                     }
                 }
 
-                this.analiseService.getRegistroAnalise(codcadastro).subscribe(data => {
+                this.analiseService.getRegistroAnalise(this.codcadastro).subscribe(data => {
                     const analise: Analise = data['data'][0];
                     if (analise != undefined) {
                         for (let item = 0; item < analise.simulacoes.length; item++) {
@@ -182,6 +185,7 @@ export class MenuBarComponent implements OnInit {
                 });
             
             this.hideDialogInfo();
+            this.sharedService.showLoader.emit(false);
         }
     }
 

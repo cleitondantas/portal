@@ -18,6 +18,13 @@ export class SharedService {
   @Output() messengerService = new MessageService();
   @Output() showError = new EventEmitter<string>();
   showTemplate = new EventEmitter<boolean>();
+  getTipoCliente = false;
+  getTipoContato = false;
+  getEstadoCivil = false;
+  getBanco = false;
+  getModalidade = false;
+  getAmortizacao = false;
+  showLoader = new EventEmitter<boolean>();
 
   constructor() {
     return SharedService.instance = SharedService.instance || this;
@@ -99,5 +106,20 @@ calendarioBr() {
     clear: 'Limpar',
     dateFormat: 'dd/mm/yy'
   };
+}
+
+hiddenLoader() {
+  if ((this.getAmortizacao == true) && (this.getBanco == true) && (this.getEstadoCivil == true) &&
+      (this.getModalidade == true) && (this.getTipoCliente == true) && (this.getTipoContato == true)) {
+        setTimeout(() => {
+          this.getTipoCliente = false;
+          this.getTipoContato = false;
+          this.getEstadoCivil = false;
+          this.getBanco = false;
+          this.getModalidade = false;
+          this.getAmortizacao = false;
+          this.showLoader.emit(true);
+        }, 500);
+  }
 }
 }

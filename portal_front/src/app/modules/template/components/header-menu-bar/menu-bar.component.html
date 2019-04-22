@@ -136,15 +136,16 @@
       <p-table [value]="clienteInformacao">
         <ng-template pTemplate="header">
              <tr>
+                  <th>Cod Cadastro</th>
                   <th>Nome</th>
                   <th>CPF</th>
                   <th>Data nascimento</th>
-
                   <th></th>
               </tr>
         </ng-template>
         <ng-template pTemplate="body" let-comprador>
              <tr>
+                  <td>{{codcadastro}}</td>
                   <td>{{comprador.nomecliente}}</td>
                   <td>{{comprador.cpfcnpj}}</td>
                   <td>{{dataNascimento}}</td>

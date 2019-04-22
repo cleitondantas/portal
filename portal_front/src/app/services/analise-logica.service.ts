@@ -6,13 +6,15 @@ import { InstiruicaoFinanceiras } from '../models/instituicaoFinanceira';
 import { DadosFaturamento } from '../models/dadosfaturamento';
 import { AnaliseChamadasService } from './analise-chamadas.service';
 import { SPE } from '../models/spe';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnaliseLogicaService {
 
-  constructor(private analiseChamadasService: AnaliseChamadasService) { }
+  constructor(private analiseChamadasService: AnaliseChamadasService,
+              private sharedService: SharedService) { }
 
   adicionarSimulacao(simulacao: Simulacoes, cod: number) {
     const simulacao2: Simulacoes = new Simulacoes();
@@ -329,6 +331,64 @@ export class AnaliseLogicaService {
     });
 
     return dadosfaturamento;
+  }
+
+  getDadosCadastrais(analiseSelecionada) {
+    const jsonObj: any = JSON.parse(analiseSelecionada);
+    const analise: Simulacoes = <Simulacoes>jsonObj;
+
+    this.analiseChamadasService.getDadosCadastrais('instituicoesfinanceiras').subscribe(event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+      } else if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        for (let i = 0; i < dadosBaixados.length; i++) {
+          if (analise.codinstituicaofinanceira == dadosBaixados[i].codInstituicaoFinanceira) {
+              analise.codinstituicaofinanceira = dadosBaixados[i].descInstituicaoFinanceira;
+          }
+        }
+        this.sharedService.getBanco = true;
+        this.sharedService.hiddenLoader();
+      }
+    });
+
+    this.analiseChamadasService.getDadosCadastrais('modalidadesimulacoes').subscribe(event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+      } else if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        for (let i = 0; i < dadosBaixados.length; i++) {
+          if (analise.codmodalidadesimulacao == dadosBaixados[i].codModalidadeSimulacao) {
+            analise.codmodalidadesimulacao = dadosBaixados[i].descModalidadeSimulacao;
+          }
+        }
+        this.sharedService.getModalidade = true;
+        this.sharedService.hiddenLoader();
+      }
+    });
+
+    this.analiseChamadasService.getDadosCadastrais('tipoamortizacao').subscribe(event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+      } else if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        for (let i = 0; i < dadosBaixados.length; i++) {
+          if (analise.codtipoamortizacao == dadosBaixados[i].codtipoamortizacao) {
+            analise.codtipoamortizacao = dadosBaixados[i].desctipoamortizacao;
+          }
+        }
+        this.sharedService.getAmortizacao = true;
+        this.sharedService.hiddenLoader();
+      }
+    });
+
+    if (analise.codsicaq == 0) {
+      analise.codsicaq = 'Possui SICAQ';
+    } else if (analise.codsicaq == 1) {
+      analise.codsicaq = 'Não possui SICAQ';
+    }
+
+    analise.dataenviobanco = new Date(analise.dataenviobanco);
+    analise.dataenviobanco.toUTCString();
+
+    return analise;
   }
 
   private fixUTC(date: Date) {
