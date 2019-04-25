@@ -64,33 +64,8 @@ export class AnaliseComponent implements OnInit {
     this.simulacaoLista = [];
 
     this.br = this.sharedService.calendarioBr();
-
-    this.service.getInstFinan().subscribe(dados => {
-      this.instFinanTemp = dados['data'];
-      for (let _i = 0; _i < this.instFinanTemp.length; _i++) {
-        const item: InstiruicaoFinanceiras = new InstiruicaoFinanceiras();
-        item.codInstituicaoFinanceira =   this.instFinanTemp[_i].codInstituicaoFinanceira;
-        item.descInstituicaoFinanceira = this.instFinanTemp[_i].descInstituicaoFinanceira;
-        this.instFinan[_i] = item;
-      }
-      this.instFinanEvent.emit(true);
-      this.instFinan = dados['data'];
-    });
-
-    this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
-    this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
-
-    this.service.getStatusSimulacao().subscribe(dados => {
-      this.statussimulacaoTemp =  dados['data'];
-        for (let _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
-          const item: StatusSimulacao = new StatusSimulacao();
-          item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
-          item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
-          this.statussimulacao[_i] = item;
-        }
-      this.statusSimulEvent.emit(true);
-     });
-
+    this.chamadasInit();
+    
     const AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
 
     if (AnaliseSelecionada != 'undefined' && AnaliseSelecionada != null) {
@@ -109,10 +84,15 @@ export class AnaliseComponent implements OnInit {
         this.simulacaoLista.push(analise.simulacoes[_i]);
       }
       this.controle = true;
+      if (this.verificarSelecionado() == true) {
+        this.analiseCred.disabled = false;
+      } else {
+        this.analiseCred.disabled = true;
+      }
     } else {
-    this.codcadastro = SharedService.getInstance().temporario[0];
-    this.analise.numerocadastroincorporadorafid = SharedService.getInstance().temporario[1];
-    this.controle = false;
+      this.codcadastro = SharedService.getInstance().temporario[0];
+      this.analise.numerocadastroincorporadorafid = SharedService.getInstance().temporario[1];
+      this.controle = false;
     }
 
     if (SharedService.getInstance().temporario != null) {
@@ -124,6 +104,8 @@ export class AnaliseComponent implements OnInit {
         SharedService.getInstance().temporario = temporario;
       }
       this.simulacoes = new Simulacoes();
+      this.analise = new Analise();
+      this.analiseCred.disabled = true;
       this.ngOnInit();
     });
 
@@ -389,5 +371,34 @@ export class AnaliseComponent implements OnInit {
         });
       }
     }
+  }
+
+  chamadasInit() {
+    this.service.getInstFinan().subscribe(dados => {
+      this.instFinanTemp = dados['data'];
+      for (let _i = 0; _i < this.instFinanTemp.length; _i++) {
+        const item: InstiruicaoFinanceiras = new InstiruicaoFinanceiras();
+        item.codInstituicaoFinanceira =   this.instFinanTemp[_i].codInstituicaoFinanceira;
+        item.descInstituicaoFinanceira = this.instFinanTemp[_i].descInstituicaoFinanceira;
+        this.instFinan[_i] = item;
+      }
+      this.instFinanEvent.emit(true);
+      this.instFinan = dados['data'];
+    });
+
+    this.service.getModalidades().subscribe(dados => this.modalidade = dados['data']);
+    this.service.getTipoAmortizacao().subscribe(dados => this.tipoAmortizacao = dados['data']);
+
+    this.service.getStatusSimulacao().subscribe(dados => {
+      this.statussimulacaoTemp =  dados['data'];
+        for (let _i = 0; _i < this.statussimulacaoTemp.length; _i++) {
+          const item: StatusSimulacao = new StatusSimulacao();
+          item.codstatussimulacao =   this.statussimulacaoTemp[_i].codstatussimulacao;
+          item.descstatussimulacao = this.statussimulacaoTemp[_i].descstatussimulacao;
+          this.statussimulacao[_i] = item;
+        }
+      this.statusSimulEvent.emit(true);
+     });
+
   }
 }

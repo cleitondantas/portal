@@ -50,10 +50,13 @@ export class DadosFaturamentoComponent implements OnInit {
     if (analiseSelecionada != 'undefined' && analiseSelecionada != null) {
       this.dadosfaturamento = this.logicaService.receberDadosFaturamento(analiseSelecionada, this.dadosfaturamento, this.speEvent);
     }
+    console.log(this.dadosfaturamento)
   }
 
   salvar(formulario) {
-    this.dadosfaturamento.razaosocialspe = this.dadosfaturamento.razaosocialspe.descspe;
+    if (this.dadosfaturamento.razaosocialspe != undefined || this.dadosfaturamento.razaosocialspe != null) {
+      this.dadosfaturamento.razaosocialspe = this.dadosfaturamento.razaosocialspe.descspe;
+    }
     console.log('formulario');
     console.log(formulario);
     console.log('this.dadosfaturamento');

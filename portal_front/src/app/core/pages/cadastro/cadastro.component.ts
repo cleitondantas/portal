@@ -18,6 +18,7 @@ import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro',
@@ -36,12 +37,16 @@ export class CadastroComponent implements OnInit {
     private messageService: MessageService,
     private sharedService: SharedService
   ) { }
+
   contato: any[] = [];
   contatoDisplay: any[] = [];
   contatoSelecionado: any;
   compradores: Compradores[] = [];
   disabled = false;
   selectedItem: any;
+  getLoads = {getEmpreendimentos: false, getOriginacoes: false, getEstadoCivil: false, getTipoContato: false,
+               getTipoCliente: false, getIncorporadoras: false};
+  load: boolean = false;
 
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
@@ -89,13 +94,8 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
-    this.chamadasService.getEmpreendimentos().subscribe(dados => this.empreendimento = dados['data']);
-    this.chamadasService.getOriginacao().subscribe(dados => this.originacao = dados['data']);
-    this.chamadasService.getEstadoCivil().subscribe(dados => this.estadoCivil = dados['data']);
-    this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
-    this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
-    this.chamadasService.getIncorporadoras().subscribe(dados => {this.incorp = dados['data']; });
+    SharedService.getInstance().temporario = [];
+    this.chamadasInit();
 
     this.br = this.sharedService.calendarioBr();
 
@@ -104,6 +104,7 @@ export class CadastroComponent implements OnInit {
     this.chamadasService.buscarCadastro.subscribe(dado => {
       this.ngOnInit();
     });
+
   }
 
   adicionarContato (contato: Contatos) {
@@ -579,5 +580,67 @@ export class CadastroComponent implements OnInit {
     const cep = (<HTMLInputElement>document.getElementById(cepRecebido));
     cep.focus();
     cep.setSelectionRange(0, 0);
+  }
+
+  hiddenLoader() {
+    if ((this.getLoads.getEmpreendimentos == true) && (this.getLoads.getEstadoCivil == true) && 
+        (this.getLoads.getIncorporadoras == true) && (this.getLoads.getOriginacoes == true) && 
+        (this.getLoads.getTipoCliente == true) && (this.getLoads.getTipoContato == true)) {
+          setTimeout(() => {
+            this.load = true;
+          }, 500);
+        }
+  }
+
+  chamadasInit() {
+    this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
+    this.chamadasService.getDadosCadastrais('empreendimentos').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.empreendimento = dadosBaixados;
+        this.getLoads.getEmpreendimentos = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('originacoes').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.originacao = dadosBaixados;
+        this.getLoads.getOriginacoes = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('estadocivil').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.estadoCivil = dadosBaixados;
+        this.getLoads.getEstadoCivil = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('tipocontatos').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.tipoContato = dadosBaixados;
+        this.getLoads.getTipoContato = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('tipoclientes').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.tipocliente = dadosBaixados;
+        this.getLoads.getTipoCliente = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('incorporadoras').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.incorp = dadosBaixados;
+        this.getLoads.getIncorporadoras = true;
+        this.hiddenLoader();
+      }
+    })
   }
 }

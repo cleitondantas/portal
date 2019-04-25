@@ -2,7 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { Compradores } from 'src/app/models/compradores';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
-import { CadastroChamadasService } from 'src/app/services/cadastro-chamadas.service';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 import { CadastroLogicaService } from 'src/app/services/cadastro-logica.service';
 import { SharedService } from 'src/app/services/shared.service';

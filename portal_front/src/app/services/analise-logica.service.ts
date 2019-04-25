@@ -157,7 +157,7 @@ export class AnaliseLogicaService {
 
       if (simulacaoLista[_i].codsicaq == true) {
         simulacaoLista[_i].codsicaq = 0;
-      } else {
+      } else if (simulacaoLista[_i].codsicaq == false) {
         simulacaoLista[_i].codsicaq = 1;
       }
     }
