@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RelatorioListaService } from './relatorio-lista.service';
 import { Historico } from '../../../models/historico';
-import * as $ from "jquery";
+import * as $ from 'jquery';
 import { SelectItem } from 'primeng/api';
 import { HistoricoSimples } from '../../../models/HistoricoSimples';
 
@@ -14,17 +14,17 @@ import { HistoricoSimples } from '../../../models/HistoricoSimples';
 
 export class RelatorioListaComponent implements OnInit {
   proposta: string;
-  historicos:Historico[];
+  historicos: Historico[];
   brands: SelectItem[];
   cols: any[];
-  historicoSimples: HistoricoSimples[]
-  contaPassos:number;
+  historicoSimples: HistoricoSimples[];
+  contaPassos: number;
   constructor(private service: RelatorioListaService) {}
 
   ngOnInit() {
-    
-    this.buscarExist(3,1);
-    document.getElementById("idIndex").classList.remove('stylebody');
+
+    this.buscarExist(3, 1);
+    document.getElementById('idIndex').classList.remove('stylebody');
     this.brands = [
       { label: 'All Area', value: null },
       { label: 'Liberacao', value: 'Liberacao' },
@@ -43,52 +43,52 @@ export class RelatorioListaComponent implements OnInit {
         { field: 'obs', header: 'obs' }
     ];
   }
-  buscarHistoricoPorProposta(){
-    this.service.buscarHistoricoPorProposta(this.proposta).subscribe((data:Historico[]) => this.preencheTabela(data)); 
+  buscarHistoricoPorProposta() {
+    this.service.buscarHistoricoPorProposta(this.proposta).subscribe((data: Historico[]) => this.preencheTabela(data));
 
   }
-  buscarHistoricoPorContrato(){
-    this.service.buscarHistoricoPorContrato(this.proposta).subscribe((data:Historico[]) => this.preencheTabela(data)); 
+  buscarHistoricoPorContrato() {
+    this.service.buscarHistoricoPorContrato(this.proposta).subscribe((data: Historico[]) => this.preencheTabela(data));
   }
 
-  buscarHistoricoPorDocumento(){
-    this.service.buscarHistoricoPorDocumento(this.proposta).subscribe((data:Historico[]) => this.preencheTabela(data)); 
+  buscarHistoricoPorDocumento() {
+    this.service.buscarHistoricoPorDocumento(this.proposta).subscribe((data: Historico[]) => this.preencheTabela(data));
   }
 
 
-  buscarExist(z:number,p:number){
-    var i = 1;
-    passos(z,p);
-   function passos(m, n){
-        //Quantidade de passos
+  buscarExist(z: number, p: number) {
+    let i = 1;
+    passos(z, p);
+   function passos(m, n) {
+        // Quantidade de passos
         if (i < m) {
             do {
                 i++;
              //  $('.progressbar li:last').after("<li _ngcontent-c8  id='" + i + "'>Passo " + i + "</li>");
-                var wi = 100 / i;
-                $('.progressbar li').css({ "width": wi + "%" });
-            } while (i < m)
+                const wi = 100 / i;
+                $('.progressbar li').css({ 'width': wi + '%' });
+            } while (i < m);
         }
-        //Passos concluídos
-        $('#' + n).addClass("active").prevAll().addClass("active");
-        //Passos concluídos
-        if($('#' +n).hasClass("active")){
-            $('#' +n).nextAll().removeClass("active");
+        // Passos concluídos
+        $('#' + n).addClass('active').prevAll().addClass('active');
+        // Passos concluídos
+        if ($('#' + n).hasClass('active')) {
+            $('#' + n).nextAll().removeClass('active');
         } else {
-            $('#' +n).addClass("active").prevAll().addClass("active");
+            $('#' + n).addClass('active').prevAll().addClass('active');
         }
     }
   }
 
 
 
-  preencheTabela(data:Historico[]){
-    var items = [];
+  preencheTabela(data: Historico[]) {
+    const items = [];
     this.contaPassos = 0;
-    for(let item  of  data){
-      if(this.contaPassos <= item.area.codArea){
+    for (const item  of  data) {
+      if (this.contaPassos <= item.area.codArea) {
         this.contaPassos =  item.area.codArea;
-         this.buscarExist(3,this.contaPassos);
+         this.buscarExist(3, this.contaPassos);
       }
     items.push(new HistoricoSimples(
       item.id,

@@ -1,6 +1,6 @@
-export class AreaUsuarios{
-    codAreaUsuario:string;
-    descArea:string;
-    isAtivo:boolean;
-    
+export class AreaUsuarios {
+    codAreaUsuario: string;
+    descArea: string;
+    isAtivo: boolean;
+
 }

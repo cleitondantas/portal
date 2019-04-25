@@ -30,7 +30,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { MenuModule } from 'primeng/menu';
 import { TabViewModule } from 'primeng/tabview';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { KeyFilterModule } from 'primeng/keyfilter';
@@ -38,6 +38,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 import { DadosCadastraisComponent } from './pages/informacoes/dados-cadastrais/dados-cadastrais.component';
 import { HistoricoComponent } from './pages/informacoes/historico/historico.component';
@@ -46,6 +47,7 @@ import { DadosFaturamentoComponent } from './pages/analise-credito/dados-faturam
 import { AnaliseComponent } from './pages/analise-credito/analise/analise.component';
 
 import { PrimeNgCalendarMaskDirective } from 'src/app/directive/maskInput.directive';
+import { CoreRoutingModule } from './core-routing.module';
 
 @NgModule({
   imports: [
@@ -79,7 +81,9 @@ import { PrimeNgCalendarMaskDirective } from 'src/app/directive/maskInput.direct
     TextMaskModule,
     MessagesModule,
     MessageModule,
-    ToastModule
+    ToastModule,
+    ToggleButtonModule,
+    CoreRoutingModule
   ],
   declarations: [
     HomeComponent,

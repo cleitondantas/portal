@@ -17,26 +17,26 @@ import { SharedService } from '../../../services/shared.service';
 export class CadastrousuarioComponent implements OnInit {
   roles: SelectItem[];
   selectRoles: Role[];
-  roleArray:any;
+  roleArray: any;
   usuario: Usuario = new Usuario();
-  shared : SharedService;
-  user : Usuario;
+  shared: SharedService;
+  user: Usuario;
   item: Role;
 
   constructor(private service: FormcadastroService) {
     this.shared = SharedService.getInstance();
    }
 
-  ngOnInit(){
-  
+  ngOnInit() {
+
     this.getRoles();
   }
 
 
-  getRoles(){
-    var items = [];
+  getRoles() {
+    let items = [];
     this.service.getRoles().subscribe(data => {
-      for (var _i = 0; _i < data['data'].length; _i++) {
+      for (let _i = 0; _i < data['data'].length; _i++) {
         this.item = new Role();
         this.item.id = (data['data'][_i].id);
         this.item.nivel = (data['data'][_i].nivel);
@@ -47,29 +47,29 @@ export class CadastrousuarioComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormBuilder){
+  onSubmit(form: FormBuilder) {
     this.service.createOrUpdateUsuer(this.usuario).subscribe(res => {
       this.showConfirm();
       this.clearUser(this.usuario);
-    },err => {
+    }, err => {
       console.log(err);
     });
-    
+
   }
 
   showConfirm() {
     this.shared.messengerService.clear();
-    this.shared.messengerService.add({key: 'ok', severity:'success', summary: 'Ação Realizada', detail:'Ação Realizada com Sucesso!'});
+    this.shared.messengerService.add({key: 'ok', severity: 'success', summary: 'Ação Realizada', detail: 'Ação Realizada com Sucesso!'});
 }
 
-clearUser(usuario : Usuario){
+clearUser(usuario: Usuario) {
   usuario.cpf = '';
   usuario.email = '';
   usuario.login = '';
   usuario.nome = '';
   usuario.password = '';
   usuario.perfis = null;
-  usuario.sobrenome ='';
+  usuario.sobrenome = '';
   usuario.telefone = '';
 }
 

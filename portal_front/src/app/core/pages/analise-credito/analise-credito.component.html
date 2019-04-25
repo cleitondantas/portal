@@ -2,7 +2,7 @@
   <p-tabPanel header="Análise de crédito">
     <app-analise></app-analise>
   </p-tabPanel>
-  <p-tabPanel header="Dados para faturamento">
+  <p-tabPanel header="Dados para faturamento" [disabled]="disabled">
     <app-dados-faturamento></app-dados-faturamento>
   </p-tabPanel>
 </p-tabView>

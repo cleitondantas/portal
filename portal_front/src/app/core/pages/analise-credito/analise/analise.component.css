@@ -6,3 +6,10 @@
 .ajusteLabel {
     float: right;
 }
+
+.radio {
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+}

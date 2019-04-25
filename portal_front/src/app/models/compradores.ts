@@ -1,8 +1,8 @@
-import { Contatos } from "./contatos";
+import { Contatos } from './contatos';
 
 export class Compradores {
     cpfcnpj: string;
-    codtipocliente: number;
+    codtipocliente: any;
     nomecliente: string;
     ndocumento: string;
     orgaoexpedidor: any;
@@ -22,5 +22,5 @@ export class Compradores {
     datacadastro: Date;
     valorrenda: number;
     contatos: Contatos[];
-    principal: boolean = false;
+    principal = false;
 }
