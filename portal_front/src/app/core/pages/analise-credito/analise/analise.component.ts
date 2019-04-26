@@ -262,7 +262,7 @@ export class AnaliseComponent implements OnInit {
   salvarAnalise(formDatasDoProcesso) {
     this.msgs2 = [];
 
-    if ((this.validaFormulario(formDatasDoProcesso) == true) && (this.simulacaoLista.length !== 0)) {
+    if (this.validaFormulario(formDatasDoProcesso) == true) {
       this.confirmationService.confirm({
         message: 'Tem certeza que deseja salvar essas informações?',
         header: 'Confirmação',
@@ -278,14 +278,6 @@ export class AnaliseComponent implements OnInit {
       });
     } else {
       this.adicionarMsgErro(formDatasDoProcesso);
-
-      if (this.simulacaoLista.length == 0) {
-        this.msgs2.push({
-          severity: 'error',
-          summary: 'Erro ao salvar!',
-          detail: `Adicione pelo menos 1 simulação.`
-        });
-      }
     }
   }
 

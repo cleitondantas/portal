@@ -16,22 +16,24 @@
 
     <div class="p-grid">
       <div class="p-col-4">
-        <label class="ajusteLabel" for="razaosocialspe">A FATURAR CONTRATO SPE:</label>
+        <label class="ajusteLabel" for="razaosocialspe">A FATURAR CONTRATO SPE: </label>
       </div>
       <div class="p-col-8">
           <p-dropdown placeholder="Selecione..." optionLabel="descspe" [options]="spe" [autoWidth]="false" 
           [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="razaosocialspe" #razaosocialspe="ngModel" 
-          [(ngModel)]="dadosfaturamento.razaosocialspe" filter="true" required id="razaosocialspe" (onChange)="preencherSPE($event.value)"></p-dropdown>
+          [(ngModel)]="dadosfaturamento.razaosocialspe" filter="true" required id="razaosocialspe" (onChange)="preencherSPE($event.value)"
+          required></p-dropdown>
         </div>
     </div>
   </div>
   <div class="p-col-6">
     <div class="p-grid">
       <div class="p-col-2">
-        <label class="ajusteLabel" for="cpf">CPF/CNPJ: </label>
+        <label class="ajusteLabel" for="cpfcnpj">CPF/CNPJ: </label>
       </div>
       <div class="p-col-10">
-        <input type="text" name="cpfcnpj"  [(ngModel)]="dadosfaturamento.cpfcnpj" pKeyFilter="num" class="ajusteInput" pInputText id="cpf" [ngStyle]="{'width': '50%'}">
+        <input type="text" name="cpfcnpj"  [(ngModel)]="dadosfaturamento.cpfcnpj" pKeyFilter="num" class="ajusteInput" pInputText id="cpfcnpj" [ngStyle]="{'width': '50%'}"
+        required>
       </div>
     </div>
   </div>
@@ -188,6 +190,7 @@
             <button pButton type="button" (click)="salvar(formulario)" label="Salvar" class="ui-button-success" ></button>
         </div>
     </div>   
+    <p-messages [(value)]="msgs"></p-messages>
   </p-fieldset>
 <br><br>
 

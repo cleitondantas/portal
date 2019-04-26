@@ -1,22 +1,25 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { DadosFaturamento } from 'src/app/models/dadosfaturamento';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
-import { Analise } from 'src/app/models/analise';
 import { SPE } from 'src/app/models/spe';
 import { SharedService } from 'src/app/services/shared.service';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { MessageService, Message } from 'primeng/api';
 
 @Component({
   selector: 'app-dados-faturamento',
   templateUrl: './dados-faturamento.component.html',
-  styleUrls: ['./dados-faturamento.component.css']
+  styleUrls: ['./dados-faturamento.component.css'],
+  providers: [MessageService]
 })
 export class DadosFaturamentoComponent implements OnInit {
   br: any;
   spe: SPE[];
   speTemp: SPE[];
   speEvent = new EventEmitter<any>();
+  msgs: Message[] = [];
 
   constructor(private analiseChamadasService: AnaliseChamadasService,
               private sharedService: SharedService,
@@ -54,15 +57,34 @@ export class DadosFaturamentoComponent implements OnInit {
   }
 
   salvar(formulario) {
-    if (this.dadosfaturamento.razaosocialspe != undefined || this.dadosfaturamento.razaosocialspe != null) {
+    if (this.validaForm(formulario) == true) {
       this.dadosfaturamento.razaosocialspe = this.dadosfaturamento.razaosocialspe.descspe;
+      console.log('formulario');
+      console.log(formulario);
+      console.log('this.dadosfaturamento');
+      console.log(this.dadosfaturamento);
+      this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => (console.log(dados['data'])));
+      this.router.navigate(['/home']);
+    } else {
+      this.msgs = [];
+      const camposInvalidos: any[] = [];
+
+      for (const _i in formulario.controls) {
+        if (formulario.controls[_i].status == 'INVALID') {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
+          formulario.controls[_i].pristine = false;
+          this.msgs = [];
+          this.msgs.push({
+            severity: 'error',
+            summary: 'Erro ao salvar!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:`
+            + camposInvalidos + `</strong>.`
+          })
+        }
+      }
     }
-    console.log('formulario');
-    console.log(formulario);
-    console.log('this.dadosfaturamento');
-    console.log(this.dadosfaturamento);
-    this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => (console.log(dados['data'])));
-    this.router.navigate(['/home']);
   }
 
   cancelar() {
@@ -71,5 +93,13 @@ export class DadosFaturamentoComponent implements OnInit {
 
   preencherSPE(speRecebido: SPE) {
     this.dadosfaturamento.cpfcnpj = speRecebido.cnpjspe;
+  }
+
+  validaForm(formSPE: NgForm) {
+    if (formSPE.valid == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

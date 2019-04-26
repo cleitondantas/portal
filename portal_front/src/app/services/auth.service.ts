@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { SharedService } from './shared.service';
 import { CurrentUser } from '../models/currentUser';
 import { NgForm } from '@angular/forms';
@@ -24,15 +24,21 @@ export class AuthService {
 
   fazerLogin(form: NgForm, usuario: Usuario) {
     console.log('URL origin:' + environment.urlpath);
-    this.http.post((environment.urlpath + url), usuario).subscribe((userAuthentication: CurrentUser) => {
-      this.shared.setToken(userAuthentication.token);
-      this.shared.setSessionUsuario(userAuthentication.usuario);
-      this.usuarioAutenticado = true;
-      this.mostrarsistema.emit(true);
-      localStorage.setItem('nome_usuario', userAuthentication.usuario.nome + ' ' + userAuthentication.usuario.sobrenome);
-      console.log(userAuthentication.usuario.nome + ' ' + userAuthentication.usuario.sobrenome);
-      this.router.navigate(['/home']);
-    }, err => {
+    this.http.request(new HttpRequest('POST', (environment.urlpath + url), usuario, {
+      reportProgress: true
+    })).subscribe(event => {
+      if (event instanceof HttpResponse) {
+        let evento: any = event.body;
+        this.shared.setToken(evento.token);
+        this.shared.setSessionUsuario(evento.usuario);
+        this.usuarioAutenticado = true;
+        this.mostrarsistema.emit(true);
+        localStorage.setItem('nome_usuario', evento.usuario.nome + ' ' + evento.usuario.sobrenome);
+        console.log(evento.usuario.nome + ' ' + evento.usuario.sobrenome);
+       //this.router.navigate(['/home']);
+      }
+    }), (err => {
+      console.log(err)
       this.shared.setToken(null);
       this.shared.showTemplate.emit(false);
       localStorage.removeItem('nome_usuario');
