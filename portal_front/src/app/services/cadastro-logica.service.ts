@@ -318,6 +318,28 @@ export class CadastroLogicaService {
     return contDisplay;
   }
 
+  getCadInfo(cadInfoSelecionado) {
+    const cadInfo: CadastroInformacao = JSON.parse(cadInfoSelecionado);
+    this.chamadasService.getDadosCadastrais('empreendimentos').subscribe(event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+      } else if (event instanceof HttpResponse) {
+        const empreendimento = event.body['data'];
+        for (let item = 0; item < empreendimento.length; item ++) {
+          if (empreendimento[item].codempreendimento == cadInfo.codempreendimento) {
+            cadInfo.codempreendimento = empreendimento[item].descempreendimento;
+          }
+        }
+        cadInfo.codempreendimento = cadInfo.codempreendimento;
+
+        this.sharedService.getEmpreendimento = true;
+        this.sharedService.hiddenLoader();
+      }
+    });
+    cadInfo.unidade = cadInfo.unidade;
+
+    return cadInfo;
+  }
+
   private fixUTC(date: Date) {
     const ano  = date.getUTCFullYear();
     const mes = date.getUTCMonth();

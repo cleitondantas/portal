@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-informacoes',
@@ -6,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./informacoes.component.css']
 })
 export class InformacoesComponent implements OnInit {
+  load: boolean;
 
-  constructor() { }
+  constructor(private sharedService: SharedService) { }
 
-  ngOnInit() {}
+  ngOnDestroy() {
+    const storage = ['CADASTRODADOS', 'ANALISEDADOS', 'fid', 'codcadastro', 'CADASTROINFO'];
+    for (let i = 0; i < storage.length; i++) {
+        if (sessionStorage.getItem(storage[i]) !== null || undefined || 'undefined') {
+            sessionStorage.removeItem(storage[i]);
+        }
+    }
+  }
+
+  ngOnInit() {
+    this.sharedService.showLoader.subscribe(dado => {
+      this.load = dado;
+    })
+  }
 
 }
