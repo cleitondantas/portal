@@ -1,4 +1,4 @@
-import { Compradores } from "./compradores";
+import { Compradores } from './compradores';
 
 export class CadastroInformacao {
     codcadastro: number;

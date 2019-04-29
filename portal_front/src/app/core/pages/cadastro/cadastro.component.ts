@@ -17,7 +17,8 @@ import { Router } from '@angular/router';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
-import emailMask from 'text-mask-addons/dist/emailMask'
+import emailMask from 'text-mask-addons/dist/emailMask';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro',
@@ -27,12 +28,25 @@ import emailMask from 'text-mask-addons/dist/emailMask'
 })
 
 export class CadastroComponent implements OnInit {
+
+  constructor(
+    private confirmationService: ConfirmationService,
+    private chamadasService: CadastroChamadasService,
+    private logicaService: CadastroLogicaService,
+    private router: Router,
+    private messageService: MessageService,
+    private sharedService: SharedService
+  ) { }
+
   contato: any[] = [];
   contatoDisplay: any[] = [];
   contatoSelecionado: any;
   compradores: Compradores[] = [];
-  disabled: boolean = false;
+  disabled = false;
   selectedItem: any;
+  getLoads = {getEmpreendimentos: false, getOriginacoes: false, getEstadoCivil: false, getTipoContato: false,
+               getTipoCliente: false, getIncorporadoras: false};
+  load: boolean = false;
 
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
@@ -43,38 +57,33 @@ export class CadastroComponent implements OnInit {
   tipocliente: TipoClientes[];
   retornocadastro: CadastroInformacao;
   br: any;
-  disabledButton: boolean = true;
+  disabledButton = true;
   mask: Array<string | RegExp>;
   mask2: Array<string | RegExp> = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/];
-  disabledInput: boolean = true;
+  disabledInput = true;
   msgs: Message[] = [];
-  msgs2: Message[]= [];
-  controle: boolean = false;
+  msgs2: Message[] = [];
+  controle = false;
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
   contatos: Contatos = new Contatos();
 
-  constructor(
-    private confirmationService: ConfirmationService,
-    private chamadasService: CadastroChamadasService,
-    private logicaService: CadastroLogicaService,
-    private router: Router,
-    private messageService: MessageService
-  ) { }
+  incorpotradoras: any[];
+  item: Incorporadoras;
 
   OnSubmit(cadInfo: CadastroInformacao, formulario) {
       this.chamadasService.createUser(cadInfo).subscribe(dados => {
         this.retornocadastro = dados['data'];
         console.log(JSON.stringify(dados['data']));
-        console.log("COD "+this.retornocadastro.codcadastro);
-        console.log("FID "+this.retornocadastro.numerocadastroincorporadorafid);
+        console.log('COD ' + this.retornocadastro.codcadastro);
+        console.log('FID ' + this.retornocadastro.numerocadastroincorporadorafid);
         SharedService.getInstance().temporario[0] = this.retornocadastro.codcadastro;
         SharedService.getInstance().temporario[1] = this.retornocadastro.numerocadastroincorporadorafid;
-        this.messageService.add({severity:'success', summary: 'Sucesso!', detail:'Cadastro feito com sucesso!'});
+        this.messageService.add({severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
         setTimeout(() => {
           this.router.navigate(['/analise']);
-        }, 1000); 
+        }, 1000);
       });
    // sessionStorage.clear();
     formulario.reset();
@@ -84,53 +93,35 @@ export class CadastroComponent implements OnInit {
     sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
   }
 
-  incorpotradoras:any[];
-  item: Incorporadoras;
-
   ngOnInit() {
-    this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
-    this.chamadasService.getEmpreendimentos().subscribe(dados => this.empreendimento = dados['data']);
-    this.chamadasService.getOriginacao().subscribe(dados => this.originacao = dados['data']);
-    this.chamadasService.getEstadoCivil().subscribe(dados => this.estadoCivil = dados['data']);
-    this.chamadasService.getTipoContato().subscribe(dados => this.tipoContato = dados['data']);
-    this.chamadasService.getTipoClientes().subscribe(dados => this.tipocliente = dados['data']);
-    this.chamadasService.getIncorporadoras().subscribe(dados => {this.incorp = dados['data']});
+    SharedService.getInstance().temporario = [];
+    this.chamadasInit();
 
-    this.br = 
-    {
-      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
-      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-      dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-      monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
-      monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
-      today: "Hoje",
-      firstDayOfWeek: 1,
-      clear: "Limpar",
-      dateFormat: "dd/mm/yy"
-    }
+    this.br = this.sharedService.calendarioBr();
 
     this.visualizarInfoImovel();
 
     this.chamadasService.buscarCadastro.subscribe(dado => {
       this.ngOnInit();
     });
+
   }
 
   adicionarContato (contato: Contatos) {
-    if ((this.disabledInput == false) && (contato.desccontato !== "")) {
-      var contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
-      var contato2 = this.logicaService.adicionarContatosLista(contato);
-  
+    if ((this.disabledInput == false) && (contato.desccontato !== '')) {
+      const contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
+      const contato2 = this.logicaService.adicionarContatosLista(contato);
+
       contato2.cpfcnpj = this.comprador.cpfcnpj;
-  
+
       this.contatoDisplay.push(contatoDisplay);
       this.contato.push(contato2);
-  
+
       this.contatos = this.logicaService.limparContatos(this.contatos);
-      document.getElementById("desccontato").removeAttribute('placeholder');
+      document.getElementById('desccontato').removeAttribute('placeholder');
       this.disabledInput = true;
     } else {
-      this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'Preencha os campos para adicionar o contato!'});
+      this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'Preencha os campos para adicionar o contato!'});
     }
   }
 
@@ -138,26 +129,26 @@ export class CadastroComponent implements OnInit {
     this.msgs = [];
     setTimeout(() => {
       if (this.validaFormulario(formCadInfo) == true) {
-        var comprador2 = this.logicaService.adicionarComprador(comprador);
+        const comprador2 = this.logicaService.adicionarComprador(comprador);
         comprador2.contatos = this.contato;
-    
+
         this.compradores.push(comprador2);
         this.disabled = false;
-    
+
         comprador = new Compradores();
-    
+
         formCadInfo.reset();
-    
+
         this.contato = [];
         this.contatoDisplay = [];
         this.msgs = [];
-        this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Comprador adicionado!'});
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Comprador adicionado!'});
       } else {
         this.msgs = [];
-        let camposInvalidos: any[] = [];
-  
-        for (var _i in formCadInfo.controls) {
-          if (formCadInfo.controls[_i].status == "INVALID") {
+        const camposInvalidos: any[] = [];
+
+        for (const _i in formCadInfo.controls) {
+          if (formCadInfo.controls[_i].status == 'INVALID') {
             let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
             campoInvalido = campoInvalido.replace(': ', '');
             camposInvalidos.push(` ` + campoInvalido);
@@ -166,32 +157,33 @@ export class CadastroComponent implements OnInit {
             this.msgs.push({
               severity: 'error',
               summary: 'Erro ao adicionar comprador!',
-              detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-            })
+              detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` +
+               camposInvalidos + `</strong>.`
+            });
           }
         }
-  
+
         if (this.contato.length == 0) {
           this.msgs.push({
             severity: 'error',
             summary: 'Erro ao adicionar comprador!',
             detail: `Adicione pelo menos 1 contato.`
-          })
+          });
         }
       }
     }, 301);
-    
+
   }
- 
+
   removerContato (contatoC) {
-    let index = this.contatoDisplay.indexOf(contatoC);
+    const index = this.contatoDisplay.indexOf(contatoC);
 
     this.contato.splice(index, 1);
     this.contatoDisplay.splice(index, 1);
   }
 
   removerComprador (comprador) {
-    let index = this.compradores.indexOf(comprador);
+    const index = this.compradores.indexOf(comprador);
     this.compradores.splice(index, 1);
 
     if (this.compradores.length <= 0) {
@@ -199,7 +191,7 @@ export class CadastroComponent implements OnInit {
     } else {
       this.disabled = false;
     }
-    this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Comprador removido!'});
+    this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Comprador removido!'});
   }
 
   consultaCEP() {
@@ -207,17 +199,17 @@ export class CadastroComponent implements OnInit {
 
     if (cep != null && cep !== '') {
       cep = cep.replace(/\D/g, '');
-    
+
       if (cep !== '') {
         const  validacep = /^[0-9]{8}$/;
 
         if (validacep.test(cep)) {
           return this.chamadasService.getCep(cep).subscribe(dados => {
-            if (!("erro" in dados)) {
-              this.populaDadosForm(dados)
+            if (!('erro' in dados)) {
+              this.populaDadosForm(dados);
             } else {
               this.comprador.cepresidencial = null;
-              this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'CEP não encontrado!'});
+              this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'CEP não encontrado!'});
             }
           });
         }
@@ -241,17 +233,17 @@ export class CadastroComponent implements OnInit {
 
   if (cep != null && cep !== '') {
     cep = cep.replace(/\D/g, '');
-  
+
     if (cep !== '') {
       const  validacep = /^[0-9]{8}$/;
 
       if (validacep.test(cep)) {
         return this.chamadasService.getCep(cep).subscribe(dados => {
-          if (!("erro" in dados)) {
-            this.populaDadosFormImovel(dados)
+          if (!('erro' in dados)) {
+            this.populaDadosFormImovel(dados);
           } else {
             this.cadInfo.cep = null;
-            this.messageService.add({key: 'popup', severity:'error', summary: 'Erro!', detail:'CEP não encontrado!'});
+            this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'CEP não encontrado!'});
           }
         });
       }
@@ -283,20 +275,22 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.compradores = [];
-        this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Formulário limpo!'});
+        this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Formulário limpo!'});
       },
       reject: () => {
-          
+
       }
   });
   }
 
-  setarTrue(rowData: Compradores) {
-    for(var i = 0, len = this.compradores.length; i < len; ++i) {
-      this.compradores[i].principal = false;
+  setarTrue(dados) {
+    console.log(dados);
+    const rowData: Compradores = dados.data;
+    for (let _i = 0; _i < this.compradores.length; _i++) {
+      if (rowData.cpfcnpj == this.compradores[_i].cpfcnpj) {
+        this.compradores[_i].principal = true;
+      }
     }
-    
-    rowData.principal = true;
   }
 
   verificarSelecionado() {
@@ -309,9 +303,22 @@ export class CadastroComponent implements OnInit {
     }
   }
 
+  tirarSelecionado(rowData) {
+    console.log(rowData);
+    const row: Compradores = rowData.data;
+    for (let _i = 0; _i < this.compradores.length; _i++) {
+      if (row.cpfcnpj == this.compradores[_i].cpfcnpj) {
+        this.compradores[_i].principal = false;
+      }
+    }
+  }
+
   confirmacao(cadInfo: CadastroInformacao, formulario) {
-    let principal = this.verificarSelecionado();
+    const principal = this.verificarSelecionado();
     if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
+      this.msgs = [];
+      this.msgs2 = [];
+
       this.confirmationService.confirm({
         message: 'Tem certeza que deseja continuar?',
         header: 'Confirmação',
@@ -319,31 +326,22 @@ export class CadastroComponent implements OnInit {
         acceptLabel: 'Sim',
         rejectLabel: 'Não',
         accept: () => {
-          cadInfo.uf = cadInfo.uf.uf;
-          cadInfo.clientes = this.compradores;
-          cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
-          cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
-          cadInfo.codoriginacao = cadInfo.codoriginacao['codoriginacao'];
-          for (let index = 0; index < cadInfo.clientes.length; index++) {
-            cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
-          }
-          cadInfo.cep = cadInfo.cep.replace('-', '');
-          cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+          cadInfo = this.logicaService.confirmacao(cadInfo, this.compradores);
           this.compradores = [];
 
           this.OnSubmit(cadInfo, formulario);
-          
-          this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Cadastro feito com sucesso!'});
+
+          this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
         },
         reject: () => {
         }
-      })
+      });
     } else {
       this.msgs2 = [];
-      let camposInvalidos: any[] = [];
+      const camposInvalidos: any[] = [];
 
-      for (var _i in formulario.controls) {
-        if (formulario.controls[_i].status == "INVALID") {
+      for (const _i in formulario.controls) {
+        if (formulario.controls[_i].status == 'INVALID') {
           let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
           campoInvalido = campoInvalido.replace(': ', '');
           camposInvalidos.push(` ` + campoInvalido);
@@ -352,8 +350,9 @@ export class CadastroComponent implements OnInit {
           this.msgs2.push({
             severity: 'error',
             summary: 'Erro ao avançar!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` +
+            camposInvalidos + `</strong>.`
+          });
         }
       }
 
@@ -362,7 +361,7 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao avançar!',
           detail: `Cadastre pelo menos 1 comprador.`
-        })
+        });
       }
 
       if (principal == false) {
@@ -370,46 +369,34 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao avançar!',
           detail: `Selecione o comprador principal.`
-        })
+        });
       }
     }
   }
 
-  atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any){
-    if (this.validaFormImovel(formulario) == true) {
-      cadInfo.uf = cadInfo.uf.uf;
-      cadInfo.clientes = this.compradores;
-      
-      cadInfo.codincorporadora = cadInfo.codincorporadora.codincorporadora;
-      cadInfo.codempreendimento = cadInfo.codempreendimento.codempreendimento;
-      cadInfo.codoriginacao = cadInfo.codoriginacao['codoriginacao'];
-      for (let index = 0; index < cadInfo.clientes.length; index++) {
-        cadInfo.clientes[index].cepresidencial = cadInfo.clientes[index].cepresidencial.replace('-', '');
-      
-        if(typeof  cadInfo.clientes[index].codestadocivil.codestadocivil !== 'undefined'){
-          cadInfo.clientes[index].codestadocivil = cadInfo.clientes[index].codestadocivil.codestadocivil;  
-        }
-      }
-      cadInfo.cep = cadInfo.cep.replace('-', '');
-      cadInfo.codusuario = Number(SharedService.getInstance().getSessionUsuario().codUsuario);
+  atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any) {
+    const principal = this.verificarSelecionado();
+
+    if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
+      cadInfo = this.logicaService.atualizarCadInfo(cadInfo, this.compradores);
       this.compradores = [];
-  
-      console.log(JSON.stringify(cadInfo))
+
+      console.log(JSON.stringify(cadInfo));
       this.chamadasService.putCadastro(cadInfo).subscribe(dados => {
-        this.retornocadastro = dados['data']
-        console.log(dados)
+        this.retornocadastro = dados['data'];
+        console.log(dados);
       });
       formulario.reset();
-      this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Alterações salvas!'});
+      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
       setTimeout(() => {
         this.router.navigate(['/home']);
-      }, 1000); 
+      }, 1000);
     } else {
       this.msgs2 = [];
-      let camposInvalidos: any[] = [];
+      const camposInvalidos: any[] = [];
 
-      for (var _i in formulario.controls) {
-        if (formulario.controls[_i].status == "INVALID") {
+      for (const _i in formulario.controls) {
+        if (formulario.controls[_i].status == 'INVALID') {
           let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
           campoInvalido = campoInvalido.replace(': ', '');
           camposInvalidos.push(` ` + campoInvalido);
@@ -418,8 +405,9 @@ export class CadastroComponent implements OnInit {
           this.msgs2.push({
             severity: 'error',
             summary: 'Erro ao salvar alterações!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:`
+            + camposInvalidos + `</strong>.`
+          });
         }
       }
 
@@ -428,16 +416,24 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao salvar alterações!',
           detail: `Cadastre pelo menos 1 comprador.`
-        })
+        });
+      }
+
+      if (principal == false) {
+        this.msgs2.push({
+          severity: 'error',
+          summary: 'Erro ao avançar!',
+          detail: `Selecione o comprador principal.`
+        });
       }
     }
   }
 
   verificaCpfCnpj(formCadInfo) {
-    let cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
-    let cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
+    const cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
+    const cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
 
-    if((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
+    if ((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
       return true;
     } else {
       formCadInfo.controls['cpfcnpj'].status = 'INVALID';
@@ -446,7 +442,7 @@ export class CadastroComponent implements OnInit {
   }
 
   validaFormulario(formCadInfo) {
-    let cpfcnpj = this.verificaCpfCnpj(formCadInfo);
+    const cpfcnpj = this.verificaCpfCnpj(formCadInfo);
     if (formCadInfo.valid == false || this.contato.length == 0 || cpfcnpj == false) {
       return false;
     } else {
@@ -464,18 +460,18 @@ export class CadastroComponent implements OnInit {
 
   validContato(evento) {
     evento.value = evento.value.codtipocontato;
-    var input = document.getElementById("desccontato");
+    const input = document.getElementById('desccontato');
     this.contatos.desccontato = '';
     this.disabledInput = false;
 
-    if(evento.value == 1) {
+    if (evento.value == 1) {
       input.setAttribute('placeholder', '(XX) XXXX-XXXX');
       this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else if (evento.value == 2) {
       input.setAttribute('placeholder', '(XX) XXXXX-XXXX');
       this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else if (evento.value == 3) {
-      input.setAttribute('placeholder', 'email@email.com')
+      input.setAttribute('placeholder', 'email@email.com');
       this.mask = emailMask;
     }
   }
@@ -492,47 +488,17 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.disabledButton = true;
-        this.messageService.add({key: 'popup', severity:'warn', summary: 'Aviso!', detail:'Formulário limpo!'});
+        this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Formulário limpo!'});
       },
       reject: () => {
       }
   });
   }
 
-  visualizarComprador(comprador:Compradores) {
+  visualizarComprador(comprador: Compradores) {
     this.disabledButton = false;
 
-    this.comprador.codusuario = comprador.codusuario;
-    this.comprador.cpfcnpj = comprador.cpfcnpj;
-    this.comprador.codtipocliente = comprador.codtipocliente;
-    this.comprador.nomecliente = comprador.nomecliente;
-    this.comprador.ndocumento = comprador.ndocumento;
-    this.comprador.orgaoexpedidor = comprador.orgaoexpedidor;
-    this.comprador.dataexpedicao = new Date(comprador.dataexpedicao);
-    this.comprador.datanascimento = new Date(comprador.datanascimento);
-
-    for (let item = 0; item < this.estadoCivil.length; item++) {
-      if(comprador.codestadocivil == this.estadoCivil[item].codestadocivil){
-        comprador.codestadocivil = {
-          codestadocivil: this.estadoCivil[item].codestadocivil,
-          descestadocivil: this.estadoCivil[item].descestadocivil  
-        };
-      }
-    }
-    this.comprador.codestadocivil = comprador.codestadocivil;
-
-    this.comprador.nacionalidade = comprador.nacionalidade;
-    this.comprador.profissao = comprador.profissao;
-    this.comprador.cepresidencial = comprador.cepresidencial;
-    this.comprador.uf = {uf: comprador.uf};
-    this.comprador.cidade = comprador.cidade
-    this.comprador.bairro = comprador.bairro;
-    this.comprador.endereco = comprador.endereco;
-    this.comprador.complemento = comprador.complemento;
-    this.comprador.numeroendereco = comprador.numeroendereco;
-    this.comprador.datacadastro = new Date(comprador.datacadastro);
-    this.comprador.valorrenda = comprador.valorrenda;
-    this.comprador.principal = comprador.principal;
+    this.comprador = this.logicaService.visualizarComprador(this.comprador, comprador, this.estadoCivil);
 
     this.comprador.contatos = comprador.contatos;
     this.contato = comprador.contatos;
@@ -540,7 +506,7 @@ export class CadastroComponent implements OnInit {
     for (let item = 0; item < comprador.contatos.length; item++) {
       for (let item2 = 0; item2 <  this.tipoContato.length; item2++) {
         if (this.tipoContato[item2].codtipocontato == comprador.contatos[item].codtipocontato) {
-            var contatoDisplay: Contatos = new Contatos();
+            const contatoDisplay: Contatos = new Contatos();
             contatoDisplay.tipocontato = this.tipoContato[item2].desctipocontato;
             contatoDisplay.desccontato =  comprador.contatos[item].desccontato;
             this.contatoDisplay.push(contatoDisplay);
@@ -550,132 +516,42 @@ export class CadastroComponent implements OnInit {
   }
 
   visualizarInfoImovel() {
-    //Verifica se a tela está sendo carregada vinda do Campo de busca
-    if(sessionStorage.getItem('CADASTROSELECIONADO')!=null){
-      let jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO'));// Recebe os dados enviados pela busca de cadastro
-      let cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
-      //Codigo de parce do objeto carregado para os dados da tela
-      this.cadInfo = cadastroinformacaoCarregada;
-      this.cadInfo.bairro = cadastroinformacaoCarregada.bairro;
-      this.cadInfo.blocotorre = cadastroinformacaoCarregada.blocotorre;
-      this.cadInfo.box = cadastroinformacaoCarregada.box;
-      this.cadInfo.cep = cadastroinformacaoCarregada.cep;
-      this.cadInfo.cidade = cadastroinformacaoCarregada.cidade;
-      this.cadInfo.codcadastro  = cadastroinformacaoCarregada.codcadastro;
-      this.chamadasService.getEstadoCivil().subscribe(dados => {
-      this.estadoCivil = dados['data']
-        for (let item = 0; item < cadastroinformacaoCarregada.clientes.length; item ++) {
-          for (let i = 0; i < this.estadoCivil.length; i ++) {
-            if(Number(cadastroinformacaoCarregada.clientes[item].codestadocivil) == Number(this.estadoCivil[i].codestadocivil)){
-       
-              let descricao = this.estadoCivil[i].descestadocivil;
-              cadastroinformacaoCarregada.clientes[item].codestadocivil = {
-                codestadocivil: cadastroinformacaoCarregada.clientes[item].codestadocivil,
-                descestadocivil: descricao  
-              };
-            }
-          }
+    // Verifica se a tela está sendo carregada vinda do Campo de busca
+    if (sessionStorage.getItem('CADASTROSELECIONADO') != null) {
+      this.cadInfo = this.logicaService.visualizarInfoImovel(this.cadInfo);
+      this.compradores = this.cadInfo.clientes;
+      for (let _i = 0; _i < this.compradores.length; _i++) {
+        if (this.cadInfo.clientes[_i].principal == true) {
+          this.selectedItem = this.cadInfo.clientes[_i];
         }
-        this.compradores = cadastroinformacaoCarregada.clientes;
-        this.cadInfo.clientes = cadastroinformacaoCarregada.clientes;
-        for (let _i = 0; _i < this.compradores.length; _i++) {
-          if (this.cadInfo.clientes[_i].principal == true) {
-            this.selectedItem = this.cadInfo.clientes[_i];
-          }
-        }
-      });
-      
-      this.chamadasService.getEmpreendimentos().subscribe(dados => {
-        this.empreendimento = dados['data']
-        for (let item = 0; item < this.empreendimento.length; item ++) {
-          if (this.empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
-            this.cadInfo.codempreendimento = {codempreendimento: cadastroinformacaoCarregada.codempreendimento, cnpjspe: this.empreendimento[item].cnpjspe, descempreendimento: this.empreendimento[item].descempreendimento};
-          }
-        }        
-      });
 
-      this.chamadasService.getOriginacao().subscribe(dados => { 
-        this.originacao = dados['data']
-        for (let item = 0; item < this.originacao.length; item ++) {
-          if (Number(this.originacao[item].codoriginacao) == Number(cadastroinformacaoCarregada.codoriginacao)) {
-            this.cadInfo.codoriginacao = {codoriginacao: cadastroinformacaoCarregada.codoriginacao, descoriginacao: this.originacao[item].descoriginacao};
-          }
-        }  
-      });
-
-      this.cadInfo.codusuario = cadastroinformacaoCarregada.codusuario;
-      this.cadInfo.complemento = cadastroinformacaoCarregada.complemento;
-      this.cadInfo.numero = cadastroinformacaoCarregada.numero;
-      this.cadInfo.endereco = cadastroinformacaoCarregada.endereco;
-      this.cadInfo.uf = {uf: cadastroinformacaoCarregada.uf};
-
-      this.chamadasService.getIncorporadoras().subscribe(dados => {
-        this.incorp = dados['data']
-        for (let item = 0; item < this.incorp.length; item ++) {
-          if (this.incorp[item].codincorporadora == cadastroinformacaoCarregada.codincorporadora) {
-            this.cadInfo.codincorporadora = {codincorporadora: cadastroinformacaoCarregada.codincorporadora, descincorporadora: this.incorp[item].descincorporadora};
-          }
-        }
-      });
-
-      this.cadInfo.dtentrada = new Date(cadastroinformacaoCarregada.dtentrada);
-
-      this.cadInfo.numerocadastroincorporadorafid = cadastroinformacaoCarregada.numerocadastroincorporadorafid;
-      this.cadInfo.saldodevedor = cadastroinformacaoCarregada.saldodevedor;
-      this.cadInfo.unidade = cadastroinformacaoCarregada.unidade;
-      this.cadInfo.vagaautomovel = cadastroinformacaoCarregada.vagaautomovel;
-      this.cadInfo.valorvenda = cadastroinformacaoCarregada.valorvenda;
-
-      for (var _i in this.comprador) {
-        this.comprador[_i] = null;
       }
+      console.log(this.cadInfo);
+
+      this.comprador = new Compradores();
       this.contatoDisplay = [];
       this.contato = [];
       this.controle = true;
       this.disabledButton = true;
     }
   }
-  
+
   atualizarComprador(formCadInfo) {
     if (this.validaFormulario(formCadInfo) == true) {
-      for (let item = 0; item < this.compradores.length; item++) {
-        if (this.compradores[item].cpfcnpj == this.comprador.cpfcnpj) {
-          this.compradores[item].cpfcnpj = this.comprador.cpfcnpj;
-          this.compradores[item].codtipocliente = Number(this.comprador.codtipocliente);
-          this.compradores[item].nomecliente = this.comprador.nomecliente;
-          this.compradores[item].ndocumento = this.comprador.ndocumento;
-          this.compradores[item].orgaoexpedidor = this.comprador.orgaoexpedidor;
-          this.compradores[item].dataexpedicao = this.comprador.dataexpedicao;
-          this.compradores[item].datanascimento = this.comprador.datanascimento;
-          this.compradores[item].codestadocivil = this.comprador.codestadocivil.codestadocivil;
-          this.compradores[item].nacionalidade = this.comprador.nacionalidade;
-          this.compradores[item].profissao = this.comprador.profissao;
-          this.compradores[item].contatos = this.contato;
-          this.compradores[item].cepresidencial = this.comprador.cepresidencial;
-          this.compradores[item].uf = this.comprador.uf.uf
-          this.compradores[item].cidade = this.comprador.cidade;
-          this.compradores[item].bairro = this.comprador.bairro;
-          this.compradores[item].endereco = this.comprador.endereco;
-          this.compradores[item].complemento = this.comprador.complemento;
-          this.compradores[item].numeroendereco = this.comprador.numeroendereco;
-          this.compradores[item].codusuario = this.comprador.codusuario;
-          this.compradores[item].datacadastro = this.comprador.datacadastro;
-          this.compradores[item].valorrenda = this.comprador.valorrenda;
-        }
-      }
-          
+      this.compradores = this.logicaService.atualizarComprador(this.compradores, this.comprador, this.contato);
+
       formCadInfo.reset();
       this.contatoDisplay = [];
       this.contato = [];
       this.msgs = [];
       this.disabledButton = true;
-      this.messageService.add({key: 'popup', severity:'success', summary: 'Sucesso!', detail:'Informações do comprador alteradas!'});
+      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Informações do comprador alteradas!'});
     } else {
       this.msgs = [];
-      let camposInvalidos: any[] = [];
+      const camposInvalidos: any[] = [];
 
-      for (var _i in formCadInfo.controls) {
-        if (formCadInfo.controls[_i].status == "INVALID") {
+      for (const _i in formCadInfo.controls) {
+        if (formCadInfo.controls[_i].status == 'INVALID') {
           let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
           campoInvalido = campoInvalido.replace(': ', '');
           camposInvalidos.push(` ` + campoInvalido);
@@ -684,8 +560,9 @@ export class CadastroComponent implements OnInit {
           this.msgs.push({
             severity: 'error',
             summary: 'Erro ao salvar alterações!',
-            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` + camposInvalidos + `</strong>.`
-          })
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:`
+            + camposInvalidos + `</strong>.`
+          });
         }
       }
 
@@ -694,14 +571,76 @@ export class CadastroComponent implements OnInit {
           severity: 'error',
           summary: 'Erro ao salvar alterações!',
           detail: `Adicione pelo menos 1 contato.`
-        })
+        });
       }
     }
   }
 
-  setCursor(cepRecebido){
-    var cep = (<HTMLInputElement>document.getElementById(cepRecebido));
+  setCursor(cepRecebido) {
+    const cep = (<HTMLInputElement>document.getElementById(cepRecebido));
     cep.focus();
     cep.setSelectionRange(0, 0);
+  }
+
+  hiddenLoader() {
+    if ((this.getLoads.getEmpreendimentos == true) && (this.getLoads.getEstadoCivil == true) && 
+        (this.getLoads.getIncorporadoras == true) && (this.getLoads.getOriginacoes == true) && 
+        (this.getLoads.getTipoCliente == true) && (this.getLoads.getTipoContato == true)) {
+          setTimeout(() => {
+            this.load = true;
+          }, 500);
+        }
+  }
+
+  chamadasInit() {
+    this.chamadasService.getEstados().subscribe(dados => this.estado = dados);
+    this.chamadasService.getDadosCadastrais('empreendimentos').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.empreendimento = dadosBaixados;
+        this.getLoads.getEmpreendimentos = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('originacoes').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.originacao = dadosBaixados;
+        this.getLoads.getOriginacoes = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('estadocivil').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.estadoCivil = dadosBaixados;
+        this.getLoads.getEstadoCivil = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('tipocontatos').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.tipoContato = dadosBaixados;
+        this.getLoads.getTipoContato = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('tipoclientes').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.tipocliente = dadosBaixados;
+        this.getLoads.getTipoCliente = true;
+        this.hiddenLoader();
+      }
+    })
+    this.chamadasService.getDadosCadastrais('incorporadoras').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        const dadosBaixados = event.body['data'];
+        this.incorp = dadosBaixados;
+        this.getLoads.getIncorporadoras = true;
+        this.hiddenLoader();
+      }
+    })
   }
 }

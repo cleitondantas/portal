@@ -6,8 +6,12 @@ body {
     -ms-flex-align: center;
     -ms-flex-pack: center;
     -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
+    -ms-box-pack: center;
+    -moz-box-pack: center;
     justify-content: center;
 }
 
@@ -15,7 +19,7 @@ body {
     width: 50%;
     height: 100%;
     border-radius: 5px;
-    padding: 0px;
+    padding: 0;
     box-shadow:0 5px 5px rgba(0,0,0,.175);
 }
 
@@ -26,13 +30,13 @@ body {
 }
 
 #card{
-    border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 0 0;
     text-align: left;
     color: black;
 }
 
 .col{
-    padding: 15px 0px 0px 15px;
+    padding: 15px 0 0 15px;
 }
 
 .form-control{
@@ -43,46 +47,46 @@ body {
 #tipodeusuario{
     float: left;
     width: 95%;
-    margin: 0px 10px 0px 10px;
+    margin: 0 10px 0 10px;
 }
 
 @media (max-width: 991px){
     #tipodeusuario{
         width: 90%;
-        margin: 0px 10px 0px 10px;
+        margin: 0 10px 0 10px;
     }
 }
 
 #email{
-    margin: 20px 20px 20px 0px;
+    margin: 20px 20px 20px 0;
 }
 
 @media (max-width: 991px){
     #email{
-        margin: 20px 50px 20px 0px;
+        margin: 20px 50px 20px 0;
     }
 }
 
 #addon1{
     height: 38px;
-    margin: 20px 0px 0px 10px;
+    margin: 20px 0 0 10px;
 }
 
 #buttonsalvar{
     width: 20%;
     float: right;
-    margin: 0px 20px 10px 0px;
+    margin: 0 20px 10px 0;
 }
 
 @media (max-width: 991px){
     #buttonsalvar{
-        margin: 0px 50px 10px 0px;
+        margin: 0 50px 10px 0;
     }
 }
 
 @media (max-width: 767px){
     #buttonsalvar{
-        margin: 0px 45px 10px 0px;
+        margin: 0 45px 10px 0;
     }
 }
 

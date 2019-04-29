@@ -1,285 +1,312 @@
-<p-fieldset legend="Dados pessoais">
-  <div class="p-grid">
-    <div class="p-col-6">
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="fid">FID: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="nomeC">Nome cliente: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="numeroIdent">Número de identidade: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="dataExp">Data de expedição: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="estCivil">Estado civil: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <p-fieldset legend="Contatos">
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="tipo">Tipo: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="contato">Contato: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="tipoC">Tipo contato: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
-      </p-fieldset>
-
-    </div>
-    <div class="p-col-6">
-      
-      <br><br>
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="cpf">CPF/CNPJ: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="orgExp">Órgão expeditor: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="nacionalidade">Nacionalidade: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="profissao">Profissão: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="dataNasc">Data de nascimento: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-      
-      <p-fieldset legend="Endereços">
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="cep">CEP: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="end">Endereço: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="numero">Número: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
-        <div class="p-grid">
-          <div class="p-col-4">
-            <label class="ajusteLabel" for="bairro">Bairro: </label>
-          </div>
-          <div class="p-col-4">
-          </div>
-        </div>
-
-      </p-fieldset>
-
-    </div>
+<div class="p-grid p-justify-center p-align-center vertical-container" [hidden]="load" style="padding: 25px;">
+  <div #loader class="lds-dual-ring">
   </div>
-</p-fieldset>
+</div>
 
-<p-fieldset legend="Análise de crédito">
-  <div class="p-grid">
-    <div class="p-col-6">
+<div [hidden]="!load">
+  <p-fieldset legend="Dados pessoais">
+    <div class="p-grid">
+      <div class="p-col-6">
 
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="fid">FID: </label>
+          </div>
+          <div class="p-col-4">
+            {{fid}}
+          </div>
         </div>
-        <div class="p-col-4">
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="nomeC">Nome cliente: </label>
+          </div>
+          <div class="p-col-4">
+            {{comprador.nomecliente}}
+          </div>
         </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="tipoP">Tipo de pessoa: </label>
+          </div>
+          <div class="p-col-4">
+            {{comprador.codtipocliente}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="numeroIdent">Número de identidade: </label>
+          </div>
+          <div class="p-col-4">
+            {{comprador.ndocumento}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="dataExp">Data de expedição: </label>
+          </div>
+          <div class="p-col-4">
+            {{dataExpedicao}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="estCivil">Estado civil: </label>
+          </div>
+          <div class="p-col-4">
+            {{comprador.codestadocivil}}
+          </div>
+        </div>
+
+        <p-fieldset legend="Contatos">
+            <p-table [value]="contatoDisplay" [scrollable]="true" scrollHeight="200px" columnResizeMode="fit">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th><strong>Tipo</strong></th>
+                    <th><strong>Contato</strong></th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-contatoC let-cont>
+                  <tr [pSelectableRow]="contatoC">
+                    <td> {{cont.tipocontato}} </td>
+                    <td> {{cont.desccontato}} </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+        </p-fieldset>
+
       </div>
+      <div class="p-col-6">
+        
+        <br><br>
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="cpf">CPF/CNPJ: </label>
+          </div>
+          <div class="p-col-4">
+            {{comprador.cpfcnpj}}
+          </div>
+        </div>
 
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorAprov">Valor aprovado: </label>
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="orgExp">Órgão expedidor: </label>
+          </div>
+          <div class="p-col-4">
+            {{comprador.orgaoexpedidor}}
+          </div>
         </div>
-        <div class="p-col-4">
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="nacionalidade">Nacionalidade: </label>
+          </div>
+          <div class="p-col-4">
+            {{comprador.nacionalidade}}
+          </div>
         </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="profissao">Profissão: </label>
+          </div>
+          <div class="p-col-4">
+            {{comprador.profissao}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="dataNasc">Data de nascimento: </label>
+          </div>
+          <div class="p-col-4">
+            {{dataNascimento}}
+          </div>
+        </div>
+        
+        <p-fieldset legend="Endereços">
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="cep">CEP: </label>
+            </div>
+            <div class="p-col-4">
+              {{comprador.cepresidencial}}
+            </div>
+          </div>
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="end">Endereço: </label>
+            </div>
+            <div class="p-col-4">
+              {{comprador.endereco}}
+            </div>
+          </div>
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="numero">Número: </label>
+            </div>
+            <div class="p-col-4">
+              {{comprador.numeroendereco}}
+            </div>
+          </div>
+
+          <div class="p-grid">
+            <div class="p-col-4">
+              <label class="ajusteLabel" for="bairro">Bairro: </label>
+            </div>
+            <div class="p-col-4">
+              {{comprador.bairro}}
+            </div>
+          </div>
+
+        </p-fieldset>
+
       </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="modalidade">Modalidade: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="dataEnv">Data envio ao banco: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorPrestAprov">Valor prestação aprovado: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="sicaq">SICAQ: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="correspondente">Correspondente: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
     </div>
-    <div class="p-col-6">
+  </p-fieldset>
 
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="prazoFinan">Prazo financiamento: </label>
+  <p-fieldset legend="Análise de crédito">
+    <div class="p-grid">
+      <div class="p-col-6">
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorComVen">Valor de compra e venda: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.valorcompravenda ? 'R$' : ''}} {{analise.valorcompravenda?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          </div>
         </div>
-        <div class="p-col-4">
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorAprov">Valor aprovado: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.valoravaliacao ? 'R$' : ''}} {{analise.valoravaliacao?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          </div>
         </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="modalidade">Modalidade: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.codmodalidadesimulacao}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="dataEnv">Data envio ao banco: </label>
+          </div>
+          <div class="p-col-4">
+            {{dataEnvioAoBanco}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorPrestAprov">Valor prestação aprovado: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.valorrecursosproprios ? 'R$' : ''}} {{analise.valorprimeiraparcela?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="sicaq">SICAQ: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.codsicaq}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="correspondente">Correspondente: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.correspondente}}
+          </div>
+        </div>
+
       </div>
+      <div class="p-col-6">
 
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="banco">Banco: </label>
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="prazoFinan">Prazo financiamento: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.prazofinanciamento}}
+          </div>
         </div>
-        <div class="p-col-4">
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="banco">Banco: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.codinstituicaofinanceira}}
+          </div>
         </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="tipoAmor">Tipo Amortização: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.codtipoamortizacao}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorSubs">Valor subsídio: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.valorsubsidio ? 'R$' : ''}} {{analise.valorsubsidio?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="valorAvalBanco">Valor avaliação Banco: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.valoravaliacaoinstfinanc ? 'R$' : ''}} {{analise.valoravaliacaoinstfinanc?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="fgts">FGTS: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.valorfgts ? 'R$' : ''}} {{analise.valorfgts?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          </div>
+        </div>
+
+        <div class="p-grid">
+          <div class="p-col-4">
+            <label class="ajusteLabel" for="recProprio">Recurso próprio: </label>
+          </div>
+          <div class="p-col-4">
+            {{analise.valorrecursosproprios ? 'R$' : ''}} {{analise.valorrecursosproprios?.toLocaleString('pt-br', {minimumFractionDigits: 2})}}
+          </div>
+        </div>
+
       </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="tipoAmor">Tipo Amortização: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorSubs">Valor subsídio: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="valorAvalBanco">Valor avaliação Banco: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="fgts">FGTS: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
-      <div class="p-grid">
-        <div class="p-col-4">
-          <label class="ajusteLabel" for="recProprio">Recurso próprio: </label>
-        </div>
-        <div class="p-col-4">
-        </div>
-      </div>
-
     </div>
-  </div>
-</p-fieldset>
+  </p-fieldset>
+</div>

@@ -1,5 +1,5 @@
-export class Municipio{
-    codMunicipio:number;
-    codEstado:number;
-    descMunicipio:string;
+export class Municipio {
+    codMunicipio: number;
+    codEstado: number;
+    descMunicipio: string;
 }

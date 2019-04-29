@@ -1,8 +1,8 @@
-import { Area } from "./area";
+import { Area } from './area';
 
 export class Canal {
     area: Area;
-    codCanal:number;
-    isAtivo:boolean;
-    
+    codCanal: number;
+    isAtivo: boolean;
+
 }

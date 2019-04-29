@@ -1,546 +1,553 @@
-<form novalidate #formulario="ngForm" >
-  <p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
-  <p-panel>
-    <p-header>
-      Cadastro de informação
-    </p-header>
+<div class="p-grid p-justify-center p-align-center vertical-container" [hidden]="load" style="padding: 25px;">
+  <div #loader class="lds-dual-ring">
+  </div>
+</div>
 
-    <p-fieldset legend="Cadastro de informações pessoais">
-      <div>
-        <form #formCadInfo="ngForm">
-          <p-fieldset legend="Comprador principal">
-            <div class="p-grid">
-              <div class="p-col-6">
+<div [hidden]="!load">
+  <form novalidate #formulario="ngForm" >
+    <p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
+    <p-panel>
+      <p-header>
+        Cadastro de informação
+      </p-header>
 
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="cpfcnpj">CPF/CNPJ: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="cpfcnpj" ngModel  name="cpfcnpj"  #cpfcnpj="ngModel" [(ngModel)]="comprador.cpfcnpj"
-                    pKeyFilter="pint" required>
-                  </div>
-                </div>
+      <p-fieldset legend="Cadastro de informações pessoais">
+        <div>
+          <form #formCadInfo="ngForm">
+            <p-fieldset legend="Comprador principal">
+              <div class="p-grid">
+                <div class="p-col-6">
 
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="codtipocliente">Tipo de pessoa: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codtipocliente}}" label="{{tipo.desctipocliente}}" name="codtipocliente" class="radio" ngModel #codtipocliente="ngModel" [(ngModel)]="comprador.codtipocliente"
-                    required id="codtipocliente"></p-radioButton>
-                  </div>
-                </div>
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="ndocumento">Número de identidade: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="ndocumento" ngModel  name="ndocumento" #ndocumento="ngModel" [(ngModel)]="comprador.ndocumento"
-                    required>
-                  </div>
-                </div>
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="dataexpedicao">Data expedição: </label>
-                  </div>
-                  <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
-                    <div class="ui-inputgroup">
-                      <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-                      class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                      id="dataexpedicao" dateFormat="dd/mm/yy" ngModel name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"
-                      [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="cpfcnpj">CPF/CNPJ: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="cpfcnpj" ngModel  name="cpfcnpj"  #cpfcnpj="ngModel" [(ngModel)]="comprador.cpfcnpj"
+                      pKeyFilter="pint" required>
                     </div>
                   </div>
-                </div>
 
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="codestadocivil">Estado civil: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <p-dropdown placeholder="Selecione..." optionLabel="descestadocivil" [options]="estadoCivil" [autoWidth]="false" id="codestadocivil"
-                    [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codestadocivil" #codestadocivil="ngModel" [(ngModel)]="comprador.codestadocivil"
-                    required></p-dropdown>
-                  </div>
-                </div>
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="valorrenda">Renda: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input currencyMask pInputText class="ajusteInput" name="valorrenda" [(ngModel)]="comprador.valorrenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-                    required id="valorrenda"/>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="p-col-6">
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="nomecliente">Nome do cliente: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="nomecliente" ngModel  name="nomecliente"  #nomecliente="ngModel" [(ngModel)]="comprador.nomecliente"
-                    required>
-                  </div>
-                </div>
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="datanascimento">Data de nascimento: </label>
-                  </div>
-                  <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
-                    <div class="ui-inputgroup">
-                      <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-                      class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                      id="datanascimento" dateFormat="dd/mm/yy" ngModel name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
-                      [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="codtipocliente">Tipo de pessoa: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <p-radioButton  *ngFor="let tipo of tipocliente" value="{{tipo.codtipocliente}}" label="{{tipo.desctipocliente}}" name="codtipocliente" class="radio" ngModel #codtipocliente="ngModel" [(ngModel)]="comprador.codtipocliente"
+                      required id="codtipocliente"></p-radioButton>
                     </div>
                   </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="ndocumento">Número de identidade: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="ndocumento" ngModel  name="ndocumento" #ndocumento="ngModel" [(ngModel)]="comprador.ndocumento"
+                      required>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="dataexpedicao">Data expedição: </label>
+                    </div>
+                    <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+                      <div class="ui-inputgroup">
+                        <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+                        class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0 0 3px'}" [style]="{'width': '100%'}"
+                        id="dataexpedicao" dateFormat="dd/mm/yy" ngModel name="dataexpedicao"  #dataexpedicao="ngModel" [(ngModel)]="comprador.dataexpedicao"
+                        [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="codestadocivil">Estado civil: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <p-dropdown placeholder="Selecione..." optionLabel="descestadocivil" [options]="estadoCivil" [autoWidth]="false" id="codestadocivil"
+                      [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codestadocivil" #codestadocivil="ngModel" [(ngModel)]="comprador.codestadocivil"
+                      required></p-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="valorrenda">Renda: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input currencyMask pInputText class="ajusteInput" name="valorrenda" [(ngModel)]="comprador.valorrenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+                      required id="valorrenda"/>
+                    </div>
+                  </div>
+
                 </div>
 
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="orgaoexpedidor">Órgão expedidor: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="orgaoexpedidor" ngModel name="orgaoexpedidor"  #orgaoexpedidor="ngModel" [(ngModel)]="comprador.orgaoexpedidor"
-                    required>
-                  </div>
-                </div>
+                <div class="p-col-6">
 
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="nacionalidade">Nacionalidade: </label>
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="nomecliente">Nome do cliente: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="nomecliente" ngModel  name="nomecliente"  #nomecliente="ngModel" [(ngModel)]="comprador.nomecliente"
+                      required>
+                    </div>
                   </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="nacionalidade" ngModel name="nacionalidade"  #nacionalidade="ngModel" [(ngModel)]="comprador.nacionalidade"
-                    required>
-                  </div>
-                </div>
 
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="profissao">Profissão: </label>
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="datanascimento">Data de nascimento: </label>
+                    </div>
+                    <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+                      <div class="ui-inputgroup">
+                        <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+                        class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0 0 3px'}" [style]="{'width': '100%'}"
+                        id="datanascimento" dateFormat="dd/mm/yy" ngModel name="datanascimento"  #datanascimento="ngModel" [(ngModel)]="comprador.datanascimento"
+                        [locale]="br" required dataType="date" rPCalendarMask></p-calendar>
+                      </div>
+                    </div>
                   </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="profissao" ngModel name="profissao"  #profissao="ngModel" [(ngModel)]="comprador.profissao"
-                    required>
-                  </div>
-                </div>
 
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="orgaoexpedidor">Órgão expedidor: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="orgaoexpedidor" ngModel name="orgaoexpedidor"  #orgaoexpedidor="ngModel" [(ngModel)]="comprador.orgaoexpedidor"
+                      required>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="nacionalidade">Nacionalidade: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="nacionalidade" ngModel name="nacionalidade"  #nacionalidade="ngModel" [(ngModel)]="comprador.nacionalidade"
+                      required>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="profissao">Profissão: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="profissao" ngModel name="profissao"  #profissao="ngModel" [(ngModel)]="comprador.profissao"
+                      required>
+                    </div>
+                  </div>
+
+                </div>
               </div>
-            </div>
 
-          </p-fieldset>
+            </p-fieldset>
 
-          <p-fieldset legend="Endereço">
+            <p-fieldset legend="Endereço">
+              <div class="p-grid">
+                <div class="p-col-6">
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="cepresidencial">CEP: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cepresidencial" mask="99999-999" 
+                      (onBlur)="consultaCEP()" ngModel name="cepresidencial" #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"
+                      required inputId="cepcadastro" (click)="setCursor('cepcadastro')"></p-inputMask>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="numeroendereco">Número: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="numeroendereco" ngModel name="numeroendereco"  #numeroendereco="ngModel" [(ngModel)]="comprador.numeroendereco"
+                      required>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="bairroresidencial">Bairro: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="bairroresidencial" ngModel name="bairroresidencial"  #bairroresidencial="ngModel" [(ngModel)]="comprador.bairro"
+                      required>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="cidaderesidencial">Cidade: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="cidaderesidencial" ngModel name="cidaderesidencial"  #cidaderesidencial="ngModel" [(ngModel)]="comprador.cidade"
+                      required>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="p-col-6">
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="enderecoresidencial">Endereço: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="enderecoresidencial" ngModel name="enderecoresidencial"  #enderecoresidencial="ngModel" [(ngModel)]="comprador.endereco"
+                      required>
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="complementoresidencial">Complemento: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="complementoresidencial" ngModel name="complementoresidencial"  #complementoresidencial="ngModel" [(ngModel)]="comprador.complemento">
+                    </div>
+                  </div>
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="ufresidencial">Estado: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <p-dropdown placeholder="Selecione..." optionLabel="uf" [options]="estado" id="ufresidencial"
+                      [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="ufresidencial"  #ufresidencial="ngModel" [(ngModel)]="comprador.uf"
+                      required></p-dropdown>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </p-fieldset>
+          </form>
+
+          <p-fieldset legend="Contatos">
             <div class="p-grid">
-              <div class="p-col-6">
+              <div class="p-col-6" >
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="cepresidencial">CEP: </label>
+                    <label class="ajusteLabel" for="tipo">Tipo: </label>
                   </div>
-                  <div class="p-col-8">
-                    <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cepresidencial" mask="99999-999" 
-                    (onBlur)="consultaCEP()" ngModel name="cepresidencial" #cepresidencial="ngModel" [(ngModel)]="comprador.cepresidencial"
-                    required inputId="cepcadastro" (click)="setCursor('cepcadastro')"></p-inputMask>
-                  </div>
-                </div>
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="numeroendereco">Número: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="numeroendereco" ngModel name="numeroendereco"  #numeroendereco="ngModel" [(ngModel)]="comprador.numeroendereco"
-                    required>
+                  <div class="p-col-8" id="tipo">
+                    <p-dropdown placeholder="Selecione..." optionLabel="desctipocontato" [options]="tipoContato" dataKey="value"
+                    [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codtipocontato" #codtipocontato="ngModel" [(ngModel)]="contatos.codtipocontato"
+                    (onChange)="validContato($event)"></p-dropdown>
                   </div>
                 </div>
 
                 <div class="p-grid">
                   <div class="p-col-4">
-                    <label class="ajusteLabel" for="bairroresidencial">Bairro: </label>
                   </div>
                   <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="bairroresidencial" ngModel name="bairroresidencial"  #bairroresidencial="ngModel" [(ngModel)]="comprador.bairro"
-                    required>
+                    <input type="text" #desccontato class="ajusteInput" pInputText id="desccontato" ngModel name="desccontato" #desccontato="ngModel" [(ngModel)]="contatos.desccontato"
+                    [textMask]="{mask: mask}" [disabled]="disabledInput">
                   </div>
                 </div>
 
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="cidaderesidencial">Cidade: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="cidaderesidencial" ngModel name="cidaderesidencial"  #cidaderesidencial="ngModel" [(ngModel)]="comprador.cidade"
-                    required>
-                  </div>
-                </div>
-
-              </div>
-              <div class="p-col-6">
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="enderecoresidencial">Endereço: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="enderecoresidencial" ngModel name="enderecoresidencial"  #enderecoresidencial="ngModel" [(ngModel)]="comprador.endereco"
-                    required>
-                  </div>
-                </div>
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="complementoresidencial">Complemento: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="complementoresidencial" ngModel name="complementoresidencial"  #complementoresidencial="ngModel" [(ngModel)]="comprador.complemento">
-                  </div>
-                </div>
-
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="ufresidencial">Estado: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <p-dropdown placeholder="Selecione..." optionLabel="uf" [options]="estado" id="ufresidencial"
-                    [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="ufresidencial"  #ufresidencial="ngModel" [(ngModel)]="comprador.uf"
-                    required></p-dropdown>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </p-fieldset>
-        </form>
-
-        <p-fieldset legend="Contatos">
-          <div class="p-grid">
-            <div class="p-col-6" >
-
-              <div class="p-grid">
-                <div class="p-col-4">
-                  <label class="ajusteLabel" for="tipo">Tipo: </label>
-                </div>
-                <div class="p-col-8" id="tipo">
-                  <p-dropdown placeholder="Selecione..." optionLabel="desctipocontato" [options]="tipoContato" dataKey="value"
-                  [autoWidth]="false" [style]="{'width': '100%'}" class="ajusteInput" ngModel name="codtipocontato" #codtipocontato="ngModel" [(ngModel)]="contatos.codtipocontato"
-                  (onChange)="validContato($event)"></p-dropdown>
-                </div>
-              </div>
-
-              <div class="p-grid">
-                <div class="p-col-4">
-                </div>
-                <div class="p-col-8">
-                  <input type="text" #desccontato class="ajusteInput" pInputText id="desccontato" ngModel name="desccontato" #desccontato="ngModel" [(ngModel)]="contatos.desccontato"
-                  [textMask]="{mask: mask}" [disabled]="disabledInput">
-                </div>
+                <br><br>
+                <p><button pButton type="button" label="Adicionar contato" class="ui-button-raised ui-button-secondary" 
+                [ngStyle]="{'float': 'right'}" (click)="adicionarContato(contatos)" icon="pi pi-plus-circle" iconPos="right"></button>
               </div>
 
               <br><br>
-              <p><button pButton type="button" label="Adicionar contato" class="ui-button-raised ui-button-secondary" 
-              [ngStyle]="{'float': 'right'}" (click)="adicionarContato(contatos)" icon="pi pi-plus-circle" iconPos="right"></button>
+              <div class="p-col-6">
+                <p-table [value]="contatoDisplay" [scrollable]="true" scrollHeight="200px" columnResizeMode="fit">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th><strong>Excluir</strong></th>
+                      <th><strong>Tipo</strong></th>
+                      <th><strong>Contato</strong></th>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="body" let-contatoC let-cont>
+                    <tr [pSelectableRow]="contatoC">
+                      <td> <button pButton type="button" (click)="removerContato(contatoC)" icon="pi pi-trash"></button> </td>
+                      <td> {{cont.tipocontato}} </td>
+                      <td> {{cont.desccontato}} </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
             </div>
+          </p-fieldset>
 
-            <br><br>
-            <div class="p-col-6">
-              <p-table [value]="contatoDisplay" [scrollable]="true" scrollHeight="200px">
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th><strong>Excluir</strong></th>
-                    <th><strong>Tipo</strong></th>
-                    <th><strong>Contato</strong></th>
-                  </tr>
-                </ng-template>
+          <button pButton type="button" label="Adicionar comprador" class="ui-button-raised ui-button-secondary" 
+          [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}" (click)="adicionarCompradorLista(comprador, formCadInfo)"
+          icon="pi pi-plus-circle" iconPos="right" [hidden]="!disabledButton"></button>
 
-                <ng-template pTemplate="body" let-contatoC let-cont>
-                  <tr [pSelectableRow]="contatoC">
-                    <td> <button pButton type="button" (click)="removerContato(contatoC)" icon="pi pi-trash"></button> </td>
-                    <td> {{cont.tipocontato}} </td>
-                    <td> {{cont.desccontato}} </td>
-                  </tr>
-                </ng-template>
-              </p-table>
+          <button pButton type="button" label="Salvar alterações" class="ui-button-raised ui-button-secondary" 
+          [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}"
+          icon="pi pi-save" iconPos="right" [hidden]="disabledButton" (click)="atualizarComprador(formCadInfo)"></button>
+
+          <button pButton type="button" label="Limpar comprador" class="ui-button-raised ui-button-warning" 
+          [ngStyle]="{'float': 'right', 'width': '15%', 'margin': '5px'}" (click)="limparCadInfo(formCadInfo)"
+          icon="pi pi-refresh" iconPos="right"></button>
+
+          <br><br>
+          <p-messages [(value)]="msgs"></p-messages>
+          
+        </div>
+      </p-fieldset>
+
+      <div class="p-grid">
+        <p-fieldset legend="Compradores">
+          <p-table [value]="compradores" [(selection)]="selectedItem" (onRowUnselect)="tirarSelecionado($event)" (onRowSelect)="setarTrue($event)">
+            <ng-template pTemplate="header">
+              <tr>
+                <th><strong>Excluir</strong></th>
+                <th><strong>Visualizar</strong></th>
+                <th><strong>Nome</strong></th>
+                <th><strong>CPF</strong></th>
+                <th><strong>Renda</strong></th>
+                <th><strong>Comprador principal</strong></th>
+              </tr>
+            </ng-template>
+    
+            <ng-template pTemplate="body" let-rowData let-comp>
+              <tr [pSelectableRow]="rowData">
+                <td> <button pButton icon="pi pi-user-minus" (click)="removerComprador(rowData)"></button> </td>
+                <td> <button pButton icon="pi pi-search" (click)="visualizarComprador(rowData)"></button></td>
+                <td> {{comp.nomecliente}} </td>
+                <td> {{comp.cpfcnpj}} </td>
+                <td> {{ comp.valorrenda.toLocaleString('pt-br', {minimumFractionDigits: 2}) }} </td>
+                <td>
+                    <p-tableRadioButton [value]="rowData"></p-tableRadioButton>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-fieldset>
+      </div>
+
+      <p-fieldset legend="Cadastro de informações do Imóvel">
+        
+        <div class="p-grid">
+          <div class="p-col-1">
+            <label class="ajusteLabel" for="numerocadastroincorporadorafid">FID: </label>
+          </div>
+          <div class="p-col-3">
+            <input type="text" pInputText id="numerocadastroincorporadorafid" class="ajusteInput" ngModel name="numerocadastroincorporadorafid" 
+            #numerocadastroincorporadorafid="ngModel" [(ngModel)]="cadInfo.numerocadastroincorporadorafid" pKeyFilter="pint" required>
+          </div>
+        </div>
+
+        <p-fieldset legend="INCORPORADORA">
+          <div class="p-grid">
+            <div class="p-col-3">
+              
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="dtentrada">Entrada: </label> 
+                  <!-- TB.CADASTRO.DT_CADASTRO -->
+                </div>
+                <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
+                  <div class="ui-inputgroup">
+                    <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
+                    class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0 0 3px'}" [style]="{'width': '100%'}"
+                    id="dtentrada" dateFormat="dd/mm/yy" ngModel  name="dtentrada"  #dtentrada="ngModel" [(ngModel)]="cadInfo.dtentrada"
+                    [locale]="br" showButtonBar="true" required dataType="date" rPCalendarMask></p-calendar>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="p-col-5">
+              <div class="p-grid">
+                <div class="p-col-3">
+                  <label class="ajusteLabel" for="codincorporadora">Incorporadora: </label>
+                </div>
+                <div class="p-col-7">
+                  <p-dropdown placeholder="Selecione..." optionLabel="descincorporadora" [options]="incorp" [autoWidth]="false" [style]="{'width': '100%'}" 
+                  ngModel name="codincorporadora" #codincorporadora="ngModel" [(ngModel)]="cadInfo.codincorporadora" required id="codincorporadora"></p-dropdown>
+                </div>
+              </div>
+
+            </div>
+            <div class="p-col-4">
+
+              <div class="p-grid">
+                <div class="p-col-3">
+                  <label class="ajusteLabel" for="codoriginacao">Originação: </label>
+                </div>
+                <div class="p-col-7">
+                  <p-dropdown placeholder="Selecione..." optionLabel="descoriginacao" [options]="originacao" [autoWidth]="false" [style]="{'width': '100%'}" 
+                  ngModel name="codoriginacao"  #codoriginacao="ngModel" [(ngModel)]="cadInfo.codoriginacao" required id="codoriginacao"></p-dropdown>
+                </div>
+              </div>
+
             </div>
           </div>
         </p-fieldset>
 
-        <button pButton type="button" label="Adicionar comprador" class="ui-button-raised ui-button-secondary" 
-        [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}" (click)="adicionarCompradorLista(comprador, formCadInfo)"
-        icon="pi pi-plus-circle" iconPos="right" [hidden]="!disabledButton"></button>
+        <p-fieldset legend="DADOS DO EMPREENDIMENTO">
+          <div class="p-grid">
+            <div class="p-col-7">
 
-        <button pButton type="button" label="Salvar alterações" class="ui-button-raised ui-button-secondary" 
-        [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}"
-        icon="pi pi-save" iconPos="right" [hidden]="disabledButton" (click)="atualizarComprador(formCadInfo)"></button>
-
-        <button pButton type="button" label="Limpar comprador" class="ui-button-raised ui-button-warning" 
-        [ngStyle]="{'float': 'right', 'width': '15%', 'margin': '5px'}" (click)="limparCadInfo(formCadInfo)"
-        icon="pi pi-refresh" iconPos="right"></button>
-
-        <br><br>
-        <p-messages [(value)]="msgs"></p-messages>
-        
-      </div>
-    </p-fieldset>
-
-    <div class="p-grid">
-      <p-fieldset legend="Compradores">
-        <p-table [value]="compradores" [(selection)]="selectedItem">
-          <ng-template pTemplate="header">
-            <tr>
-              <th><strong>Excluir</strong></th>
-              <th><strong>Visualizar</strong></th>
-              <th><strong>Nome</strong></th>
-              <th><strong>CPF</strong></th>
-              <th><strong>Renda</strong></th>
-              <th><strong>Comprador principal</strong></th>
-            </tr>
-          </ng-template>
-  
-          <ng-template pTemplate="body" let-rowData let-comp>
-            <tr [pSelectableRow]="rowData">
-              <td> <button pButton icon="pi pi-user-minus" (click)="removerComprador(rowData)"></button> </td>
-              <td> <button pButton icon="pi pi-search" (click)="visualizarComprador(rowData)"></button></td>
-              <td> {{comp.nomecliente}} </td>
-              <td> {{comp.cpfcnpj}} </td>
-              <td> {{comp.valorrenda}} </td>
-              <td>
-                  <p-tableRadioButton [value]="rowData" value=true name="principal" (click)="setarTrue(rowData)" ngDefaultControl="comprador.principal"></p-tableRadioButton>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </p-fieldset>
-    </div>
-
-    <p-fieldset legend="Cadastro de informações do Imóvel">
-      
-      <div class="p-grid">
-        <div class="p-col-1">
-          <label class="ajusteLabel" for="numerocadastroincorporadorafid">FID: </label>
-        </div>
-        <div class="p-col-3">
-          <input type="text" pInputText id="numerocadastroincorporadorafid" class="ajusteInput" ngModel name="numerocadastroincorporadorafid" 
-          #numerocadastroincorporadorafid="ngModel" [(ngModel)]="cadInfo.numerocadastroincorporadorafid" pKeyFilter="pint" required>
-        </div>
-      </div>
-
-      <p-fieldset legend="INCORPORADORA">
-        <div class="p-grid">
-          <div class="p-col-3">
-            
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="dtentrada">Entrada: </label> 
-                <!-- TB.CADASTRO.DT_CADASTRO -->
-              </div>
-              <div class="p-col-8" [ngStyle]="{'padding-right': '2px'}">
-                <div class="ui-inputgroup">
-                  <p-calendar [showIcon]="true" [yearNavigator]="true" yearRange="1900:2019" [monthNavigator]="true" 
-                  class="ajusteInput" [inputStyle]="{'width': 'calc(100% - 2.357em)', 'border-radius': '3px 0px 0px 3px'}" [style]="{'width': '100%'}"
-                  id="dtentrada" dateFormat="dd/mm/yy" ngModel  name="dtentrada"  #dtentrada="ngModel" [(ngModel)]="cadInfo.dtentrada"
-                  [locale]="br" showButtonBar="true" required dataType="date" rPCalendarMask></p-calendar>
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="codempreendimento">Empreendimento: </label>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-col-5">
-            <div class="p-grid">
-              <div class="p-col-3">
-                <label class="ajusteLabel" for="codincorporadora">Incorporadora: </label>
-              </div>
-              <div class="p-col-7">
-                <p-dropdown placeholder="Selecione..." optionLabel="descincorporadora" [options]="incorp" [autoWidth]="false" [style]="{'width': '100%'}" 
-                ngModel name="codincorporadora" #codincorporadora="ngModel" [(ngModel)]="cadInfo.codincorporadora" required id="codincorporadora"></p-dropdown>
-              </div>
-            </div>
-
-          </div>
-          <div class="p-col-4">
-
-            <div class="p-grid">
-              <div class="p-col-3">
-                <label class="ajusteLabel" for="codoriginacao">Originação: </label>
-              </div>
-              <div class="p-col-7">
-                <p-dropdown placeholder="Selecione..." optionLabel="descoriginacao" [options]="originacao" [autoWidth]="false" [style]="{'width': '100%'}" 
-                ngModel name="codoriginacao"  #codoriginacao="ngModel" [(ngModel)]="cadInfo.codoriginacao" required id="codoriginacao"></p-dropdown>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </p-fieldset>
-
-      <p-fieldset legend="DADOS DO EMPREENDIMENTO">
-        <div class="p-grid">
-          <div class="p-col-7">
-
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="codempreendimento">Empreendimento: </label>
-              </div>
-              <div class="p-col-4">
-                <p-dropdown placeholder="Selecione..." optionLabel="descempreendimento" [options]="empreendimento" [autoWidth]="false" 
-                [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="codempreendimento"  #codempreendimento="ngModel" 
-                [(ngModel)]="cadInfo.codempreendimento" filter="true" required id="codempreendimento"></p-dropdown>
-              </div>
-              <div class="p-col-2">
-                <label class="ajusteLabel" for="unidade">Unidade: </label>
-              </div>
-              <div class="p-col-2">
-                <input type="text" class="ajusteInput" pInputText id="unidade" ngModel name="unidade"  #unidade="ngModel" [(ngModel)]="cadInfo.unidade" required>
-              </div>
-            </div>
-
-            <div class="p-grid">
-              <div class="p-col-8">
-                <div class="p-grid">
-                  <div class="p-col-6">
-                    <label class="ajusteLabel" for="vagaautomovel">Vaga de automóvel: </label>
-                  </div>
-                  <div class="p-col-6">
-                    <input type="text" class="ajusteInput" pInputText id="vagaautomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
-                  </div>
+                <div class="p-col-4">
+                  <p-dropdown placeholder="Selecione..." optionLabel="descempreendimento" [options]="empreendimento" [autoWidth]="false" 
+                  [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="codempreendimento"  #codempreendimento="ngModel" 
+                  [(ngModel)]="cadInfo.codempreendimento" filter="true" required id="codempreendimento"></p-dropdown>
+                </div>
+                <div class="p-col-2">
+                  <label class="ajusteLabel" for="unidade">Unidade: </label>
+                </div>
+                <div class="p-col-2">
+                  <input type="text" class="ajusteInput" pInputText id="unidade" ngModel name="unidade"  #unidade="ngModel" [(ngModel)]="cadInfo.unidade" required>
                 </div>
               </div>
 
-              <div class="p-col-4">
-                <div class="p-grid">
-                  <div class="p-col-6">
-                    <label class="ajusteLabel" for="box">Box: </label>
+              <div class="p-grid">
+                <div class="p-col-8">
+                  <div class="p-grid">
+                    <div class="p-col-6">
+                      <label class="ajusteLabel" for="vagaautomovel">Vaga de automóvel: </label>
+                    </div>
+                    <div class="p-col-6">
+                      <input type="text" class="ajusteInput" pInputText id="vagaautomovel"ngModel name="vagaautomovel"  #vagaautomovel="ngModel" [(ngModel)]="cadInfo.vagaautomovel">
+                    </div>
                   </div>
-                  <div class="p-col-6">
-                    <input type="text" class="ajusteInput" pInputText id="box" ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box">
+                </div>
+
+                <div class="p-col-4">
+                  <div class="p-grid">
+                    <div class="p-col-6">
+                      <label class="ajusteLabel" for="box">Box: </label>
+                    </div>
+                    <div class="p-col-6">
+                      <input type="text" class="ajusteInput" pInputText id="box" ngModel name="box"  #box="ngModel" [(ngModel)]="cadInfo.box">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-col-5">
+              <div class="p-grid">
+                <div class="p-col-6">
+
+                  <div class="p-grid">
+                    <div class="p-col-4">
+                      <label class="ajusteLabel" for="blocotorre">Bloco: </label>
+                    </div>
+                    <div class="p-col-8">
+                      <input type="text" class="ajusteInput" pInputText id="blocotorre" ngModel name="blocotorre"  #blocotorre="ngModel" [(ngModel)]="cadInfo.blocotorre" required>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </p-fieldset>
 
-          <div class="p-col-5">
-            <div class="p-grid">
-              <div class="p-col-6">
+        <p-fieldset legend="Endereço do Imovel">
+          <div class="p-grid">
+            <div class="p-col-6">
 
-                <div class="p-grid">
-                  <div class="p-col-4">
-                    <label class="ajusteLabel" for="blocotorre">Bloco: </label>
-                  </div>
-                  <div class="p-col-8">
-                    <input type="text" class="ajusteInput" pInputText id="blocotorre" ngModel name="blocotorre"  #blocotorre="ngModel" [(ngModel)]="cadInfo.blocotorre" required>
-                  </div>
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="cep">CEP: </label>
+                </div>
+                <div class="p-col-8">
+                  <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
+                  ngModel name="cep" #cep="ngModel" [(ngModel)]="cadInfo.cep" (onBlur)="consultaCEPImovel()" required
+                  inputId="cepImovel" (click)="setCursor('cepImovel')"></p-inputMask>
                 </div>
               </div>
+
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="numero">Número: </label>
+                </div>
+                <div class="p-col-8">
+                  <input type="text" class="ajusteInput" pInputText id="numero" ngModel name="numero"  #numero="ngModel" [(ngModel)]="cadInfo.numero" required>
+                </div>
+              </div>
+
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="bairro">Bairro: </label>
+                </div>
+                <div class="p-col-8">
+                  <input type="text" class="ajusteInput" pInputText id="bairro" ngModel name="bairro"  #bairro="ngModel" [(ngModel)]="cadInfo.bairro" required>
+                </div>
+              </div>
+
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="cidade">Cidade: </label>
+                </div>
+                <div class="p-col-8">
+                  <input type="text" class="ajusteInput" pInputText id="cidade" ngModel name="cidade"  #cidade="ngModel" [(ngModel)]="cadInfo.cidade" required>
+                </div>
+              </div>
+
+            </div>
+            <div class="p-col-6">
+
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="endereco">Endereço: </label>
+                </div>
+                <div class="p-col-8">
+                  <input type="text" class="ajusteInput" pInputText id="endereco" ngModel name="endereco"  #endereco="ngModel" [(ngModel)]="cadInfo.endereco" required>
+                </div>
+              </div>
+
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="complemento">Complemento: </label>
+                </div>
+                <div class="p-col-8">
+                  <input type="text" class="ajusteInput" pInputText id="complemento" ngModel name="complemento"  #complemento="ngModel" [(ngModel)]="cadInfo.complemento">
+                </div>
+              </div>
+
+              <div class="p-grid">
+                <div class="p-col-4">
+                  <label class="ajusteLabel" for="uf">Estado: </label>
+                </div>
+                <div class="p-col-8">
+                  <p-dropdown placeholder="Selecione..." optionLabel="uf" [options]="estado" id="uf"
+                  [autoWidth]="false" [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="uf"  #uf="ngModel" [(ngModel)]="cadInfo.uf" required></p-dropdown>
+                </div>
+              </div>
+
             </div>
           </div>
-        </div>
-      </p-fieldset>
 
-      <p-fieldset legend="Endereço do Imovel">
-        <div class="p-grid">
-          <div class="p-col-6">
-
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="cep">CEP: </label>
-              </div>
-              <div class="p-col-8">
-                <p-inputMask [style]="{'width': '100%', 'margin-left': '5px'}" id="cep" mask="99999-999" 
-                ngModel name="cep" #cep="ngModel" [(ngModel)]="cadInfo.cep" (onBlur)="consultaCEPImovel()" required
-                inputId="cepImovel" (click)="setCursor('cepImovel')"></p-inputMask>
-              </div>
-            </div>
-
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="numero">Número: </label>
-              </div>
-              <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="numero" ngModel name="numero"  #numero="ngModel" [(ngModel)]="cadInfo.numero" required>
-              </div>
-            </div>
-
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="bairro">Bairro: </label>
-              </div>
-              <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="bairro" ngModel name="bairro"  #bairro="ngModel" [(ngModel)]="cadInfo.bairro" required>
-              </div>
-            </div>
-
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="cidade">Cidade: </label>
-              </div>
-              <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="cidade" ngModel name="cidade"  #cidade="ngModel" [(ngModel)]="cadInfo.cidade" required>
-              </div>
-            </div>
-
-          </div>
-          <div class="p-col-6">
-
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="endereco">Endereço: </label>
-              </div>
-              <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="endereco" ngModel name="endereco"  #endereco="ngModel" [(ngModel)]="cadInfo.endereco" required>
-              </div>
-            </div>
-
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="complemento">Complemento: </label>
-              </div>
-              <div class="p-col-8">
-                <input type="text" class="ajusteInput" pInputText id="complemento" ngModel name="complemento"  #complemento="ngModel" [(ngModel)]="cadInfo.complemento">
-              </div>
-            </div>
-
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label class="ajusteLabel" for="uf">Estado: </label>
-              </div>
-              <div class="p-col-8">
-                <p-dropdown placeholder="Selecione..." optionLabel="uf" [options]="estado" id="uf"
-                [autoWidth]="false" [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="uf"  #uf="ngModel" [(ngModel)]="cadInfo.uf" required></p-dropdown>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        </p-fieldset>
 
       </p-fieldset>
 
-    </p-fieldset>
+      <p-footer>
+        <div class="p-grid p-justify-end">
+          <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
+          [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario, formCadInfo)"
+          icon="pi pi-refresh" iconPos="right"></button>
+          <button pButton type="submit" label="Avançar" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
+          icon="pi pi-angle-double-right" iconPos="right" (click)="confirmacao(cadInfo, formulario)" [hidden]="controle"></button>
+          <button pButton type="submit" label="Salvar" (click)="atualizarCadastroInformacoes(cadInfo, formulario)" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
+          icon="pi pi-save" iconPos="right" [hidden]="!controle"></button>       
+        </div>
 
-    <p-footer>
-      <div class="p-grid p-justify-end">
-        <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
-        [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario, formCadInfo)"
-        icon="pi pi-refresh" iconPos="right"></button>
-        <button pButton type="submit" label="Avançar" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
-        icon="pi pi-angle-double-right" iconPos="right" (click)="confirmacao(cadInfo, formulario)" [hidden]="controle"></button>
-        <button pButton type="submit" label="Salvar" (click)="atualizarCadastroInformacoes(cadInfo, formulario)" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
-        icon="pi pi-save" iconPos="right" [hidden]="!controle"></button>       
-      </div>
+        <p-messages [(value)]="msgs2"></p-messages>
+      </p-footer>
+    </p-panel>
 
-      <p-messages [(value)]="msgs2"></p-messages>
-    </p-footer>
-  </p-panel>
-
-  <br>
-  <p-confirmDialog [ngStyle]="{width: '425px'}"></p-confirmDialog>
-</form>
+    <br>
+    <p-confirmDialog [ngStyle]="{width: '425px'}"></p-confirmDialog>
+  </form>
+</div>

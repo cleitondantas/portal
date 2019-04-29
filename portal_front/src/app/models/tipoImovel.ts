@@ -1,4 +1,4 @@
-export class TipoImovel{
-    codTipoImovel:number;
-    descTipoImovel:string;
+export class TipoImovel {
+    codTipoImovel: number;
+    descTipoImovel: string;
 }

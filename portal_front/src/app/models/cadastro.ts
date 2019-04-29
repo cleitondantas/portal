@@ -19,5 +19,5 @@ export interface Cadastro {
     valorLiquidacao: any;
     status?: string;
     situacao?: string;
-    dataSolicitacao: any
+    dataSolicitacao: any;
 }
