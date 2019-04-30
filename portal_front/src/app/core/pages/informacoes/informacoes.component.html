@@ -3,17 +3,24 @@
     Informações
   </p-header>
 
-  <p-tabView>
-    <p-tabPanel header="Dados cadastrais">
-        <ng-template pTemplate="content">
-            <app-dados-cadastrais></app-dados-cadastrais>
-        </ng-template>
-    </p-tabPanel>
+  <div class="p-grid p-justify-center p-align-center vertical-container" [hidden]="load" style="padding: 25px;">
+      <div #loader class="lds-dual-ring">
+      </div>
+  </div>
 
-    <p-tabPanel header="Histórico">
-      <app-historico></app-historico>
-    </p-tabPanel>
-  </p-tabView>
+  <div [hidden]="!load">
+    <p-tabView>
+      <p-tabPanel header="Dados cadastrais">
+          <ng-template pTemplate="content">
+              <app-dados-cadastrais></app-dados-cadastrais>
+          </ng-template>
+      </p-tabPanel>
+
+      <p-tabPanel header="Histórico">
+        <app-historico></app-historico>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
 </p-panel>
 
 <br>

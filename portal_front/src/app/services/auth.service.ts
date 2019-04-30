@@ -16,6 +16,7 @@ export class AuthService {
 
   usuarioAutenticado = false;
   mostrarsistema = new EventEmitter<boolean>();
+  msgError = new EventEmitter();
   shared: SharedService;
   constructor(private http: HttpClient, private router: Router) {
     this.shared = SharedService.getInstance();
@@ -35,17 +36,17 @@ export class AuthService {
         this.mostrarsistema.emit(true);
         localStorage.setItem('nome_usuario', evento.usuario.nome + ' ' + evento.usuario.sobrenome);
         console.log(evento.usuario.nome + ' ' + evento.usuario.sobrenome);
-       //this.router.navigate(['/home']);
+       this.router.navigate(['/home']);
       }
-    }), (err => {
-      console.log(err)
+    }, err => {
+      this.msgError.emit(false);
       this.shared.setToken(null);
       this.shared.showTemplate.emit(false);
       localStorage.removeItem('nome_usuario');
       this.shared.removeSessionUsuario();
       this.usuarioAutenticado = false;
       console.log('ERRO AO TENTAR LOGAR');
-    });
+    })
   }
 
   fazerLogout() {

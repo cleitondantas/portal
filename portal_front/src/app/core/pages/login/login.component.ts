@@ -36,19 +36,20 @@ user = new Usuario();
     }, 301);
     this.authService.fazerLogin(from, this.user);
 
-    setTimeout(() => {
-      this.hidden = true;
-      if (this.authService.isUsuarioAutenticado() == false) {
-        this.msgs = [];
-        this.msgs.push({
-          severity: 'error',
-          summary: 'Erro ao logar!',
-          detail: 'Usúario ou senha estão incorretos.'
-        });
-      } else {
-        this.msgs = [];
-      }
-
-    }, 1500);
+    this.authService.msgError.subscribe(dado => {
+      setTimeout(() => {
+        this.hidden = true;
+        if (dado == false) {
+          this.msgs = [];
+          this.msgs.push({
+            severity: 'error',
+            summary: 'Erro ao logar!',
+            detail: 'Usúario ou senha estão incorretos.'
+          });
+        } else {
+          this.msgs = [];
+        }
+      }, 301);
+    })
   }
 }
