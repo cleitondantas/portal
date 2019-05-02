@@ -8,6 +8,7 @@
       <label class="ajusteLabel" for="fid">FID: </label>
     </div>
     <div class="p-col-4">
+      {{fid}}
     </div>
   </div>
 
@@ -18,6 +19,7 @@
       <label class="ajusteLabel" for="client">Cliente: </label>
     </div>
     <div class="p-col-4">
+      {{comprador.nomecliente}}
     </div>
   </div>
 
@@ -29,6 +31,7 @@
       <label class="ajusteLabel" for="cpf">CPF: </label>
     </div>
     <div class="p-col-4">
+      {{comprador.cpfcnpj}}
     </div>
   </div>
 
@@ -37,6 +40,7 @@
       <label class="ajusteLabel" for="empreend">Empreendimento: </label>
     </div>
     <div class="p-col-4">
+      {{cadInfo.codempreendimento}}
     </div>
   </div>
 
@@ -45,6 +49,7 @@
       <label class="ajusteLabel" for="unidade">Unidade: </label>
     </div>
     <div class="p-col-4">
+      {{cadInfo.unidade}}
     </div>
   </div>
 
@@ -61,58 +66,60 @@
 </div>
 
 <div class="p-grid">
-  <div class="p-col-6">
+  <div class="p-col-8">
 
     <div class="p-grid">
       <div class="p-col-2">
         <label class="ajusteLabel" for="fases">Fases: </label>
       </div>
-      <div class="p-col-10" id="fases">
-        <p-dropdown placeholder="Entrevista" optionLabel="Demo"></p-dropdown>
+      <div class="p-col-3" id="fases">
+        <p-dropdown [options]="fases"  placeholder="Selecione..." optionLabel="fase"
+        [(ngModel)]="fase"  (onChange)="changeFases($event)" ></p-dropdown>
       </div>
-    </div>
-
-    <div class="p-grid">
+    
       <div class="p-col-2">
         <label class="ajusteLabel" for="fases">Sisteses: </label>
       </div>
-      <div class="p-col-10" id="fases">
-        <p-dropdown placeholder="Sem contato" optionLabel="Demo"></p-dropdown>
+
+      <div class="p-col-3" id="fases">
+        <p-dropdown  [options]="sinteses"  placeholder="Selecione..." optionLabel="sintese" 
+         [(ngModel)]="sintese" (onChange)="changeSintese($event)" ></p-dropdown>
       </div>
     </div>
-
   </div>
-  <div class="p-col-6">
+  <div class="p-col-4">
     <br><br>
 
-    <button pButton type="button" label="Salvar" class="ui-button-rounded ui-button-success" 
-    [ngStyle]="{'width': '15%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
-    <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
-    [ngStyle]="{'width': '15%', 'height': '40%', 'margin': '3px'}" icon="pi pi-refresh" iconPos="right"></button>
+    <button pButton type="button" label="Limpar" class="ui-button-warning" 
+    [ngStyle]="{'width': '90px', 'height':'30px', 'margin': '3px'}" icon="pi pi-refresh" iconPos="right"></button>
+    <button pButton type="button" (click)="salvar()" label="Salvar" class=" ui-button-success" 
+    [ngStyle]="{'width': '90px', 'height': '30px', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
+
   </div>
 </div>
 
 <div class="p-grid" [ngStyle]="{'height': '3px', 'background-color': 'black'}"></div>
 <br>
 <div class="p-grid">
-  <p-table [value]="ponto">
+  <p-table [value]="historicoAnalises" [scrollable]="true" scrollHeight="200px" >
     <ng-template pTemplate="header">
       <tr>
-        <th>Data</th>
-        <th>Histórico</th>
-        <th>Usuário</th>
-        <th>Fase</th>
-        <th>Sinteses</th>
+        <th class="tddata">Data</th>
+        <th  class="tdusuario" >Usuário</th>
+        <th  class="tdfase" >Fase</th>
+        <th  class="tdsintese" >Sinteses</th>
+        <th  class="tddescricao">Descrição</th>   
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-pon>
+    <ng-template pTemplate="body" let-hist>
       <tr>
-        <td>{{pon.data}}</td>
-        <td> {{pon.historico}} </td>
-        <td> {{pon.usuario}} </td>
-        <td> {{pon.fase}}</td>
-        <td> {{pon.sintese}} </td>
+        
+        <td class="tddata">{{hist.datahistorico | date :  "dd/MM/y"}}</td>
+        <td class="tdusuario" > {{hist.usuario}} </td>
+        <td class="tdfase"> {{hist.fase}}</td>
+        <td class="tdsintese" > {{hist.sintese}} </td>
+        <td class="tddescricao"> {{hist.descricao}} </td>
       </tr>
     </ng-template>
   </p-table>

@@ -19,6 +19,8 @@ public interface UsuarioService {
 	//@Cacheable("usuarios")
 	Usuario findByLogin(String nome);
 	
+	Usuario findByCodUsuario(Long  codUsuario);
+	
 	@Query("SELECT u.login FROM Usuario u WHERE u.login LIKE CONCAT('%',:username,'%')")
 	List<String> findUsuariosWithPartOfLogin(@Param("username") String login);
 	

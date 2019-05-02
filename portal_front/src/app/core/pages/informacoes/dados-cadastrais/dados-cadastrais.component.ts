@@ -2,7 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { Compradores } from 'src/app/models/compradores';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
-import { CadastroChamadasService } from 'src/app/services/cadastro-chamadas.service';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 import { CadastroLogicaService } from 'src/app/services/cadastro-logica.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -13,8 +12,6 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./dados-cadastrais.component.css']
 })
 export class DadosCadastraisComponent implements OnInit {
-  load: boolean;
-
   comprador: Compradores = new Compradores();
   analise: Simulacoes = new Simulacoes();
   fid: any;
@@ -28,15 +25,6 @@ export class DadosCadastraisComponent implements OnInit {
               private cadastroLogicaService: CadastroLogicaService,
               private sharedService: SharedService) {}
 
-  ngOnDestroy() {
-    const storage = ['CADASTRODADOS', 'ANALISEDADOS', 'fid', 'codcadastro'];
-    for (let i = 0; i < storage.length; i++) {
-        if (sessionStorage.getItem(storage[i]) !== null || undefined || 'undefined') {
-            sessionStorage.removeItem(storage[i]);
-        }
-    }
-  }
-
   ngOnInit() {
     this.visualizarDados();
 
@@ -47,10 +35,6 @@ export class DadosCadastraisComponent implements OnInit {
         this.visualizarDados();
       }
     });
-
-    this.sharedService.showLoader.subscribe(dado => {
-      this.load = dado;
-    })
   }
 
   visualizarDados() {

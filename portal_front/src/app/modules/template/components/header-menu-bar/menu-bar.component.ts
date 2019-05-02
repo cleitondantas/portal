@@ -154,7 +154,7 @@ export class MenuBarComponent implements OnInit {
     }
 
     irInformacoes() {
-        const storage = ['CADASTRODADOS', 'ANALISEDADOS', 'fid'];
+        const storage = ['CADASTRODADOS', 'ANALISEDADOS', 'fid', 'CADASTROINFO'];
         for (let i = 0; i < storage.length; i++) {
             if (sessionStorage.getItem(storage[i]) !== null || undefined || 'undefined') {
                 sessionStorage.removeItem(storage[i]);
@@ -166,6 +166,7 @@ export class MenuBarComponent implements OnInit {
                 sessionStorage.setItem('fid', JSON.stringify(this.cadastrosTabelaBuscaInfo[i].numerocadastroincorporadorafid));
                 for (let item = 0; item < this.cadastrosTabelaBuscaInfo[i]['clientes'].length; item++) {
                     if (this.clienteInformacao[0].nomecliente == this.cadastrosTabelaBuscaInfo[i]['clientes'][item].nomecliente) {
+                        sessionStorage.setItem('CADASTROINFO', JSON.stringify(this.cadastrosTabelaBuscaInfo[i]));
                         sessionStorage.setItem('CADASTRODADOS', JSON.stringify(this.cadastrosTabelaBuscaInfo[i]['clientes'][item]));
                     }
                 }

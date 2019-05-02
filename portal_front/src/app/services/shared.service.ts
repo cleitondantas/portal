@@ -24,6 +24,7 @@ export class SharedService {
   getBanco = false;
   getModalidade = false;
   getAmortizacao = false;
+  getEmpreendimento = false;
   showLoader = new EventEmitter<boolean>();
 
   constructor() {
@@ -110,7 +111,8 @@ calendarioBr() {
 
 hiddenLoader() {
   if ((this.getAmortizacao == true) && (this.getBanco == true) && (this.getEstadoCivil == true) &&
-      (this.getModalidade == true) && (this.getTipoCliente == true) && (this.getTipoContato == true)) {
+      (this.getModalidade == true) && (this.getTipoCliente == true) && (this.getTipoContato == true) &&
+      (this.getEmpreendimento == true)) {
         setTimeout(() => {
           this.getTipoCliente = false;
           this.getTipoContato = false;
@@ -118,6 +120,7 @@ hiddenLoader() {
           this.getBanco = false;
           this.getModalidade = false;
           this.getAmortizacao = false;
+          this.getEmpreendimento = false;
           this.showLoader.emit(true);
         }, 500);
   }
