@@ -61,7 +61,7 @@
     <label class="ajusteLabel" for="desc">Descrição: </label>
   </div>
   <div class="p-col-11">
-    <textarea [cols]="100" [rows]="4" pInputTextarea></textarea>
+    <textarea [cols]="100" [rows]="4" pInputTextarea name="descricao" [(ngModel)]="historicoAnalise.descricao"></textarea>
   </div>
 </div>
 
@@ -74,16 +74,17 @@
       </div>
       <div class="p-col-3" id="fases">
         <p-dropdown [options]="fases"  placeholder="Selecione..." optionLabel="fase"
-        [(ngModel)]="fase"  (onChange)="changeFases($event)" ></p-dropdown>
+        [(ngModel)]="historicoAnalise.fase" (onChange)="changeFases($event)" ></p-dropdown>
       </div>
     
       <div class="p-col-2">
-        <label class="ajusteLabel" for="fases">Sisteses: </label>
+        <label class="ajusteLabel" for="fases">Sinteses: </label>
       </div>
 
       <div class="p-col-3" id="fases">
+        <i class="pi pi-spin pi-spinner" style="font-size: 3em" [hidden]="!loadSpin"></i>
         <p-dropdown  [options]="sinteses"  placeholder="Selecione..." optionLabel="sintese" 
-         [(ngModel)]="sintese"  ></p-dropdown>
+         [(ngModel)]="historicoAnalise.sintese" [disabled]="disabledSintese" [hidden]="loadSpin"></p-dropdown>
       </div>
     </div>
   </div>
@@ -92,7 +93,7 @@
 
     <button pButton type="button" label="Limpar" class="ui-button-warning" 
     [ngStyle]="{'width': '90px', 'height':'30px', 'margin': '3px'}" icon="pi pi-refresh" iconPos="right"></button>
-    <button pButton type="button" (click)="salvar()" label="Salvar" class=" ui-button-success" 
+    <button pButton type="button" (click)="salvar(historicoAnalise)" label="Salvar" class=" ui-button-success" 
     [ngStyle]="{'width': '90px', 'height': '30px', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
 
   </div>
@@ -105,20 +106,19 @@
     <ng-template pTemplate="header">
       <tr>
         <th class="tddata">Data</th>
-        <th  class="tdusuario" >Usuário</th>
-        <th  class="tdfase" >Fase</th>
-        <th  class="tdsintese" >Sinteses</th>
-        <th  class="tddescricao">Descrição</th>   
+        <th class="tdusuario" >Usuário</th>
+        <th class="tdfase" >Fase</th>
+        <th class="tdsintese" >Sinteses</th>
+        <th class="tddescricao">Descrição</th>   
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-hist>
       <tr>
-        
         <td class="tddata">{{hist.datahistorico | date :  "dd/MM/y"}}</td>
         <td class="tdusuario" > {{hist.usuario}} </td>
-        <td class="tdfase"> {{hist.fase}}</td>
-        <td class="tdsintese" > {{hist.sintese}} </td>
+        <td class="tdfase"> {{hist.fase.fase}}</td>
+        <td class="tdsintese" > {{hist.sintese.sintese}} </td>
         <td class="tddescricao"> {{hist.descricao}} </td>
       </tr>
     </ng-template>
