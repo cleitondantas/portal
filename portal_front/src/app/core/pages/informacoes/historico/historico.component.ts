@@ -63,13 +63,7 @@ export class HistoricoComponent implements OnInit {
     })
   }
 
-  changeSintese(){
-
-  }
-
   getHistorico(){
-
-    
    this.historicoService.getHistorico(79).subscribe(data => {
         for (let i = 0; i < data['data'].length; i++) {
             console.log('Historico->'+ data['data'][i].datahistorico);
