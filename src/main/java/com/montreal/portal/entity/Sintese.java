@@ -20,10 +20,10 @@ public class Sintese {
 	@Column(name="SINTESE")
 	private String sintese;
 	
-	@Column(name="NUM_SISTESE")	
-	private Integer numsistese;
+	@Column(name="NUM_SINTESE")	
+	private Integer numsintese;
 	
-	@Column(name="num_fase")	
+	@Column(name="NUM_FASE")	
 	private Integer numfase;
 
 	
@@ -45,12 +45,12 @@ public class Sintese {
 		this.sintese = sintese;
 	}
 
-	public Integer getNumsistese() {
-		return numsistese;
+	public Integer getNumsintese() {
+		return numsintese;
 	}
 
-	public void setNumsistese(Integer numsistese) {
-		this.numsistese = numsistese;
+	public void setNumsintese(Integer numsintese) {
+		this.numsintese = numsintese;
 	}
 
 	public Integer getNumfase() {

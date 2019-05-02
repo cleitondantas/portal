@@ -36,11 +36,28 @@ public class SinteseControler {
 		return ResponseEntity.ok(response);
 	}
 	
+	
+	
 	@GetMapping(value = "/sintese/{numfase}/{numsintese}")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Sintese>>> findBySintese(@PathVariable Integer numsintese,@PathVariable Integer numfase) {
 		Response<Iterable<Sintese>> response = new Response<Iterable<Sintese>>();
 		Iterable<Sintese> sintese = sinteseRepository.findBySintese(numsintese, numfase);
+		if (sintese == null) {
+			response.getErrors().add("Not Fund:");
+			return ResponseEntity.badRequest().body(response);
+		}
+		response.setData(sintese);
+		return ResponseEntity.ok(response);
+	}
+	
+	
+	
+	@GetMapping(value = "/sintese/{local}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+    public ResponseEntity<Response<Iterable<Sintese>>> findBySintesePorFase(@PathVariable Integer numfase) {
+		Response<Iterable<Sintese>> response = new Response<Iterable<Sintese>>();
+		Iterable<Sintese> sintese = sinteseRepository.findByNumfase(numfase);
 		if (sintese == null) {
 			response.getErrors().add("Not Fund:");
 			return ResponseEntity.badRequest().body(response);

@@ -21,21 +21,24 @@ public class Historico implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(name="DATA_HISTORICO")
+	private Date datahistorico;
 
 	@Column(name="COD_CADASTRO")	
 	private Integer codcadastro;
 	
-	@Column(name="DESC_ATIVIDADE")	
-	private String descatividade;
+	@Column(name="COD_USUARIO")
+	private Integer codusuario;
 	
-	@Column(name="desc_sub_atividade")	
-	private String descsubatividade;
+	@Column(name="NUM_FASE")
+	private Integer numfase;
 	
-	@Column(name="cod_usuario")
-	private Long codusuario;
-	
-	@Column(name="data_historico")
-	private Date datahistorico;
+	@Column(name="NUM_SINTESE")
+	private Integer numsintese;
+
+	@Column(name="DESCRICAO")	
+	private String descricao;
 
 	public Integer getId() {
 		return id;
@@ -43,6 +46,14 @@ public class Historico implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Date getDatahistorico() {
+		return datahistorico;
+	}
+
+	public void setDatahistorico(Date datahistorico) {
+		this.datahistorico = datahistorico;
 	}
 
 	public Integer getCodcadastro() {
@@ -53,36 +64,37 @@ public class Historico implements Serializable{
 		this.codcadastro = codcadastro;
 	}
 
-	public String getDescatividade() {
-		return descatividade;
-	}
-
-	public void setDescatividade(String descatividade) {
-		this.descatividade = descatividade;
-	}
-
-	public String getDescsubatividade() {
-		return descsubatividade;
-	}
-
-	public void setDescsubatividade(String descsubatividade) {
-		this.descsubatividade = descsubatividade;
-	}
-
-	public Long getCodusuario() {
+	public Integer getCodusuario() {
 		return codusuario;
 	}
 
-	public void setCodusuario(Long codusuario) {
+	public void setCodusuario(Integer codusuario) {
 		this.codusuario = codusuario;
 	}
 
-	public Date getDatahistorico() {
-		return datahistorico;
+	public Integer getNumfase() {
+		return numfase;
 	}
 
-	public void setDatahistorico(Date datahistorico) {
-		this.datahistorico = datahistorico;
+	public void setNumfase(Integer numfase) {
+		this.numfase = numfase;
+	}
+
+
+	public Integer getNumsintese() {
+		return numsintese;
+	}
+
+	public void setNumsintese(Integer numsintese) {
+		this.numsintese = numsintese;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	
