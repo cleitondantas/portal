@@ -53,7 +53,7 @@ public class SinteseControler {
 	
 	
 	
-	@GetMapping(value = "/sintese/{local}")
+	@GetMapping(value = "/sintese/{numfase}")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Sintese>>> findBySintesePorFase(@PathVariable Integer numfase) {
 		Response<Iterable<Sintese>> response = new Response<Iterable<Sintese>>();

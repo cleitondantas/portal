@@ -78,9 +78,16 @@ export class HistoricoComponent implements OnInit {
 
       }
     
-    
+      this.getUsuarios();
    });
    
+  }
+
+  getUsuarios(){
+
+    this.usersService.getUsuario(10001).subscribe(data=>{
+      console.log(data['tada'])
+    })
   }
 
   salvar(){
