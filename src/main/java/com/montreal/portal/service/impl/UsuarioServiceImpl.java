@@ -69,5 +69,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioRepository.findUsuariosWithPartOfLogin(login);
 	}
 
+	@Override
+	public Usuario findByCodUsuario(Long codUsuario) {
+		// TODO Auto-generated method stub
+		return usuarioRepository.findByCodUsuario(codUsuario);
+	}
+
 
 }

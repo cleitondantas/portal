@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,19 @@ public class HistoricoControler {
 			return ResponseEntity.badRequest().body(response);
 		}
 		response.setData(users);
+		return ResponseEntity.ok(response);
+    }
+	
+	@GetMapping(value = "/historico/{codcadastro}")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+    public ResponseEntity<Response<Iterable<Historico>>> findbyCodcadastro(@PathVariable Integer codcadastro) {
+		Response<Iterable<Historico>> response = new Response<Iterable<Historico>>();
+		Iterable<Historico> res = historicoRepository.findByCodcadastro(codcadastro);
+		if (res == null) {
+			response.getErrors().add("Not Fund:");
+			return ResponseEntity.badRequest().body(response);
+		}
+		response.setData(res);
 		return ResponseEntity.ok(response);
     }
 	
