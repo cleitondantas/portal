@@ -60,6 +60,12 @@ public class HistoricoControler {
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Historico>> create(HttpServletRequest request, @RequestBody Historico  historico,BindingResult result) {
 		Response<Historico> response = new Response<Historico>();
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.println(historico.getDescricao());
 		try {
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
