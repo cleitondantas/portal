@@ -39,14 +39,17 @@ export class HistoricoService {
   }
 
   postHistorico(hist: HistoricoAnalise){
-     let data2: HistoricoAnalise = new HistoricoAnalise();
-     data2.datahistorico = hist.datahistorico;
-     data2.codcadastro = hist.codcadastro;
-     data2.descricao = hist.descricao;
-     data2.numsintese =  hist.numsintese.numsintese; 
-     data2.numfase = hist.numfase.numfase;
-     console.log(data2);
-     return this.http.post<HistoricoAnalise>(environment.urlpath +'/api/historico', data2);
+    let data2: HistoricoAnalise = new HistoricoAnalise();
+    data2.datahistorico = new Date(hist.datahistorico);
+    data2.codcadastro = hist.codcadastro;
+    data2.codusuario = hist.codusuario;
+    data2.descricao = hist.descricao;
+    data2.numsintese =  hist.numsintese.numsintese; 
+    data2.numfase = hist.numfase.numfase;
+    console.log(data2);
+    return this.http.request(new HttpRequest('POST', environment.urlpath + '/api/historico', data2, {
+     reportProgress: true
+    }));
   }
 
   getSintesePorFaseRequest(numfase) {

@@ -1,3 +1,4 @@
+import { Message } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { Compradores } from 'src/app/models/compradores';
 import { CadastroLogicaService } from 'src/app/services/cadastro-logica.service';
@@ -23,7 +24,7 @@ export class HistoricoComponent implements OnInit {
   disabledSintese: boolean = true;
   loadSpin: boolean = false;
   fid: any;
-  ponto: any[];
+  msgs: Message[] = [];
   fases: Fase[];
   sinteses: Sintese[];
   historicoAnalises: HistoricoAnalise[] = [];
@@ -86,6 +87,7 @@ export class HistoricoComponent implements OnInit {
   }
 
   salvar(data){
+    this.msgs = [];
     let data2: HistoricoAnalise = new HistoricoAnalise();
     data2 = data;
     data2.datahistorico = new Date().toDateString();
@@ -93,9 +95,19 @@ export class HistoricoComponent implements OnInit {
     data2.codusuario = user.codUsuario;
     data2.codcadastro = this.cadInfo.codcadastro;
     data2.numsintese = this.sinteseSelecionado;
-    this.historicoService.postHistorico(data2);
-    this.historicoAnalises.push(data2);
-    this.historicoAnalise = new HistoricoAnalise();
+    this.historicoService.postHistorico(data2).subscribe(event => {
+      if (event instanceof HttpResponse) {
+        let evento: any = event.body['data'];
+        this.historicoAnalises.push(data2);
+        this.historicoAnalise = new HistoricoAnalise();
+      }
+    }, err => {
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao salvar!',
+        detail: 'Tente novamente!'
+      })
+    });
   }
 
   visualizarCadInfo() {
