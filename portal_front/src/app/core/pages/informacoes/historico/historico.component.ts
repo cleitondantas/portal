@@ -28,7 +28,7 @@ export class HistoricoComponent implements OnInit {
   sinteses: Sintese[];
   historicoAnalises: HistoricoAnalise[] = [];
   historicoAnalise: HistoricoAnalise = new HistoricoAnalise();
-
+  sinteseSelecionado: Sintese;
 
   constructor(
      private cadastroLogicaService: CadastroLogicaService,
@@ -69,6 +69,11 @@ export class HistoricoComponent implements OnInit {
     })
     this.disabledSintese = false;
   }
+  
+  changeSintese(event){
+    const sinsete: Sintese = event.value;
+    this.sinteseSelecionado = sinsete;
+  }
 
   getHistorico(){
    this.historicoService.getHistorico(79).subscribe(data => {
@@ -85,9 +90,11 @@ export class HistoricoComponent implements OnInit {
     data2 = data;
     data2.datahistorico = new Date().toDateString();
     let user: Usuario = this.sharedService.getSessionUsuario();
-    data2.usuario = user.codUsuario;
+    data2.codusuario = user.codUsuario;
+    data2.codcadastro = this.cadInfo.codcadastro;
+    data2.numsintese = this.sinteseSelecionado;
+    this.historicoService.postHistorico(data2);
     this.historicoAnalises.push(data2);
-    console.log(this.historicoAnalises);
     this.historicoAnalise = new HistoricoAnalise();
   }
 

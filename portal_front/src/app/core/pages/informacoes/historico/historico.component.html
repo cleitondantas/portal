@@ -74,7 +74,7 @@
       </div>
       <div class="p-col-3" id="fases">
         <p-dropdown [options]="fases"  placeholder="Selecione..." optionLabel="fase"
-        [(ngModel)]="historicoAnalise.fase" (onChange)="changeFases($event)" ></p-dropdown>
+        [(ngModel)]="historicoAnalise.numfase" (onChange)="changeFases($event)" ></p-dropdown>
       </div>
     
       <div class="p-col-2">
@@ -84,7 +84,8 @@
       <div class="p-col-3" id="fases">
         <i class="pi pi-spin pi-spinner" style="font-size: 3em" [hidden]="!loadSpin"></i>
         <p-dropdown  [options]="sinteses"  placeholder="Selecione..." optionLabel="sintese" 
-         [(ngModel)]="historicoAnalise.sintese" [disabled]="disabledSintese" [hidden]="loadSpin"></p-dropdown>
+         [(ngModel)]="historicoAnalise.numsintese"  (onChange)="changeSintese($event)" [disabled]="disabledSintese" [hidden]="loadSpin">
+        </p-dropdown>
       </div>
     </div>
   </div>
@@ -116,11 +117,11 @@
     <ng-template pTemplate="body" let-hist>
       <tr>
         <td class="tddata">{{hist.datahistorico | date :  "dd/MM/y"}}</td>
-        <td class="tdusuario" > {{hist.usuario}} </td>
-        <td class="tdfase"> {{hist.fase.fase}}</td>
-        <td class="tdsintese" > {{hist.sintese.sintese}} </td>
+        <td class="tdusuario" > {{hist.codusuario}} </td>
+        <td class="tdfase"> {{hist.numfase.fase}}</td>
+        <td class="tdsintese" > {{hist.numsintese.sintese}} </td>
         <td class="tddescricao"> {{hist.descricao}} </td>
       </tr>
     </ng-template>
   </p-table>
-</div>
+  </div>
