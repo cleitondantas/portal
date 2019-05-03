@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Fase } from '../models/fase';
 import { Sintese } from '../models/sintese';
@@ -34,9 +34,14 @@ export class HistoricoService {
     return this.http.get<Sintese[]>(environment.urlpath + '/api/sintese/'+numfase+"/"+numsintese);
   }
 
-
   getHistorico(codcadastro:number){
     return this.http.get<any[]>(environment.urlpath + '/api/historico/'+codcadastro);
+  }
+
+  getSintesePorFaseRequest(numfase) {
+    return this.http.request(new HttpRequest('GET', environment.urlpath + '/api/sintese/' + numfase, {
+      reportProgress: true
+    }));
   }
 
 }
