@@ -54,7 +54,6 @@ export class HistoricoComponent implements OnInit {
       this.getHistorico();
       }
     });
-
     this.getHistorico();  
   }
 
@@ -71,7 +70,7 @@ export class HistoricoComponent implements OnInit {
     })
     this.disabledSintese = false;
   }
-  
+
   changeSintese(event){
     const sinsete: Sintese = event.value;
     this.sinteseSelecionado = sinsete;
@@ -88,11 +87,10 @@ export class HistoricoComponent implements OnInit {
     this.msgs = [];
     let data2: HistoricoAnalise = new HistoricoAnalise();
     data2 = this.historicoLogicaService.salvarHistorico(data, this.cadInfo.codcadastro, this.sinteseSelecionado);
-
     this.historicoService.postHistorico(data2).subscribe(event => {
       if (event instanceof HttpResponse) {
         let evento: any = event.body['data'];
-        this.historicoAnalises.push(data2);
+        this.historicoAnalises.unshift(data2);
         this.historicoAnalise = new HistoricoAnalise();
         setTimeout(() => {
           this.loadTable = false;
@@ -114,7 +112,6 @@ export class HistoricoComponent implements OnInit {
     const cadInfoSelecionado = sessionStorage.getItem('CADASTROINFO');
     if (cadastroSelecionado != 'undefined' && cadastroSelecionado != null) {
       const comprador: Compradores = this.cadastroLogicaService.getDadosCadastrais(cadastroSelecionado);
-
       this.comprador = comprador;
       this.fid = JSON.parse(sessionStorage.getItem('fid'));
     }

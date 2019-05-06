@@ -1,5 +1,7 @@
 package com.montreal.portal.controler;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,13 +61,8 @@ public class HistoricoControler {
 	@PostMapping(value = "/historico")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Historico>> create(HttpServletRequest request, @RequestBody Historico  historico,BindingResult result) {
+		historico.setDatahistorico(new Date());
 		Response<Historico> response = new Response<Historico>();
-		System.out.println("---------------------------------------------------------------------------");
-		System.out.println("---------------------------------------------------------------------------");
-		System.out.println("---------------------------------------------------------------------------");
-		System.out.println("---------------------------------------------------------------------------");
-		System.out.println("---------------------------------------------------------------------------");
-		System.out.println(historico.getDescricao());
 		try {
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
