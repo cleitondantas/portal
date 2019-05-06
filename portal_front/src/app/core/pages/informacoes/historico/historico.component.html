@@ -78,7 +78,7 @@
       </div>
     
       <div class="p-col-3">
-        <label class="ajusteLabel" for="fases">Sinteses: </label>
+        <label class="ajusteLabel" for="fases">Sínteses: </label>
       </div>
 
       <div class="p-col-3" id="fases">
@@ -92,7 +92,7 @@
   <div class="p-col-4">
     <br><br>
 
-    <button pButton type="button" label="Limpar" class="ui-button-warning" 
+    <button pButton type="button" (click)="limpar()" label="Limpar" class="ui-button-warning" 
     [ngStyle]="{'width': '90px', 'height':'30px', 'margin': '3px'}" icon="pi pi-refresh" iconPos="right"></button>
     <button pButton type="button" (click)="salvar(historicoAnalise)" label="Salvar" class=" ui-button-success" 
     [ngStyle]="{'width': '90px', 'height': '30px', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
@@ -112,20 +112,20 @@
     <p-table [value]="historicoAnalises" sortMode="multiple" [scrollable]="true" scrollHeight="200px" >
       <ng-template pTemplate="header">
         <tr>
-          <th class="tddata">Data</th>
-          <th class="tdusuario" >Usuário</th>
-          <th class="tdfase" >Fase</th>
-          <th class="tdsintese" >Sinteses</th>
-          <th class="tddescricao">Descrição</th>   
+          <th class="tddata"><strong>Data</strong></th>
+          <th class="tdusuario"><strong>Usuário</strong></th>
+          <th class="tdfase"><strong>Fase</strong></th>
+          <th class="tdsintese"><strong>Sínteses</strong></th>
+          <th class="tddescricao"><strong>Descrição</strong></th>   
         </tr>
       </ng-template>
   
       <ng-template pTemplate="body" let-hist>
         <tr>
-          <td class="tddata" >{{hist.datahistorico | date :  "dd/MM/y"}}</td>
-          <td class="tdusuario" > {{hist.codusuario}} </td>
+          <td class="tddata">{{hist.datahistorico | date :  "dd/MM/y"}}</td>
+          <td class="tdusuario"> {{hist.codusuario}} </td>
           <td class="tdfase"> {{hist.numfase.fase}}</td>
-          <td class="tdsintese" > {{hist.numsintese.sintese}} </td>
+          <td class="tdsintese"> {{hist.numsintese.sintese}} </td>
           <td class="tddescricao"> {{hist.descricao}} </td>
         </tr>
       </ng-template>

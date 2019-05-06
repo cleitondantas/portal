@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Fase } from '../models/fase';
 import { Sintese } from '../models/sintese';
 import { HistoricoAnalise } from '../models/HistoricoAnalise';
+import { Usuario } from '../models/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,10 @@ export class HistoricoService {
     }));
   }
 
-
+  getUsuario(codusuario){
+    return this.http.request(new HttpRequest('GET', environment.urlpath + '/api/usuario/' + codusuario, {
+      reportProgress: true
+    }));
+  }
 
 }
