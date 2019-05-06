@@ -109,7 +109,7 @@
   </div>
 
   <div [hidden]="loadTable">
-    <p-table [value]="historicoAnalises" [scrollable]="true" scrollHeight="200px">
+    <p-table [value]="historicoAnalises" sortMode="multiple" [scrollable]="true" scrollHeight="200px" >
       <ng-template pTemplate="header">
         <tr>
           <th class="tddata">Data</th>
@@ -122,7 +122,7 @@
   
       <ng-template pTemplate="body" let-hist>
         <tr>
-          <td class="tddata">{{hist.datahistorico | date :  "dd/MM/y"}}</td>
+          <td class="tddata" >{{hist.datahistorico | date :  "dd/MM/y"}}</td>
           <td class="tdusuario" > {{hist.codusuario}} </td>
           <td class="tdfase"> {{hist.numfase.fase}}</td>
           <td class="tdsintese" > {{hist.numsintese.sintese}} </td>
