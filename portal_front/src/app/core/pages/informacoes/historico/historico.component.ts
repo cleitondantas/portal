@@ -9,8 +9,6 @@ import { Fase } from 'src/app/models/fase';
 import { Sintese } from 'src/app/models/sintese';
 import { HistoricoAnalise } from 'src/app/models/HistoricoAnalise';
 import { HttpResponse } from '@angular/common/http';
-import { SharedService } from 'src/app/services/shared.service';
-import { Usuario } from 'src/app/models/usuario';
 import { HistoricoLogicaService } from 'src/app/services/historico-logica.service';
 
 @Component({
@@ -36,7 +34,6 @@ export class HistoricoComponent implements OnInit {
      private cadastroLogicaService: CadastroLogicaService,
      private chamadaService: AnaliseChamadasService,
      private historicoService: HistoricoService,
-     private sharedService: SharedService,
      private historicoLogicaService: HistoricoLogicaService) { }
      
   ngOnInit() {
