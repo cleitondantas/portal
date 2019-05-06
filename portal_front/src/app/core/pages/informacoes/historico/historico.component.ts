@@ -8,10 +8,10 @@ import { HistoricoService } from 'src/app/services/historico.service';
 import { Fase } from 'src/app/models/fase';
 import { Sintese } from 'src/app/models/sintese';
 import { HistoricoAnalise } from 'src/app/models/HistoricoAnalise';
-import { UsersService } from 'src/app/services/users.service';
 import { HttpResponse } from '@angular/common/http';
 import { SharedService } from 'src/app/services/shared.service';
 import { Usuario } from 'src/app/models/usuario';
+import { HistoricoLogicaService } from 'src/app/services/historico-logica.service';
 
 @Component({
   selector: 'app-historico',
@@ -23,6 +23,7 @@ export class HistoricoComponent implements OnInit {
   cadInfo: CadastroInformacao = new CadastroInformacao();
   disabledSintese: boolean = true;
   loadSpin: boolean = false;
+  loadTable: boolean = false;
   fid: any;
   msgs: Message[] = [];
   fases: Fase[];
@@ -34,15 +35,14 @@ export class HistoricoComponent implements OnInit {
   constructor(
      private cadastroLogicaService: CadastroLogicaService,
      private chamadaService: AnaliseChamadasService,
-     private usersService: UsersService,
      private historicoService: HistoricoService,
-     private sharedService: SharedService) { }
+     private sharedService: SharedService,
+     private historicoLogicaService: HistoricoLogicaService) { }
      
   ngOnInit() {
     this.chamadaService.getDadosCadastrais('fases').subscribe(event => {
       if (event instanceof HttpResponse) {
         this.fases = event.body['data'];
-        console.log(this.fases)
       }
     })
     this.visualizarCadInfo();
@@ -50,9 +50,10 @@ export class HistoricoComponent implements OnInit {
     this.chamadaService.buscarInformacoes.subscribe(dado => {
       if (dado == true) {
       this.visualizarCadInfo();
+      this.historicoAnalises = [];
+      this.getHistorico();
       }
     });
-
 
     this.getHistorico();  
   }
@@ -77,29 +78,26 @@ export class HistoricoComponent implements OnInit {
   }
 
   getHistorico(){
-   this.historicoService.getHistorico(79).subscribe(data => {
-        for (let i = 0; i < data['data'].length; i++) {
-            console.log('Historico->'+ data['data'][i].datahistorico);
-            this.usersService.getUsuario(data['data'][i].codcadastro);
-      }
+   this.historicoService.getHistorico(this.cadInfo.codcadastro).subscribe(data => {
+     this.historicoAnalises = this.historicoLogicaService.receberHistorico(data)
    });
-   
   }
 
   salvar(data){
+    this.loadTable = true;
     this.msgs = [];
     let data2: HistoricoAnalise = new HistoricoAnalise();
-    data2 = data;
-    data2.datahistorico = new Date().toDateString();
-    let user: Usuario = this.sharedService.getSessionUsuario();
-    data2.codusuario = user.codUsuario;
-    data2.codcadastro = this.cadInfo.codcadastro;
-    data2.numsintese = this.sinteseSelecionado;
+    data2 = this.historicoLogicaService.salvarHistorico(data, this.cadInfo.codcadastro, this.sinteseSelecionado);
+
     this.historicoService.postHistorico(data2).subscribe(event => {
       if (event instanceof HttpResponse) {
         let evento: any = event.body['data'];
         this.historicoAnalises.push(data2);
         this.historicoAnalise = new HistoricoAnalise();
+        setTimeout(() => {
+          this.loadTable = false;
+        }, 500);
+        this.disabledSintese = true;
       }
     }, err => {
       this.msgs.push({
@@ -107,6 +105,7 @@ export class HistoricoComponent implements OnInit {
         summary: 'Erro ao salvar!',
         detail: 'Tente novamente!'
       })
+      this.loadTable = false;
     });
   }
 
