@@ -10,6 +10,8 @@ import { Sintese } from 'src/app/models/sintese';
 import { HistoricoAnalise } from 'src/app/models/HistoricoAnalise';
 import { HttpResponse } from '@angular/common/http';
 import { HistoricoLogicaService } from 'src/app/services/historico-logica.service';
+import { SharedService } from 'src/app/services/shared.service';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-historico',
@@ -34,6 +36,7 @@ export class HistoricoComponent implements OnInit {
      private cadastroLogicaService: CadastroLogicaService,
      private chamadaService: AnaliseChamadasService,
      private historicoService: HistoricoService,
+     private sharedService: SharedService,
      private historicoLogicaService: HistoricoLogicaService) { }
      
   ngOnInit() {
@@ -87,6 +90,8 @@ export class HistoricoComponent implements OnInit {
     this.historicoService.postHistorico(data2).subscribe(event => {
       if (event instanceof HttpResponse) {
         let evento: any = event.body['data'];
+        let user: Usuario = this.sharedService.getSessionUsuario();
+        data2.codusuario = user.nome + ' ' + user.sobrenome;
         this.historicoAnalises.unshift(data2);
         this.historicoAnalise = new HistoricoAnalise();
         setTimeout(() => {
@@ -117,5 +122,10 @@ export class HistoricoComponent implements OnInit {
       const cadInfo: CadastroInformacao = this.cadastroLogicaService.getCadInfo(cadInfoSelecionado);
       this.cadInfo = cadInfo;
     }
+  }
+
+  limpar() {
+    this.historicoAnalise = new HistoricoAnalise();
+    this.disabledSintese = true;
   }
 }
