@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { DadosFaturamento } from 'src/app/models/dadosfaturamento';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SPE } from 'src/app/models/spe';
@@ -15,6 +15,8 @@ import { MessageService, Message } from 'primeng/api';
   providers: [MessageService]
 })
 export class DadosFaturamentoComponent implements OnInit {
+  @ViewChild('formulario', { read: NgForm }) form: any;
+  
   br: any;
   spe: SPE[];
   speTemp: SPE[];
@@ -35,6 +37,8 @@ export class DadosFaturamentoComponent implements OnInit {
   }
   ngOnInit() {
     this.br = this.sharedService.calendarioBr();
+    this.form.reset();
+    this.msgs = [];
 
     this.analiseChamadasService.getSPE().subscribe(dados => {
       this.speTemp = dados['data'];

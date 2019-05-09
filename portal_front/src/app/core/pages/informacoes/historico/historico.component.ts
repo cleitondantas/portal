@@ -1,5 +1,5 @@
-import { Message } from 'primeng/api';
-import { Component, OnInit } from '@angular/core';
+import { Message, MessageService } from 'primeng/api';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Compradores } from 'src/app/models/compradores';
 import { CadastroLogicaService } from 'src/app/services/cadastro-logica.service';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
@@ -10,15 +10,18 @@ import { Sintese } from 'src/app/models/sintese';
 import { HistoricoAnalise } from 'src/app/models/HistoricoAnalise';
 import { HttpResponse } from '@angular/common/http';
 import { HistoricoLogicaService } from 'src/app/services/historico-logica.service';
-import { SharedService } from 'src/app/services/shared.service';
-import { Usuario } from 'src/app/models/usuario';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-historico',
   templateUrl: './historico.component.html',
-  styleUrls: ['./historico.component.css']
+  styleUrls: ['./historico.component.css'],
+  providers: [MessageService]
+
 })
 export class HistoricoComponent implements OnInit {
+  @ViewChild('formHistorico', { read: NgForm }) form: any;
+
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
   disabledSintese: boolean = true;
@@ -36,7 +39,7 @@ export class HistoricoComponent implements OnInit {
      private cadastroLogicaService: CadastroLogicaService,
      private chamadaService: AnaliseChamadasService,
      private historicoService: HistoricoService,
-     private sharedService: SharedService,
+     private messageService: MessageService,
      private historicoLogicaService: HistoricoLogicaService) { }
      
   ngOnInit() {
@@ -52,8 +55,17 @@ export class HistoricoComponent implements OnInit {
       this.visualizarCadInfo();
       this.historicoAnalises = [];
       this.getHistorico();
+      this.msgs = [];
+      this.form.reset();
       }
     });
+
+    this.historicoLogicaService.load.subscribe(dado => {
+      setTimeout(() => {
+        this.loadTable = !dado;
+      }, 500);
+    })
+
     this.getHistorico();  
   }
 
@@ -82,31 +94,43 @@ export class HistoricoComponent implements OnInit {
    });
   }
 
-  salvar(data){
+  salvar(data, formHistorico){
     this.loadTable = true;
     this.msgs = [];
-    let data2: HistoricoAnalise = new HistoricoAnalise();
-    data2 = this.historicoLogicaService.salvarHistorico(data, this.cadInfo.codcadastro, this.sinteseSelecionado);
-    this.historicoService.postHistorico(data2).subscribe(event => {
-      if (event instanceof HttpResponse) {
-        let evento: any = event.body['data'];
-        let user: Usuario = this.sharedService.getSessionUsuario();
-        data2.codusuario = user.nome + ' ' + user.sobrenome;
-        this.historicoAnalises.unshift(data2);
-        this.historicoAnalise = new HistoricoAnalise();
-        setTimeout(() => {
-          this.loadTable = false;
-        }, 500);
-        this.disabledSintese = true;
+    if (this.validaForm(formHistorico) == true) {
+      let data2: HistoricoAnalise = new HistoricoAnalise();
+      data2 = this.historicoLogicaService.salvarHistorico(data, this.cadInfo.codcadastro, this.sinteseSelecionado);
+      this.historicoService.postHistorico(data2).subscribe(event => {
+        if (event instanceof HttpResponse) {
+          let evento: any = event.body['data'];
+          evento = this.historicoLogicaService.receberData(evento);
+          console.log(evento);
+          this.historicoAnalises.unshift(evento);
+          formHistorico.reset();
+          this.disabledSintese = true;
+          this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Adicionado com sucesso!'});
+        }
+      });
+    } else {
+      const camposInvalidos: any[] = [];
+
+      for (const _i in formHistorico.controls) {
+        if (formHistorico.controls[_i].status == 'INVALID') {
+          let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
+          campoInvalido = campoInvalido.replace(': ', '');
+          camposInvalidos.push(` ` + campoInvalido);
+          formHistorico.controls[_i].pristine = false;
+          this.msgs = [];
+          this.msgs.push({
+            severity: 'error',
+            summary: 'Erro ao salvar!',
+            detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:` +
+             camposInvalidos + `</strong>.`
+          });
+        }
       }
-    }, err => {
-      this.msgs.push({
-        severity: 'error',
-        summary: 'Erro ao salvar!',
-        detail: 'Tente novamente!'
-      })
       this.loadTable = false;
-    });
+    }
   }
 
   visualizarCadInfo() {
@@ -124,8 +148,18 @@ export class HistoricoComponent implements OnInit {
     }
   }
 
-  limpar() {
-    this.historicoAnalise = new HistoricoAnalise();
+  limpar(form) {
+    form.reset();
+    this.msgs = [];
     this.disabledSintese = true;
+    this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Formulário limpo!'});
+  }
+
+  validaForm(form) {
+    if (form.valid == false ) {
+      return false;
+    } else {
+      return true;
+    } 
   }
 }

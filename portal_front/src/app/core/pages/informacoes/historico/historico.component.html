@@ -1,5 +1,6 @@
 <br>
 
+<p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
 <div class="p-grid">
   <div class="p-col-6">
 
@@ -56,49 +57,52 @@
   </div>
 </div>
 
-<div class="p-grid">
-  <div class="p-col-2">
-    <label class="ajusteLabel" for="desc">Descrição: </label>
-  </div>
-  <div class="p-col-10">
-    <textarea [cols]="100" [rows]="4" pInputTextarea name="descricao" [(ngModel)]="historicoAnalise.descricao"></textarea>
-  </div>
-</div>
-
-<div class="p-grid">
-  <div class="p-col-8">
-
-    <div class="p-grid">
-      <div class="p-col-3">
-        <label class="ajusteLabel" for="fases">Fases: </label>
-      </div>
-      <div class="p-col-3" id="fases">
-        <p-dropdown [options]="fases"  placeholder="Selecione..." optionLabel="fase" [autoWidth]="false" [style]="{'width': '100%'}"
-        [(ngModel)]="historicoAnalise.numfase" (onChange)="changeFases($event)"></p-dropdown>
-      </div>
-    
-      <div class="p-col-3">
-        <label class="ajusteLabel" for="fases">Sínteses: </label>
-      </div>
-
-      <div class="p-col-3" id="fases">
-        <i class="pi pi-spin pi-spinner" style="font-size: 3em" [hidden]="!loadSpin"></i>
-        <p-dropdown  [options]="sinteses"  placeholder="Selecione..." optionLabel="sintese" [autoWidth]="false" [style]="{'width': '100%'}"
-         [(ngModel)]="historicoAnalise.numsintese"  (onChange)="changeSintese($event)" [disabled]="disabledSintese" [hidden]="loadSpin">
-        </p-dropdown>
-      </div>
+<form #formHistorico="ngForm">
+  <div class="p-grid">
+    <div class="p-col-2">
+      <label class="ajusteLabel" for="desc">Descrição: </label>
+    </div>
+    <div class="p-col-10">
+      <textarea [cols]="100" [rows]="4" pInputTextarea name="descricao" [(ngModel)]="historicoAnalise.descricao"></textarea>
     </div>
   </div>
-  <div class="p-col-4">
-    <br><br>
 
-    <button pButton type="button" (click)="limpar()" label="Limpar" class="ui-button-warning" 
-    [ngStyle]="{'width': '90px', 'height':'30px', 'margin': '3px'}" icon="pi pi-refresh" iconPos="right"></button>
-    <button pButton type="button" (click)="salvar(historicoAnalise)" label="Salvar" class=" ui-button-success" 
-    [ngStyle]="{'width': '90px', 'height': '30px', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
+  <div class="p-grid">
+    <div class="p-col-8">
 
+      <div class="p-grid">
+        <div class="p-col-3">
+          <label class="ajusteLabel" for="numfase">Fases: </label>
+        </div>
+        <div class="p-col-3" id="fases">
+          <p-dropdown [options]="fases"  placeholder="Selecione..." optionLabel="fase" [autoWidth]="false" [style]="{'width': '100%'}"
+          [(ngModel)]="historicoAnalise.numfase" name="numfase" (onChange)="changeFases($event)" required></p-dropdown>
+        </div>
+      
+        <div class="p-col-3">
+          <label class="ajusteLabel" for="numsintese">Sínteses: </label>
+        </div>
+
+        <div class="p-col-3" id="fases">
+          <i class="pi pi-spin pi-spinner" style="font-size: 3em" [hidden]="!loadSpin"></i>
+          <p-dropdown  [options]="sinteses"  placeholder="Selecione..." optionLabel="sintese" [autoWidth]="false" [style]="{'width': '100%'}"
+          [(ngModel)]="historicoAnalise.numsintese" name="numsintese" (onChange)="changeSintese($event)" [disabled]="disabledSintese" [hidden]="loadSpin"
+          required></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="p-col-4">
+      <br><br>
+
+      <button pButton type="button" (click)="limpar(formHistorico)" label="Limpar" class="ui-button-warning" 
+      [ngStyle]="{'width': '90px', 'height':'30px', 'margin': '3px'}" icon="pi pi-refresh" iconPos="right"></button>
+      <button pButton type="button" (click)="salvar(historicoAnalise, formHistorico)" label="Salvar" class=" ui-button-success" 
+      [ngStyle]="{'width': '90px', 'height': '30px', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
+
+    </div>
   </div>
-</div>
+</form>
+
 <p-messages [(value)]="msgs"></p-messages>
 
 <div class="p-grid" [ngStyle]="{'height': '3px', 'background-color': 'black'}"></div>

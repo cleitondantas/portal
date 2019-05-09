@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { AnaliseChamadasService } from './analise-chamadas.service';
 import { HttpResponse } from '@angular/common/http';
 import { HistoricoService } from './historico.service';
@@ -12,6 +12,10 @@ import { SharedService } from './shared.service';
   providedIn: 'root'
 })
 export class HistoricoLogicaService {
+  getSintese: boolean = false;
+  getFase: boolean = false;
+  load = new EventEmitter<boolean>();
+
 
   constructor(private chamadaService: AnaliseChamadasService, 
               private historicoService: HistoricoService,
@@ -21,58 +25,59 @@ export class HistoricoLogicaService {
     let dados: HistoricoAnalise[] = data['data'];
     var fase: Fase[];
     var sintese: Sintese[];
-    var primeiroUser: Usuario;
+    var codUsuarios: any[] = [];
 
-    this.historicoService.getUsuario(dados[0].codusuario).subscribe(event => {
-      if (event instanceof HttpResponse) {
-        primeiroUser = event.body['data'];
-            
-        for (let i = 0; i < dados.length; ++i) {
-          if (primeiroUser.codUsuario == dados[i].codusuario) {
-            dados[i].codusuario = primeiroUser.nome + ' ' + primeiroUser.sobrenome;
-          } else {
-            this.historicoService.getUsuario(dados[i].codusuario).subscribe(event => {
-              if (event instanceof HttpResponse) {
-                let user: Usuario = event.body['data'];
+    for (let i = 0; i < dados.length; i++) {
+      if (codUsuarios.includes(dados[i].codusuario) == false) {
+        codUsuarios.push(dados[i].codusuario);
+      }
+    }
 
-                dados[i].codusuario = user.nome + ' ' + user.sobrenome;
-              }
-            })
+    for (let i = 0; i < codUsuarios.length; i++) {
+      this.historicoService.getUsuario(codUsuarios[i]).subscribe(event => {
+        if (event instanceof HttpResponse) {
+          let user: Usuario = event.body['data'];
+
+          for (let item = 0; item < dados.length; item++) {
+            if (user.codUsuario == dados[item].codusuario) {
+              dados[item].codusuario = user.nome + ' ' + user.sobrenome;
+            }
           }
         }
+      })
+    }
 
-        this.chamadaService.getDadosCadastrais('fases').subscribe(event => {
-          if (event instanceof HttpResponse) {
-            fase = event.body['data'];
-            for (let i = 0; i < dados.length; i++) {
-              for (let item = 0; item < fase.length; item++) {
-                if (dados[i].numfase == fase[item].numfase) {
-                  dados[i].numfase = fase[item];
+    this.chamadaService.getDadosCadastrais('fases').subscribe(event => {
+      if (event instanceof HttpResponse) {
+        fase = event.body['data'];
+        for (let i = 0; i < dados.length; i++) {
+          for (let item = 0; item < fase.length; item++) {
+            if (dados[i].numfase == fase[item].numfase) {
+              dados[i].numfase = fase[item];
+            }
+          }
+        }
+        this.sharedService.getFase = true;
+        this.sharedService.hiddenLoader();
+               
+        this.historicoService.getSinteses().subscribe(data => {
+          sintese = data['data'];
+          for (let i = 0; i < dados.length; i++) {
+            for (let item = 0; item < sintese.length; item++) {
+              if (dados[i].numfase.numfase == sintese[item].numfase) {
+                if(dados[i].numsintese == sintese[item].numsintese) {
+                  dados[i].numsintese = sintese[item];
                 }
               }
             }
-            this.sharedService.getFase = true;
-            this.sharedService.hiddenLoader();
-                   
-            this.historicoService.getSinteses().subscribe(data => {
-              sintese = data['data'];
-              for (let i = 0; i < dados.length; i++) {
-                for (let item = 0; item < sintese.length; item++) {
-                  if (dados[i].numfase.numfase == sintese[item].numfase) {
-                    if(dados[i].numsintese == sintese[item].numsintese) {
-                      dados[i].numsintese = sintese[item];
-                    }
-                  }
-                }
-              }
-              
-            this.sharedService.getSintese = true;
-            this.sharedService.hiddenLoader();
-            })
-           }
-         });
+          }
+          
+        this.sharedService.getSintese = true;
+        this.sharedService.hiddenLoader();
+        })
       }
     });
+
     return dados;
   }
 
@@ -86,5 +91,39 @@ export class HistoricoLogicaService {
     data2.numsintese = sinteseSelecionado;
 
     return data2;
+  }
+
+  receberData(dado: HistoricoAnalise) {
+    let dado2: HistoricoAnalise = new HistoricoAnalise();
+    let user: Usuario = this.sharedService.getSessionUsuario();
+
+    dado2 = dado;
+    this.historicoService.getFasePorNumero(dado.numfase).subscribe(data => {
+      data = data['data'];
+
+      dado2.numfase = data[0];
+      this.getFase = true;
+      this.loadTable();
+    })
+
+    this.historicoService.getSintesePorFaseSintese(dado.numfase, dado.numsintese).subscribe(data => {
+      data = data['data'];
+
+      dado2.numsintese = data[0];
+      this.getSintese = true;
+      this.loadTable();
+    })
+
+    dado2.codusuario = user.nome + ' ' + user.sobrenome;
+
+    return dado2;
+  }
+
+  loadTable() {
+    if (this.getFase == true && this.getSintese == true) {
+      this.getFase = false;
+      this.getSintese = false;
+      this.load.emit(true);
+    }
   }
 }
