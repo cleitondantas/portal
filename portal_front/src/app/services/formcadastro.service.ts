@@ -21,11 +21,13 @@ export class FormcadastroService {
   }
 
   createOrUpdateUsuer(user: Usuario) {
+    console.log(JSON.stringify(user));
     user.isAtivo = true;
     if (user.id != null ) {
       return this.http.put<Usuario>(environment.urlpath + '/api/user/usuario', user);
     } else {
       user.id = null;
+
       return this.http.post<Usuario>(environment.urlpath + '/api/user/usuario', user);
     }
   }
