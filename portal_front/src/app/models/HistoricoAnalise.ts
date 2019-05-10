@@ -5,11 +5,8 @@ export class HistoricoAnalise{
     id: number;
     datahistorico: any;
     codcadastro: number;
-    usuario: any;
-    fase: any;
-    sintese: any;
+    codusuario: any;
+    numfase: any;
+    numsintese: any;
     descricao: string;
-
-    
-
 }

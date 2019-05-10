@@ -1,5 +1,6 @@
 <br>
 
+<p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
 <div class="p-grid">
   <div class="p-col-6">
 
@@ -56,71 +57,82 @@
   </div>
 </div>
 
-<div class="p-grid">
-  <div class="p-col-1">
-    <label class="ajusteLabel" for="desc">Descrição: </label>
-  </div>
-  <div class="p-col-11">
-    <textarea [cols]="100" [rows]="4" pInputTextarea></textarea>
-  </div>
-</div>
-
-<div class="p-grid">
-  <div class="p-col-8">
-
-    <div class="p-grid">
-      <div class="p-col-2">
-        <label class="ajusteLabel" for="fases">Fases: </label>
-      </div>
-      <div class="p-col-3" id="fases">
-        <p-dropdown [options]="fases"  placeholder="Selecione..." optionLabel="fase"
-        [(ngModel)]="fase"  (onChange)="changeFases($event)" ></p-dropdown>
-      </div>
-    
-      <div class="p-col-2">
-        <label class="ajusteLabel" for="fases">Sisteses: </label>
-      </div>
-
-      <div class="p-col-3" id="fases">
-        <p-dropdown  [options]="sinteses"  placeholder="Selecione..." optionLabel="sintese" 
-         [(ngModel)]="sintese"  ></p-dropdown>
-      </div>
+<form #formHistorico="ngForm">
+  <div class="p-grid">
+    <div class="p-col-2">
+      <label class="ajusteLabel" for="desc">Descrição: </label>
+    </div>
+    <div class="p-col-10">
+      <textarea [cols]="100" [rows]="4" pInputTextarea name="descricao" [(ngModel)]="historicoAnalise.descricao"></textarea>
     </div>
   </div>
-  <div class="p-col-4">
-    <br><br>
 
-    <button pButton type="button" label="Limpar" class="ui-button-warning" 
-    [ngStyle]="{'width': '90px', 'height':'30px', 'margin': '3px'}" icon="pi pi-refresh" iconPos="right"></button>
-    <button pButton type="button" (click)="salvar()" label="Salvar" class=" ui-button-success" 
-    [ngStyle]="{'width': '90px', 'height': '30px', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
+  <div class="p-grid">
+    <div class="p-col-8">
 
+      <div class="p-grid">
+        <div class="p-col-3">
+          <label class="ajusteLabel" for="numfase">Fases: </label>
+        </div>
+        <div class="p-col-3" id="fases">
+          <p-dropdown [options]="fases"  placeholder="Selecione..." optionLabel="fase" [autoWidth]="false" [style]="{'width': '100%'}"
+          [(ngModel)]="historicoAnalise.numfase" name="numfase" (onChange)="changeFases($event)" required></p-dropdown>
+        </div>
+      
+        <div class="p-col-3">
+          <label class="ajusteLabel" for="numsintese">Sínteses: </label>
+        </div>
+
+        <div class="p-col-3" id="fases">
+          <i class="pi pi-spin pi-spinner" style="font-size: 3em" [hidden]="!loadSpin"></i>
+          <p-dropdown  [options]="sinteses"  placeholder="Selecione..." optionLabel="sintese" [autoWidth]="false" [style]="{'width': '100%'}"
+          [(ngModel)]="historicoAnalise.numsintese" name="numsintese" (onChange)="changeSintese($event)" [disabled]="disabledSintese" [hidden]="loadSpin"
+          required></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="p-col-4">
+      <br><br>
+
+      <button pButton type="button" (click)="limpar(formHistorico)" label="Limpar" class="ui-button-warning" 
+      [ngStyle]="{'width': '90px', 'height':'30px', 'margin': '3px'}" icon="pi pi-refresh" iconPos="right"></button>
+      <button pButton type="button" (click)="salvar(historicoAnalise, formHistorico)" label="Salvar" class=" ui-button-success" 
+      [ngStyle]="{'width': '90px', 'height': '30px', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
+
+    </div>
   </div>
-</div>
+</form>
+
+<p-messages [(value)]="msgs"></p-messages>
 
 <div class="p-grid" [ngStyle]="{'height': '3px', 'background-color': 'black'}"></div>
 <br>
-<div class="p-grid">
-  <p-table [value]="historicoAnalises" [scrollable]="true" scrollHeight="200px" >
-    <ng-template pTemplate="header">
-      <tr>
-        <th class="tddata">Data</th>
-        <th  class="tdusuario" >Usuário</th>
-        <th  class="tdfase" >Fase</th>
-        <th  class="tdsintese" >Sinteses</th>
-        <th  class="tddescricao">Descrição</th>   
-      </tr>
-    </ng-template>
+<div class="p-grid p-justify-center">
+  <div class="p-grid" [hidden]="!loadTable" style="padding: 25px;">
+      <i class="pi pi-spin pi-spinner" style="font-size: 10em"></i>
+  </div>
 
-    <ng-template pTemplate="body" let-hist>
-      <tr>
-        
-        <td class="tddata">{{hist.datahistorico | date :  "dd/MM/y"}}</td>
-        <td class="tdusuario" > {{hist.usuario}} </td>
-        <td class="tdfase"> {{hist.fase}}</td>
-        <td class="tdsintese" > {{hist.sintese}} </td>
-        <td class="tddescricao"> {{hist.descricao}} </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  <div [hidden]="loadTable">
+    <p-table [value]="historicoAnalises" sortMode="multiple" [scrollable]="true" scrollHeight="200px" >
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="tddata"><strong>Data</strong></th>
+          <th class="tdusuario"><strong>Usuário</strong></th>
+          <th class="tdfase"><strong>Fase</strong></th>
+          <th class="tdsintese"><strong>Sínteses</strong></th>
+          <th class="tddescricao"><strong>Descrição</strong></th>   
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-hist>
+        <tr>
+          <td class="tddata">{{hist.datahistorico | date :  "dd/MM/y"}}</td>
+          <td class="tdusuario"> {{hist.codusuario}} </td>
+          <td class="tdfase"> {{hist.numfase.fase}}</td>
+          <td class="tdsintese"> {{hist.numsintese.sintese}} </td>
+          <td class="tddescricao"> {{hist.descricao}} </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>

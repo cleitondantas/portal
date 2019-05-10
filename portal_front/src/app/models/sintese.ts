@@ -2,7 +2,7 @@ export class Sintese{
 
     id : number;
     sintese: string;
-    numsistese: number;
+    numsintese: number;
     numfase: number;
 
 }

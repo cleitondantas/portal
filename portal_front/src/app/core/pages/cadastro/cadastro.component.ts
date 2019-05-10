@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { of } from 'rxjs';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Compradores } from 'src/app/models/compradores';
@@ -19,6 +19,7 @@ import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask';
 import { HttpResponse } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro',
@@ -28,6 +29,8 @@ import { HttpResponse } from '@angular/common/http';
 })
 
 export class CadastroComponent implements OnInit {
+  @ViewChild('formulario', { read: NgForm }) form: any;
+  @ViewChild('formCadInfo', { read: NgForm }) formCadInfo: any;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -103,6 +106,10 @@ export class CadastroComponent implements OnInit {
 
     this.chamadasService.buscarCadastro.subscribe(dado => {
       this.ngOnInit();
+      this.form.reset();
+      this.formCadInfo.reset();
+      this.msgs = [];
+      this.msgs2 = [];
     });
 
   }
@@ -275,6 +282,8 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.compradores = [];
+        this.msgs = [];
+        this.msgs2 = [];
         this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Formulário limpo!'});
       },
       reject: () => {
@@ -488,6 +497,7 @@ export class CadastroComponent implements OnInit {
         this.contato = [];
         this.contatoDisplay = [];
         this.disabledButton = true;
+        this.msgs = [];
         this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Formulário limpo!'});
       },
       reject: () => {

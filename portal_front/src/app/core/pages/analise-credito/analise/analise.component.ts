@@ -1,6 +1,6 @@
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Router } from '@angular/router';
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { Simulacoes } from 'src/app/models/simulacoes';
 import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -13,6 +13,7 @@ import { StatusSimulacao } from 'src/app/models/status-simulacao';
 
 import { Modalidades } from 'src/app/models/modalidades';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-analise',
@@ -21,6 +22,8 @@ import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
   providers: [MessageService]
 })
 export class AnaliseComponent implements OnInit {
+  @ViewChild('formSimulacao', { read: NgForm }) form: any;
+  @ViewChild('formDatasDoProcesso', { read: NgForm }) formData: any;
 
   codcadastro: any;
   simulacaoLista: Simulacoes[] = [];
@@ -103,9 +106,11 @@ export class AnaliseComponent implements OnInit {
       if (SharedService.getInstance().temporario == null) {
         SharedService.getInstance().temporario = temporario;
       }
-      this.simulacoes = new Simulacoes();
-      this.analise = new Analise();
+      this.form.reset();
+      this.formData.reset();
       this.analiseCred.disabled = true;
+      this.msgs = [];
+      this.msgs2 = [];
       this.ngOnInit();
     });
 
