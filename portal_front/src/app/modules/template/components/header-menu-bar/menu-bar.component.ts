@@ -116,6 +116,34 @@ export class MenuBarComponent implements OnInit {
         });
     }
 
+    clickBuscaPorCPFInfo(event: any) {
+        this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
+            this.msgsCpf = [];
+            this.cadastrosTabelaBuscaInfo = data['data'];
+            for (let i = 0; i < this.cadastrosTabelaBuscaInfo.length; i++) {
+                this.codcadastro = this.cadastrosTabelaBuscaInfo[i].codcadastro;
+                for (let item = 0; item < this.cadastrosTabelaBuscaInfo[i].clientes.length; item++) {
+                    if (this.cpfclienteSelecionado == this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj) {
+                        let data = this.cadastrosTabelaBuscaInfo[i].clientes[item].datanascimento;
+                        data = new Date(data);
+                        data.toUTCString();
+                        this.dataNascimento = this.fixUTC(data);
+                        this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj = this.formatCpfCnpj(this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj)
+                        this.clienteInformacao = [this.cadastrosTabelaBuscaInfo[i].clientes[item]];
+                    }
+                }
+            }
+            console.log(this.clienteInformacao);
+        }, error => {
+            this.msgsCpf = [];
+            this.msgsCpf.push({
+                severity: 'error',
+                summary: 'Erro ao buscar!',
+                detail: `Não foi encontrado nenhum cadastro com o CPF: <strong>` + this.cpfclienteSelecionado + `</strong>. Verifique e tente novamente.`
+            });
+        });
+    }
+
     clickBuscaPorCPF(event: any) {
         this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
             this.cadastrosTabelaBusca = data['data'];

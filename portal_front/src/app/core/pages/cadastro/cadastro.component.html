@@ -535,7 +535,10 @@
       <p-footer>
         <div class="p-grid p-justify-end">
           <button pButton type="button" label="Limpar" class="ui-button-rounded ui-button-warning" 
-          [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario, formCadInfo)"
+          [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="limparFormulario(formulario, formCadInfo)" [hidden]="controle"
+          icon="pi pi-refresh" iconPos="right"></button>
+          <button pButton type="button" label="Cancelar" class="ui-button-rounded ui-button-warning" 
+          [ngStyle]="{'width': '15%', 'margin': '3px'}" (click)="cancelar()" [hidden]="!controle"
           icon="pi pi-refresh" iconPos="right"></button>
           <button pButton type="submit" label="Avançar" class="ui-button-rounded ui-button-success"  [ngStyle]="{'width': '15%', 'margin': '3px'}" 
           icon="pi pi-angle-double-right" iconPos="right" (click)="confirmacao(cadInfo, formulario)" [hidden]="controle"></button>
