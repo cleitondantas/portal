@@ -70,9 +70,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public Usuario findByCodUsuario(Long codUsuario) {
+	public Usuario findByCodUsuario(Integer codUsuario) {
 		// TODO Auto-generated method stub
 		return usuarioRepository.findByCodUsuario(codUsuario);
+	}
+
+	@Override
+	public List<Usuario> maxxCodUsuario() {
+		// TODO Auto-generated method stub
+		return usuarioRepository.maxxCodUsuario();
 	}
 
 
