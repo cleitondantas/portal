@@ -318,7 +318,7 @@
                 <td> <button pButton icon="pi pi-user-minus" (click)="removerComprador(rowData)"></button> </td>
                 <td> <button pButton icon="pi pi-search" (click)="visualizarComprador(rowData)"></button></td>
                 <td> {{comp.nomecliente}} </td>
-                <td> {{comp.cpfcnpj}} </td>
+                <td> {{comp.cpfcnpj | cpf}} </td>
                 <td> {{ comp.valorrenda.toLocaleString('pt-br', {minimumFractionDigits: 2}) }} </td>
                 <td>
                     <p-tableRadioButton [value]="rowData"></p-tableRadioButton>

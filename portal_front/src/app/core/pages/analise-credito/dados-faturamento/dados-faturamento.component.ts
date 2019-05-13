@@ -7,6 +7,9 @@ import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MessageService, Message } from 'primeng/api';
+import onlyNumbers from '@brazilian-utils/helper-only-numbers';
+import formatCpf from '@brazilian-utils/format-cpf';
+import formatCnpj from '@brazilian-utils/format-cnpj';
 
 @Component({
   selector: 'app-dados-faturamento',
@@ -63,6 +66,7 @@ export class DadosFaturamentoComponent implements OnInit {
   salvar(formulario) {
     if (this.validaForm(formulario) == true) {
       this.dadosfaturamento.razaosocialspe = this.dadosfaturamento.razaosocialspe.descspe;
+      this.dadosfaturamento.cpfcnpj = onlyNumbers(this.dadosfaturamento.cpfcnpj);
       console.log('formulario');
       console.log(formulario);
       console.log('this.dadosfaturamento');
@@ -96,6 +100,13 @@ export class DadosFaturamentoComponent implements OnInit {
   }
 
   preencherSPE(speRecebido: SPE) {
+    let spe2: any;
+    spe2 = onlyNumbers(speRecebido.cnpjspe);
+    if (spe2.length > 11) {
+      speRecebido.cnpjspe = formatCnpj(spe2);
+    } else {
+      speRecebido.cnpjspe = formatCpf(spe2)
+    }
     this.dadosfaturamento.cpfcnpj = speRecebido.cnpjspe;
   }
 
