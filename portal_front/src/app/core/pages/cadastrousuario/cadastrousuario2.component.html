@@ -1,33 +1,33 @@
 <div class="p-grid p-justify-center p-align-center">
     <div class="main-container">
-        <form id="form" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <form id="form" #f="ngForm" (ngSubmit)="onSubmit(f)" autocomplete="off">
             <p-panel header="Cadastro de usuário">
                 <div class="p-grid">
                     <div class="p-col-6">
-                        <input type="text" class="ajusteInput" pInputText placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuario.nome"/>
-                        <input type="text" class="ajusteInput" pInputText placeholder="Telefone ou Ramal" id="contato" pattern="\d+" ngModel name="telefone" #telefone="ngModel" [(ngModel)]="usuario.telefone"/>
-                        <input type="text" class="ajusteInput" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuario.login"/>
-                        <input type="text" class="ajusteInput" pInputText placeholder="Senha" id="senha" ngModel name="senha"  #senha="ngModel" [(ngModel)]="usuario.password"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuario.nome" tabindex="1"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Telefone ou Ramal" id="contato" pattern="\d+" ngModel name="telefone" #telefone="ngModel" [(ngModel)]="usuario.telefone" tabindex="3"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuario.login" tabindex="5"/>
+                        <input type="password" class="ajusteInput" pInputText placeholder="Senha" id="senha" ngModel name="senha"  #senha="ngModel" [(ngModel)]="usuario.password" tabindex="7"/>
                     </div>
 
                     <div class="p-col-6">
-                        <input type="text" class="ajusteInput" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuario.sobrenome"/>
-                        <input type="text" class="ajusteInput" pInputText placeholder="CPF" name="cpf" #cpf="ngModel" [(ngModel)]="usuario.cpf"/>
-                        <input type="text" class="ajusteInput" pInputText placeholder="Repita o nickname" id="cnickname"/>
-                        <input type="text" class="ajusteInput" pInputText placeholder="Confirme a senha" id="csenha"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuario.sobrenome" tabindex="2"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="CPF" name="cpf" #cpf="ngModel" [(ngModel)]="usuario.cpf" tabindex="4"/>
+                        <input type="text" class="ajusteInput" pInputText placeholder="Repita o nickname" id="confirmarNickName" name="confirmarNickName" [(ngModel)]="confirmarNickName" tabindex="6"/>
+                        <input type="password" class="ajusteInput" pInputText placeholder="Confirme a senha" id="confirmarSenha" name="confirmarSenha" [(ngModel)]="confirmarSenha" tabindex="8"/>
                     </div>
 
                     <div class="p-col-12">
                         <div class="ui-inputgroup">
                             <span class="ui-inputgroup-addon">@</span>
-                            <input id="idemail" type="email" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuario.email">  
+                            <input id="idemail" type="email" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuario.email" tabindex="9">  
                         </div>
                     </div>
 
                     <div class="p-col-12">
                         <div class="ui-inputgroup">
                             <p-multiSelect [options]="selectRoles" optionLabel="profile" [(ngModel)]="usuario.perfis" defaultLabel="Selecione o perfil.." [ngModelOptions]="{standalone:true}" 
-                            [style]="{'width': '100%'}" [ngStyle]="{'width': '100%'}"></p-multiSelect>
+                            [style]="{'width': '100%'}" [ngStyle]="{'width': '100%'}" tabindex="10"></p-multiSelect>
                         </div>
                     </div>
 

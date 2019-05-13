@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { of } from 'rxjs';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Compradores } from 'src/app/models/compradores';
@@ -31,7 +31,8 @@ import { NgForm } from '@angular/forms';
 export class CadastroComponent implements OnInit {
   @ViewChild('formulario', { read: NgForm }) form: any;
   @ViewChild('formCadInfo', { read: NgForm }) formCadInfo: any;
-
+  @ViewChild('desccontato') desccontato: ElementRef;
+  
   constructor(
     private confirmationService: ConfirmationService,
     private chamadasService: CadastroChamadasService,
@@ -105,11 +106,11 @@ export class CadastroComponent implements OnInit {
     this.visualizarInfoImovel();
 
     this.chamadasService.buscarCadastro.subscribe(dado => {
-      this.ngOnInit();
       this.form.reset();
       this.formCadInfo.reset();
       this.msgs = [];
       this.msgs2 = [];
+      this.visualizarInfoImovel();
     });
 
   }
@@ -125,7 +126,7 @@ export class CadastroComponent implements OnInit {
       this.contato.push(contato2);
 
       this.contatos = this.logicaService.limparContatos(this.contatos);
-      document.getElementById('desccontato').removeAttribute('placeholder');
+      this.desccontato.nativeElement.removeAttribute('placeholder');
       this.disabledInput = true;
     } else {
       this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'Preencha os campos para adicionar o contato!'});
@@ -469,18 +470,17 @@ export class CadastroComponent implements OnInit {
 
   validContato(evento) {
     evento.value = evento.value.codtipocontato;
-    const input = document.getElementById('desccontato');
     this.contatos.desccontato = '';
     this.disabledInput = false;
 
     if (evento.value == 1) {
-      input.setAttribute('placeholder', '(XX) XXXX-XXXX');
+      this.desccontato.nativeElement.setAttribute('placeholder', '(XX) XXXX-XXXX');
       this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else if (evento.value == 2) {
-      input.setAttribute('placeholder', '(XX) XXXXX-XXXX');
+      this.desccontato.nativeElement.setAttribute('placeholder', '(XX) XXXXX-XXXX');
       this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else if (evento.value == 3) {
-      input.setAttribute('placeholder', 'email@email.com');
+      this.desccontato.nativeElement.setAttribute('placeholder', 'email@email.com');
       this.mask = emailMask;
     }
   }
@@ -528,7 +528,7 @@ export class CadastroComponent implements OnInit {
   visualizarInfoImovel() {
     // Verifica se a tela está sendo carregada vinda do Campo de busca
     if (sessionStorage.getItem('CADASTROSELECIONADO') != null) {
-      this.cadInfo = this.logicaService.visualizarInfoImovel(this.cadInfo);
+      this.cadInfo = this.logicaService.visualizarInfoImovel();
       this.compradores = this.cadInfo.clientes;
       for (let _i = 0; _i < this.compradores.length; _i++) {
         if (this.cadInfo.clientes[_i].principal == true) {
@@ -536,7 +536,6 @@ export class CadastroComponent implements OnInit {
         }
 
       }
-      console.log(this.cadInfo);
 
       this.comprador = new Compradores();
       this.contatoDisplay = [];
@@ -600,6 +599,13 @@ export class CadastroComponent implements OnInit {
             this.load = true;
           }, 500);
         }
+  }
+
+  cancelar() {
+    this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Operação cancelada!'});
+    setTimeout(() => {
+      this.router.navigate(['/home']);
+    }, 1000);
   }
 
   chamadasInit() {
