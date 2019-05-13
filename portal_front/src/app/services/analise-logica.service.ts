@@ -71,7 +71,6 @@ export class AnaliseLogicaService {
           } else {
             simulacaoLista[item].codtipoamortizacao = simulacoes.codtipoamortizacao.codtipoamortizacao;
           }
-          simulacaoLista[item].codtipoamortizacao = simulacoes.codtipoamortizacao.codtipoamortizacao;
           simulacaoLista[item].valorsubsidio = simulacoes.valorsubsidio;
           simulacaoLista[item].valordespesasfinanciadas = simulacoes.valordespesasfinanciadas;
           simulacaoLista[item].valorfinanciamento = simulacoes.valorfinanciamento;
@@ -314,11 +313,21 @@ export class AnaliseLogicaService {
 
           dadosfaturamento.razaosocialspe = dados['data'][_i].razaosocialspe;
 
-          dadosfaturamento.mesfaturamento1 = new Date(dados['data'][_i].mesfaturamento1);
+          if (dados['data'][_i].mesfaturamento1 != null) {
+            dadosfaturamento.mesfaturamento1 = new Date(dados['data'][_i].mesfaturamento1);
+          };
+
           dadosfaturamento.parcela2 = dados['data'][_i].parcela2;
           dadosfaturamento.notafiscal2 = dados['data'][_i].notafiscal2;
-          dadosfaturamento.mesfaturamento2 = new Date(dados['data'][_i].mesfaturamento2);
-          dadosfaturamento.mesfaturado = new Date(dados['data'][_i].mesfaturado);
+
+          if (dados['data'][_i].mesfaturamento2 != null) {
+            dadosfaturamento.mesfaturamento2 = new Date(dados['data'][_i].mesfaturamento2);
+          };
+
+          if (dados['data'][_i].mesfaturado != null) {
+            dadosfaturamento.mesfaturado = new Date(dados['data'][_i].mesfaturado);
+          };
+
           dadosfaturamento.totalrecebimentoincorporadora = dados['data'][_i].totalrecebimentoincorporadora;
           dadosfaturamento.recebimentoteoricobanco = dados['data'][_i].recebimentoteoricobanco;
           dadosfaturamento.totalrecebido = dados['data'][_i].totalrecebido;

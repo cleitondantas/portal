@@ -128,7 +128,7 @@
         <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
         <p-autoComplete  [suggestions]="nomeClienteFiltrado" (completeMethod)="searchPorCPF($event)" field="cpfcnpj"  placeholder="CPF"
         id="idBuscacpf" size="90" (onBlur)="blurCPFSelect($event)" ngModel [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"></p-autoComplete>
-        <p-button  icon="pi pi-search" (onClick)="clickBuscaPorCPF($event)"></p-button>        
+        <p-button  icon="pi pi-search" (onClick)="clickBuscaPorCPFInfo($event)"></p-button>        
     </div>
     <p-messages [(value)]="msgsCpf"></p-messages>
    <br>

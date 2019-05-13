@@ -147,7 +147,8 @@ export class CadastroLogicaService {
     return comprador;
   }
 
-  visualizarInfoImovel(cadInfo: CadastroInformacao) {
+  visualizarInfoImovel() {
+    let cadInfo: CadastroInformacao;
     const jsonObj: any = JSON.parse(sessionStorage.getItem('CADASTROSELECIONADO')); // Recebe os dados enviados pela busca de cadastro
     const cadastroinformacaoCarregada: CadastroInformacao = <CadastroInformacao>jsonObj;
     // Codigo de parce do objeto carregado para os dados da tela

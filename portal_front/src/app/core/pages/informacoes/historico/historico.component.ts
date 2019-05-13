@@ -52,11 +52,11 @@ export class HistoricoComponent implements OnInit {
 
     this.chamadaService.buscarInformacoes.subscribe(dado => {
       if (dado == true) {
+      this.form.reset();
       this.visualizarCadInfo();
       this.historicoAnalises = [];
       this.getHistorico();
       this.msgs = [];
-      this.form.reset();
       }
     });
 
@@ -104,7 +104,6 @@ export class HistoricoComponent implements OnInit {
         if (event instanceof HttpResponse) {
           let evento: any = event.body['data'];
           evento = this.historicoLogicaService.receberData(evento);
-          console.log(evento);
           this.historicoAnalises.unshift(evento);
           formHistorico.reset();
           this.disabledSintese = true;
