@@ -50,7 +50,13 @@ public class Controler {
 					result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 					return ResponseEntity.badRequest().body(response);
 				}
-				user.setPassword(passwordEncoder.encode(user.getPassword()));
+				List<Usuario> maxCodUsuarioList = usuarioService.maxxCodUsuario();
+				
+				for(Usuario item: maxCodUsuarioList)
+					user.setCodUsuario(item.getCodUsuario()+1);
+				    user.setIsAtivo(true);
+				    user.setPassword(passwordEncoder.encode(user.getPassword()));
+				    
 				Usuario userPersisted = (Usuario) usuarioService.save(user);
 				response.setData(userPersisted);
 			} catch (DuplicateKeyException dE) {
