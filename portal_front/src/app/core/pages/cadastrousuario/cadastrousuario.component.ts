@@ -87,14 +87,8 @@ export class CadastrousuarioComponent implements OnInit {
     } else {
       controle =  false;
     }
-<<<<<<<
-    
-    if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarSenha) && (controle == true)) {
-=======
 
-    if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarSenha) && (controle == true)
-        && (this.usuario.login != "") && (this.usuario.password != "")) {
->>>>>>>
+    if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarSenha) && (controle == true) && (this.usuario.login != "") && (this.usuario.password != "")) {
       return true
     } else {
       return false;
