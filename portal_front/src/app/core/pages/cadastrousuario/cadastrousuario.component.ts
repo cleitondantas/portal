@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Usuario } from '../../../models/usuario';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, NgForm } from '@angular/forms';
 import { FormcadastroService } from 'src/app/services/formcadastro.service';
-import { SelectItem } from 'primeng/api';
+import { SelectItem, Message } from 'primeng/api';
 import { Role } from '../../../models/role';
 import { SharedService } from '../../../services/shared.service';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
-
 
 @Component({
   selector: 'app-cadastrousuario',
@@ -17,6 +16,8 @@ import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 
 
 export class CadastrousuarioComponent implements OnInit {
+  @ViewChild('form', { read: NgForm }) form: any;
+
   roles: SelectItem[];
   selectRoles: Role[];
   roleArray: any;
@@ -24,6 +25,7 @@ export class CadastrousuarioComponent implements OnInit {
   shared: SharedService;
   user: Usuario;
   item: Role;
+  msgs: Message[] = [];
   confirmarSenha: string;
   confirmarNickName: string;
 
@@ -52,6 +54,7 @@ export class CadastrousuarioComponent implements OnInit {
   }
 
   onSubmit(form: FormBuilder) {
+    this.msgs = [];
     if (this.validaForm() == true) {
       this.service.createOrUpdateUsuer(this.usuario).subscribe(res => {
         this.showConfirm();
@@ -60,7 +63,7 @@ export class CadastrousuarioComponent implements OnInit {
         console.log(err);
       });
     } else {
-      console.log('os campos nao coincidem')
+      this.msgErro();
     }
   }
 
@@ -70,14 +73,8 @@ export class CadastrousuarioComponent implements OnInit {
   }
 
   clearUser(usuario: Usuario) {
-    usuario.cpf = '';
-    usuario.email = '';
-    usuario.login = '';
-    usuario.nome = '';
-    usuario.password = '';
-    usuario.perfis = null;
-    usuario.sobrenome = '';
-    usuario.telefone = '';
+    this.form.reset();
+    this.msgs = [];
   }
 
   validaForm() {
@@ -90,12 +87,98 @@ export class CadastrousuarioComponent implements OnInit {
     } else {
       controle =  false;
     }
+<<<<<<<
     
     if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarSenha) && (controle == true)) {
+=======
+
+    if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarSenha) && (controle == true)
+        && (this.usuario.login != "") && (this.usuario.password != "")) {
+>>>>>>>
       return true
     } else {
       return false;
     }
   }
 
+  msgErro() {
+    let forms = ['login', 'confirmarNickName', 'senha', 'confirmarSenha', 'cpf'];
+    for (let i = 0; i < forms.length; i++) {
+      this.form.controls[forms[i]].status = "VALID";
+    };
+
+    if (this.usuario.login != this.confirmarNickName) {
+      this.form.controls['confirmarNickName'].status = "INVALID";
+      this.form.controls['login'].status = "INVALID";
+      this.form.controls['confirmarNickName'].pristine = false;
+      this.form.controls['login'].pristine = false;
+
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao cadastrar usuário!',
+        detail: `Os campos de nickname não coincidem.`
+      });
+    };
+
+    if (this.usuario.login == "" || this.confirmarNickName == "") {
+      this.form.controls['confirmarNickName'].status = "INVALID";
+      this.form.controls['login'].status = "INVALID";
+      this.form.controls['confirmarNickName'].pristine = false;
+      this.form.controls['login'].pristine = false;
+
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao cadastrar usuário!',
+        detail: `Os campos de nickname estão em branco.`
+      });
+    };
+
+    if (this.usuario.password != this.confirmarSenha) {
+      this.form.controls['confirmarSenha'].status = "INVALID";
+      this.form.controls['senha'].status = "INVALID";
+      this.form.controls['confirmarSenha'].pristine = false;
+      this.form.controls['senha'].pristine = false;
+
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao cadastrar usuário!',
+        detail: `As senhas não coincidem.`
+      });
+    };
+    
+    if (this.usuario.password == "" || this.confirmarSenha == "") {
+      this.form.controls['confirmarSenha'].status = "INVALID";
+      this.form.controls['senha'].status = "INVALID";
+      this.form.controls['confirmarSenha'].pristine = false;
+      this.form.controls['senha'].pristine = false;
+
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao cadastrar usuário!',
+        detail: `Os campos de senha estão em branco.`
+      });
+    };
+
+    if ((isValidCpf(this.usuario.cpf) != true) && (isValidCnpj(this.usuario.cpf) != true)) {
+      this.form.controls['cpf'].status = "INVALID";
+      this.form.controls['cpf'].pristine = false;
+
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao cadastrar usuário!',
+        detail: `O CPF não é válido.`
+      });
+    };
+
+    if (this.usuario.cpf == "") {
+      this.form.controls['cpf'].status = "INVALID";
+      this.form.controls['cpf'].pristine = false;
+
+      this.msgs.push({
+        severity: 'error',
+        summary: 'Erro ao cadastrar usuário!',
+        detail: `O campo de CPF está em branco.`
+      });
+    };
+  }
 }
