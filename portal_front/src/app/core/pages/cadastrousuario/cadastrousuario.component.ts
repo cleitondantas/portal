@@ -90,8 +90,8 @@ export class CadastrousuarioComponent implements OnInit {
     } else {
       controle =  false;
     }
-
-    if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarNickName) && (controle == true)) {
+    
+    if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarSenha) && (controle == true)) {
       return true
     } else {
       return false;

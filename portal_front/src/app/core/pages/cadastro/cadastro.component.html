@@ -315,7 +315,7 @@
     
             <ng-template pTemplate="body" let-rowData let-comp>
               <tr [pSelectableRow]="rowData">
-                <td> <button pButton icon="pi pi-user-minus" (click)="removerComprador(rowData)"></button> </td>
+                <td> <button pButton icon="pi pi-times" (click)="removerComprador(rowData)" class="ui-button-danger"></button> </td>
                 <td> <button pButton icon="pi pi-search" (click)="visualizarComprador(rowData)"></button></td>
                 <td> {{comp.nomecliente}} </td>
                 <td> {{comp.cpfcnpj}} </td>
