@@ -10,6 +10,7 @@ import formatCpf from '@brazilian-utils/format-cpf';
 import formatCnpj from '@brazilian-utils/format-cnpj';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
+import onlyNumbers from '@brazilian-utils/helper-only-numbers';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,10 @@ export class CadastroLogicaService {
   adicionarComprador(comprador: Compradores) {
     const comprador2: Compradores = new Compradores();
 
-    comprador2.cpfcnpj = comprador.cpfcnpj;
+    comprador2.cpfcnpj = onlyNumbers(comprador.cpfcnpj);
     comprador2.codtipocliente = Number(comprador.codtipocliente);
     comprador2.nomecliente = comprador.nomecliente;
-    comprador2.ndocumento = comprador.ndocumento;
+    comprador2.ndocumento = onlyNumbers(comprador.ndocumento);
     comprador2.orgaoexpedidor = comprador.orgaoexpedidor;
     comprador2.dataexpedicao = comprador.dataexpedicao;
     comprador2.datanascimento = comprador.datanascimento;
@@ -81,10 +82,10 @@ export class CadastroLogicaService {
   atualizarComprador(compradores: Compradores[] = [], comprador: Compradores, contato: any[] = []) {
     for (let item = 0; item < compradores.length; item++) {
       if (compradores[item].cpfcnpj == comprador.cpfcnpj) {
-        compradores[item].cpfcnpj = comprador.cpfcnpj;
+        compradores[item].cpfcnpj = onlyNumbers(comprador.cpfcnpj);
         compradores[item].codtipocliente = Number(comprador.codtipocliente);
         compradores[item].nomecliente = comprador.nomecliente;
-        compradores[item].ndocumento = comprador.ndocumento;
+        compradores[item].ndocumento = onlyNumbers(comprador.ndocumento);
         compradores[item].orgaoexpedidor = comprador.orgaoexpedidor;
         compradores[item].dataexpedicao = comprador.dataexpedicao;
         compradores[item].datanascimento = comprador.datanascimento;

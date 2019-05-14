@@ -7,6 +7,8 @@ import { DadosFaturamento } from '../models/dadosfaturamento';
 import { AnaliseChamadasService } from './analise-chamadas.service';
 import { SPE } from '../models/spe';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import formatCpf from '@brazilian-utils/format-cpf';
+import formatCnpj from '@brazilian-utils/format-cnpj';
 
 @Injectable({
   providedIn: 'root'
@@ -297,7 +299,13 @@ export class AnaliseLogicaService {
           dadosfaturamento.coddadosfaturamento = dados['data'][_i].coddadosfaturamento;
           dadosfaturamento.codanalise = dados['data'][_i].codanalise;
           dadosfaturamento.codcadastro = dados['data'][_i].codcadastro;
-          dadosfaturamento.cpfcnpj = dados['data'][_i].cpfcnpj;
+
+          if (dados['data'][_i].cpfcnpj.length > 11) {
+            dadosfaturamento.cpfcnpj = formatCnpj(dados['data'][_i].cpfcnpj);
+          } else {
+            dadosfaturamento.cpfcnpj = formatCpf(dados['data'][_i].cpfcnpj)
+          }
+
           dadosfaturamento.parcela1 = dados['data'][_i].parcela1;
           dadosfaturamento.notafiscal1   = dados['data'][_i].notafiscal1;
 

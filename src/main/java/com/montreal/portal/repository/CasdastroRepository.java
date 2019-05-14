@@ -19,4 +19,6 @@ public interface CasdastroRepository extends JpaRepository<Cadastro,Integer>{
 	@Query(value = "select c.* from tb_cadastro c inner join tb_cliente_cadastro cc on cc.cod_cadastro = c.cod_cadastro inner join tb_clientes cl  on cl.cpf_cnpj = cc.cpf_cnpj where cl.cpf_cnpj like %:cpf%",nativeQuery = true)
 	List<Cadastro> findCadastroWithPartOfCPFCliente(@Param("cpf") String cpf);
 	
+	@Query(value = "SELECT TOP 10 * FROM tb_cadastro order by dt_atividade desc",nativeQuery = true)
+	List<Cadastro> 	findTopCadastro();
 }

@@ -11,7 +11,7 @@ import { TipoContato } from '../models/tipo-contato';
 import { TipoClientes } from '../models/tipo-clientes';
 import { environment } from '../../environments/environment';
 import { Cliente } from '../models/cliente';
-import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +65,7 @@ export class CadastroChamadasService {
     .then(data => data);
   }
 
+  
   getBuscaNomeClienteCadastrado(nome: any) {
     return this.http.get<Cliente[]>(environment.urlpath + '/api/cliente/nome/' + nome)
     .toPromise()

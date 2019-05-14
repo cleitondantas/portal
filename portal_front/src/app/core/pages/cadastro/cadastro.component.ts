@@ -16,6 +16,7 @@ import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
+import onlyNumbers from '@brazilian-utils/helper-only-numbers';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask';
 import { HttpResponse } from '@angular/common/http';
@@ -120,7 +121,7 @@ export class CadastroComponent implements OnInit {
       const contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
       const contato2 = this.logicaService.adicionarContatosLista(contato);
 
-      contato2.cpfcnpj = this.comprador.cpfcnpj;
+      contato2.cpfcnpj = onlyNumbers(this.comprador.cpfcnpj);
 
       this.contatoDisplay.push(contatoDisplay);
       this.contato.push(contato2);
@@ -191,15 +192,25 @@ export class CadastroComponent implements OnInit {
   }
 
   removerComprador (comprador) {
-    const index = this.compradores.indexOf(comprador);
-    this.compradores.splice(index, 1);
-
-    if (this.compradores.length <= 0) {
-      this.disabled = true;
-    } else {
-      this.disabled = false;
-    }
-    this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Comprador removido!'});
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja continuar?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+       const index = this.compradores.indexOf(comprador);
+        this.compradores.splice(index, 1);
+        if (this.compradores.length <= 0) {
+          this.disabled = true;
+        } else {
+          this.disabled = false;
+        }
+          this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Comprador removido!'});
+      },
+      reject: () => {
+      }
+    })
   }
 
   consultaCEP() {
