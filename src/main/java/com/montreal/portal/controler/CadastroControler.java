@@ -135,6 +135,7 @@ public class CadastroControler {
 		return ResponseEntity.ok(response);
 	}
 
+	
 	@GetMapping(value = "/cadastros/top")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Iterable<Cadastro>>> findTopCadastro() {
