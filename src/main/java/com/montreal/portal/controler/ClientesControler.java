@@ -1,11 +1,13 @@
 package com.montreal.portal.controler;
 
+import java.util.Date;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -16,11 +18,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.montreal.portal.entity.Cliente;
 import com.montreal.portal.repository.ClientesRepository;
 import com.montreal.portal.response.Response;
+
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 @RestController
 @RequestMapping("/api")
@@ -29,6 +36,7 @@ public class ClientesControler {
 
 	@Autowired
 	private ClientesRepository clientesRepository;
+	
 	
 	@GetMapping(value = "/clientes")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.montreal.portal.entity.Cadastro;
@@ -24,6 +26,8 @@ import com.montreal.portal.entity.Cliente;
 import com.montreal.portal.entity.Contato;
 import com.montreal.portal.repository.CasdastroRepository;
 import com.montreal.portal.response.Response;
+
+import io.reactivex.Observable;
 
 @RestController
 @RequestMapping("/api")
@@ -33,6 +37,9 @@ public class CadastroControler {
 	@Autowired
 	private CasdastroRepository casdastroRepository;
 
+	
+	
+	
 	@PostMapping(value = "/cadastro")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Cadastro>> create(HttpServletRequest request, @RequestBody Cadastro cadastro, BindingResult result) {
@@ -128,6 +135,33 @@ public class CadastroControler {
 		return ResponseEntity.ok(response);
 	}
 
+	@GetMapping(value = "/cadastros/top")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+	public ResponseEntity<Response<Iterable<Cadastro>>> findTopCadastro() {
+		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
+		try {
+			
+			List<Cadastro> cadastros = casdastroRepository.findTopCadastro();
+
+			for (Cadastro item : cadastros) {
+				for (Cliente cliente : item.getClientes()) {
+					if (item.getCpfcnpj() != null) {
+						if (item.getCpfcnpj().equalsIgnoreCase(cliente.getCpfcnpj())) {
+							cliente.setPrincipal(true);
+						} else {
+							cliente.setPrincipal(false);
+						}
+					}
+				}
+			}
+			response.setData(cadastros);
+		} catch (Exception e) {
+			response.getErrors().add(e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
+		return ResponseEntity.ok(response);
+	}
+
 	
 	//Busca por FID
 	@GetMapping(value = "/cadastro/{cod}")
@@ -138,11 +172,6 @@ public class CadastroControler {
 		Cadastro cadastro =null;
 		try {
 		List<Cadastro> listCadastro = 	casdastroRepository.findCadastroWithPartOfFid(Integer.parseInt(cod));
-		//	Optional<Cadastro> cadastroOptional = casdastroRepository.findById(Integer.parseInt(cod));
-//			if(cadastroOptional.isPresent()) {
-//				cadastro = cadastroOptional.get();
-//			}
-		
 		for(Cadastro item: listCadastro) {
 			cadastro = item;
 		}
@@ -157,8 +186,6 @@ public class CadastroControler {
 					}
 				}
 			}
-			cadastros.add(cadastro);
-			response.setData(cadastros);
 	
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
@@ -176,11 +203,6 @@ public class CadastroControler {
 		Cadastro cadastro =null;
 		try {
 		List<Cadastro> listCadastro = 	casdastroRepository.findCadastroWithPartOfNomeCliente(nomeCliente);
-		//	Optional<Cadastro> cadastroOptional = casdastroRepository.findById(Integer.parseInt(cod));
-//			if(cadastroOptional.isPresent()) {
-//				cadastro = cadastroOptional.get();
-//			}
-		
 		for(Cadastro item: listCadastro) {
 			cadastro = item;
 		}

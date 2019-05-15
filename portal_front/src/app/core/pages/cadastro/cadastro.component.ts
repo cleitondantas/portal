@@ -21,6 +21,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask';
 import { HttpResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -40,7 +41,8 @@ export class CadastroComponent implements OnInit {
     private logicaService: CadastroLogicaService,
     private router: Router,
     private messageService: MessageService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private authService : AuthService
   ) { }
 
   contato: any[] = [];
@@ -99,6 +101,7 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit() {
+
     SharedService.getInstance().temporario = [];
     this.chamadasInit();
 
@@ -192,15 +195,25 @@ export class CadastroComponent implements OnInit {
   }
 
   removerComprador (comprador) {
-    const index = this.compradores.indexOf(comprador);
-    this.compradores.splice(index, 1);
-
-    if (this.compradores.length <= 0) {
-      this.disabled = true;
-    } else {
-      this.disabled = false;
-    }
-    this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Comprador removido!'});
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja continuar?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+       const index = this.compradores.indexOf(comprador);
+        this.compradores.splice(index, 1);
+        if (this.compradores.length <= 0) {
+          this.disabled = true;
+        } else {
+          this.disabled = false;
+        }
+          this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Comprador removido!'});
+      },
+      reject: () => {
+      }
+    })
   }
 
   consultaCEP() {

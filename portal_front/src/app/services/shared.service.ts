@@ -14,7 +14,7 @@ export class SharedService {
   private user: Usuario;
   role: Role;
   temporario: any[] = [];
-
+  static emitirevento  = new EventEmitter<any>();
   @Output() messengerService = new MessageService();
   @Output() showError = new EventEmitter<string>();
   showTemplate = new EventEmitter<boolean>();

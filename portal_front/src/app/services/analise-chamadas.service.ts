@@ -20,7 +20,7 @@ export class AnaliseChamadasService {
   controle = false;
   buscarAnalise = new EventEmitter<any>();
   buscarInformacoes = new EventEmitter<any>();
-
+  emitirevento  = new EventEmitter<any>();
   constructor(
     private http: HttpClient
   ) { }
