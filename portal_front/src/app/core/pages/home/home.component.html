@@ -1,6 +1,28 @@
-<div >
-<p>
+<div class="p-grid p-justify-center p-align-center vertical-container" [hidden]="load" style="padding: 25px;">
+    <div #loader class="lds-dual-ring">
+    </div>
+</div>
 
-</p>
+<div [hidden]="!load">
+    <p-table [value]="infosTable" sortMode="multiple">
+        <ng-template pTemplate="header">
+          <tr>
+            <th><strong>Nome</strong></th>
+            <th><strong>CPF/CNPJ</strong></th>
+            <th><strong>Empreendimento</strong></th>
+            <th><strong>Endereço do imóvel</strong></th>
+            <th><strong>Visualizar</strong></th>  
+          </tr>
+        </ng-template>
 
+        <ng-template pTemplate="body" let-rowData let-info>
+          <tr [pSelectableRow]="rowData">
+            <td> {{info.nomecliente}} </td>
+            <td> {{info.cpfcnpj | cpf}}</td>
+            <td> {{info.codempreendimento}} </td>
+            <td> {{info.endereco}}</td>
+            <td> <p-button label="IR >>" (onClick)="irCadastro(rowData)"></p-button></td>
+          </tr>
+        </ng-template>
+  </p-table>
 </div>
