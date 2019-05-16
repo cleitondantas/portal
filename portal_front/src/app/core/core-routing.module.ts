@@ -8,6 +8,7 @@ import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { RelatorioListaComponent } from './pages/relatorio-lista/relatorio-lista.component';
 import { LoginComponent } from './pages/login/login.component';
 import { GraficComponent } from './pages/grafic/grafic.component';
+import { ChatComponent } from './pages/chat/chat.component';
 
 const routes: Routes = [
 { path: 'informacoes', component: InformacoesComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
 { path: 'cadastro', component: CadastroComponent},
 { path: 'lista', component: RelatorioListaComponent},
 { path: 'login', component: LoginComponent},
+{ path: 'chat', component: ChatComponent},
 ];
 
 @NgModule({

@@ -31,8 +31,22 @@ public class Empreendimento implements Serializable{
 	
 	@Column(name="desc_empreendimento")
 	private String descempreendimento;
+	
+	@Column(name="rua")
+	private String rua;
+	
+	@Column(name="num")
+	private String numemero;
+	
+	@Column(name="cidade")
+	private String cidade;
+	
+	@Column(name="bairro")
+	private String bairro;
 
-
+	@Column(name="cep")
+	private String cep;
+	
 	public String getCnpjspe() {
 		return cnpjspe;
 	}
@@ -60,6 +74,56 @@ public class Empreendimento implements Serializable{
 
 	public void setDescempreendimento(String descempreendimento) {
 		this.descempreendimento = descempreendimento;
+	}
+
+
+	public String getRua() {
+		return rua;
+	}
+
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+
+	public String getNumemero() {
+		return numemero;
+	}
+
+
+	public void setNumemero(String numemero) {
+		this.numemero = numemero;
+	}
+
+
+	public String getCidade() {
+		return cidade;
+	}
+
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+
+	public String getBairro() {
+		return bairro;
+	}
+
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+
+	public String getCep() {
+		return cep;
+	}
+
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 
