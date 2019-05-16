@@ -49,6 +49,7 @@ import { AnaliseComponent } from './pages/analise-credito/analise/analise.compon
 
 import { PrimeNgCalendarMaskDirective } from 'src/app/directive/maskInput.directive';
 import { CoreRoutingModule } from './core-routing.module';
+import { ChatComponent } from './pages/chat/chat.component';
 
 @NgModule({
   imports: [
@@ -102,7 +103,8 @@ import { CoreRoutingModule } from './core-routing.module';
     AnaliseCreditoComponent,
     DadosFaturamentoComponent,
     AnaliseComponent,
-    PrimeNgCalendarMaskDirective
+    PrimeNgCalendarMaskDirective,
+    ChatComponent
     ],
   exports: [
     CadastroComponent,

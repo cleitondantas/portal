@@ -1,0 +1,10 @@
+.chat {
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+  }
+  
+  #input {
+    margin-bottom: 16px;
+  }
+  

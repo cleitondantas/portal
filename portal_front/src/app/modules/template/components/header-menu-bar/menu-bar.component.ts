@@ -365,7 +365,7 @@ export class MenuBarComponent implements OnInit {
             icon: 'pi pi-fw pi-search',
             items: [
               {label: 'Agrupado', icon: 'pi pi-fw pi-search', routerLink: '/lista'},
-              {label: 'Graficos', icon: 'pi pi-fw pi-search', routerLink: '/grafic'}
+              {label: 'Graficos', icon: 'pi pi-fw pi-search', routerLink: '/chat'}
             ]
         },
           {
