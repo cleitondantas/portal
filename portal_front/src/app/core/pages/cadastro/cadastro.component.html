@@ -319,7 +319,7 @@
                 <td> <button pButton icon="pi pi-search" (click)="visualizarComprador(rowData)"></button></td>
                 <td> {{comp.nomecliente}} </td>
                 <td> {{comp.cpfcnpj | cpf}} </td>
-                <td> {{ comp.valorrenda.toLocaleString('pt-br', {minimumFractionDigits: 2}) }} </td>
+                <td> R$ {{ comp.valorrenda.toLocaleString('pt-br', {minimumFractionDigits: 2}) }} </td>
                 <td>
                     <p-tableRadioButton [value]="rowData"></p-tableRadioButton>
                 </td>
@@ -399,7 +399,7 @@
                 <div class="p-col-4">
                   <p-dropdown placeholder="Selecione..." optionLabel="descempreendimento" [options]="empreendimento" [autoWidth]="false" 
                   [style]="{'width': '100%', 'margin-left': '5px'}" ngModel name="codempreendimento"  #codempreendimento="ngModel" 
-                  [(ngModel)]="cadInfo.codempreendimento" filter="true" required id="codempreendimento"></p-dropdown>
+                  [(ngModel)]="cadInfo.codempreendimento" filter="true" required id="codempreendimento" (onChange)="preencherEmpreendimento($event)"></p-dropdown>
                 </div>
                 <div class="p-col-2">
                   <label class="ajusteLabel" for="unidade">Unidade: </label>
