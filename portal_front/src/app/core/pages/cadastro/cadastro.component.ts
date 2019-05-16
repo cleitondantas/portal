@@ -308,9 +308,9 @@ export class CadastroComponent implements OnInit {
   }
 
   setarTrue(dados) {
-    console.log(dados);
     const rowData: Compradores = dados.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
+      this.compradores[_i].principal = false;
       if (rowData.cpfcnpj == this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = true;
       }
@@ -318,22 +318,19 @@ export class CadastroComponent implements OnInit {
   }
 
   verificarSelecionado() {
+    let principal: boolean = false;
     for (let _i = 0; _i < this.compradores.length; _i++) {
       if (this.compradores[_i].principal == true) {
-        return true;
-      } else {
-        return false;
+        principal = true;
       }
     }
+
+    return principal;
   }
 
   tirarSelecionado(rowData) {
-    console.log(rowData);
-    const row: Compradores = rowData.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
-      if (row.cpfcnpj == this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = false;
-      }
     }
   }
 
