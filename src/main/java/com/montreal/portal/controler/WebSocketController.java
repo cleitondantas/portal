@@ -5,9 +5,11 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.util.HtmlUtils;
 
 import io.reactivex.annotations.Nullable;
 
@@ -30,4 +32,10 @@ public class WebSocketController {
             LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + ": " + message);
     }
 	
+
+    @MessageMapping("/hello")
+    @SendTo("/topic/greetings")
+    public String greeting(String message) throws Exception {
+        return new String(HtmlUtils.htmlEscape(message));
+    }
 }
