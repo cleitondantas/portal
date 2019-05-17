@@ -1,0 +1,35 @@
+<div class="p-grid p-justify-center p-align-center">
+  <div class="main-container">
+    <p-panel>
+      <p-header>
+        Editar usuário
+      </p-header>
+    
+      <div class="p-grid p-justify-center p-align-center">
+        <div class="ui-g" [ngStyle]="{'width': '70%'}">
+          <div class="p-col-12">
+        
+            <div class="p-grid p-align-center vertical-container">
+              <div class="p-col-2" [ngStyle]="{'float': 'right'}">
+                <label for="client">Usuário:</label>
+              </div>
+              <div class="p-col-10">
+                <div class="ui-inputgroup">
+                  <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0px 0px 15px'}">
+                    <i class="pi pi-search"></i>
+                  </span>
+                  <input type="search" pInputText id="client" [ngStyle]="{'width': '100%'}">
+                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0px 15px 15px 0px'}"></button>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="p-grid" [ngStyle]="{'height': '3px', 'background-color': 'black', 'margin': '5px'}"></div>
+
+    </p-panel>    
+  </div>
+</div>

@@ -217,8 +217,18 @@ export class CadastroComponent implements OnInit {
   preencherEmpreendimento(event) {
     if (event.value.cep != null) {
       this.cadInfo.cep = event.value.cep;
-      this.consultaCEPImovel();
-      this.cadInfo.numero = event.value.numemero;
+      let cep = event.value.cep;
+      cep.replace('-', '');
+      this.chamadasService.getCep(cep).subscribe(dados => {
+        let dadosRecebidos: any = dados;
+        if (!('erro' in dados)) {
+          this.cadInfo.numero = event.value.numemero;
+          this.cadInfo.bairro = event.value.bairro;
+          this.cadInfo.cidade = event.value.cidade;
+          this.cadInfo.endereco = event.value.rua;
+          this.cadInfo.uf = {uf: dadosRecebidos.uf.toUpperCase()};
+        }
+      })
     } else {
       this.cadInfo.cep = null;
       this.cadInfo.numero = null;
@@ -620,6 +630,12 @@ export class CadastroComponent implements OnInit {
         (this.getLoads.getIncorporadoras == true) && (this.getLoads.getOriginacoes == true) && 
         (this.getLoads.getTipoCliente == true) && (this.getLoads.getTipoContato == true)) {
           setTimeout(() => {
+            this.getLoads.getEmpreendimentos = false;
+            this.getLoads.getIncorporadoras = false;
+            this.getLoads.getTipoCliente = false;
+            this.getLoads.getEstadoCivil = false;
+            this.getLoads.getOriginacoes = false;
+            this.getLoads.getTipoContato = false;
             this.load = true;
           }, 500);
         }

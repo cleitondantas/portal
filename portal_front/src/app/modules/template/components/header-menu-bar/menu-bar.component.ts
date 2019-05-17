@@ -416,8 +416,10 @@ export class MenuBarComponent implements OnInit {
                             this.hideDialogInfo();
                             this.hideDialog();
                             this.hideDialogDisplay();
-                        }},                          {label: 'Update', icon: 'pi pi-fw pi-save'},
-                          {label: 'Delete', icon: 'pi pi-fw pi-minus'}
+                        }},
+                        {label: 'Update', icon: 'pi pi-fw pi-save', routerLink: '/updateusuario'},
+                        {label: 'Delete', icon: 'pi pi-fw pi-minus', routerLink: '/deleteusuario'},
+                        {label: 'Reset', icon: 'pi pi-replay', routerLink: '/resetusuario'}
                       ]
                   }
               ]
