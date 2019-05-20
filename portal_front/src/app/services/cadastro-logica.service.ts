@@ -166,10 +166,7 @@ export class CadastroLogicaService {
       const empreendimento = dados['data'];
       for (let item = 0; item < empreendimento.length; item ++) {
         if (empreendimento[item].codempreendimento == cadastroinformacaoCarregada.codempreendimento) {
-          cadInfo.codempreendimento = {
-            codempreendimento: cadastroinformacaoCarregada.codempreendimento,
-            cnpjspe: empreendimento[item].cnpjspe,
-            descempreendimento: empreendimento[item].descempreendimento};
+          cadInfo.codempreendimento = empreendimento[item];
         }
       }
     });

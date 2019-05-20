@@ -41,7 +41,6 @@ export class HomeComponent implements OnInit {
           }
         }
 
-        console.log(this.cadastrosrecentes);
         this.popularInfoTable();
       }
     });
@@ -55,7 +54,8 @@ export class HomeComponent implements OnInit {
 
       for (let i = 0; i < this.cadastrosrecentes.length; i++) {
         cadastro = {nomecliente: this.cadastrosrecentes[i].nomecliente, cpfcnpj: this.cadastrosrecentes[i].cpfcnpj,
-                        codempreendimento: this.cadastroInformacoes[i].codempreendimento, endereco: this.cadastroInformacoes[i].endereco};
+                    codempreendimento: this.cadastroInformacoes[i].codempreendimento, endereco: this.cadastroInformacoes[i].endereco,
+                    numero: this.cadastroInformacoes[i].numero};
         
         for (let item = 0; item < empreendimento.length; item ++) {
           if (empreendimento[item].codempreendimento == cadastro.codempreendimento) {
@@ -64,12 +64,12 @@ export class HomeComponent implements OnInit {
         }
         
         this.infosTable.push(cadastro);
-        setTimeout(() => {
-          this.load = true;
-        }, 500);
       }
+      
+      setTimeout(() => {
+        this.load = true;
+      }, 500);
     });
-    
     console.log(this.infosTable)
   }
 
