@@ -159,13 +159,11 @@ public class CadastroControler {
 		return ResponseEntity.ok(response);
 	}
 
-	
 	//Busca por FID
 	@GetMapping(value = "/cadastro/{cod}")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Iterable<Cadastro>>> findFidCadastro(@PathVariable String cod) {
 		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
-		List<Cadastro>  cadastros  =  new ArrayList<Cadastro>();
 		Cadastro cadastro =null;
 		try {
 		List<Cadastro> listCadastro = 	casdastroRepository.findCadastroWithPartOfFid(Integer.parseInt(cod));

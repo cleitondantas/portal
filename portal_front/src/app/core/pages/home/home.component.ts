@@ -5,6 +5,7 @@ import { HomeChamadasService } from 'src/app/services/home-chamadas.service';
 import { Compradores } from 'src/app/models/compradores';
 import { Router } from '@angular/router';
 import { CadastroChamadasService } from 'src/app/services/cadastro-chamadas.service';
+import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
     this.getListCadastrosTop();
+  //  this.getFlux();
   }
 
   getListCadastrosTop(){
@@ -66,9 +68,9 @@ export class HomeComponent implements OnInit {
       
       setTimeout(() => {
         this.load = true;
-      }, 500);
+      }, 0);
     });
-
+    console.log(this.infosTable)
   }
 
   irCadastro(cadastro: Compradores) {
@@ -81,5 +83,10 @@ export class HomeComponent implements OnInit {
     }
 
     this.router.navigate(['/cadastro']);
+  }
+
+
+  getFlux(){
+    this.cadastroChamada.getFlux().subscribe(data => console.log(data))
   }
 }

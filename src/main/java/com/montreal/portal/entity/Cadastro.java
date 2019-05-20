@@ -28,6 +28,14 @@ public class Cadastro implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -6604602776788012022L;
+	
+	
+	public Cadastro() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod_cadastro")

@@ -2,6 +2,9 @@ package com.montreal.portal.security.controller;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.montreal.portal.entity.Usuario;
+import com.montreal.portal.response.Response;
 import com.montreal.portal.security.CurrentUsuario;
 import com.montreal.portal.security.jwt.JwtAuthenticationRequest;
 import com.montreal.portal.security.jwt.JwtTokenUtil;
@@ -56,6 +60,14 @@ public class AuthenticationRestController {
         final Usuario usuario = usuarioService.findByLogin(authenticationRequest.getLogin());
         usuario.setPassword(null);
         usuario.setId(null);
+        
+        if(!usuario.getIsAtivo()) {
+        	Response<String> response = new Response<String>();
+        	List<String> errors = new ArrayList<>();
+        	errors.add("Erro, Usuario não está ativo");
+        	response.setErrors(errors);
+        	return ResponseEntity.ok(response);
+        }
         
         return ResponseEntity.ok(new CurrentUsuario(token, usuario));
     }
