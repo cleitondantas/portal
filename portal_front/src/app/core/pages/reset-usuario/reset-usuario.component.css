@@ -5,3 +5,12 @@
     padding: 0;
     box-shadow:0 5px 5px rgba(0,0,0,.175);
 }
+
+.ajusteInput {
+    width: 100%;
+    margin: 1vw 0vw 1vw 0vw;
+}
+
+.ajusteLabel {
+  float: right;
+}

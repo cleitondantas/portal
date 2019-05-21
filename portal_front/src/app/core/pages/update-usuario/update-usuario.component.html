@@ -5,31 +5,96 @@
         Editar usuário
       </p-header>
     
-      <div class="p-grid p-justify-center p-align-center">
-        <div class="ui-g" [ngStyle]="{'width': '70%'}">
-          <div class="p-col-12">
+      <div class="p-grid p-justify-center p-align-center" [ngStyle]="{'margin': '5px'}">
+        <div class="p-grid">
+          <div class="p-col-6">
         
             <div class="p-grid p-align-center vertical-container">
               <div class="p-col-2" [ngStyle]="{'float': 'right'}">
-                <label for="client">Usuário:</label>
+                <label for="usuario">Usuário:</label>
               </div>
               <div class="p-col-10">
                 <div class="ui-inputgroup">
                   <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0px 0px 15px'}">
                     <i class="pi pi-search"></i>
                   </span>
-                  <input type="search" pInputText id="client" [ngStyle]="{'width': '100%'}">
-                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0px 15px 15px 0px'}"></button>
+                  <p-autoComplete [(ngModel)]="usuario" [suggestions]="results" (completeMethod)="searchNome($event)"></p-autoComplete>
+                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0px 15px 15px 0px'}"
+                  (click)="getUser(true)" ></button>
                 </div>
               </div>
             </div>
             
           </div>
+          <div class="p-col-6">
+
+            <div class="p-grid p-align-center vertical-container">
+              <div class="p-col-2" [ngStyle]="{'float': 'right'}">
+                <label for="login">Login:</label>
+              </div>
+              <div class="p-col-10">
+                <div class="ui-inputgroup">
+                  <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0px 0px 15px'}">
+                    <i class="pi pi-search"></i>
+                  </span>
+                  <p-autoComplete [(ngModel)]="nickname" [suggestions]="resultsLogin" (completeMethod)="searchLogin($event)"></p-autoComplete>
+                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0px 15px 15px 0px'}"
+                  (click)="getUser(false)"></button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  
+      <div class="p-grid" [ngStyle]="{'height': '3px', 'background-color': 'black', 'margin': '5px'}"></div>
+
+      <div class="p-grid p-justify-center" [hidden]="!showLoad">
+        <div class="p-grid" style="padding: 25px;">
+            <i class="pi pi-spin pi-spinner" style="font-size: 10em"></i>
         </div>
       </div>
 
-      <div class="p-grid" [ngStyle]="{'height': '3px', 'background-color': 'black', 'margin': '5px'}"></div>
-
+      <div [hidden]="!showForm">
+        <form id="form" #form="ngForm" autocomplete="off">
+          <div class="p-grid">
+            <div class="p-col-6">
+                <input type="text" class="ajusteInput" pInputText placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuarioForm.nome" tabindex="1"/>
+                <input type="text" class="ajusteInput" pInputText placeholder="Telefone ou Ramal" id="contato" pattern="\d+" ngModel name="telefone" #telefone="ngModel" [(ngModel)]="usuarioForm.telefone" tabindex="3"/>
+                <input type="text" class="ajusteInput" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuarioForm.login" tabindex="5"/>
+            </div>
+  
+            <div class="p-col-6">
+                <input type="text" class="ajusteInput" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuarioForm.sobrenome" tabindex="2"/>
+                <input type="text" class="ajusteInput" pInputText placeholder="CPF" name="cpf" #cpf="ngModel" [(ngModel)]="usuarioForm.cpf" tabindex="4"/>
+                <input type="text" class="ajusteInput" pInputText placeholder="Repita o nickname" id="confirmarNickName" name="confirmarNickName" [(ngModel)]="confirmarNickName" tabindex="6"/>
+            </div>
+  
+            <div class="p-col-12">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon">@</span>
+                    <input id="idemail" type="email" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuarioForm.email" tabindex="9">  
+                </div>
+            </div>
+  
+            <div class="p-col-12">
+                <div class="ui-inputgroup">
+                    <p-multiSelect [options]="selectRoles" optionLabel="profile" [(ngModel)]="usuarioForm.perfis" defaultLabel="Selecione o perfil.." [ngModelOptions]="{standalone:true}" 
+                    [style]="{'width': '100%'}" [ngStyle]="{'width': '100%'}" tabindex="10"></p-multiSelect>
+                </div>
+            </div>
+  
+            <div class="p-grid p-justify-end" [ngStyle]="{'width': '100%', 'height': '100%'}">
+                <button pButton type="submit" label="Salvar" class="ui-button-rounded ui-button-success" 
+                [ngStyle]="{'width': '15%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right" (click)="atualizarUser()"></button>
+            </div>
+  
+          </div>
+        </form>
+      </div>
+      
     </p-panel>    
   </div>
 </div>
+  
