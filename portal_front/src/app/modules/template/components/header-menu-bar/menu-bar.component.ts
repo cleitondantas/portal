@@ -51,6 +51,7 @@ export class MenuBarComponent implements OnInit {
     nomeClienteFiltrado: any[];
     dataNascimento: string;
     codcadastro: number;
+    loadSpin: boolean = false;
 
     nomeclienteSelecionado: string;
     cpfclienteSelecionado: string;
@@ -75,9 +76,14 @@ export class MenuBarComponent implements OnInit {
 
     }
     clickBuscaPorNome(event: any) {
+        this.loadSpin = !this.loadSpin;
         this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado, null).subscribe(data => {
             this.msgsNome = [];
             this.cadastrosTabelaBusca = data['data'];
+
+            setTimeout(() => {
+                this.loadSpin = !this.loadSpin;
+            }, 500);
         }, error => {
             this.msgsNome = [];
             this.msgsNome.push({
@@ -85,10 +91,12 @@ export class MenuBarComponent implements OnInit {
                 summary: 'Erro ao buscar!',
                 detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
+            this.loadSpin = !this.loadSpin;
         });
     }
 
     clickBuscaPorNomeInfo(event: any) {
+        this.loadSpin = !this.loadSpin;
         this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado, null).subscribe(data => {
             this.msgsNome = [];
             this.cadastrosTabelaBuscaInfo = data['data'];
@@ -105,6 +113,10 @@ export class MenuBarComponent implements OnInit {
                     }
                 }
             }
+
+            setTimeout(() => {
+                this.loadSpin = !this.loadSpin;
+            }, 500);
             console.log(this.clienteInformacao);
         }, error => {
             this.msgsNome = [];
@@ -113,10 +125,13 @@ export class MenuBarComponent implements OnInit {
                 summary: 'Erro ao buscar!',
                 detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
+            this.loadSpin = !this.loadSpin;
         });
     }
 
     clickBuscaPorCPFInfo(event: any) {
+        this.loadSpin = !this.loadSpin;
+
         this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
             this.msgsCpf = [];
             this.cadastrosTabelaBuscaInfo = data['data'];
@@ -133,6 +148,10 @@ export class MenuBarComponent implements OnInit {
                     }
                 }
             }
+
+            setTimeout(() => {
+                this.loadSpin = !this.loadSpin;
+            }, 500);
             console.log(this.clienteInformacao);
         }, error => {
             this.msgsCpf = [];
@@ -141,12 +160,20 @@ export class MenuBarComponent implements OnInit {
                 summary: 'Erro ao buscar!',
                 detail: `Não foi encontrado nenhum cadastro com o CPF: <strong>` + this.cpfclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
+
+            this.loadSpin = !this.loadSpin;
         });
     }
 
     clickBuscaPorCPF(event: any) {
+        this.loadSpin = !this.loadSpin;
+
         this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
             this.cadastrosTabelaBusca = data['data'];
+            
+            setTimeout(() => {
+                this.loadSpin = !this.loadSpin;
+            }, 500);
         }, error => {
             this.msgsCpf = [];
             this.msgsCpf.push({
@@ -154,6 +181,8 @@ export class MenuBarComponent implements OnInit {
                 summary: 'Erro ao buscar!',
                 detail: `Não foi encontrado nenhum cadastro com o CPF: <strong>` + this.cpfclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
+
+            this.loadSpin = !this.loadSpin;
         });
 
     }
@@ -365,21 +394,32 @@ export class MenuBarComponent implements OnInit {
             icon: 'pi pi-fw pi-search',
             items: [
               {label: 'Agrupado', icon: 'pi pi-fw pi-search', routerLink: '/lista'},
-              {label: 'Graficos', icon: 'pi pi-fw pi-search', routerLink: '/grafic'}
+              {label: 'Graficos', icon: 'pi pi-fw pi-search', routerLink: '/chat'}
             ]
         },
           {
                 visible: true,
               label: 'Administrador',
               icon: 'pi pi-fw pi-cog',
+              routerLink: '/cadastrousuario',
+              command: (event: Event) => {
+                this.hideDialogInfo();
+                this.hideDialog();
+                this.hideDialogDisplay();
+                },
               items: [
                   {
                       label: 'Usuario',
                       icon: 'pi pi-fw pi-pencil',
                       items: [
-                          {label: 'Novo', icon: 'pi pi-fw pi-save', routerLink: '/cadastrousuario'},
-                          {label: 'Update', icon: 'pi pi-fw pi-save'},
-                          {label: 'Delete', icon: 'pi pi-fw pi-minus'}
+                        {label: 'Novo', icon: 'pi pi-fw pi-save', routerLink: '/cadastrousuario', command: (event: Event) => {
+                            this.hideDialogInfo();
+                            this.hideDialog();
+                            this.hideDialogDisplay();
+                        }},
+                        {label: 'Update', icon: 'pi pi-fw pi-save', routerLink: '/updateusuario'},
+                        {label: 'Delete', icon: 'pi pi-fw pi-minus', routerLink: '/deleteusuario'},
+                        {label: 'Reset', icon: 'pi pi-replay', routerLink: '/resetusuario'}
                       ]
                   }
               ]

@@ -1,0 +1,92 @@
+<div class="p-grid p-justify-center p-align-center">
+  <div class="main-container">
+    <p-panel>
+      <p-header>
+        Deletar Usuario
+      </p-header>
+    
+      <div class="p-grid p-justify-center p-align-center" [ngStyle]="{'margin': '5px'}">
+        <div class="p-grid">
+          <div class="p-col-6">
+        
+            <div class="p-grid p-align-center vertical-container">
+              <div class="p-col-2" [ngStyle]="{'float': 'right'}">
+                <label for="usuario">Usuário:</label>
+              </div>
+              <div class="p-col-10">
+                <div class="ui-inputgroup">
+                  <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0px 0px 15px'}">
+                    <i class="pi pi-search"></i>
+                  </span>
+                  <p-autoComplete [(ngModel)]="usuario" [suggestions]="results" (completeMethod)="searchNome($event)"></p-autoComplete>
+                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0px 15px 15px 0px'}"
+                  (click)="getUser(true)" ></button>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="p-col-6">
+
+            <div class="p-grid p-align-center vertical-container">
+              <div class="p-col-2" [ngStyle]="{'float': 'right'}">
+                <label for="login">Login:</label>
+              </div>
+              <div class="p-col-10">
+                <div class="ui-inputgroup">
+                  <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0px 0px 15px'}">
+                    <i class="pi pi-search"></i>
+                  </span>
+                  <p-autoComplete [(ngModel)]="nickname" [suggestions]="resultsLogin" (completeMethod)="searchLogin($event)"></p-autoComplete>
+                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0px 15px 15px 0px'}"
+                  (click)="getUser(false)"></button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  
+      <div class="p-grid" [ngStyle]="{'height': '3px', 'background-color': 'black', 'margin': '5px'}"></div>
+
+      <div class="p-grid p-justify-center" [hidden]="!showLoad">
+        <div class="p-grid" style="padding: 25px;">
+            <i class="pi pi-spin pi-spinner" style="font-size: 10em"></i>
+        </div>
+      </div>
+
+      <div [hidden]="!showForm">
+        <form id="form" #form="ngForm" autocomplete="off">
+          <div class="p-grid">
+            <div class="p-col-6">
+                <input type="text" class="ajusteInput" pInputText placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuarioForm.nome" tabindex="1"/>
+                
+            </div>
+  
+            <div class="p-col-6">
+                <input type="text" class="ajusteInput" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuarioForm.sobrenome" tabindex="2"/>
+            </div>
+            <div class="p-col-12">
+                <input type="text" class="ajusteInput" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuarioForm.login" tabindex="5"/>
+            </div> 
+            <div class="p-col-12">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon">@</span>
+                    <input id="idemail" type="email" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuarioForm.email" tabindex="9">  
+                </div>
+            </div>
+  
+            <div class="p-grid p-justify-end" [ngStyle]="{'width': '100%', 'height': '100%'}">
+                <button pButton type="submit" label="Delete" class="ui-button-danger ui-button-raised" 
+                [ngStyle]="{'width': '15%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right" (click)="deleteUser()"></button>
+            </div>
+  
+          </div>
+        </form>
+      </div>
+      
+    </p-panel>    
+  </div>
+</div>
+  

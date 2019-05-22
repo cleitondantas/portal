@@ -21,7 +21,6 @@ import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask';
 import { HttpResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -41,8 +40,7 @@ export class CadastroComponent implements OnInit {
     private logicaService: CadastroLogicaService,
     private router: Router,
     private messageService: MessageService,
-    private sharedService: SharedService,
-    private authService : AuthService
+    private sharedService: SharedService
   ) { }
 
   contato: any[] = [];
@@ -216,6 +214,32 @@ export class CadastroComponent implements OnInit {
     })
   }
 
+  preencherEmpreendimento(event) {
+    if (event.value.cep != null) {
+      this.cadInfo.cep = event.value.cep;
+      let cep = event.value.cep;
+      cep.replace('-', '');
+      this.chamadasService.getCep(cep).subscribe(dados => {
+        let dadosRecebidos: any = dados;
+        if (!('erro' in dados)) {
+          this.cadInfo.numero = event.value.numemero;
+          this.cadInfo.bairro = event.value.bairro;
+          this.cadInfo.cidade = event.value.cidade;
+          this.cadInfo.endereco = event.value.rua;
+          this.cadInfo.uf = {uf: dadosRecebidos.uf.toUpperCase()};
+        }
+      })
+    } else {
+      this.cadInfo.cep = null;
+      this.cadInfo.numero = null;
+      this.cadInfo.bairro = null;
+      this.cadInfo.cidade = null;
+      this.cadInfo.endereco = null;
+      this.cadInfo.complemento = null;
+      this.cadInfo.uf = null;
+    }
+  }
+
   consultaCEP() {
     let cep = this.comprador.cepresidencial;
 
@@ -308,9 +332,9 @@ export class CadastroComponent implements OnInit {
   }
 
   setarTrue(dados) {
-    console.log(dados);
     const rowData: Compradores = dados.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
+      this.compradores[_i].principal = false;
       if (rowData.cpfcnpj == this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = true;
       }
@@ -318,22 +342,19 @@ export class CadastroComponent implements OnInit {
   }
 
   verificarSelecionado() {
+    let principal: boolean = false;
     for (let _i = 0; _i < this.compradores.length; _i++) {
       if (this.compradores[_i].principal == true) {
-        return true;
-      } else {
-        return false;
+        principal = true;
       }
     }
+
+    return principal;
   }
 
   tirarSelecionado(rowData) {
-    console.log(rowData);
-    const row: Compradores = rowData.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
-      if (row.cpfcnpj == this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = false;
-      }
     }
   }
 
@@ -548,7 +569,6 @@ export class CadastroComponent implements OnInit {
         if (this.cadInfo.clientes[_i].principal == true) {
           this.selectedItem = this.cadInfo.clientes[_i];
         }
-
       }
 
       this.comprador = new Compradores();
@@ -610,6 +630,12 @@ export class CadastroComponent implements OnInit {
         (this.getLoads.getIncorporadoras == true) && (this.getLoads.getOriginacoes == true) && 
         (this.getLoads.getTipoCliente == true) && (this.getLoads.getTipoContato == true)) {
           setTimeout(() => {
+            this.getLoads.getEmpreendimentos = false;
+            this.getLoads.getIncorporadoras = false;
+            this.getLoads.getTipoCliente = false;
+            this.getLoads.getEstadoCivil = false;
+            this.getLoads.getOriginacoes = false;
+            this.getLoads.getTipoContato = false;
             this.load = true;
           }, 500);
         }
@@ -631,7 +657,8 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getEmpreendimentos = true;
         this.hiddenLoader();
       }
-    })
+    });
+
     this.chamadasService.getDadosCadastrais('originacoes').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];
@@ -655,7 +682,8 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getTipoContato = true;
         this.hiddenLoader();
       }
-    })
+    });
+
     this.chamadasService.getDadosCadastrais('tipoclientes').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];
@@ -663,7 +691,8 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getTipoCliente = true;
         this.hiddenLoader();
       }
-    })
+    });
+
     this.chamadasService.getDadosCadastrais('incorporadoras').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];
@@ -671,6 +700,6 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getIncorporadoras = true;
         this.hiddenLoader();
       }
-    })
+    });
   }
 }

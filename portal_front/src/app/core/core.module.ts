@@ -49,6 +49,10 @@ import { AnaliseComponent } from './pages/analise-credito/analise/analise.compon
 
 import { PrimeNgCalendarMaskDirective } from 'src/app/directive/maskInput.directive';
 import { CoreRoutingModule } from './core-routing.module';
+import { ChatComponent } from './pages/chat/chat.component';
+import { ResetUsuarioComponent } from './pages/reset-usuario/reset-usuario.component';
+import { UpdateUsuarioComponent } from './pages/update-usuario/update-usuario.component';
+import { DeleteUsuarioComponent } from './pages/delete-usuario/delete-usuario.component';
 
 @NgModule({
   imports: [
@@ -102,7 +106,11 @@ import { CoreRoutingModule } from './core-routing.module';
     AnaliseCreditoComponent,
     DadosFaturamentoComponent,
     AnaliseComponent,
-    PrimeNgCalendarMaskDirective
+    PrimeNgCalendarMaskDirective,
+    ChatComponent,
+    ResetUsuarioComponent,
+    UpdateUsuarioComponent,
+    DeleteUsuarioComponent
     ],
   exports: [
     CadastroComponent,

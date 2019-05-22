@@ -31,6 +31,10 @@ export class CadastroChamadasService {
   getEmpreendimentos() {
     return this.http.get<Empreendimento[]>(environment.urlpath + '/api/empreendimentos');
   }
+  
+  getFlux() {
+    return this.http.get<Empreendimento[]>(environment.urlpath + '/api/flux');
+  }
 
   getOriginacao() {
     return this.http.get<Originacao[]>(environment.urlpath + '/api/originacoes');
