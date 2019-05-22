@@ -4,16 +4,21 @@ import { HttpResponse } from '@angular/common/http';
 import { Usuario } from 'src/app/models/usuario';
 import { Role } from 'src/app/models/role';
 import { FormCadastroLogicaService } from 'src/app/services/form-cadastro-logica.service';
+import { ConfirmationService, Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-reset-usuario',
   templateUrl: './reset-usuario.component.html',
-  styleUrls: ['./reset-usuario.component.css']
+  styleUrls: ['./reset-usuario.component.css'],
+  providers: [MessageService]
 })
+
+
 export class ResetUsuarioComponent implements OnInit {
   usuario: string;
   nickname: string;
 
+  newPassord: string;
   usuarioForm: Usuario = new Usuario();
   selectRoles: Role[];
   item: Role;
@@ -24,6 +29,7 @@ export class ResetUsuarioComponent implements OnInit {
   showLoad: boolean = false;
 
   constructor(private formcadastro: FormcadastroService,
+              private messageService: MessageService,
               private formCadastroLogica: FormCadastroLogicaService) { }
 
   ngOnInit() {
@@ -31,9 +37,15 @@ export class ResetUsuarioComponent implements OnInit {
   }
 
   atualizarUser() {
-    this.formcadastro.createOrUpdateUsuer(this.usuarioForm).subscribe(data => {
+    if(this.newPassord!=null && this.newPassord.length != 0){
+      this.usuarioForm.password = this.newPassord;
+    this.formcadastro.salvaresetUserPassword(this.usuarioForm).subscribe(data => {
+      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});    
       console.log(data);
     })
+  }else{
+    this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'Erro ao realizar alterações!'});
+  }
   }
   
   getRoles() {
@@ -98,4 +110,10 @@ export class ResetUsuarioComponent implements OnInit {
       this.resultsLogin = this.formCadastroLogica.filtroClientePorLogin(event.query, data['data']);
     })
   }
+
+  resetRandonPassoword(){
+    this.newPassord = this.formcadastro.makeid(8);
+  }
+
+
 }

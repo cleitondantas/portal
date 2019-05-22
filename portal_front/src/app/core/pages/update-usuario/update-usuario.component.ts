@@ -4,11 +4,12 @@ import { HttpResponse } from '@angular/common/http';
 import { Usuario } from 'src/app/models/usuario';
 import { Role } from 'src/app/models/role';
 import { FormCadastroLogicaService } from 'src/app/services/form-cadastro-logica.service';
-
+import { ConfirmationService, Message, MessageService } from 'primeng/api';
 @Component({
   selector: 'app-update-usuario',
   templateUrl: './update-usuario.component.html',
-  styleUrls: ['./update-usuario.component.css']
+  styleUrls: ['./update-usuario.component.css'],
+  providers: [MessageService]
 })
 export class UpdateUsuarioComponent implements OnInit {
   usuario: string;
@@ -24,6 +25,7 @@ export class UpdateUsuarioComponent implements OnInit {
   showLoad: boolean = false;
 
   constructor(private formcadastro: FormcadastroService,
+              private messageService: MessageService,
               private formCadastroLogica: FormCadastroLogicaService) { }
 
   ngOnInit() {
@@ -31,9 +33,23 @@ export class UpdateUsuarioComponent implements OnInit {
   }
 
   atualizarUser() {
-    this.formcadastro.createOrUpdateUsuer(this.usuarioForm).subscribe(data => {
-      console.log(data);
-    })
+    if(this.usuarioForm.nome!=null && this.usuarioForm.nome.length!=0 
+        && this.usuarioForm.sobrenome && this.usuarioForm.sobrenome.length!=0
+        && this.usuarioForm.telefone !=null && this.usuarioForm.telefone.length!=0
+        && this.usuarioForm.cpf !=null && this.usuarioForm.cpf.length!=0
+        && this.usuarioForm.login !=null && this.usuarioForm.login.length!=0
+        && this.confirmarNickName == this.usuarioForm.login){
+          console.log(this.usuarioForm);
+      this.formcadastro.createOrUpdateUsuer(this.usuarioForm).subscribe(data => {
+        console.log(data);
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});    
+      })
+      
+    }else{
+      this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'Erro ao realizar alterações!'});
+      return 
+    }
+    
   }
   
   getRoles() {
@@ -61,7 +77,7 @@ export class UpdateUsuarioComponent implements OnInit {
   
           this.usuarioForm = dadosBaixados;
           this.usuarioForm.password = null;
-  
+          this.confirmarNickName =  this.usuarioForm.login;
           setTimeout(() => {
             this.showLoad = false;
             this.showForm = true;
@@ -77,7 +93,7 @@ export class UpdateUsuarioComponent implements OnInit {
 
           this.usuarioForm = dadosBaixados;
           this.usuarioForm.password = null;
-
+          this.confirmarNickName =  this.usuarioForm.login;
           setTimeout(() => {
             this.showLoad = false;
             this.showForm = true;

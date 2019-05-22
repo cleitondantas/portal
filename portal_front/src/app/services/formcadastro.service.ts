@@ -29,9 +29,36 @@ export class FormcadastroService {
       return this.http.put<Usuario>(environment.urlpath + '/api/user/usuario', user);
     } else {
       user.id = null;
-
       return this.http.post<Usuario>(environment.urlpath + '/api/user/usuario', user);
     }
+  }
+
+
+  salvaresetUserPassword(user: Usuario) {
+    console.log(JSON.stringify(user));
+    user.isAtivo = true;
+    user.cpf = onlyNumbers(user.cpf);
+    if (user.id != null ) {
+      return this.http.put<Usuario>(environment.urlpath + '/api/user/usuario/reset', user);
+    } else {
+      user.id = null;
+      return this.http.post<Usuario>(environment.urlpath + '/api/user/usuario', user);
+    }
+  }
+
+
+  makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
+
+  deleteUpdate(user: Usuario){
+    return this.http.delete<Usuario>(environment.urlpath + '/api/user/usuario/'+user.codUsuario);
   }
 
   getRoles() {
@@ -50,9 +77,6 @@ export class FormcadastroService {
     }));
   }
 
-  deleteUser() {
-
-  }
 
   getUsers(nome) {
     return this.http.get(environment.urlpath + '/api/usuario/nome/' + nome)
