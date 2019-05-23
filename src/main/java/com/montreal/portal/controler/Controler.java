@@ -14,6 +14,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -88,6 +89,37 @@ public class Controler {
 				}else {
 					 user.setId(usuario.getId());
 					 user.setIsAtivo(true);
+					 user.setPassword(usuario.getPassword());
+					Usuario userPersisted = (Usuario) usuarioService.save(user);
+					response.setData(userPersisted);
+				}
+			} catch (DuplicateKeyException dE) {
+				response.getErrors().add("E-mail already registered !");
+				return ResponseEntity.badRequest().body(response);
+			} catch (Exception e) {
+				response.getErrors().add(e.getMessage());
+				return ResponseEntity.badRequest().body(response);
+			}
+			return ResponseEntity.ok(response);
+		}
+		
+		@PutMapping(value = "/usuario/reset")
+		@PreAuthorize("hasAnyRole('ADMIN')")
+		public ResponseEntity<Response<Usuario>> resetSenha(HttpServletRequest request, @RequestBody Usuario user,BindingResult result) {
+			Response<Usuario> response = new Response<Usuario>();
+		
+			try {
+				Usuario usuario = usuarioService.findByCodUsuario(user.getCodUsuario());
+				validateCreateUser(user, result);
+				if (result.hasErrors()) {
+					result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+					return ResponseEntity.badRequest().body(response);
+				}
+				if(usuario==null) {
+					result.addError(new ObjectError("User", "Usuario não encotrado"));
+				}else {
+					 user.setId(usuario.getId());
+					 user.setIsAtivo(true);
 					 user.setPassword(passwordEncoder.encode(user.getPassword()));
 					Usuario userPersisted = (Usuario) usuarioService.save(user);
 					response.setData(userPersisted);
@@ -102,19 +134,15 @@ public class Controler {
 			return ResponseEntity.ok(response);
 		}
 		
-		@DeleteMapping(value = "/usuario")
+		
+		@DeleteMapping(value = "/usuario/{codUsuario}")
 		@PreAuthorize("hasAnyRole('ADMIN')")
-		public ResponseEntity<Response<Usuario>> delete(HttpServletRequest request, @RequestBody Usuario user,BindingResult result) {
+		public ResponseEntity<Response<Usuario>> delete(@PathVariable Integer codUsuario) {
 			Response<Usuario> response = new Response<Usuario>();
 			try {
-				Usuario usuario = usuarioService.findByCodUsuario(user.getCodUsuario());
-				validateCreateUser(user, result);
-				if (result.hasErrors()) {
-					result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
-					return ResponseEntity.badRequest().body(response);
-				}
+				Usuario usuario = usuarioService.findByCodUsuario(codUsuario);
 				if(usuario==null) {
-					result.addError(new ObjectError("User", "Usuario não encotrado"));
+			
 				}else {
 					usuario.setIsAtivo(false);
 					Usuario userPersisted = (Usuario) usuarioService.save(usuario);

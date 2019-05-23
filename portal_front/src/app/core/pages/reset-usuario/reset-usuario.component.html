@@ -2,9 +2,9 @@
   <div class="main-container">
     <p-panel>
       <p-header>
-        Editar usuário
+        Reset de Senha
       </p-header>
-    
+      <p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
       <div class="p-grid p-justify-center p-align-center" [ngStyle]="{'margin': '5px'}">
         <div class="p-grid">
           <div class="p-col-6">
@@ -57,41 +57,49 @@
       </div>
 
       <div [hidden]="!showForm">
-        <form id="form" #form="ngForm" autocomplete="off">
-          <div class="p-grid">
-            <div class="p-col-6">
-                <input type="text" class="ajusteInput" pInputText placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuarioForm.nome" tabindex="1"/>
-                <input type="text" class="ajusteInput" pInputText placeholder="Telefone ou Ramal" id="contato" pattern="\d+" ngModel name="telefone" #telefone="ngModel" [(ngModel)]="usuarioForm.telefone" tabindex="3"/>
-                <input type="text" class="ajusteInput" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuarioForm.login" tabindex="5"/>
-            </div>
-  
-            <div class="p-col-6">
-                <input type="text" class="ajusteInput" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuarioForm.sobrenome" tabindex="2"/>
-                <input type="text" class="ajusteInput" pInputText placeholder="CPF" name="cpf" #cpf="ngModel" [(ngModel)]="usuarioForm.cpf" tabindex="4"/>
-                <input type="text" class="ajusteInput" pInputText placeholder="Repita o nickname" id="confirmarNickName" name="confirmarNickName" [(ngModel)]="confirmarNickName" tabindex="6"/>
-            </div>
-  
-            <div class="p-col-12">
-                <div class="ui-inputgroup">
-                    <span class="ui-inputgroup-addon">@</span>
-                    <input id="idemail" type="email" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuarioForm.email" tabindex="9">  
+          <form id="form" #form="ngForm" autocomplete="off">
+              <div class="p-grid">
+                <div class="p-col-6">
+                    <input type="text" disabled="true" class="ajusteInput" pInputText placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuarioForm.nome" tabindex="1"/>
+                    
                 </div>
-            </div>
-  
-            <div class="p-col-12">
-                <div class="ui-inputgroup">
-                    <p-multiSelect [options]="selectRoles" optionLabel="profile" [(ngModel)]="usuarioForm.perfis" defaultLabel="Selecione o perfil.." [ngModelOptions]="{standalone:true}" 
-                    [style]="{'width': '100%'}" [ngStyle]="{'width': '100%'}" tabindex="10"></p-multiSelect>
+      
+                <div class="p-col-6">
+                    <input type="text" disabled="true" class="ajusteInput" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuarioForm.sobrenome" tabindex="2"/>
                 </div>
-            </div>
-  
-            <div class="p-grid p-justify-end" [ngStyle]="{'width': '100%', 'height': '100%'}">
-                <button pButton type="submit" label="Salvar" class="ui-button-rounded ui-button-success" 
-                [ngStyle]="{'width': '15%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right" (click)="atualizarUser()"></button>
-            </div>
-  
-          </div>
-        </form>
+                <div class="p-col-12">
+                    <input type="text" disabled="true" class="ajusteInput" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuarioForm.login" tabindex="5"/>
+                </div> 
+                <div class="p-col-12">
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">@</span>
+                        <input id="idemail" disabled="true" type="email" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuarioForm.email" tabindex="9">  
+                    </div>
+                </div>
+                <div class="p-col-4" style="text-align: right;">
+                    <div class="ui-inputgroup" >
+                        <p >  Nova senha: </p>
+                     </div>
+                </div>  
+                <div class="p-col-4">
+                    <div class="ui-inputgroup">
+                        <h2>{{newPassord}} </h2>
+                     </div>
+                </div>      
+                <div class="p-col-4">
+                    <div class="ui-inputgroup">
+                        
+                     </div>
+                </div>  
+                <div class="p-grid p-justify-end" [ngStyle]="{'width': '100%', 'height': '100%'}">
+                    <button pButton type="submit" label="Gerar Senha" class="ui-button-danger ui-button-raised" 
+                    [ngStyle]="{'width': '20%', 'height': '40%', 'margin': '3px'}"  iconPos="right" (click)="resetRandonPassoword()"></button>
+                    <button pButton type="submit" label="Salvar" class="ui-button-success" 
+                    [ngStyle]="{'width': '20%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right" (click)="atualizarUser()"></button>
+                </div>
+      
+              </div>
+            </form>
       </div>
       
     </p-panel>    

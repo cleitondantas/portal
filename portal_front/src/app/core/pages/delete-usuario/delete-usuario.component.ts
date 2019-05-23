@@ -31,8 +31,9 @@ export class DeleteUsuarioComponent implements OnInit {
     this.getRoles();
   }
 
-  atualizarUser() {
-    this.formcadastro.createOrUpdateUsuer(this.usuarioForm).subscribe(data => {
+
+  deleteUser(){
+    this.formcadastro.deleteUpdate(this.usuarioForm).subscribe(data => {
       console.log(data);
     })
   }
