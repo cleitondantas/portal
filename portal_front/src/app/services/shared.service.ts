@@ -3,6 +3,8 @@ import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { MessageService } from 'primeng/api';
 import { Role } from '../models/role';
+import { Empreendimento } from '../models/empreendimento';
+import { Compradores } from '../models/compradores';
 
 
 @Injectable({
@@ -28,6 +30,8 @@ export class SharedService {
   getFase = false;
   getSintese = false;
   showLoader = new EventEmitter<boolean>();
+  empreendimentos: Empreendimento[] = [];
+  cadastrosrecentes: Compradores[] = [];
 
   constructor() {
     return SharedService.instance = SharedService.instance || this;

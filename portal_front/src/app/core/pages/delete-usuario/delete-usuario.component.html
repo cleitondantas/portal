@@ -4,6 +4,7 @@
       <p-header>
         Deletar Usuario
       </p-header>
+      <p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
     
       <div class="p-grid p-justify-center p-align-center" [ngStyle]="{'margin': '5px'}">
         <div class="p-grid">
@@ -60,20 +61,19 @@
         <form id="form" #form="ngForm" autocomplete="off">
           <div class="p-grid">
             <div class="p-col-6">
-                <input type="text" class="ajusteInput" pInputText placeholder="Nome" id="nome" ngModel  name="nome"  #nome="ngModel" [(ngModel)]="usuarioForm.nome" tabindex="1"/>
-                
+                <input type="text" class="ajusteInput" disabled="true" pInputText placeholder="Nome" id="nome" ngModel  name="nome" #nome="ngModel" [(ngModel)]="usuarioForm.nome" tabindex="1"/>
             </div>
   
             <div class="p-col-6">
-                <input type="text" class="ajusteInput" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuarioForm.sobrenome" tabindex="2"/>
+                <input type="text" class="ajusteInput" disabled="true" pInputText placeholder="Sobrenome" id="sobrenome" name="sobrenome" #sobrenome="ngModel" [(ngModel)]="usuarioForm.sobrenome" tabindex="2"/>
             </div>
             <div class="p-col-12">
-                <input type="text" class="ajusteInput" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuarioForm.login" tabindex="5"/>
+                <input type="text" class="ajusteInput" disabled="true" pInputText placeholder="Nickname de login" id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuarioForm.login" tabindex="5"/>
             </div> 
             <div class="p-col-12">
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon">@</span>
-                    <input id="idemail" type="email" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuarioForm.email" tabindex="9">  
+                    <input id="idemail" type="email" disabled="true" [ngStyle]="{'width': '100%'}" pInputText placeholder="E-mail (para recuperação de senha)"  name="email"  #email="ngModel" [(ngModel)]="usuarioForm.email" tabindex="9">  
                 </div>
             </div>
   
