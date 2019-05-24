@@ -27,17 +27,20 @@ export class HomeComponent implements OnInit {
               private sharedService: SharedService) { }
 
   ngOnInit() {
+    console.log("ngOnInit -->> INIT")
     sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
 
-    if (this.sharedService.empreendimentos.length == 0) {
-      this.cadastroChamada.getEmpreendimentos().subscribe(dados => {
-        this.sharedService.empreendimentos = dados['data'];
-        this.getListCadastrosTop();
-      })
-    } else {
-      this.getListCadastrosTop();
-    }
-  //  this.getFlux();
+
+        if (this.sharedService.empreendimentos.length == 0) {
+          console.log("PAssou no carregamento 1")
+          this.cadastroChamada.getEmpreendimentos().subscribe(dados => {
+            this.sharedService.empreendimentos = dados['data'];
+            this.getListCadastrosTop();
+          })
+        } else {
+          this.getListCadastrosTop();
+        
+     }
   }
 
   getListCadastrosTop(){
@@ -91,7 +94,6 @@ export class HomeComponent implements OnInit {
       cadastro = {nomecliente: this.sharedService.cadastrosrecentes[i].nomecliente, cpfcnpj: this.sharedService.cadastrosrecentes[i].cpfcnpj,
                   codempreendimento: this.cadastroInformacoes[i].codempreendimento, endereco: this.cadastroInformacoes[i].endereco,
                   numero: this.cadastroInformacoes[i].numero};
-      
     for (let item = 0; item < empreendimento.length; item ++) {
       if (empreendimento[item].codempreendimento == cadastro.codempreendimento) {
         cadastro.codempreendimento = empreendimento[item].descempreendimento;
@@ -105,7 +107,7 @@ export class HomeComponent implements OnInit {
       this.load = true;
     }, 500);
 
-    console.log(this.infosTable)
+    
   }
 
   irCadastro(cadastro: Compradores) {
