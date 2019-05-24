@@ -6,6 +6,8 @@ import { Compradores } from 'src/app/models/compradores';
 import { Router } from '@angular/router';
 import { CadastroChamadasService } from 'src/app/services/cadastro-chamadas.service';
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
+import { SharedService } from 'src/app/services/shared.service';
+import { Empreendimento } from 'src/app/models/empreendimento';
 
 @Component({
   selector: 'app-home',
@@ -17,59 +19,92 @@ export class HomeComponent implements OnInit {
   cadastroInformacoes: CadastroInformacao[] = [];
   infosTable: any[] = [];
   load: boolean = false;
+  empreendimentos: Empreendimento[];
 
   constructor(private homeChamada: HomeChamadasService,
               private router: Router,
-              private cadastroChamada: CadastroChamadasService) { }
+              private cadastroChamada: CadastroChamadasService,
+              private sharedService: SharedService) { }
 
   ngOnInit() {
     sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
-    this.getListCadastrosTop();
+
+    if (this.sharedService.empreendimentos.length == 0) {
+      this.cadastroChamada.getEmpreendimentos().subscribe(dados => {
+        this.sharedService.empreendimentos = dados['data'];
+        this.getListCadastrosTop();
+      })
+    } else {
+      this.getListCadastrosTop();
+    }
   //  this.getFlux();
   }
 
   getListCadastrosTop(){
-    this.homeChamada.getCadastrosTop().subscribe(event => {
-      if (event instanceof HttpResponse) {
-        this.cadastroInformacoes = event.body['data'];
-
-        for (let i = 0; i < this.cadastroInformacoes.length; i++) {
-          for (let item = 0; item < this.cadastroInformacoes[i].clientes.length; item++) {
-            if (this.cadastroInformacoes[i].clientes[item].principal == true) {
-              this.cadastrosrecentes.push(this.cadastroInformacoes[i].clientes[item]);
+    if (this.sharedService.cadastrosrecentes.length == 0) {
+      this.homeChamada.getCadastrosTop().subscribe(event => {
+        if (event instanceof HttpResponse) {
+          this.cadastroInformacoes = event.body['data'];
+  
+          for (let i = 0; i < this.cadastroInformacoes.length; i++) {
+            for (let item = 0; item < this.cadastroInformacoes[i].clientes.length; item++) {
+              if (this.cadastroInformacoes[i].clientes[item].principal == true) {
+                this.sharedService.cadastrosrecentes.push(this.cadastroInformacoes[i].clientes[item]);
+              }
             }
           }
+  
+          this.popularInfoTable();
         }
+      });
+    } else {
+      this.homeChamada.getCadastrosTop().subscribe(event => {
+        if (event instanceof HttpResponse) {
+          this.cadastroInformacoes = event.body['data'];
+          let novoComprador: Compradores[] = [];
 
-        this.popularInfoTable();
-      }
-    });
+          for (let i = 0; i < this.cadastroInformacoes.length; i++) {
+            for (let item = 0; item < this.cadastroInformacoes[i].clientes.length; item++) {
+              if (this.cadastroInformacoes[i].clientes[item].principal == true) {
+                novoComprador.push(this.cadastroInformacoes[i].clientes[item]);
+              }
+            }
+          }
+
+          for (let i = 0; i < this.sharedService.cadastrosrecentes.length; i++) {
+            if (this.sharedService.cadastrosrecentes[i].cpfcnpj != novoComprador[i].cpfcnpj) {
+              this.sharedService.cadastrosrecentes[i] = novoComprador[i];
+            }
+          }
+  
+          this.popularInfoTable();
+        }
+      });
+    }
+
   }
 
   popularInfoTable() {
-    let empreendimento: any[] = [];
+    let empreendimento = this.sharedService.empreendimentos;
     let cadastro;
-    this.cadastroChamada.getEmpreendimentos().subscribe(dados => {
-      empreendimento = dados['data'];
-
-      for (let i = 0; i < this.cadastrosrecentes.length; i++) {
-        cadastro = {nomecliente: this.cadastrosrecentes[i].nomecliente, cpfcnpj: this.cadastrosrecentes[i].cpfcnpj,
-                    codempreendimento: this.cadastroInformacoes[i].codempreendimento, endereco: this.cadastroInformacoes[i].endereco,
-                    numero: this.cadastroInformacoes[i].numero};
-        
-        for (let item = 0; item < empreendimento.length; item ++) {
-          if (empreendimento[item].codempreendimento == cadastro.codempreendimento) {
-            cadastro.codempreendimento = empreendimento[item].descempreendimento;
-          }
-        }
-        
-        this.infosTable.push(cadastro);
-      }
+    for (let i = 0; i < this.sharedService.cadastrosrecentes.length; i++) {
+      cadastro = {nomecliente: this.sharedService.cadastrosrecentes[i].nomecliente, cpfcnpj: this.sharedService.cadastrosrecentes[i].cpfcnpj,
+                  codempreendimento: this.cadastroInformacoes[i].codempreendimento, endereco: this.cadastroInformacoes[i].endereco,
+                  numero: this.cadastroInformacoes[i].numero};
       
-      setTimeout(() => {
-        this.load = true;
-      }, 0);
-    });
+    for (let item = 0; item < empreendimento.length; item ++) {
+      if (empreendimento[item].codempreendimento == cadastro.codempreendimento) {
+        cadastro.codempreendimento = empreendimento[item].descempreendimento;
+      }
+    }
+    
+    this.infosTable.push(cadastro);
+    }
+
+    setTimeout(() => {
+      this.load = true;
+    }, 500);
+
     console.log(this.infosTable)
   }
 
@@ -88,5 +123,11 @@ export class HomeComponent implements OnInit {
 
   getFlux(){
     this.cadastroChamada.getFlux().subscribe(data => console.log(data))
+  }
+
+  compararInfo() {
+    for (let i = 0; i < this.sharedService.cadastrosrecentes.length; i++) {
+
+    }
   }
 }
