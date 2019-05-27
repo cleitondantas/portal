@@ -15,7 +15,6 @@ import { Empreendimento } from 'src/app/models/empreendimento';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  cadastrosrecentes: Compradores[] = [];
   cadastroInformacoes: CadastroInformacao[] = [];
   infosTable: any[] = [];
   load: boolean = false;
@@ -28,66 +27,73 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     console.log("ngOnInit -->> INIT")
-    sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
+    sessionStorage.removeItem('CADASTROSELECIONADO');
 
+    if (this.sharedService.empreendimentos.length == 0) {
+      console.log("PAssou no carregamento 1")
+      this.cadastroChamada.getEmpreendimentos().subscribe(dados => {
+        this.sharedService.empreendimentos = dados['data'];
+        this.getListCadastrosTop();
+      })
+    } else {
+      this.infosTable = this.sharedService.infosTable;
+      this.load = true;
 
-        if (this.sharedService.empreendimentos.length == 0) {
-          console.log("PAssou no carregamento 1")
-          this.cadastroChamada.getEmpreendimentos().subscribe(dados => {
-            this.sharedService.empreendimentos = dados['data'];
-            this.getListCadastrosTop();
-          })
-        } else {
-          this.getListCadastrosTop();
-        
-     }
+      this.homeChamada.getCadastrosTop().subscribe(event => {
+        if (event instanceof HttpResponse) {
+          let cadInfo: CadastroInformacao[] = event.body['data'];
+          let cadastros: Compradores[] = [];
+          let mudanca: boolean = false;
+          
+          for (let i = 0; i < cadInfo.length; i++) {
+            for (let item = 0; item < cadInfo[i].clientes.length; item++) {
+              if (cadInfo[i].cpfcnpj == cadInfo[i].clientes[item].cpfcnpj) {
+                cadastros.push(cadInfo[i].clientes[item]);
+              }
+            }
+          }
+
+          let diferencas = cadastros.filter(results => this.sharedService.cadastrosrecentes.includes(results));
+          console.log(diferencas);
+
+          for (let i = 0; i < cadastros.length; i++) {
+            if (cadastros[i].cpfcnpj != this.sharedService.cadastrosrecentes[i].cpfcnpj) {
+              this.sharedService.cadastrosrecentes[i] = cadastros[i];
+              mudanca = true;
+            }
+          }
+
+          if (mudanca == true) {
+            this.cadastroInformacoes = cadInfo;
+            this.popularInfoTable();
+          }
+        }
+      })
+    }
   }
 
   getListCadastrosTop(){
-    if (this.sharedService.cadastrosrecentes.length == 0) {
-      this.homeChamada.getCadastrosTop().subscribe(event => {
-        if (event instanceof HttpResponse) {
-          this.cadastroInformacoes = event.body['data'];
-  
-          for (let i = 0; i < this.cadastroInformacoes.length; i++) {
-            for (let item = 0; item < this.cadastroInformacoes[i].clientes.length; item++) {
-              if (this.cadastroInformacoes[i].clientes[item].principal == true) {
-                this.sharedService.cadastrosrecentes.push(this.cadastroInformacoes[i].clientes[item]);
-              }
-            }
-          }
-  
-          this.popularInfoTable();
-        }
-      });
-    } else {
-      this.homeChamada.getCadastrosTop().subscribe(event => {
-        if (event instanceof HttpResponse) {
-          this.cadastroInformacoes = event.body['data'];
-          let novoComprador: Compradores[] = [];
+    this.homeChamada.getCadastrosTop().subscribe(event => {
+      if (event instanceof HttpResponse) {
+        this.cadastroInformacoes = event.body['data'];
+        this.sharedService.cadastrosrecentes = [];
 
-          for (let i = 0; i < this.cadastroInformacoes.length; i++) {
-            for (let item = 0; item < this.cadastroInformacoes[i].clientes.length; item++) {
-              if (this.cadastroInformacoes[i].clientes[item].principal == true) {
-                novoComprador.push(this.cadastroInformacoes[i].clientes[item]);
-              }
+        for (let i = 0; i < this.cadastroInformacoes.length; i++) {
+          for (let item = 0; item < this.cadastroInformacoes[i].clientes.length; item++) {
+            if (this.cadastroInformacoes[i].cpfcnpj == this.cadastroInformacoes[i].clientes[item].cpfcnpj) {
+              this.sharedService.cadastrosrecentes.push(this.cadastroInformacoes[i].clientes[item]);
             }
           }
-
-          for (let i = 0; i < this.sharedService.cadastrosrecentes.length; i++) {
-            if (this.sharedService.cadastrosrecentes[i].cpfcnpj != novoComprador[i].cpfcnpj) {
-              this.sharedService.cadastrosrecentes[i] = novoComprador[i];
-            }
-          }
-  
-          this.popularInfoTable();
         }
-      });
-    }
+
+        this.popularInfoTable();
+      }
+    })
 
   }
 
   popularInfoTable() {
+    this.infosTable = [];
     let empreendimento = this.sharedService.empreendimentos;
     let cadastro;
     for (let i = 0; i < this.sharedService.cadastrosrecentes.length; i++) {
@@ -103,11 +109,9 @@ export class HomeComponent implements OnInit {
     this.infosTable.push(cadastro);
     }
 
-    setTimeout(() => {
-      this.load = true;
-    }, 500);
+    this.sharedService.infosTable = this.infosTable;
 
-    
+    this.load = true;
   }
 
   irCadastro(cadastro: Compradores) {

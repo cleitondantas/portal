@@ -32,6 +32,7 @@ export class SharedService {
   showLoader = new EventEmitter<boolean>();
   empreendimentos: Empreendimento[] = [];
   cadastrosrecentes: Compradores[] = [];
+  infosTable: any[] = [];
 
   constructor() {
     return SharedService.instance = SharedService.instance || this;
