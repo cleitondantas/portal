@@ -37,7 +37,6 @@ export class DeleteUsuarioComponent implements OnInit {
   deleteUser(){
     this.formcadastro.deleteUpdate(this.usuarioForm).subscribe(data => {
       console.log(data);
-      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Usuário desativado!'});    
     })
   }
   

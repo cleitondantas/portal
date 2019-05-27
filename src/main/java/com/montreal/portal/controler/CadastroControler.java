@@ -1,5 +1,6 @@
 package com.montreal.portal.controler;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.montreal.portal.entity.Cadastro;
@@ -24,6 +26,8 @@ import com.montreal.portal.entity.Cliente;
 import com.montreal.portal.entity.Contato;
 import com.montreal.portal.repository.CasdastroRepository;
 import com.montreal.portal.response.Response;
+
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api")
@@ -34,7 +38,7 @@ public class CadastroControler {
 	private CasdastroRepository casdastroRepository;
 
 	
-	
+	private List<Cadastro> cadastros;
 	
 	@PostMapping(value = "/cadastro")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
@@ -68,6 +72,9 @@ public class CadastroControler {
 			cadastro.setDtatividade(dtatividade);
 			Cadastro cs = (Cadastro) casdastroRepository.save(cadastro);
 			response.setData(cs);
+			
+			//Atualiza lista de cadastros ao inserir um novo cadastro
+			cadastros = casdastroRepository.findTopCadastro();
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
 			return ResponseEntity.badRequest().body(response);
@@ -138,8 +145,8 @@ public class CadastroControler {
 		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
 		try {
 			
-			List<Cadastro> cadastros = casdastroRepository.findTopCadastro();
-
+			if(cadastros==null) {
+			cadastros = casdastroRepository.findTopCadastro();
 			for (Cadastro item : cadastros) {
 				for (Cliente cliente : item.getClientes()) {
 					if (item.getCpfcnpj() != null) {
@@ -151,6 +158,8 @@ public class CadastroControler {
 					}
 				}
 			}
+			}
+			
 			response.setData(cadastros);
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
@@ -158,6 +167,7 @@ public class CadastroControler {
 		}
 		return ResponseEntity.ok(response);
 	}
+	
 
 	//Busca por FID
 	@GetMapping(value = "/cadastro/{cod}")
