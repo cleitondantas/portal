@@ -391,6 +391,7 @@ export class MenuBarComponent implements OnInit {
               ]
           },
           {
+            visible: false,
             label: 'Relatorio',
             icon: 'pi pi-fw pi-search',
             items: [
@@ -399,7 +400,7 @@ export class MenuBarComponent implements OnInit {
             ]
         },
           {
-                visible: true,
+              
               label: 'Administrador',
               icon: 'pi pi-fw pi-cog',
               routerLink: '/cadastrousuario',
