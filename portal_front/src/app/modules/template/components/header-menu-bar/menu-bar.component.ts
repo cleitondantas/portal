@@ -66,7 +66,7 @@ export class MenuBarComponent implements OnInit {
     user: Usuario;
     nomeUsuario: string;
     profileUser: string;
-
+    isAdmin = false;
     conts = false;
 
     blurNomeSelect(item: any) {
@@ -320,7 +320,7 @@ export class MenuBarComponent implements OnInit {
         return dataString.slice(0, dataSlice);
       }
   ngOnInit() {
-
+    this.isVisualizeAdmin();
     this.itemsmenu = [{
             label: 'File',
             items: [
@@ -404,6 +404,7 @@ export class MenuBarComponent implements OnInit {
               label: 'Administrador',
               icon: 'pi pi-fw pi-cog',
               routerLink: '/cadastrousuario',
+              visible: this.isAdmin,
               command: (event: Event) => {
                 this.hideDialogInfo();
                 this.hideDialog();
@@ -427,7 +428,14 @@ export class MenuBarComponent implements OnInit {
               ]
           }
       ];
+
+
   }
+
+  isVisualizeAdmin(){
+    this.isAdmin = this.sharedService.isUserAdmin();
+  }
+
   showDialog() {
     this.display = true;
 }
@@ -496,5 +504,4 @@ formatCpfCnpj(cpfcnpj: string) {
 
     return cpfcnpj;
   }
-
 }
