@@ -14,6 +14,7 @@ import formatCpf from '@brazilian-utils/format-cpf';
 import formatCnpj from '@brazilian-utils/format-cnpj';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
+import onlyNumbers from '@brazilian-utils/helper-only-numbers';
 
 declare var TweenMax: any;
 
@@ -132,13 +133,13 @@ export class MenuBarComponent implements OnInit {
     clickBuscaPorCPFInfo(event: any) {
         this.loadSpin = !this.loadSpin;
 
-        this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
+        this.chamadasService.getBuscaCadastrado(null, onlyNumbers(this.cpfclienteSelecionado)).subscribe(data => {
             this.msgsCpf = [];
             this.cadastrosTabelaBuscaInfo = data['data'];
             for (let i = 0; i < this.cadastrosTabelaBuscaInfo.length; i++) {
                 this.codcadastro = this.cadastrosTabelaBuscaInfo[i].codcadastro;
                 for (let item = 0; item < this.cadastrosTabelaBuscaInfo[i].clientes.length; item++) {
-                    if (this.cpfclienteSelecionado == this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj) {
+                    if (onlyNumbers(this.cpfclienteSelecionado) == this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj) {
                         let data = this.cadastrosTabelaBuscaInfo[i].clientes[item].datanascimento;
                         data = new Date(data);
                         data.toUTCString();
@@ -168,7 +169,7 @@ export class MenuBarComponent implements OnInit {
     clickBuscaPorCPF(event: any) {
         this.loadSpin = !this.loadSpin;
 
-        this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
+        this.chamadasService.getBuscaCadastrado(null, onlyNumbers(this.cpfclienteSelecionado)).subscribe(data => {
             this.cadastrosTabelaBusca = data['data'];
             
             setTimeout(() => {
@@ -390,6 +391,7 @@ export class MenuBarComponent implements OnInit {
               ]
           },
           {
+            visible: false,
             label: 'Relatorio',
             icon: 'pi pi-fw pi-search',
             items: [
@@ -398,7 +400,7 @@ export class MenuBarComponent implements OnInit {
             ]
         },
           {
-                visible: true,
+              
               label: 'Administrador',
               icon: 'pi pi-fw pi-cog',
               routerLink: '/cadastrousuario',

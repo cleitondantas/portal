@@ -4,14 +4,13 @@ import { HttpResponse } from '@angular/common/http';
 import { Usuario } from 'src/app/models/usuario';
 import { Role } from 'src/app/models/role';
 import { FormCadastroLogicaService } from 'src/app/services/form-cadastro-logica.service';
-import { ConfirmationService, Message, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-delete-usuario',
   templateUrl: './delete-usuario.component.html',
   styleUrls: ['./delete-usuario.component.css'],
   providers: [MessageService]
-
 })
 export class DeleteUsuarioComponent implements OnInit {
   usuario: string;
@@ -37,7 +36,7 @@ export class DeleteUsuarioComponent implements OnInit {
 
   deleteUser(){
     this.formcadastro.deleteUpdate(this.usuarioForm).subscribe(data => {
-      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});    
+      console.log(data);
     })
   }
   

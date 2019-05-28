@@ -39,7 +39,7 @@ export class ResetUsuarioComponent implements OnInit {
   atualizarUser() {
     if(this.newPassord!=null && this.newPassord.length != 0){
       this.usuarioForm.password = this.newPassord;
-    this.formcadastro.salvaresetUserPassword(this.usuarioForm).subscribe(data => {
+      this.formcadastro.salvaresetUserPassword(this.usuarioForm).subscribe(data => {
       this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});    
       console.log(data);
     })
@@ -65,6 +65,7 @@ export class ResetUsuarioComponent implements OnInit {
   getUser(dado) {
     this.showLoad = true;
     this.showForm = false;
+    this.newPassord = null;
 
     if (dado == false) {
       this.formcadastro.getLogin(this.nickname).subscribe(event => {
