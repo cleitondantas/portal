@@ -15,6 +15,8 @@ export class SharedService {
   public static instance: SharedService = null;
   private user: Usuario;
   role: Role;
+  roles: Role[];
+  
   temporario: any[] = [];
   static emitirevento  = new EventEmitter<any>();
   @Output() messengerService = new MessageService();
@@ -63,6 +65,7 @@ export class SharedService {
   sessionStorage.setItem('cpf', user.cpf);
   sessionStorage.setItem('email', user.email);
   sessionStorage.setItem('perfis', user.perfis[0].profile);
+  sessionStorage.setItem('perfisJson',JSON.stringify(user.perfis));
   this.user = user;
 }
 
@@ -78,9 +81,20 @@ public getSessionUsuario(): Usuario {
     this.user.email = sessionStorage.getItem('email') == null ? null : sessionStorage.getItem('email');
     this.role = new Role();
     this.role.profile = sessionStorage.getItem('perfis');
-    console.log('getSessionUsuario() RECRIADO');
+    this.roles =  JSON.parse(sessionStorage.getItem('perfisJson'));
   }
   return this.user;
+}
+
+public isUserAdmin(): boolean {
+  this.roles =  JSON.parse(sessionStorage.getItem('perfisJson'));
+  console.log(JSON.stringify(this.roles));
+  for(let i = 0;i< this.roles.length; i++ ){
+    if(this.roles[i].nivel == 1){
+      return true;
+    }
+  }
+  return false;
 }
 
 public removeSessionUsuario() {
