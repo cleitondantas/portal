@@ -88,7 +88,6 @@ public getSessionUsuario(): Usuario {
 
 public isUserAdmin(): boolean {
   this.roles =  JSON.parse(sessionStorage.getItem('perfisJson'));
-  console.log(JSON.stringify(this.roles));
   for(let i = 0;i< this.roles.length; i++ ){
     if(this.roles[i].nivel == 1){
       return true;
