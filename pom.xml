@@ -10,7 +10,7 @@
 	<!-- <packaging>jar</packaging> -->
 	<packaging>jar</packaging>
 
-	<name>portal</name>
+	<name>Portal Assessoria</name>
 	<description>Sistema de Gerenciamento do Portal Montreal</description>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
