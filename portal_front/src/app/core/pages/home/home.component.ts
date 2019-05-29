@@ -26,11 +26,9 @@ export class HomeComponent implements OnInit {
               private sharedService: SharedService) { }
 
   ngOnInit() {
-    console.log("ngOnInit -->> INIT")
     sessionStorage.removeItem('CADASTROSELECIONADO');
-
     if (this.sharedService.empreendimentos.length == 0) {
-      console.log("PAssou no carregamento 1")
+
       this.cadastroChamada.getEmpreendimentos().subscribe(dados => {
         this.sharedService.empreendimentos = dados['data'];
         this.getListCadastrosTop();
