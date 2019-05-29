@@ -20,7 +20,7 @@ public class PortalApplication  implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... strings) throws Exception {
-	
+
     }
     
 

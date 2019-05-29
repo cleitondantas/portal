@@ -10,7 +10,7 @@
 	<!-- <packaging>jar</packaging> -->
 	<packaging>jar</packaging>
 
-	<name>portal</name>
+	<name>Portal Assessoria</name>
 	<description>Sistema de Gerenciamento do Portal Montreal</description>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -131,8 +131,42 @@
 
 	</dependencies>
 
+	<profiles>
+	    <profile>
+	        <id>10.6.5.99</id>
+	        <activation>
+    			<activeByDefault>true</activeByDefault>
+			</activation>
+	        <properties>
+	             <app.databasename>bpo_assessoria_novo</app.databasename>
+	        </properties>
+	    </profile>
+	    <profile>
+	        <id>10.6.5.40</id>
+	        <properties>
+	             <app.databasename>BPO_ASSESSORIA_PROD</app.databasename>
+	        </properties>
+	    </profile>
+	</profiles>
+
+
 	<build>
 		<plugins>
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <configuration>
+                <delimiters>
+                    <delimiter>@</delimiter>
+                </delimiters>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </configuration>
+        </plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
