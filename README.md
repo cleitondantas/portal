@@ -15,6 +15,10 @@
 
 Montando imagem com Docker 
 
+    Build e Deploy automatizado
+    wget https://raw.githubusercontent.com/cleitondantas/portal/master/install.sh && chmod +x install.sh && ./install.sh
+    
+    ----------------------------
     FROM openjdk:8-jdk-alpine
     VOLUME /tmp
     COPY /*.jar portal.jar
