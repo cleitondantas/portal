@@ -39,10 +39,10 @@ export class MenuBarComponent implements OnInit {
         this.profileUser = localStorage.getItem('profile');
     }
 
-    @ViewChild('mushroom') box: ElementRef;
-    @ViewChild('mushroom2') box2: ElementRef;
-
-    @ViewChild('navmenuuser') navmenuuser: ElementRef;
+    @ViewChild('contain') contain: ElementRef;
+    @ViewChild('containLista') containLista: ElementRef;
+    @ViewChild('label') label: ElementRef;
+    @ViewChild('logo') logo: ElementRef;
 
     display = false;
     displayAnalise = false;
@@ -463,18 +463,35 @@ logOut() {
     this.authService.fazerLogout();
 }
 doIt() {
+    var tl = new TimelineMax();
+    var contain = this.contain.nativeElement;
+    var containLista = this.containLista.nativeElement;
+    var logo = this.logo.nativeElement;
    if (this.conts) {
         this.conts = false;
-        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft: 209}, {paddingLeft: 0, delay: 0.5, ease: Power1.easeOut});
-        TweenMax.fromTo(this.navmenuuser.nativeElement, 0.3, {height: 'auto'}, {height: 0, display: 'none', ease:  Power1.easeOut});
-        TweenMax.fromTo(this.box.nativeElement, 0.5, {height: 'auto'}, {height: 0, ease: Power1.easeOut});
+        tl.to(logo, 0.5, {height: "0px"}).to(logo, 0.2, {display: "none"})
+        .to(containLista, 1, {height: "0px", ease: Power1.easeOut})
+        .to(contain, 1, {width: this.label.nativeElement.offsetWidth + 50, borderBottomLeftRadius: 20, ease: Power1.easeOut})
+        
+        //TweenMax.to(this.contain.nativeElement, 1, {width: "auto",  borderBottomLeftRadius: 20, delay: 0.5,ease: Power1.easeOut});
+        //TweenMax.to(this.containLista.nativeElement, 0.3, {display: "none", ease: Power1.easeOut})
+        //TweenMax.to(this.contain.nativeElement, 1, {, delay: 0.5, ease: Power1.easeOut});
+        //TweenMax.fromTo(this.containLista.nativeElement, 1, {paddingLeft: 209}, {paddingLeft: 0, delay: 0.5, ease: Power1.easeOut});
+        //TweenMax.fromTo(this.navmenuuser.nativeElement, 0.3, {height: 'auto'}, {height: 0, display: 'none', ease:  Power1.easeOut});
+        //TweenMax.fromTo(this.contain.nativeElement, 0.5, {height: 'auto'}, {height: 0, ease: Power1.easeOut});
 
     } else {
         this.conts = true;
-        TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft: 0}, {paddingLeft: 209, ease:  Back.easeOut.config(1.7)});
-        TweenMax.fromTo(this.box.nativeElement, 0.8, {height: 0}, {height: 'auto', delay: 1, ease: Back.easeOut.config(1.7)});
-        TweenMax.fromTo(this.navmenuuser.nativeElement, 0.8, {height: 0}, {height: 'auto', delay: 1, display: 'block', ease: Back.easeOut.config(1.7)});
-        TweenMax.fromTo(this.box.nativeElement, 1.5, {width: 355}, {width: 355, delay: 1, ease: Power1.easeOut});
+        tl.fromTo(contain, 1, {width: this.label.nativeElement.offsetWidth + 50}, {width: "100%", borderBottomLeftRadius: 0, ease: Back.easeOut.config(1.7)})
+        .to(containLista, 1, {height: "230px", ease: Back.easeOut.config(1.7)})
+        .to(logo, 0, {display: "block", height: "auto"})
+
+        //TweenMax.to(this.contain.nativeElement, 1, {width: "100%",  borderBottomLeftRadius: 0, ease: Back.easeOut.config(1.7)});
+        //TweenMax.to(this.containLista.nativeElement, 0.8, {display: "block", delay: 1, ease: Back.easeOut.config(1.7)})
+        //TweenMax.fromTo(this.containLista.nativeElement, 1, {paddingLeft: 0}, {paddingLeft: 209, ease:  Back.easeOut.config(1.7)});
+        //TweenMax.fromTo(this.contain.nativeElement, 0.8, {height: 0}, {height: 'auto', delay: 1, ease: Back.easeOut.config(1.7)});
+        //TweenMax.fromTo(this.navmenuuser.nativeElement, 0.8, {height: 0}, {height: 'auto', delay: 1, display: 'block', ease: Back.easeOut.config(1.7)});
+        //TweenMax.fromTo(this.contain.nativeElement, 1.5, {width: 355}, {width: 355, delay: 1, ease: Power1.easeOut});
     }
 }
 

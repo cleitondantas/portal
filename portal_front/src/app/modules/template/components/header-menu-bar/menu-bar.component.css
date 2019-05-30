@@ -3,6 +3,70 @@
   z-index: 10;
 }
 
+.contain {
+  width: 400px; 
+  height: 40px; 
+  display: inline-flex;
+  margin: 0px;
+}
+
+.menuitem {
+  background-color: brown;
+  border-radius: 20px 20px 20px 20px;
+  height: 40px;
+  margin: 0px;
+}
+
+.containLista {
+  background-color: brown;
+  width: 380px;
+  height: 0px;
+  border-radius: 0px 0px 20px 20px;
+  right: 20px;
+  position: relative;
+  float: right;
+}
+
+img {
+  margin-top: 20px;
+  margin-left: 40px;
+  height: 0;
+  display: none;
+}
+
+.lista {
+  position: relative;
+  top: 10px;
+  margin: 0;
+  padding: 0;
+  width: 290px;
+  list-style: none;
+}
+
+.lista li {
+  text-indent: 20px;
+  line-height: 50px;
+  cursor: pointer;
+
+}
+
+.lista li a {
+color: white;
+display: block;
+text-decoration: none;
+border-radius: 10px 10px 10px 10px;
+}
+
+.lista li a:hover {
+background: rgba(255,255,255,0.25);
+color: white;
+text-decoration: none;
+}
+
+.lista li a:active, .lista li a:focus {
+text-decoration: none;
+}
+
 h6 {
     position: relative;
     transform: translateY(30%); 
