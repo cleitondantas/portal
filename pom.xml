@@ -10,8 +10,9 @@
 	<!-- <packaging>jar</packaging> -->
 	<packaging>jar</packaging>
 
-	<name>Portal Assessoria</name>
+	<name>portal</name>
 	<description>Sistema de Gerenciamento do Portal Montreal</description>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -28,21 +29,13 @@
 	</properties>
 
 	<dependencies>
-	<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons-core -->
-	<!-- 
-	<dependency>
-	    <groupId>org.springframework.data</groupId>
-	    <artifactId>spring-data-commons-core</artifactId>
-	    <version>1.4.1.RELEASE</version>
-	</dependency>
-	 -->
-	
 		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>
 			<artifactId>rxjava</artifactId>
 			<version>2.2.3</version>
 		</dependency>
 		
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
@@ -61,12 +54,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
-		
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
+
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
@@ -159,12 +147,31 @@
                 <delimiters>
                     <delimiter>@</delimiter>
                 </delimiters>
+                 <nonFilteredFileExtensions>
+            		<nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>woff</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>svg</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>eot</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>ico</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>png</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>js</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>txt</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>gif</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>png</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>html</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>css</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>json</nonFilteredFileExtension>
+            		<nonFilteredFileExtension>sql</nonFilteredFileExtension>
+          		</nonFilteredFileExtensions>
                 <resources>
                     <resource>
                         <directory>src/main/resources</directory>
                         <filtering>true</filtering>
                     </resource>
                 </resources>
+                
             </configuration>
         </plugin>
 			<plugin>
