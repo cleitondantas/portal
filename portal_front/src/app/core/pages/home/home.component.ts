@@ -53,16 +53,20 @@ export class HomeComponent implements OnInit {
 
           let diferencas = cadastros.filter(results => this.sharedService.cadastrosrecentes.includes(results));
           console.log(diferencas);
-
+          
           for (let i = 0; i < cadastros.length; i++) {
-            if (cadastros[i].cpfcnpj != this.sharedService.cadastrosrecentes[i].cpfcnpj) {
+            if (this.sharedService.cadastrosrecentes[i] == undefined) {
+              this.sharedService.cadastrosrecentes[i] = cadastros[i];
+              mudanca = true;
+            } else if (cadastros[i].cpfcnpj != this.sharedService.cadastrosrecentes[i].cpfcnpj) {
               this.sharedService.cadastrosrecentes[i] = cadastros[i];
               mudanca = true;
             }
           }
 
+          this.cadastroInformacoes = cadInfo;
+
           if (mudanca == true) {
-            this.cadastroInformacoes = cadInfo;
             this.popularInfoTable();
           }
         }
@@ -113,6 +117,8 @@ export class HomeComponent implements OnInit {
   }
 
   irCadastro(cadastro: Compradores) {
+    console.log(cadastro)
+    console.log(this.cadastroInformacoes);
     for (let i = 0; i < this.cadastroInformacoes.length; i++) {
       for (let item = 0; item < this.cadastroInformacoes[i].clientes.length; item++) {
         if (this.cadastroInformacoes[i].clientes[item].cpfcnpj == cadastro.cpfcnpj) {

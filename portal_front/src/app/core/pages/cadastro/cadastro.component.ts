@@ -86,6 +86,7 @@ export class CadastroComponent implements OnInit {
         SharedService.getInstance().temporario[0] = this.retornocadastro.codcadastro;
         SharedService.getInstance().temporario[1] = this.retornocadastro.numerocadastroincorporadorafid;
         this.messageService.add({severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
         setTimeout(() => {
           this.router.navigate(['/analise']);
         }, 1000);
@@ -375,8 +376,6 @@ export class CadastroComponent implements OnInit {
           this.compradores = [];
 
           this.OnSubmit(cadInfo, formulario);
-
-          this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
         },
         reject: () => {
         }
@@ -430,12 +429,12 @@ export class CadastroComponent implements OnInit {
       this.chamadasService.putCadastro(cadInfo).subscribe(dados => {
         this.retornocadastro = dados['data'];
         console.log(dados);
+        formulario.reset();
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 1000);
       });
-      formulario.reset();
-      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
-      setTimeout(() => {
-        this.router.navigate(['/home']);
-      }, 1000);
     } else {
       this.msgs2 = [];
       const camposInvalidos: any[] = [];
@@ -566,8 +565,9 @@ export class CadastroComponent implements OnInit {
       this.cadInfo = this.logicaService.visualizarInfoImovel();
       this.compradores = this.cadInfo.clientes;
       for (let _i = 0; _i < this.compradores.length; _i++) {
-        if (this.cadInfo.clientes[_i].principal == true) {
-          this.selectedItem = this.cadInfo.clientes[_i];
+        if (this.compradores[_i].cpfcnpj == this.cadInfo.cpfcnpj) {
+          this.selectedItem = this.compradores[_i];
+          this.compradores[_i].principal = true;
         }
       }
 
