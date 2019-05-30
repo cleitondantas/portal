@@ -15,6 +15,7 @@ if [ "$1" == "prod" ]; then
 else
         if [ "$1" == "dev" ]; then
         	echo "Iniciado instalação em modo dev"
+        	rm -rf portal
         	git clone https://github.com/cleitondantas/portal.git
 			cd portal        
 			mvn clean install -P10.6.5.99
@@ -27,6 +28,7 @@ else
         	echo "Iniciado instalação em modo DEFALT"
 			varip=$(hostname -I | awk '{print $1}')
         	echo "$varip"
+        	rm -rf portal
         	git clone https://github.com/cleitondantas/portal.git
 			cd portal        
 			mvn clean install -P$varip
