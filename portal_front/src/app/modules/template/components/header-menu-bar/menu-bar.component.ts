@@ -17,6 +17,7 @@ import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import onlyNumbers from '@brazilian-utils/helper-only-numbers';
 
 declare var TweenMax: any;
+declare var TimelineMax: any;
 
 @Component({
   selector: 'app-menu-bar',
@@ -469,9 +470,14 @@ doIt() {
     var logo = this.logo.nativeElement;
    if (this.conts) {
         this.conts = false;
-        tl.to(logo, 0.5, {height: "0px"}).to(logo, 0.2, {display: "none"})
-        .to(containLista, 1, {height: "0px", ease: Power1.easeOut})
-        .to(contain, 1, {width: this.label.nativeElement.offsetWidth + 50, borderBottomLeftRadius: 20, ease: Power1.easeOut})
+        TweenMax.to(logo, 0.5, {height: "0px", display: "none"});
+        TweenMax.to("ul.lista > li", 0.5, {height: "0px", display: "none", ease: Power1.easeOut});
+        TweenMax.to(containLista, 1, {height: "0px", delay: 0.2, ease: Power1.easeOut});
+        TweenMax.to(contain, 1, {width: this.label.nativeElement.offsetWidth + 50, borderBottomLeftRadius: 20, delay: 1.2, ease: Power1.easeOut});
+        
+        /*tl.to(logo, 0.5, {height: "0px"}).to(logo, 0.2, {display: "none"})
+        .to(containLista, 1, {height: "0px", display: "none", ease: Power1.easeOut})
+        .to(contain, 1, {width: this.label.nativeElement.offsetWidth + 50, borderBottomLeftRadius: 20, ease: Power1.easeOut})*/
         
         //TweenMax.to(this.contain.nativeElement, 1, {width: "auto",  borderBottomLeftRadius: 20, delay: 0.5,ease: Power1.easeOut});
         //TweenMax.to(this.containLista.nativeElement, 0.3, {display: "none", ease: Power1.easeOut})
@@ -482,9 +488,14 @@ doIt() {
 
     } else {
         this.conts = true;
-        tl.fromTo(contain, 1, {width: this.label.nativeElement.offsetWidth + 50}, {width: "100%", borderBottomLeftRadius: 0, ease: Back.easeOut.config(1.7)})
-        .to(containLista, 1, {height: "230px", ease: Back.easeOut.config(1.7)})
-        .to(logo, 0, {display: "block", height: "auto"})
+        TweenMax.fromTo(contain, 1, {width: this.label.nativeElement.offsetWidth + 50}, {width: "400px", borderBottomLeftRadius: 0, ease: Back.easeOut.config(1.7)})
+        TweenMax.to(containLista, 1, {height: "230px", display: "block", delay: 0.4, ease: Back.easeOut.config(1.7)});
+        TweenMax.to("ul.lista > li", 0.5, {height: "auto", display: "block", delay: 0.7, ease: Back.easeOut.config(1.7)});
+        TweenMax.to(logo, 0, {display: "block", delay: 0.6, height: "auto", ease: Back.easeOut.config(1.7)})
+
+        /*tl.fromTo(contain, 1, {width: this.label.nativeElement.offsetWidth + 50}, {width: "400px", borderBottomLeftRadius: 0, ease: Back.easeOut.config(1.7)})
+        .to(containLista, 1, {height: "230px", display: "block", ease: Back.easeOut.config(1.7)})
+        .to(logo, 0, {display: "block", height: "auto"})*/
 
         //TweenMax.to(this.contain.nativeElement, 1, {width: "100%",  borderBottomLeftRadius: 0, ease: Back.easeOut.config(1.7)});
         //TweenMax.to(this.containLista.nativeElement, 0.8, {display: "block", delay: 1, ease: Back.easeOut.config(1.7)})
@@ -497,7 +508,7 @@ doIt() {
 
 trocarSenha() {
     this.doIt();
-    this.router.navigate(['/cadastrousuario']);
+    this.router.navigate(['/trocarsenha']);
 }
 
 showError() {
