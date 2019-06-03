@@ -6,7 +6,7 @@
 
 ##Scripts
 
-#####Install Docker
+##### Install Docker
 ```sh
 sudo yum check-update
 curl -fsSL https://get.docker.com/ | sh
@@ -15,7 +15,7 @@ sudo systemctl status docker
 sudo systemctl enable docker
 ```
 
-#####Install Java 1.8
+##### Install Java 1.8
 ```sh
 yum -y update
 yum install java-1.8.0-openjdk
@@ -25,16 +25,16 @@ yum install java-1.8.0-openjdk
 sudo yum install maven
 ```
 
-#####Install wget
+##### Install wget
 ```sh
 sudo yum install wget
 ```
-####Build e Deploy automatizado
+#### Build e Deploy automatizado
 ```sh
 wget https://raw.githubusercontent.com/cleitondantas/portal/master/install.sh && chmod +x install.sh && ./install.sh
 ```
 
-###OU
+### OU
 
 #### Build e Deploy Manual
 ```sh
