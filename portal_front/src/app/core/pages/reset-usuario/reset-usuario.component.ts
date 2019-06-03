@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { Role } from 'src/app/models/role';
 import { FormCadastroLogicaService } from 'src/app/services/form-cadastro-logica.service';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-reset-usuario',
@@ -31,7 +32,7 @@ export class ResetUsuarioComponent implements OnInit {
   constructor(private formcadastro: FormcadastroService,
               private messageService: MessageService,
               private formCadastroLogica: FormCadastroLogicaService) { }
-
+              
   ngOnInit() {
     this.getRoles();
   }
