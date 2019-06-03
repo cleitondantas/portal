@@ -12,6 +12,7 @@ import { ChatComponent } from './pages/chat/chat.component';
 import { UpdateUsuarioComponent } from './pages/update-usuario/update-usuario.component';
 import { DeleteUsuarioComponent } from './pages/delete-usuario/delete-usuario.component';
 import { ResetUsuarioComponent } from './pages/reset-usuario/reset-usuario.component';
+import { TrocarSenhaComponent } from './pages/trocar-senha/trocar-senha.component';
 
 const routes: Routes = [
 { path: 'informacoes', component: InformacoesComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
 { path: 'updateusuario', component: UpdateUsuarioComponent},
 { path: 'deleteusuario', component: DeleteUsuarioComponent},
 { path: 'resetusuario', component: ResetUsuarioComponent},
+{ path: 'trocarsenha', component: TrocarSenhaComponent},
 { path: 'grafic', component: GraficComponent},
 { path: 'cadastro', component: CadastroComponent},
 { path: 'lista', component: RelatorioListaComponent},
