@@ -3,6 +3,8 @@ import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { MessageService } from 'primeng/api';
 import { Role } from '../models/role';
+import { Empreendimento } from '../models/empreendimento';
+import { Compradores } from '../models/compradores';
 
 
 @Injectable({
@@ -13,8 +15,10 @@ export class SharedService {
   public static instance: SharedService = null;
   private user: Usuario;
   role: Role;
+  roles: Role[];
+  
   temporario: any[] = [];
-
+  static emitirevento  = new EventEmitter<any>();
   @Output() messengerService = new MessageService();
   @Output() showError = new EventEmitter<string>();
   showTemplate = new EventEmitter<boolean>();
@@ -28,6 +32,9 @@ export class SharedService {
   getFase = false;
   getSintese = false;
   showLoader = new EventEmitter<boolean>();
+  empreendimentos: Empreendimento[] = [];
+  cadastrosrecentes: Compradores[] = [];
+  infosTable: any[] = [];
 
   constructor() {
     return SharedService.instance = SharedService.instance || this;
@@ -58,6 +65,7 @@ export class SharedService {
   sessionStorage.setItem('cpf', user.cpf);
   sessionStorage.setItem('email', user.email);
   sessionStorage.setItem('perfis', user.perfis[0].profile);
+  sessionStorage.setItem('perfisJson',JSON.stringify(user.perfis));
   this.user = user;
 }
 
@@ -73,9 +81,19 @@ public getSessionUsuario(): Usuario {
     this.user.email = sessionStorage.getItem('email') == null ? null : sessionStorage.getItem('email');
     this.role = new Role();
     this.role.profile = sessionStorage.getItem('perfis');
-    console.log('getSessionUsuario() RECRIADO');
+    this.roles =  JSON.parse(sessionStorage.getItem('perfisJson'));
   }
   return this.user;
+}
+
+public isUserAdmin(): boolean {
+  this.roles =  JSON.parse(sessionStorage.getItem('perfisJson'));
+  for(let i = 0;i< this.roles.length; i++ ){
+    if(this.roles[i].nivel == 1){
+      return true;
+    }
+  }
+  return false;
 }
 
 public removeSessionUsuario() {

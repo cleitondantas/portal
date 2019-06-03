@@ -26,6 +26,20 @@ public class Cliente implements Serializable{
 	 */
 	private static final long serialVersionUID = 7033046181992380543L;
 
+	
+	 public Cliente() {
+
+	}
+	 
+	public Cliente(String nomecliente) {
+		this.nomecliente = nomecliente;
+	}
+	public Cliente(String nomecliente,Date datacadastro) {
+		this.nomecliente = nomecliente;
+		this.datacadastro =  datacadastro;
+	}
+	 
+	 
 	@Id
 	@Column(name="cpf_cnpj")
 	private String cpfcnpj;

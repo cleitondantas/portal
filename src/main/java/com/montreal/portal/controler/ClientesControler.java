@@ -30,6 +30,7 @@ public class ClientesControler {
 	@Autowired
 	private ClientesRepository clientesRepository;
 	
+	
 	@GetMapping(value = "/clientes")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Cliente>>> findAllClientes() {

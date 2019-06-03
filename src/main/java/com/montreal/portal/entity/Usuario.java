@@ -57,7 +57,7 @@ public class Usuario implements Serializable{
 	    private Long id;
 	    
 	    @Column(name="cod_usuario")
-	    private Long codUsuario;
+	    private Integer codUsuario;
 	    
 	    private String login;		
 	    private String password;
@@ -161,13 +161,14 @@ public class Usuario implements Serializable{
 			this.isAtivo = isAtivo;
 		}
 
-		public Long getCodUsuario() {
+		public Integer getCodUsuario() {
 			return codUsuario;
 		}
 
-		public void setCodUsuario(Long codUsuario) {
+		public void setCodUsuario(Integer codUsuario) {
 			this.codUsuario = codUsuario;
 		}
+
 
 
 		

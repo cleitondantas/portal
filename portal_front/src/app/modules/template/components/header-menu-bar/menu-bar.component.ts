@@ -14,6 +14,7 @@ import formatCpf from '@brazilian-utils/format-cpf';
 import formatCnpj from '@brazilian-utils/format-cnpj';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
+import onlyNumbers from '@brazilian-utils/helper-only-numbers';
 
 declare var TweenMax: any;
 
@@ -51,6 +52,7 @@ export class MenuBarComponent implements OnInit {
     nomeClienteFiltrado: any[];
     dataNascimento: string;
     codcadastro: number;
+    loadSpin: boolean = false;
 
     nomeclienteSelecionado: string;
     cpfclienteSelecionado: string;
@@ -64,7 +66,7 @@ export class MenuBarComponent implements OnInit {
     user: Usuario;
     nomeUsuario: string;
     profileUser: string;
-
+    isAdmin = false;
     conts = false;
 
     blurNomeSelect(item: any) {
@@ -75,9 +77,14 @@ export class MenuBarComponent implements OnInit {
 
     }
     clickBuscaPorNome(event: any) {
+        this.loadSpin = !this.loadSpin;
         this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado, null).subscribe(data => {
             this.msgsNome = [];
             this.cadastrosTabelaBusca = data['data'];
+
+            setTimeout(() => {
+                this.loadSpin = !this.loadSpin;
+            }, 500);
         }, error => {
             this.msgsNome = [];
             this.msgsNome.push({
@@ -85,10 +92,12 @@ export class MenuBarComponent implements OnInit {
                 summary: 'Erro ao buscar!',
                 detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
+            this.loadSpin = !this.loadSpin;
         });
     }
 
     clickBuscaPorNomeInfo(event: any) {
+        this.loadSpin = !this.loadSpin;
         this.chamadasService.getBuscaCadastrado(this.nomeclienteSelecionado, null).subscribe(data => {
             this.msgsNome = [];
             this.cadastrosTabelaBuscaInfo = data['data'];
@@ -105,6 +114,10 @@ export class MenuBarComponent implements OnInit {
                     }
                 }
             }
+
+            setTimeout(() => {
+                this.loadSpin = !this.loadSpin;
+            }, 500);
             console.log(this.clienteInformacao);
         }, error => {
             this.msgsNome = [];
@@ -113,17 +126,20 @@ export class MenuBarComponent implements OnInit {
                 summary: 'Erro ao buscar!',
                 detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
+            this.loadSpin = !this.loadSpin;
         });
     }
 
     clickBuscaPorCPFInfo(event: any) {
-        this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
+        this.loadSpin = !this.loadSpin;
+
+        this.chamadasService.getBuscaCadastrado(null, onlyNumbers(this.cpfclienteSelecionado)).subscribe(data => {
             this.msgsCpf = [];
             this.cadastrosTabelaBuscaInfo = data['data'];
             for (let i = 0; i < this.cadastrosTabelaBuscaInfo.length; i++) {
                 this.codcadastro = this.cadastrosTabelaBuscaInfo[i].codcadastro;
                 for (let item = 0; item < this.cadastrosTabelaBuscaInfo[i].clientes.length; item++) {
-                    if (this.cpfclienteSelecionado == this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj) {
+                    if (onlyNumbers(this.cpfclienteSelecionado) == this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj) {
                         let data = this.cadastrosTabelaBuscaInfo[i].clientes[item].datanascimento;
                         data = new Date(data);
                         data.toUTCString();
@@ -133,6 +149,10 @@ export class MenuBarComponent implements OnInit {
                     }
                 }
             }
+
+            setTimeout(() => {
+                this.loadSpin = !this.loadSpin;
+            }, 500);
             console.log(this.clienteInformacao);
         }, error => {
             this.msgsCpf = [];
@@ -141,12 +161,20 @@ export class MenuBarComponent implements OnInit {
                 summary: 'Erro ao buscar!',
                 detail: `Não foi encontrado nenhum cadastro com o CPF: <strong>` + this.cpfclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
+
+            this.loadSpin = !this.loadSpin;
         });
     }
 
     clickBuscaPorCPF(event: any) {
-        this.chamadasService.getBuscaCadastrado(null, this.cpfclienteSelecionado).subscribe(data => {
+        this.loadSpin = !this.loadSpin;
+
+        this.chamadasService.getBuscaCadastrado(null, onlyNumbers(this.cpfclienteSelecionado)).subscribe(data => {
             this.cadastrosTabelaBusca = data['data'];
+            
+            setTimeout(() => {
+                this.loadSpin = !this.loadSpin;
+            }, 500);
         }, error => {
             this.msgsCpf = [];
             this.msgsCpf.push({
@@ -154,6 +182,8 @@ export class MenuBarComponent implements OnInit {
                 summary: 'Erro ao buscar!',
                 detail: `Não foi encontrado nenhum cadastro com o CPF: <strong>` + this.cpfclienteSelecionado + `</strong>. Verifique e tente novamente.`
             });
+
+            this.loadSpin = !this.loadSpin;
         });
 
     }
@@ -290,7 +320,7 @@ export class MenuBarComponent implements OnInit {
         return dataString.slice(0, dataSlice);
       }
   ngOnInit() {
-
+    this.isVisualizeAdmin();
     this.itemsmenu = [{
             label: 'File',
             items: [
@@ -361,31 +391,51 @@ export class MenuBarComponent implements OnInit {
               ]
           },
           {
+            visible: false,
             label: 'Relatorio',
             icon: 'pi pi-fw pi-search',
             items: [
               {label: 'Agrupado', icon: 'pi pi-fw pi-search', routerLink: '/lista'},
-              {label: 'Graficos', icon: 'pi pi-fw pi-search', routerLink: '/grafic'}
+              {label: 'Graficos', icon: 'pi pi-fw pi-search', routerLink: '/chat'}
             ]
         },
           {
-                visible: true,
+              
               label: 'Administrador',
               icon: 'pi pi-fw pi-cog',
+              routerLink: '/cadastrousuario',
+              visible: this.isAdmin,
+              command: (event: Event) => {
+                this.hideDialogInfo();
+                this.hideDialog();
+                this.hideDialogDisplay();
+                },
               items: [
                   {
                       label: 'Usuario',
                       icon: 'pi pi-fw pi-pencil',
                       items: [
-                          {label: 'Novo', icon: 'pi pi-fw pi-save', routerLink: '/cadastrousuario'},
-                          {label: 'Update', icon: 'pi pi-fw pi-save'},
-                          {label: 'Delete', icon: 'pi pi-fw pi-minus'}
+                        {label: 'Novo', icon: 'pi pi-fw pi-save', routerLink: '/cadastrousuario', command: (event: Event) => {
+                            this.hideDialogInfo();
+                            this.hideDialog();
+                            this.hideDialogDisplay();
+                        }},
+                        {label: 'Update', icon: 'pi pi-fw pi-save', routerLink: '/updateusuario'},
+                        {label: 'Delete', icon: 'pi pi-fw pi-minus', routerLink: '/deleteusuario'},
+                        {label: 'Reset', icon: 'pi pi-replay', routerLink: '/resetusuario'}
                       ]
                   }
               ]
           }
       ];
+
+
   }
+
+  isVisualizeAdmin(){
+    this.isAdmin = this.sharedService.isUserAdmin();
+  }
+
   showDialog() {
     this.display = true;
 }
@@ -424,7 +474,7 @@ doIt() {
         TweenMax.fromTo(this.box2.nativeElement, 1, {paddingLeft: 0}, {paddingLeft: 209, ease:  Back.easeOut.config(1.7)});
         TweenMax.fromTo(this.box.nativeElement, 0.8, {height: 0}, {height: 'auto', delay: 1, ease: Back.easeOut.config(1.7)});
         TweenMax.fromTo(this.navmenuuser.nativeElement, 0.8, {height: 0}, {height: 'auto', delay: 1, display: 'block', ease: Back.easeOut.config(1.7)});
-        TweenMax.fromTo(this.box.nativeElement, 1.5, {width: 325}, {width: 325, delay: 1, ease: Power1.easeOut});
+        TweenMax.fromTo(this.box.nativeElement, 1.5, {width: 355}, {width: 355, delay: 1, ease: Power1.easeOut});
     }
 }
 
@@ -454,5 +504,4 @@ formatCpfCnpj(cpfcnpj: string) {
 
     return cpfcnpj;
   }
-
 }

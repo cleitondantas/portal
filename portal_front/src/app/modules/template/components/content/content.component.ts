@@ -14,15 +14,17 @@ export class ContentComponent implements OnInit {
   ngOnInit() {
     this.authService.mostrarsistema.subscribe(
       mostrar => this.mostrarMenu = mostrar
-
     );
+    if(this.authService.isUsuarioAutenticado()){
+      this.mostrarMenu = true;
+    }
   }
 
   public logOut() {
     this.authService.mostrarsistema.subscribe(
       mostrar => this.mostrarMenu = mostrar
-
     );
   }
+
 
 }

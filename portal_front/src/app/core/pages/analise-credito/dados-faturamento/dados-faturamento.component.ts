@@ -7,6 +7,9 @@ import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MessageService, Message } from 'primeng/api';
+import onlyNumbers from '@brazilian-utils/helper-only-numbers';
+import formatCpf from '@brazilian-utils/format-cpf';
+import formatCnpj from '@brazilian-utils/format-cnpj';
 
 @Component({
   selector: 'app-dados-faturamento',
@@ -34,8 +37,11 @@ export class DadosFaturamentoComponent implements OnInit {
   ngOnDestroy() {
     sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
     console.log('ngOnDestroy()');
-  }
+}
+
   ngOnInit() {
+    console.log("-------------------------------ngOnInit----DadosFaturamentoComponent")
+
     this.br = this.sharedService.calendarioBr();
     this.form.reset();
     this.msgs = [];
@@ -56,23 +62,25 @@ export class DadosFaturamentoComponent implements OnInit {
     const analiseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
     if (analiseSelecionada != 'undefined' && analiseSelecionada != null) {
       this.dadosfaturamento = this.logicaService.receberDadosFaturamento(analiseSelecionada, this.dadosfaturamento, this.speEvent);
+    }else{
+      SharedService.emitirevento.subscribe(
+        dados => (this.dadosfaturamento.codcadastro = dados)
+      )
     }
-    console.log(this.dadosfaturamento)
+    
+    
   }
 
   salvar(formulario) {
     if (this.validaForm(formulario) == true) {
       this.dadosfaturamento.razaosocialspe = this.dadosfaturamento.razaosocialspe.descspe;
-      console.log('formulario');
-      console.log(formulario);
-      console.log('this.dadosfaturamento');
-      console.log(this.dadosfaturamento);
-      this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => (console.log(dados['data'])));
+      this.dadosfaturamento.cpfcnpj = onlyNumbers(this.dadosfaturamento.cpfcnpj);
+         console.log(JSON.stringify(this.dadosfaturamento));
+      this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados =>(console.log(JSON.stringify(dados['data']))));
       this.router.navigate(['/home']);
     } else {
       this.msgs = [];
       const camposInvalidos: any[] = [];
-
       for (const _i in formulario.controls) {
         if (formulario.controls[_i].status == 'INVALID') {
           let campoInvalido = document.querySelector(`label[for="` + _i + `"]`).innerHTML;
@@ -96,6 +104,13 @@ export class DadosFaturamentoComponent implements OnInit {
   }
 
   preencherSPE(speRecebido: SPE) {
+    let spe2: any;
+    spe2 = onlyNumbers(speRecebido.cnpjspe);
+    if (spe2.length > 11) {
+      speRecebido.cnpjspe = formatCnpj(spe2);
+    } else {
+      speRecebido.cnpjspe = formatCpf(spe2)
+    }
     this.dadosfaturamento.cpfcnpj = speRecebido.cnpjspe;
   }
 

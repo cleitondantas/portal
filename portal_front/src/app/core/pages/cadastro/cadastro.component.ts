@@ -16,6 +16,7 @@ import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
+import onlyNumbers from '@brazilian-utils/helper-only-numbers';
 import { SharedService } from 'src/app/services/shared.service';
 import emailMask from 'text-mask-addons/dist/emailMask';
 import { HttpResponse } from '@angular/common/http';
@@ -85,6 +86,7 @@ export class CadastroComponent implements OnInit {
         SharedService.getInstance().temporario[0] = this.retornocadastro.codcadastro;
         SharedService.getInstance().temporario[1] = this.retornocadastro.numerocadastroincorporadorafid;
         this.messageService.add({severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
         setTimeout(() => {
           this.router.navigate(['/analise']);
         }, 1000);
@@ -98,6 +100,7 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit() {
+
     SharedService.getInstance().temporario = [];
     this.chamadasInit();
 
@@ -120,7 +123,7 @@ export class CadastroComponent implements OnInit {
       const contatoDisplay = this.logicaService.adicionarContatosDisplay(contato);
       const contato2 = this.logicaService.adicionarContatosLista(contato);
 
-      contato2.cpfcnpj = this.comprador.cpfcnpj;
+      contato2.cpfcnpj = onlyNumbers(this.comprador.cpfcnpj);
 
       this.contatoDisplay.push(contatoDisplay);
       this.contato.push(contato2);
@@ -191,15 +194,51 @@ export class CadastroComponent implements OnInit {
   }
 
   removerComprador (comprador) {
-    const index = this.compradores.indexOf(comprador);
-    this.compradores.splice(index, 1);
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja continuar?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+       const index = this.compradores.indexOf(comprador);
+        this.compradores.splice(index, 1);
+        if (this.compradores.length <= 0) {
+          this.disabled = true;
+        } else {
+          this.disabled = false;
+        }
+          this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Comprador removido!'});
+      },
+      reject: () => {
+      }
+    })
+  }
 
-    if (this.compradores.length <= 0) {
-      this.disabled = true;
+  preencherEmpreendimento(event) {
+    if (event.value.cep != null) {
+      this.cadInfo.cep = event.value.cep;
+      let cep = event.value.cep;
+      cep.replace('-', '');
+      this.chamadasService.getCep(cep).subscribe(dados => {
+        let dadosRecebidos: any = dados;
+        if (!('erro' in dados)) {
+          this.cadInfo.numero = event.value.numemero;
+          this.cadInfo.bairro = event.value.bairro;
+          this.cadInfo.cidade = event.value.cidade;
+          this.cadInfo.endereco = event.value.rua;
+          this.cadInfo.uf = {uf: dadosRecebidos.uf.toUpperCase()};
+        }
+      })
     } else {
-      this.disabled = false;
+      this.cadInfo.cep = null;
+      this.cadInfo.numero = null;
+      this.cadInfo.bairro = null;
+      this.cadInfo.cidade = null;
+      this.cadInfo.endereco = null;
+      this.cadInfo.complemento = null;
+      this.cadInfo.uf = null;
     }
-    this.messageService.add({key: 'popup', severity: 'warn', summary: 'Aviso!', detail: 'Comprador removido!'});
   }
 
   consultaCEP() {
@@ -294,9 +333,9 @@ export class CadastroComponent implements OnInit {
   }
 
   setarTrue(dados) {
-    console.log(dados);
     const rowData: Compradores = dados.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
+      this.compradores[_i].principal = false;
       if (rowData.cpfcnpj == this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = true;
       }
@@ -304,22 +343,19 @@ export class CadastroComponent implements OnInit {
   }
 
   verificarSelecionado() {
+    let principal: boolean = false;
     for (let _i = 0; _i < this.compradores.length; _i++) {
       if (this.compradores[_i].principal == true) {
-        return true;
-      } else {
-        return false;
+        principal = true;
       }
     }
+
+    return principal;
   }
 
   tirarSelecionado(rowData) {
-    console.log(rowData);
-    const row: Compradores = rowData.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
-      if (row.cpfcnpj == this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = false;
-      }
     }
   }
 
@@ -340,8 +376,6 @@ export class CadastroComponent implements OnInit {
           this.compradores = [];
 
           this.OnSubmit(cadInfo, formulario);
-
-          this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Cadastro feito com sucesso!'});
         },
         reject: () => {
         }
@@ -395,12 +429,12 @@ export class CadastroComponent implements OnInit {
       this.chamadasService.putCadastro(cadInfo).subscribe(dados => {
         this.retornocadastro = dados['data'];
         console.log(dados);
+        formulario.reset();
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 1000);
       });
-      formulario.reset();
-      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
-      setTimeout(() => {
-        this.router.navigate(['/home']);
-      }, 1000);
     } else {
       this.msgs2 = [];
       const camposInvalidos: any[] = [];
@@ -531,10 +565,10 @@ export class CadastroComponent implements OnInit {
       this.cadInfo = this.logicaService.visualizarInfoImovel();
       this.compradores = this.cadInfo.clientes;
       for (let _i = 0; _i < this.compradores.length; _i++) {
-        if (this.cadInfo.clientes[_i].principal == true) {
-          this.selectedItem = this.cadInfo.clientes[_i];
+        if (this.compradores[_i].cpfcnpj == this.cadInfo.cpfcnpj) {
+          this.selectedItem = this.compradores[_i];
+          this.compradores[_i].principal = true;
         }
-
       }
 
       this.comprador = new Compradores();
@@ -596,6 +630,12 @@ export class CadastroComponent implements OnInit {
         (this.getLoads.getIncorporadoras == true) && (this.getLoads.getOriginacoes == true) && 
         (this.getLoads.getTipoCliente == true) && (this.getLoads.getTipoContato == true)) {
           setTimeout(() => {
+            this.getLoads.getEmpreendimentos = false;
+            this.getLoads.getIncorporadoras = false;
+            this.getLoads.getTipoCliente = false;
+            this.getLoads.getEstadoCivil = false;
+            this.getLoads.getOriginacoes = false;
+            this.getLoads.getTipoContato = false;
             this.load = true;
           }, 500);
         }
@@ -617,7 +657,8 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getEmpreendimentos = true;
         this.hiddenLoader();
       }
-    })
+    });
+
     this.chamadasService.getDadosCadastrais('originacoes').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];
@@ -641,7 +682,8 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getTipoContato = true;
         this.hiddenLoader();
       }
-    })
+    });
+
     this.chamadasService.getDadosCadastrais('tipoclientes').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];
@@ -649,7 +691,8 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getTipoCliente = true;
         this.hiddenLoader();
       }
-    })
+    });
+
     this.chamadasService.getDadosCadastrais('incorporadoras').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];
@@ -657,6 +700,6 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getIncorporadoras = true;
         this.hiddenLoader();
       }
-    })
+    });
   }
 }

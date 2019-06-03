@@ -1,6 +1,6 @@
 <div class="p-grid p-justify-center p-align-center">
     <div class="main-container">
-        <form id="form" #f="ngForm" (ngSubmit)="onSubmit(f)" autocomplete="off">
+        <form id="form" #form="ngForm" (ngSubmit)="onSubmit(form)" autocomplete="off">
             <p-panel header="Cadastro de usuário">
                 <div class="p-grid">
                     <div class="p-col-6">
@@ -35,6 +35,8 @@
                         <button pButton type="submit" label="Salvar" class="ui-button-rounded ui-button-success" 
                         [ngStyle]="{'width': '15%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
                     </div>
+
+                    <p-messages [(value)]="msgs" [ngStyle]="{'width': '100%'}"></p-messages>
 
                     <!--ARRUMAR O CONTAINER ALTURA-->
 

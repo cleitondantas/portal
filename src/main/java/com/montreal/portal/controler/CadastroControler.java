@@ -33,6 +33,9 @@ public class CadastroControler {
 	@Autowired
 	private CasdastroRepository casdastroRepository;
 
+	
+	private List<Cadastro> cadastros;
+	
 	@PostMapping(value = "/cadastro")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Cadastro>> create(HttpServletRequest request, @RequestBody Cadastro cadastro, BindingResult result) {
@@ -65,6 +68,9 @@ public class CadastroControler {
 			cadastro.setDtatividade(dtatividade);
 			Cadastro cs = (Cadastro) casdastroRepository.save(cadastro);
 			response.setData(cs);
+			
+			//Atualiza lista de cadastros ao inserir um novo cadastro
+			cadastros = casdastroRepository.findTopCadastro();
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
 			return ResponseEntity.badRequest().body(response);
@@ -94,6 +100,7 @@ public class CadastroControler {
 				Cadastro cs = (Cadastro) casdastroRepository.save(cadastro);
 				response.setData(cs);
 			}
+			cadastros = casdastroRepository.findTopCadastro();
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
 			return ResponseEntity.badRequest().body(response);
@@ -129,20 +136,44 @@ public class CadastroControler {
 	}
 
 	
+	@GetMapping(value = "/cadastros/top")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+	public ResponseEntity<Response<Iterable<Cadastro>>> findTopCadastro() {
+		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
+		try {
+			
+			if(cadastros==null) {
+			cadastros = casdastroRepository.findTopCadastro();
+			for (Cadastro item : cadastros) {
+				for (Cliente cliente : item.getClientes()) {
+					if (item.getCpfcnpj() != null) {
+						if (item.getCpfcnpj().equalsIgnoreCase(cliente.getCpfcnpj())) {
+							cliente.setPrincipal(true);
+						} else {
+							cliente.setPrincipal(false);
+						}
+					}
+				}
+			}
+			}
+			
+			response.setData(cadastros);
+		} catch (Exception e) {
+			response.getErrors().add(e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
+		return ResponseEntity.ok(response);
+	}
+	
+
 	//Busca por FID
 	@GetMapping(value = "/cadastro/{cod}")
 	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
 	public ResponseEntity<Response<Iterable<Cadastro>>> findFidCadastro(@PathVariable String cod) {
 		Response<Iterable<Cadastro>> response = new Response<Iterable<Cadastro>>();
-		List<Cadastro>  cadastros  =  new ArrayList<Cadastro>();
 		Cadastro cadastro =null;
 		try {
 		List<Cadastro> listCadastro = 	casdastroRepository.findCadastroWithPartOfFid(Integer.parseInt(cod));
-		//	Optional<Cadastro> cadastroOptional = casdastroRepository.findById(Integer.parseInt(cod));
-//			if(cadastroOptional.isPresent()) {
-//				cadastro = cadastroOptional.get();
-//			}
-		
 		for(Cadastro item: listCadastro) {
 			cadastro = item;
 		}
@@ -157,8 +188,6 @@ public class CadastroControler {
 					}
 				}
 			}
-			cadastros.add(cadastro);
-			response.setData(cadastros);
 	
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
@@ -176,11 +205,6 @@ public class CadastroControler {
 		Cadastro cadastro =null;
 		try {
 		List<Cadastro> listCadastro = 	casdastroRepository.findCadastroWithPartOfNomeCliente(nomeCliente);
-		//	Optional<Cadastro> cadastroOptional = casdastroRepository.findById(Integer.parseInt(cod));
-//			if(cadastroOptional.isPresent()) {
-//				cadastro = cadastroOptional.get();
-//			}
-		
 		for(Cadastro item: listCadastro) {
 			cadastro = item;
 		}

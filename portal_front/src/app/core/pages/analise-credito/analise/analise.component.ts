@@ -64,11 +64,10 @@ export class AnaliseComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("-------------------------------ngOnInit----AnaliseComponent")
     this.simulacaoLista = [];
-
     this.br = this.sharedService.calendarioBr();
     this.chamadasInit();
-    
     const AnaliseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
 
     if (AnaliseSelecionada != 'undefined' && AnaliseSelecionada != null) {
@@ -213,17 +212,14 @@ export class AnaliseComponent implements OnInit {
         this.analise.simulacoes[_i].codcadastro = this.codcadastro;
       }
       this.analise.codcadastro = this.codcadastro;
-      console.log('this.analise objeto');
-      console.log(this.analise);
-
-      console.log('this.analise Json');
-      console.log(JSON.stringify(this.analise));
-
-      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
-
+      SharedService.emitirevento.emit(this.codcadastro);
       setTimeout(() => {
-        this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {console.log(data); });
+        this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
+          console.log(JSON.stringify(data)); 
+        });
       }, 500);
+      console.log(JSON.stringify(this.analise));
+      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
     }
 
     if (this.verificarSelecionado() == true) {

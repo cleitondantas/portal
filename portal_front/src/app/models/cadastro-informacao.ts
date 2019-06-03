@@ -5,6 +5,7 @@ export class CadastroInformacao {
     codoriginacao: any;
     numerocadastroincorporadorafid: number;
     codincorporadora: any;
+    cpfcnpj: string;
     codempreendimento: any;
     blocotorre: string;
     unidade: string;
