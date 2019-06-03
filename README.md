@@ -20,7 +20,7 @@ sudo systemctl enable docker
 yum -y update
 yum install java-1.8.0-openjdk
 ```
-#####Install Maven 3.6
+##### Install Maven 3.6
 ```sh
 sudo yum install maven
 ```
