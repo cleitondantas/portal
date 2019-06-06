@@ -46,6 +46,11 @@ export class FormcadastroService {
     }
   }
 
+  salvarTrocarSenha(user: Usuario) {
+    console.log(JSON.stringify(user));
+      return this.http.put<Usuario>(environment.urlpath + '/api/user/usuario/trocarsenha', user);
+  }
+
 
   makeid(length) {
     var result           = '';
