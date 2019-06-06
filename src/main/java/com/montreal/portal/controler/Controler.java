@@ -133,6 +133,38 @@ public class Controler {
 			}
 			return ResponseEntity.ok(response);
 		}
+
+		@PutMapping(value = "/usuario/trocarsenha")
+		@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+		public ResponseEntity<Response<Usuario>> trocarSenha(HttpServletRequest request, @RequestBody Usuario user,BindingResult result) {
+			Response<Usuario> response = new Response<Usuario>();
+		
+			try {
+				Usuario usuario = usuarioService.findByCodUsuario(user.getCodUsuario());
+				validateCreateUser(user, result);
+				if (result.hasErrors()) {
+					result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+					return ResponseEntity.badRequest().body(response);
+				}
+				if(usuario==null) {
+					result.addError(new ObjectError("User", "Usuario não encotrado"));
+				}else {
+					usuario.setPassword(passwordEncoder.encode(user.getPassword()));
+					Usuario userPersisted = (Usuario) usuarioService.save(usuario);
+					response.setData(userPersisted);
+				}
+			} catch (DuplicateKeyException dE) {
+				response.getErrors().add("E-mail already registered !");
+				return ResponseEntity.badRequest().body(response);
+			} catch (Exception e) {
+				response.getErrors().add(e.getMessage());
+				return ResponseEntity.badRequest().body(response);
+			}
+			return ResponseEntity.ok(response);
+		}
+		
+		
+		
 		
 		
 		@DeleteMapping(value = "/usuario/{codUsuario}")

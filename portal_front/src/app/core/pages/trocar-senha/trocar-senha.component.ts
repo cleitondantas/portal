@@ -30,7 +30,7 @@ export class TrocarSenhaComponent implements OnInit {
     this.msgs = [];
     if (this.verificarSenha() == true) {
       this.usuario.password = this.senha;
-      this.formCadastroService.salvaresetUserPassword(this.usuario).subscribe(data => {
+      this.formCadastroService.salvarTrocarSenha(this.usuario).subscribe(data => {
         console.log(data)
         this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
         this.router.navigate(['/home']);
