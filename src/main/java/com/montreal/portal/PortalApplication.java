@@ -9,12 +9,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.montreal.portal.entity.Usuario;
+import com.montreal.portal.repository.UsuarioRepository;
+
 @SpringBootApplication
 @EnableCaching
 public class PortalApplication  implements CommandLineRunner {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	
     public static void main(String[] args) {
@@ -24,7 +30,31 @@ public class PortalApplication  implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... strings) throws Exception {
-    	System.out.println(passwordEncoder.encode("Pedepano10!"));
+    	
+    	Usuario usuario = usuarioRepository.findByLogin("admin");
+    	if(usuario!=null && usuario.getLogin().contentEquals("admin")) {
+    		
+    	}else {
+    		usuario = new Usuario();
+    	}
+    	
+    	
+    	String pass = passwordEncoder.encode("mci@1234");
+    	usuario.setCodUsuario(10001);
+    	usuario.setLogin("admin");
+    	usuario.setNome("Montreal");
+    	usuario.setSobrenome("Informatica");
+    	usuario.setPassword(pass);
+    	usuario.setCpf("00000000000");
+    	usuario.setEmail("cleiton.dantas@montreal.com.br");
+    	usuario.setIsAtivo(true);
+    	
+    	usuarioRepository.save(usuario);
+    	
+    	System.out.println("PASS CRIPTO"+ pass);
+    	System.out.println("Login:"+usuario.getLogin()+" pass:"+"mci@1234");
+    
+    	
     }
     
 
