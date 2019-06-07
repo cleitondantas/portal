@@ -4,6 +4,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { Usuario } from 'src/app/models/usuario';
 import { Router } from '@angular/router';
 import { FormcadastroService } from 'src/app/services/formcadastro.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-trocar-senha',
@@ -23,13 +24,19 @@ export class TrocarSenhaComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.usuario = this.sharedService.getSessionUsuario(); //Arrumar isso aqui
+    let user: Usuario = this.sharedService.getSessionUsuario();
+    this.formCadastroService.getLogin(user.login).subscribe(event => {
+      if (event instanceof HttpResponse) {
+        this.usuario = event.body['data'][0];
+      }
+    });
   }
 
   atualizarSenha() {
     this.msgs = [];
     if (this.verificarSenha() == true) {
       this.usuario.password = this.senha;
+      console.log(this.usuario)
       this.formCadastroService.salvarTrocarSenha(this.usuario).subscribe(data => {
         console.log(data)
         this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
