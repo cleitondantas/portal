@@ -23,7 +23,7 @@ export class InformacoesComponent implements OnInit {
   ngOnInit() {
     this.sharedService.showLoader.subscribe(dado => {
       this.load = dado;
-    })
+    });
   }
 
 }

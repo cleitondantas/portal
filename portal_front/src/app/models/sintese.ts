@@ -1,6 +1,6 @@
-export class Sintese{
+export class Sintese {
 
-    id : number;
+    id: number;
     sintese: string;
     numsintese: number;
     numfase: number;

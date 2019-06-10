@@ -21,7 +21,7 @@
           <div class="p-col-8">
             <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
             id="valoravaliacao" name="valoravaliacao" #valoravaliacao='ngModel' [(ngModel)]="simulacoes.valoravaliacao" 
-            (blur)="calcularValorCredito(); recursoProprio()" required>
+            (blur)="calcularValorCredito(formSimulacao); recursoProprio(formSimulacao)" required>
           </div>
         </div>
 
@@ -32,7 +32,7 @@
           <div class="p-col-8">
             <input type="text" currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
             id="valorcompravenda" name="valorcompravenda" #valorcompravenda='ngModel' [(ngModel)]="simulacoes.valorcompravenda"
-            (blur)="calcularValorCredito(); recursoProprio()" required>
+            (blur)="calcularValorCredito(formSimulacao); recursoProprio(formSimulacao)" required>
           </div>
         </div>
 
@@ -172,7 +172,7 @@
             </div>
             <div class="p-col-8">
               <input currencyMask pInputText class="ajusteInput" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-              id="valorfgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio()" />
+              id="valorfgts" name="valorfgts"  [(ngModel)]="simulacoes.valorfgts" (blur)="recursoProprio(formSimulacao)" />
             </div>
           </div>
 

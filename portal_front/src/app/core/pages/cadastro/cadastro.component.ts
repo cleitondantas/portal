@@ -33,7 +33,7 @@ export class CadastroComponent implements OnInit {
   @ViewChild('formulario', { read: NgForm }) form: any;
   @ViewChild('formCadInfo', { read: NgForm }) formCadInfo: any;
   @ViewChild('desccontato') desccontato: ElementRef;
-  
+
   constructor(
     private confirmationService: ConfirmationService,
     private chamadasService: CadastroChamadasService,
@@ -51,7 +51,7 @@ export class CadastroComponent implements OnInit {
   selectedItem: any;
   getLoads = {getEmpreendimentos: false, getOriginacoes: false, getEstadoCivil: false, getTipoContato: false,
                getTipoCliente: false, getIncorporadoras: false};
-  load: boolean = false;
+  load = false;
 
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
@@ -212,16 +212,16 @@ export class CadastroComponent implements OnInit {
       },
       reject: () => {
       }
-    })
+    });
   }
 
   preencherEmpreendimento(event) {
     if (event.value.cep != null) {
       this.cadInfo.cep = event.value.cep;
-      let cep = event.value.cep;
+      const cep = event.value.cep;
       cep.replace('-', '');
       this.chamadasService.getCep(cep).subscribe(dados => {
-        let dadosRecebidos: any = dados;
+        const dadosRecebidos: any = dados;
         if (!('erro' in dados)) {
           this.cadInfo.numero = event.value.numemero;
           this.cadInfo.bairro = event.value.bairro;
@@ -229,7 +229,7 @@ export class CadastroComponent implements OnInit {
           this.cadInfo.endereco = event.value.rua;
           this.cadInfo.uf = {uf: dadosRecebidos.uf.toUpperCase()};
         }
-      })
+      });
     } else {
       this.cadInfo.cep = null;
       this.cadInfo.numero = null;
@@ -343,7 +343,7 @@ export class CadastroComponent implements OnInit {
   }
 
   verificarSelecionado() {
-    let principal: boolean = false;
+    let principal = false;
     for (let _i = 0; _i < this.compradores.length; _i++) {
       if (this.compradores[_i].principal == true) {
         principal = true;
@@ -626,8 +626,8 @@ export class CadastroComponent implements OnInit {
   }
 
   hiddenLoader() {
-    if ((this.getLoads.getEmpreendimentos == true) && (this.getLoads.getEstadoCivil == true) && 
-        (this.getLoads.getIncorporadoras == true) && (this.getLoads.getOriginacoes == true) && 
+    if ((this.getLoads.getEmpreendimentos == true) && (this.getLoads.getEstadoCivil == true) &&
+        (this.getLoads.getIncorporadoras == true) && (this.getLoads.getOriginacoes == true) &&
         (this.getLoads.getTipoCliente == true) && (this.getLoads.getTipoContato == true)) {
           setTimeout(() => {
             this.getLoads.getEmpreendimentos = false;
@@ -666,7 +666,7 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getOriginacoes = true;
         this.hiddenLoader();
       }
-    })
+    });
     this.chamadasService.getDadosCadastrais('estadocivil').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];
@@ -674,7 +674,7 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getEstadoCivil = true;
         this.hiddenLoader();
       }
-    })
+    });
     this.chamadasService.getDadosCadastrais('tipocontatos').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];

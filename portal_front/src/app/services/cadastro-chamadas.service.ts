@@ -31,7 +31,7 @@ export class CadastroChamadasService {
   getEmpreendimentos() {
     return this.http.get<Empreendimento[]>(environment.urlpath + '/api/empreendimentos');
   }
-  
+
   getFlux() {
     return this.http.get<Empreendimento[]>(environment.urlpath + '/api/flux');
   }
@@ -69,7 +69,7 @@ export class CadastroChamadasService {
     .then(data => data);
   }
 
-  
+
   getBuscaNomeClienteCadastrado(nome: any) {
     return this.http.get<Cliente[]>(environment.urlpath + '/api/cliente/nome/' + nome)
     .toPromise()

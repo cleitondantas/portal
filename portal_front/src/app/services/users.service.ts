@@ -10,8 +10,8 @@ export class UsersService {
   constructor(    private http: HttpClient) { }
 
 
-  getUsuario(codusuario:number){
-    return this.http.get<Usuario>(environment.urlpath + '/api/usuario/'+codusuario)
+  getUsuario(codusuario: number) {
+    return this.http.get<Usuario>(environment.urlpath + '/api/usuario/' + codusuario);
   }
 
 }
