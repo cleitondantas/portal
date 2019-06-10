@@ -1,6 +1,6 @@
-import { Data } from "@angular/router";
+import { Data } from '@angular/router';
 
-export class HistoricoAnalise{
+export class HistoricoAnalise {
 
     id: number;
     datahistorico: any;

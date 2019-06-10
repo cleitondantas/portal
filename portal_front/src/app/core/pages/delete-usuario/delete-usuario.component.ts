@@ -22,8 +22,8 @@ export class DeleteUsuarioComponent implements OnInit {
   results = [];
   resultsLogin = [];
   confirmarNickName: string;
-  showForm: boolean = false;
-  showLoad: boolean = false;
+  showForm = false;
+  showLoad = false;
 
   constructor(private formcadastro: FormcadastroService,
               private messageService: MessageService,
@@ -34,14 +34,14 @@ export class DeleteUsuarioComponent implements OnInit {
   }
 
 
-  deleteUser(){
+  deleteUser() {
     this.formcadastro.deleteUpdate(this.usuarioForm).subscribe(data => {
       console.log(data);
-    })
+    });
   }
-  
+
   getRoles() {
-    let items = [];
+    const items = [];
     this.formcadastro.getRoles().subscribe(data => {
       for (let _i = 0; _i < data['data'].length; _i++) {
         this.item = new Role();
@@ -61,23 +61,23 @@ export class DeleteUsuarioComponent implements OnInit {
     if (dado == false) {
       this.formcadastro.getLogin(this.nickname).subscribe(event => {
         if (event instanceof HttpResponse) {
-          let dadosBaixados: Usuario = event.body['data'][0];
-  
+          const dadosBaixados: Usuario = event.body['data'][0];
+
           this.usuarioForm = dadosBaixados;
           this.usuarioForm.password = null;
-  
+
           setTimeout(() => {
             this.showLoad = false;
             this.showForm = true;
           }, 500);
         }
-      })
+      });
     } else if (dado == true) {
-      let slice = this.usuario.indexOf(' ');
-    
+      const slice = this.usuario.indexOf(' ');
+
       this.formcadastro.getNome(this.usuario.slice(0, slice)).subscribe(event => {
         if (event instanceof HttpResponse) {
-          let dadosBaixados: Usuario = event.body['data'][0];
+          const dadosBaixados: Usuario = event.body['data'][0];
 
           this.usuarioForm = dadosBaixados;
           this.usuarioForm.password = null;
@@ -87,20 +87,20 @@ export class DeleteUsuarioComponent implements OnInit {
             this.showForm = true;
           }, 500);
         }
-      })
+      });
     }
   }
 
   searchNome(event) {
     this.formcadastro.getUsers(event.query).then(data => {
       this.results = this.formCadastroLogica.filtroClientePorNome(event.query, data['data']);
-    })
+    });
   }
 
   searchLogin(event) {
     this.formcadastro.getNick(event.query).then(data => {
       this.resultsLogin = this.formCadastroLogica.filtroClientePorLogin(event.query, data['data']);
-    })
+    });
   }
 
 }

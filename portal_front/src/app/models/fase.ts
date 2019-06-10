@@ -1,8 +1,8 @@
-export class Fase{
+export class Fase {
 
-    id : number;
+    id: number;
     fase: string;
-    numfase:number;
+    numfase: number;
 
-    
+
 }

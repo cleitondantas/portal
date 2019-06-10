@@ -294,7 +294,7 @@ export class CadastroLogicaService {
   }
 
   getContatoDisplay(comprador) {
-    let contDisplay: any[] = [];
+    const contDisplay: any[] = [];
     this.chamadasService.getDadosCadastrais('tipocontatos').subscribe(event => {
       if (event.type === HttpEventType.DownloadProgress) {
       } else if (event instanceof HttpResponse) {

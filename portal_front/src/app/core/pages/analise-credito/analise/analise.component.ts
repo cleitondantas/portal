@@ -13,7 +13,7 @@ import { StatusSimulacao } from 'src/app/models/status-simulacao';
 
 import { Modalidades } from 'src/app/models/modalidades';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-analise',
@@ -64,7 +64,7 @@ export class AnaliseComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("-------------------------------ngOnInit----AnaliseComponent")
+    console.log('-------------------------------ngOnInit----AnaliseComponent');
     this.simulacaoLista = [];
     this.br = this.sharedService.calendarioBr();
     this.chamadasInit();
@@ -115,7 +115,7 @@ export class AnaliseComponent implements OnInit {
 
     this.simulacoes.correspondente = 'Montreal';
     this.simulacoes.simulacaoselecionado = false;
-    console.log(this.simulacoes)
+    console.log(this.simulacoes);
   }
 
   addItemStatusSimulacao(items: StatusSimulacao[]) {
@@ -215,7 +215,7 @@ export class AnaliseComponent implements OnInit {
       SharedService.emitirevento.emit(this.codcadastro);
       setTimeout(() => {
         this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(JSON.stringify(data)); 
+          console.log(JSON.stringify(data));
         });
       }, 500);
       console.log(JSON.stringify(this.analise));
@@ -234,30 +234,38 @@ export class AnaliseComponent implements OnInit {
     input.click();
   }
 
-  recursoProprio() {
+  recursoProprio(formSimulacao) {
     let calc;
-    if (this.simulacoes.valorfgts == undefined) {
-      calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito;
-    } else if (this.simulacoes.valorcredito == undefined) {
-      calc = this.simulacoes.valorfgts;
-    } else {
-      calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito - this.simulacoes.valorfgts;
+    const recursoProprio: FormControl = formSimulacao.controls['valorrecursosproprios'];
+
+    if (recursoProprio.pristine == true) {
+      if (this.simulacoes.valorfgts == undefined) {
+        calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito;
+      } else if (this.simulacoes.valorcredito == undefined) {
+        calc = this.simulacoes.valorfgts;
+      } else {
+        calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito - this.simulacoes.valorfgts;
+      }
+      this.simulacoes.valorrecursosproprios = calc;
     }
-    this.simulacoes.valorrecursosproprios = calc;
   }
 
-  calcularValorCredito() {
+  calcularValorCredito(formSimulacao) {
     let calc;
-    if (this.simulacoes.valoravaliacao == undefined) {
-      calc = (80 * this.simulacoes.valorcompravenda) / 100;
-    } else if (this.simulacoes.valorcompravenda == undefined) {
-      calc = (80 * this.simulacoes.valoravaliacao) / 100;
-    } else if (this.simulacoes.valoravaliacao < this.simulacoes.valorcompravenda) {
-      calc = (80 * this.simulacoes.valoravaliacao) / 100;
-    } else {
-      calc = (80 * this.simulacoes.valorcompravenda) / 100;
+    const valorcredito: FormControl = formSimulacao.controls['valorcredito'];
+
+    if (valorcredito.pristine == true) {
+      if (this.simulacoes.valoravaliacao == undefined) {
+        calc = (80 * this.simulacoes.valorcompravenda) / 100;
+      } else if (this.simulacoes.valorcompravenda == undefined) {
+        calc = (80 * this.simulacoes.valoravaliacao) / 100;
+      } else if (this.simulacoes.valoravaliacao < this.simulacoes.valorcompravenda) {
+        calc = (80 * this.simulacoes.valoravaliacao) / 100;
+      } else {
+        calc = (80 * this.simulacoes.valorcompravenda) / 100;
+      }
+      this.simulacoes.valorcredito = calc;
     }
-    this.simulacoes.valorcredito = calc;
   }
 
   salvarAnalise(formDatasDoProcesso) {
@@ -393,5 +401,9 @@ export class AnaliseComponent implements OnInit {
       this.statusSimulEvent.emit(true);
      });
 
+  }
+
+  erro(form) {
+    console.log(form);
   }
 }

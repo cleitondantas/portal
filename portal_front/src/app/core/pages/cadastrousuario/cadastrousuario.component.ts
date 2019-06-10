@@ -40,7 +40,7 @@ export class CadastrousuarioComponent implements OnInit {
 
 
   getRoles() {
-    let items = [];
+    const items = [];
     this.service.getRoles().subscribe(data => {
       for (let _i = 0; _i < data['data'].length; _i++) {
         this.item = new Role();
@@ -80,7 +80,7 @@ export class CadastrousuarioComponent implements OnInit {
   validaForm() {
     const cpf: boolean = isValidCpf(this.usuario.cpf);
     const cnpj: boolean = isValidCnpj(this.usuario.cpf);
-    let controle: boolean = false;
+    let controle = false;
 
     if ((cpf || cnpj == true) && (this.usuario.cpf !== null)) {
       controle =  true;
@@ -88,22 +88,22 @@ export class CadastrousuarioComponent implements OnInit {
       controle =  false;
     }
 
-    if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarSenha) && (controle == true) && (this.usuario.login != "") && (this.usuario.password != "")) {
-      return true
+    if ((this.usuario.login == this.confirmarNickName) && (this.usuario.password == this.confirmarSenha) && (controle == true) && (this.usuario.login != '') && (this.usuario.password != '')) {
+      return true;
     } else {
       return false;
     }
   }
 
   msgErro() {
-    let forms = ['login', 'confirmarNickName', 'senha', 'confirmarSenha', 'cpf'];
+    const forms = ['login', 'confirmarNickName', 'senha', 'confirmarSenha', 'cpf'];
     for (let i = 0; i < forms.length; i++) {
-      this.form.controls[forms[i]].status = "VALID";
-    };
+      this.form.controls[forms[i]].status = 'VALID';
+    }
 
     if (this.usuario.login != this.confirmarNickName) {
-      this.form.controls['confirmarNickName'].status = "INVALID";
-      this.form.controls['login'].status = "INVALID";
+      this.form.controls['confirmarNickName'].status = 'INVALID';
+      this.form.controls['login'].status = 'INVALID';
       this.form.controls['confirmarNickName'].pristine = false;
       this.form.controls['login'].pristine = false;
 
@@ -112,11 +112,11 @@ export class CadastrousuarioComponent implements OnInit {
         summary: 'Erro ao cadastrar usuário!',
         detail: `Os campos de nickname não coincidem.`
       });
-    };
+    }
 
-    if (this.usuario.login == "" || this.confirmarNickName == "") {
-      this.form.controls['confirmarNickName'].status = "INVALID";
-      this.form.controls['login'].status = "INVALID";
+    if (this.usuario.login == '' || this.confirmarNickName == '') {
+      this.form.controls['confirmarNickName'].status = 'INVALID';
+      this.form.controls['login'].status = 'INVALID';
       this.form.controls['confirmarNickName'].pristine = false;
       this.form.controls['login'].pristine = false;
 
@@ -125,11 +125,11 @@ export class CadastrousuarioComponent implements OnInit {
         summary: 'Erro ao cadastrar usuário!',
         detail: `Os campos de nickname estão em branco.`
       });
-    };
+    }
 
     if (this.usuario.password != this.confirmarSenha) {
-      this.form.controls['confirmarSenha'].status = "INVALID";
-      this.form.controls['senha'].status = "INVALID";
+      this.form.controls['confirmarSenha'].status = 'INVALID';
+      this.form.controls['senha'].status = 'INVALID';
       this.form.controls['confirmarSenha'].pristine = false;
       this.form.controls['senha'].pristine = false;
 
@@ -138,11 +138,11 @@ export class CadastrousuarioComponent implements OnInit {
         summary: 'Erro ao cadastrar usuário!',
         detail: `As senhas não coincidem.`
       });
-    };
-    
-    if (this.usuario.password == "" || this.confirmarSenha == "") {
-      this.form.controls['confirmarSenha'].status = "INVALID";
-      this.form.controls['senha'].status = "INVALID";
+    }
+
+    if (this.usuario.password == '' || this.confirmarSenha == '') {
+      this.form.controls['confirmarSenha'].status = 'INVALID';
+      this.form.controls['senha'].status = 'INVALID';
       this.form.controls['confirmarSenha'].pristine = false;
       this.form.controls['senha'].pristine = false;
 
@@ -151,10 +151,10 @@ export class CadastrousuarioComponent implements OnInit {
         summary: 'Erro ao cadastrar usuário!',
         detail: `Os campos de senha estão em branco.`
       });
-    };
+    }
 
     if ((isValidCpf(this.usuario.cpf) != true) && (isValidCnpj(this.usuario.cpf) != true)) {
-      this.form.controls['cpf'].status = "INVALID";
+      this.form.controls['cpf'].status = 'INVALID';
       this.form.controls['cpf'].pristine = false;
 
       this.msgs.push({
@@ -162,10 +162,10 @@ export class CadastrousuarioComponent implements OnInit {
         summary: 'Erro ao cadastrar usuário!',
         detail: `O CPF não é válido.`
       });
-    };
+    }
 
-    if (this.usuario.cpf == "") {
-      this.form.controls['cpf'].status = "INVALID";
+    if (this.usuario.cpf == '') {
+      this.form.controls['cpf'].status = 'INVALID';
       this.form.controls['cpf'].pristine = false;
 
       this.msgs.push({
@@ -173,6 +173,6 @@ export class CadastrousuarioComponent implements OnInit {
         summary: 'Erro ao cadastrar usuário!',
         detail: `O campo de CPF está em branco.`
       });
-    };
+    }
   }
 }

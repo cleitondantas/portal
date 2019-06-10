@@ -24,9 +24,9 @@ export class HistoricoComponent implements OnInit {
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
-  disabledSintese: boolean = true;
-  loadSpin: boolean = false;
-  loadTable: boolean = false;
+  disabledSintese = true;
+  loadSpin = false;
+  loadTable = false;
   fid: any;
   msgs: Message[] = [];
   fases: Fase[];
@@ -41,13 +41,13 @@ export class HistoricoComponent implements OnInit {
      private historicoService: HistoricoService,
      private messageService: MessageService,
      private historicoLogicaService: HistoricoLogicaService) { }
-     
+
   ngOnInit() {
     this.chamadaService.getDadosCadastrais('fases').subscribe(event => {
       if (event instanceof HttpResponse) {
         this.fases = event.body['data'];
       }
-    })
+    });
     this.visualizarCadInfo();
 
     this.chamadaService.buscarInformacoes.subscribe(dado => {
@@ -64,13 +64,13 @@ export class HistoricoComponent implements OnInit {
       setTimeout(() => {
         this.loadTable = !dado;
       }, 500);
-    })
+    });
 
-    this.getHistorico();  
+    this.getHistorico();
   }
 
-  changeFases(event){
-    this.loadSpin = true;   
+  changeFases(event) {
+    this.loadSpin = true;
     const numfase: Fase = event.value;
     this.historicoService.getSintesePorFaseRequest(numfase.numfase).subscribe(event => {
       if (event instanceof HttpResponse) {
@@ -79,22 +79,22 @@ export class HistoricoComponent implements OnInit {
           this.loadSpin = false;
         }, 300);
       }
-    })
+    });
     this.disabledSintese = false;
   }
 
-  changeSintese(event){
+  changeSintese(event) {
     const sinsete: Sintese = event.value;
     this.sinteseSelecionado = sinsete;
   }
 
-  getHistorico(){
+  getHistorico() {
    this.historicoService.getHistorico(this.cadInfo.codcadastro).subscribe(data => {
-     this.historicoAnalises = this.historicoLogicaService.receberHistorico(data)
+     this.historicoAnalises = this.historicoLogicaService.receberHistorico(data);
    });
   }
 
-  salvar(data, formHistorico){
+  salvar(data, formHistorico) {
     this.loadTable = true;
     this.msgs = [];
     if (this.validaForm(formHistorico) == true) {
@@ -159,6 +159,6 @@ export class HistoricoComponent implements OnInit {
       return false;
     } else {
       return true;
-    } 
+    }
   }
 }
