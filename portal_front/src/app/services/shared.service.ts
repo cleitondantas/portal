@@ -12,13 +12,17 @@ import { Compradores } from '../models/compradores';
 })
 export class SharedService {
 
+  constructor() {
+    return SharedService.instance = SharedService.instance || this;
+  }
+
   public static instance: SharedService = null;
+  static emitirevento  = new EventEmitter<any>();
   private user: Usuario;
   role: Role;
   roles: Role[];
-  
+
   temporario: any[] = [];
-  static emitirevento  = new EventEmitter<any>();
   @Output() messengerService = new MessageService();
   @Output() showError = new EventEmitter<string>();
   showTemplate = new EventEmitter<boolean>();
@@ -35,10 +39,6 @@ export class SharedService {
   empreendimentos: Empreendimento[] = [];
   cadastrosrecentes: Compradores[] = [];
   infosTable: any[] = [];
-
-  constructor() {
-    return SharedService.instance = SharedService.instance || this;
-  }
 
   public static getInstance() {
     if (this.instance == null) {
@@ -65,7 +65,7 @@ export class SharedService {
   sessionStorage.setItem('cpf', user.cpf);
   sessionStorage.setItem('email', user.email);
   sessionStorage.setItem('perfis', user.perfis[0].profile);
-  sessionStorage.setItem('perfisJson',JSON.stringify(user.perfis));
+  sessionStorage.setItem('perfisJson', JSON.stringify(user.perfis));
   this.user = user;
 }
 
@@ -88,8 +88,8 @@ public getSessionUsuario(): Usuario {
 
 public isUserAdmin(): boolean {
   this.roles =  JSON.parse(sessionStorage.getItem('perfisJson'));
-  for(let i = 0;i< this.roles.length; i++ ){
-    if(this.roles[i].nivel == 1){
+  for (let i = 0; i < this.roles.length; i++ ) {
+    if (this.roles[i].nivel == 1) {
       return true;
     }
   }

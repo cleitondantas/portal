@@ -15,7 +15,7 @@ export class ContentComponent implements OnInit {
     this.authService.mostrarsistema.subscribe(
       mostrar => this.mostrarMenu = mostrar
     );
-    if(this.authService.isUsuarioAutenticado()){
+    if (this.authService.isUsuarioAutenticado()) {
       this.mostrarMenu = true;
     }
   }

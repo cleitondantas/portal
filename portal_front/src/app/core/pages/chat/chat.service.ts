@@ -7,8 +7,8 @@ export class ChatService {
 
   constructor() { }
 
-  getCal(){
+  getCal() {
 
-    
+
   }
 }
