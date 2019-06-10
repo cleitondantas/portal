@@ -50,6 +50,6 @@ user = new Usuario();
           this.msgs = [];
         }
       }, 301);
-    })
+    });
   }
 }

@@ -29,7 +29,7 @@ export class AuthService {
       reportProgress: true
     })).subscribe(event => {
       if (event instanceof HttpResponse) {
-        let evento: any = event.body;
+        const evento: any = event.body;
         this.shared.setToken(evento.token);
         this.shared.setSessionUsuario(evento.usuario);
         this.usuarioAutenticado = true;
@@ -46,7 +46,7 @@ export class AuthService {
       this.shared.removeSessionUsuario();
       this.usuarioAutenticado = false;
       console.log('ERRO AO TENTAR LOGAR');
-    })
+    });
   }
 
   fazerLogout() {

@@ -17,7 +17,7 @@ import { Empreendimento } from 'src/app/models/empreendimento';
 export class HomeComponent implements OnInit {
   cadastroInformacoes: CadastroInformacao[] = [];
   infosTable: any[] = [];
-  load: boolean = false;
+  load = false;
   empreendimentos: Empreendimento[];
 
   constructor(private homeChamada: HomeChamadasService,
@@ -32,17 +32,17 @@ export class HomeComponent implements OnInit {
       this.cadastroChamada.getEmpreendimentos().subscribe(dados => {
         this.sharedService.empreendimentos = dados['data'];
         this.getListCadastrosTop();
-      })
+      });
     } else {
       this.infosTable = this.sharedService.infosTable;
       this.load = true;
 
       this.homeChamada.getCadastrosTop().subscribe(event => {
         if (event instanceof HttpResponse) {
-          let cadInfo: CadastroInformacao[] = event.body['data'];
-          let cadastros: Compradores[] = [];
-          let mudanca: boolean = false;
-          
+          const cadInfo: CadastroInformacao[] = event.body['data'];
+          const cadastros: Compradores[] = [];
+          let mudanca = false;
+
           for (let i = 0; i < cadInfo.length; i++) {
             for (let item = 0; item < cadInfo[i].clientes.length; item++) {
               if (cadInfo[i].cpfcnpj == cadInfo[i].clientes[item].cpfcnpj) {
@@ -51,9 +51,9 @@ export class HomeComponent implements OnInit {
             }
           }
 
-          let diferencas = cadastros.filter(results => this.sharedService.cadastrosrecentes.includes(results));
+          const diferencas = cadastros.filter(results => this.sharedService.cadastrosrecentes.includes(results));
           console.log(diferencas);
-          
+
           for (let i = 0; i < cadastros.length; i++) {
             if (this.sharedService.cadastrosrecentes[i] == undefined) {
               this.sharedService.cadastrosrecentes[i] = cadastros[i];
@@ -70,11 +70,11 @@ export class HomeComponent implements OnInit {
             this.popularInfoTable();
           }
         }
-      })
+      });
     }
   }
 
-  getListCadastrosTop(){
+  getListCadastrosTop() {
     this.homeChamada.getCadastrosTop().subscribe(event => {
       if (event instanceof HttpResponse) {
         this.cadastroInformacoes = event.body['data'];
@@ -90,13 +90,13 @@ export class HomeComponent implements OnInit {
 
         this.popularInfoTable();
       }
-    })
+    });
 
   }
 
   popularInfoTable() {
     this.infosTable = [];
-    let empreendimento = this.sharedService.empreendimentos;
+    const empreendimento = this.sharedService.empreendimentos;
     let cadastro;
     for (let i = 0; i < this.sharedService.cadastrosrecentes.length; i++) {
       cadastro = {nomecliente: this.sharedService.cadastrosrecentes[i].nomecliente, cpfcnpj: this.sharedService.cadastrosrecentes[i].cpfcnpj,
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
         cadastro.codempreendimento = empreendimento[item].descempreendimento;
       }
     }
-    
+
     this.infosTable.push(cadastro);
     }
 
@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
   }
 
   irCadastro(cadastro: Compradores) {
-    console.log(cadastro)
+    console.log(cadastro);
     console.log(this.cadastroInformacoes);
     for (let i = 0; i < this.cadastroInformacoes.length; i++) {
       for (let item = 0; item < this.cadastroInformacoes[i].clientes.length; item++) {
@@ -131,8 +131,8 @@ export class HomeComponent implements OnInit {
   }
 
 
-  getFlux(){
-    this.cadastroChamada.getFlux().subscribe(data => console.log(data))
+  getFlux() {
+    this.cadastroChamada.getFlux().subscribe(data => console.log(data));
   }
 
   compararInfo() {

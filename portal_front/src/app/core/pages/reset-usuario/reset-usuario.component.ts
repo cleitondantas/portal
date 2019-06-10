@@ -26,31 +26,31 @@ export class ResetUsuarioComponent implements OnInit {
   results = [];
   resultsLogin = [];
   confirmarNickName: string;
-  showForm: boolean = false;
-  showLoad: boolean = false;
+  showForm = false;
+  showLoad = false;
 
   constructor(private formcadastro: FormcadastroService,
               private messageService: MessageService,
               private formCadastroLogica: FormCadastroLogicaService) { }
-              
+
   ngOnInit() {
     this.getRoles();
   }
 
   atualizarUser() {
-    if(this.newPassord!=null && this.newPassord.length != 0){
+    if (this.newPassord != null && this.newPassord.length != 0) {
       this.usuarioForm.password = this.newPassord;
       this.formcadastro.salvaresetUserPassword(this.usuarioForm).subscribe(data => {
-      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});    
+      this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
       console.log(data);
-    })
-  }else{
+    });
+  } else {
     this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'Erro ao realizar alterações!'});
   }
   }
-  
+
   getRoles() {
-    let items = [];
+    const items = [];
     this.formcadastro.getRoles().subscribe(data => {
       for (let _i = 0; _i < data['data'].length; _i++) {
         this.item = new Role();
@@ -71,23 +71,23 @@ export class ResetUsuarioComponent implements OnInit {
     if (dado == false) {
       this.formcadastro.getLogin(this.nickname).subscribe(event => {
         if (event instanceof HttpResponse) {
-          let dadosBaixados: Usuario = event.body['data'][0];
-  
+          const dadosBaixados: Usuario = event.body['data'][0];
+
           this.usuarioForm = dadosBaixados;
           this.usuarioForm.password = null;
-  
+
           setTimeout(() => {
             this.showLoad = false;
             this.showForm = true;
           }, 500);
         }
-      })
+      });
     } else if (dado == true) {
-      let slice = this.usuario.indexOf(' ');
-    
+      const slice = this.usuario.indexOf(' ');
+
       this.formcadastro.getNome(this.usuario.slice(0, slice)).subscribe(event => {
         if (event instanceof HttpResponse) {
-          let dadosBaixados: Usuario = event.body['data'][0];
+          const dadosBaixados: Usuario = event.body['data'][0];
 
           this.usuarioForm = dadosBaixados;
           this.usuarioForm.password = null;
@@ -97,23 +97,23 @@ export class ResetUsuarioComponent implements OnInit {
             this.showForm = true;
           }, 500);
         }
-      })
+      });
     }
   }
 
   searchNome(event) {
     this.formcadastro.getUsers(event.query).then(data => {
       this.results = this.formCadastroLogica.filtroClientePorNome(event.query, data['data']);
-    })
+    });
   }
 
   searchLogin(event) {
     this.formcadastro.getNick(event.query).then(data => {
       this.resultsLogin = this.formCadastroLogica.filtroClientePorLogin(event.query, data['data']);
-    })
+    });
   }
 
-  resetRandonPassoword(){
+  resetRandonPassoword() {
     this.newPassord = this.formcadastro.makeid(8);
   }
 

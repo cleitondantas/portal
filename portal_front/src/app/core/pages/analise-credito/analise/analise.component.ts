@@ -64,7 +64,7 @@ export class AnaliseComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("-------------------------------ngOnInit----AnaliseComponent")
+    console.log('-------------------------------ngOnInit----AnaliseComponent');
     this.simulacaoLista = [];
     this.br = this.sharedService.calendarioBr();
     this.chamadasInit();
@@ -115,7 +115,7 @@ export class AnaliseComponent implements OnInit {
 
     this.simulacoes.correspondente = 'Montreal';
     this.simulacoes.simulacaoselecionado = false;
-    console.log(this.simulacoes)
+    console.log(this.simulacoes);
   }
 
   addItemStatusSimulacao(items: StatusSimulacao[]) {
@@ -215,7 +215,7 @@ export class AnaliseComponent implements OnInit {
       SharedService.emitirevento.emit(this.codcadastro);
       setTimeout(() => {
         this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(JSON.stringify(data)); 
+          console.log(JSON.stringify(data));
         });
       }, 500);
       console.log(JSON.stringify(this.analise));
@@ -236,7 +236,7 @@ export class AnaliseComponent implements OnInit {
 
   recursoProprio(formSimulacao) {
     let calc;
-    let recursoProprio: FormControl = formSimulacao.controls['valorrecursosproprios'];
+    const recursoProprio: FormControl = formSimulacao.controls['valorrecursosproprios'];
 
     if (recursoProprio.pristine == true) {
       if (this.simulacoes.valorfgts == undefined) {
@@ -252,7 +252,7 @@ export class AnaliseComponent implements OnInit {
 
   calcularValorCredito(formSimulacao) {
     let calc;
-    let valorcredito: FormControl = formSimulacao.controls['valorcredito'];
+    const valorcredito: FormControl = formSimulacao.controls['valorcredito'];
 
     if (valorcredito.pristine == true) {
       if (this.simulacoes.valoravaliacao == undefined) {
@@ -404,6 +404,6 @@ export class AnaliseComponent implements OnInit {
   }
 
   erro(form) {
-    console.log(form)
+    console.log(form);
   }
 }
