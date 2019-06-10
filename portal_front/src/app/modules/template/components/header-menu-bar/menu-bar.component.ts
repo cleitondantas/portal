@@ -241,7 +241,9 @@ export class MenuBarComponent implements OnInit {
                     }
                     console.log(data);
                     this.router.navigate(['/informacoes']);
-                    this.analiseService.buscarInformacoes.emit(true);
+                    if (this.router.url == '/informacoes') {
+                        this.analiseService.buscarInformacoes.emit(true);
+                    }
                 });
 
             this.hideDialogInfo();

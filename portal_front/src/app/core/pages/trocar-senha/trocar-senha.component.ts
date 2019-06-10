@@ -32,7 +32,7 @@ export class TrocarSenhaComponent implements OnInit {
     });
   }
 
-  atualizarSenha() {
+  trocarSenha() {
     this.msgs = [];
     if (this.verificarSenha() == true) {
       this.usuario.password = this.senha;
@@ -62,7 +62,7 @@ export class TrocarSenhaComponent implements OnInit {
   verificarSenha() {
     if (this.senha == undefined || this.confirmarSenha == undefined) {
       return false;
-    } else if ((this.senha == this.confirmarSenha) && (this.senha.length > 8) && (this.confirmarSenha.length > 8)) {
+    } else if ((this.senha == this.confirmarSenha) && (this.senha.length >= 8) && (this.confirmarSenha.length >= 8)) {
       return true;
     } else {
       return false;

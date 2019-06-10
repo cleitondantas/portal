@@ -24,7 +24,7 @@
                     </div>
                     <div class="p-col-8">
                       <input type="text" class="ajusteInput" pInputText id="cpfcnpj" ngModel  name="cpfcnpj"  #cpfcnpj="ngModel" [(ngModel)]="comprador.cpfcnpj"
-                      pKeyFilter="pint" required>
+                      pKeyFilter="pint" required (blur)="blurCpf()">
                     </div>
                   </div>
 

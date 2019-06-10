@@ -14,6 +14,7 @@ import { StatusSimulacao } from 'src/app/models/status-simulacao';
 import { Modalidades } from 'src/app/models/modalidades';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 import { NgForm, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-analise',
@@ -42,6 +43,7 @@ export class AnaliseComponent implements OnInit {
   controle: boolean = this.service.controle;
   msgs: Message[] = [];
   msgs2: Message[] = [];
+  subsVar: Subscription;
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
@@ -59,6 +61,10 @@ export class AnaliseComponent implements OnInit {
     items: any[];
 
   ngOnDestroy() {
+    if (this.subsVar) {
+      this.subsVar.unsubscribe()
+    }
+    
     sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
     console.log('ngOnDestroy()');
   }
@@ -101,7 +107,7 @@ export class AnaliseComponent implements OnInit {
       SharedService.getInstance().temporario = null;
     }
 
-    this.service.buscarAnalise.subscribe(temporario => {
+    this.subsVar = this.service.buscarAnalise.subscribe(temporario => {
       if (SharedService.getInstance().temporario == null) {
         SharedService.getInstance().temporario = temporario;
       }
