@@ -71,7 +71,7 @@ public class UsuarioControler {
 	 * @return
 	 */
 	@GetMapping(value = "/usuario/login/{login}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Usuario>>> findUsuarioLogin(@PathVariable String login) {
 		Response<Iterable<Usuario>> response = new Response<Iterable<Usuario>>();
 		Iterable<Usuario> users = usuarioRepository.findUsuariosWithPartOfLoginAllParans(login);
