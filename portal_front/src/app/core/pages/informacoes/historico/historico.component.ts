@@ -11,6 +11,7 @@ import { HistoricoAnalise } from 'src/app/models/HistoricoAnalise';
 import { HttpResponse } from '@angular/common/http';
 import { HistoricoLogicaService } from 'src/app/services/historico-logica.service';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-historico',
@@ -34,6 +35,7 @@ export class HistoricoComponent implements OnInit {
   historicoAnalises: HistoricoAnalise[] = [];
   historicoAnalise: HistoricoAnalise = new HistoricoAnalise();
   sinteseSelecionado: Sintese;
+  subsVar: Subscription;
 
   constructor(
      private cadastroLogicaService: CadastroLogicaService,
@@ -41,6 +43,12 @@ export class HistoricoComponent implements OnInit {
      private historicoService: HistoricoService,
      private messageService: MessageService,
      private historicoLogicaService: HistoricoLogicaService) { }
+
+   ngOnDestroy() {
+    if (this.subsVar) {
+       this.subsVar.unsubscribe()
+     }
+   }
 
   ngOnInit() {
     this.chamadaService.getDadosCadastrais('fases').subscribe(event => {
@@ -50,7 +58,7 @@ export class HistoricoComponent implements OnInit {
     });
     this.visualizarCadInfo();
 
-    this.chamadaService.buscarInformacoes.subscribe(dado => {
+    this.subsVar = this.chamadaService.buscarInformacoes.subscribe(dado => {
       if (dado == true) {
       this.form.reset();
       this.visualizarCadInfo();
