@@ -28,6 +28,7 @@ export class HistoricoComponent implements OnInit {
   disabledSintese = true;
   loadSpin = false;
   loadTable = false;
+  faseReady: boolean = false;
   fid: any;
   msgs: Message[] = [];
   fases: Fase[];
@@ -42,7 +43,8 @@ export class HistoricoComponent implements OnInit {
      private chamadaService: AnaliseChamadasService,
      private historicoService: HistoricoService,
      private messageService: MessageService,
-     private historicoLogicaService: HistoricoLogicaService) { }
+     private historicoLogicaService: HistoricoLogicaService
+  ) { }
 
    ngOnDestroy() {
     if (this.subsVar) {
@@ -54,6 +56,7 @@ export class HistoricoComponent implements OnInit {
     this.chamadaService.getDadosCadastrais('fases').subscribe(event => {
       if (event instanceof HttpResponse) {
         this.fases = event.body['data'];
+        this.faseReady = true;
       }
     });
     this.visualizarCadInfo();
@@ -98,6 +101,22 @@ export class HistoricoComponent implements OnInit {
 
   getHistorico() {
    this.historicoService.getHistorico(this.cadInfo.codcadastro).subscribe(data => {
+     let fase = data['data'][0].numfase;
+     console.log(fase);
+
+     do {
+       setTimeout(() => {
+        if (this.faseReady === true) {
+          for (let i = 0; i < this.fases.length; i++) {
+            if (this.fases[i].numfase > fase) {
+              this.fases[i]['disabled'] = true;
+              console.log(this.fases[i])
+            }
+          }
+        }
+       }, 1000);
+     } while (this.faseReady == false);
+     
      this.historicoAnalises = this.historicoLogicaService.receberHistorico(data);
    });
   }

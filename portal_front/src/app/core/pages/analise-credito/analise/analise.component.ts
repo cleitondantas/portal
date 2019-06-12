@@ -56,7 +56,6 @@ export class AnaliseComponent implements OnInit {
     private messageService: MessageService,
     private logicaService: AnaliseLogicaService,
     private sharedService: SharedService
-
   ) { }
     items: any[];
 
@@ -200,34 +199,39 @@ export class AnaliseComponent implements OnInit {
     this.analise = this.logicaService.salvarAnalise(this.analise, this.simulacaoLista, this.codcadastro, this.controle);
 
     if (this.controle == true) {
-
       console.log(this.analise);
       console.log(JSON.stringify(this.analise));
 
-      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
-      setTimeout(() => {
-        this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(data);
+      this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
+        console.log(data);
+        this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
 
-          this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
-          this.simulacaoLista = this.analise.simulacoes;
-        });
-      }, 500);
+        this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
+        this.simulacaoLista = this.analise.simulacoes;
+        
+        setTimeout(() => {
+          this.redirecionar();
+        }, 1000);
+      });
     } else {
       for (let _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].codcadastro = this.codcadastro;
       }
       this.analise.codcadastro = this.codcadastro;
       SharedService.emitirevento.emit(this.codcadastro);
-      setTimeout(() => {
-        this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(JSON.stringify(data));
-        });
-      }, 500);
-      console.log(JSON.stringify(this.analise));
-      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
-    }
+      this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
+        this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
+        console.log(JSON.stringify(data));
 
+        setTimeout(() => {
+          this.redirecionar();
+        }, 1000);
+      });
+      console.log(JSON.stringify(this.analise));
+    }
+  }
+
+  redirecionar() {
     if (this.verificarSelecionado() == true) {
       this.analiseCred.disabled = false;
       this.analiseCred.selected = 1;
