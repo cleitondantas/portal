@@ -397,9 +397,9 @@ export class AnaliseLogicaService {
     });
 
     if (analise.codsicaq == 0) {
-      analise.codsicaq = 'Possui SICAQ';
-    } else if (analise.codsicaq == 1) {
       analise.codsicaq = 'Não possui SICAQ';
+    } else if (analise.codsicaq == 1) {
+      analise.codsicaq = 'Possui SICAQ';
     }
 
     analise.dataenviobanco = new Date(analise.dataenviobanco);

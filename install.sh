@@ -10,7 +10,7 @@ if [ "$1" == "prod" ]; then
 	docker stop $(docker ps -q --filter ancestor=mci/portal)
 	docker rm $(docker ps -a -q --filter ancestor=mci/portal)
 	docker build -t mci/portal .		
-	docker run -dit -p 8100:8100 mci/portal:latest
+	docker run -dit --restart=always -p 8100:8100 mci/portal:latest
 	docker ps
 else
         if [ "$1" == "dev" ]; then
@@ -22,7 +22,7 @@ else
 			docker stop $(docker ps -q --filter ancestor=mci/portal)
 			docker rm $(docker ps -a -q --filter ancestor=mci/portal)
 			docker build -t mci/portal .		
-			docker run -dit -p 8100:8100 mci/portal:latest
+			docker run -dit --restart=always -p 8100:8100 mci/portal:latest
 			docker ps
         else
         	echo "Iniciado instalação em modo DEFALT"
@@ -35,7 +35,7 @@ else
 			docker stop $(docker ps -q --filter ancestor=mci/portal)
 			docker rm $(docker ps -a -q --filter ancestor=mci/portal)
 			docker build -t mci/portal .		
-			docker run -dit -p 8100:8100 mci/portal:latest
+			docker run -dit --restart=always -p 8100:8100 mci/portal:latest
 			docker ps
         fi
 	echo "Para rodar em modo de desenvolvimento informe o parametro 'dev' e para rodar em modo de producao 'prod'"
