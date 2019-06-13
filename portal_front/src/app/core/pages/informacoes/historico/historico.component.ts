@@ -11,6 +11,7 @@ import { HistoricoAnalise } from 'src/app/models/HistoricoAnalise';
 import { HttpResponse } from '@angular/common/http';
 import { HistoricoLogicaService } from 'src/app/services/historico-logica.service';
 import { NgForm } from '@angular/forms';
+import { SelectItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -29,10 +30,13 @@ export class HistoricoComponent implements OnInit {
   loadSpin = false;
   loadTable = false;
   faseReady: boolean = false;
+  histReady: boolean = false;
+  sintReady: boolean = false;
   fid: any;
   msgs: Message[] = [];
-  fases: Fase[];
+  fases: SelectItem[] = [];
   sinteses: Sintese[];
+  allSinteses: Sintese[];
   historicoAnalises: HistoricoAnalise[] = [];
   historicoAnalise: HistoricoAnalise = new HistoricoAnalise();
   sinteseSelecionado: Sintese;
@@ -53,21 +57,35 @@ export class HistoricoComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.historicoService.getAllSintese().subscribe(event => {
+      if (event instanceof HttpResponse) {
+        this.allSinteses = event.body['data'];
+        this.sintReady = true;
+        this.disabledOpt();
+      }
+    });
+
     this.chamadaService.getDadosCadastrais('fases').subscribe(event => {
       if (event instanceof HttpResponse) {
-        this.fases = event.body['data'];
+        let dadoCarregado: Fase[] = event.body['data'];
+        for (let i = 0; i < dadoCarregado.length; i++) {
+          this.fases.push({label: dadoCarregado[i].fase, value: dadoCarregado[i]});
+        }
         this.faseReady = true;
+        this.disabledOpt();
       }
     });
     this.visualizarCadInfo();
 
     this.subsVar = this.chamadaService.buscarInformacoes.subscribe(dado => {
-      if (dado == true) {
-      this.form.reset();
-      this.visualizarCadInfo();
-      this.historicoAnalises = [];
-      this.getHistorico();
-      this.msgs = [];
+      if (dado === true) {
+        this.histReady = false;
+        this.form.reset();
+        this.visualizarCadInfo();
+        this.historicoAnalises = [];
+        this.enableOpt();
+        this.getHistorico();
+        this.msgs = [];
       }
     });
 
@@ -99,25 +117,55 @@ export class HistoricoComponent implements OnInit {
     this.sinteseSelecionado = sinsete;
   }
 
-  getHistorico() {
-   this.historicoService.getHistorico(this.cadInfo.codcadastro).subscribe(data => {
-     let fase = data['data'][0].numfase;
-     console.log(fase);
-
-     do {
-       setTimeout(() => {
-        if (this.faseReady === true) {
-          for (let i = 0; i < this.fases.length; i++) {
-            if (this.fases[i].numfase > fase) {
-              this.fases[i]['disabled'] = true;
-              console.log(this.fases[i])
-            }
+  disabledOpt() {
+    if (this.historicoAnalises[0] != undefined) {
+      if (this.faseReady == true && this.histReady == true && this.sintReady == true) {
+        for (let i = 0; i < this.fases.length; i++) {
+          if (this.fases[i].value['numfase'] > this.historicoAnalises[0].numfase) {
+            this.fases[i]['disabled'] = true;
           }
         }
-       }, 1000);
-     } while (this.faseReady == false);
-     
+
+        for (let i = 0; i < this.allSinteses.length; i++) {
+          if (this.allSinteses[i].numfase == this.historicoAnalises[0].numfase) {
+            if (this.historicoAnalises[0].numsintese == this.allSinteses[i].numsintese) {
+              if (i + 1 < this.allSinteses.length) {
+                if (this.historicoAnalises[0].numsintese > this.allSinteses[i + 1].numsintese) {
+                  this.fases[this.allSinteses[i].numfase]['disabled'] = false;
+                }
+              }
+            }
+          }
+        } 
+
+        /* for (let i = 0; i < this.allSinteses.length; i++) {
+          if (this.allSinteses[i].numfase == this.historicoAnalises[0].numfase) {
+            this.fases[this.allSinteses[i].numfase]['disabled'] = false;
+          }
+        } */
+      }
+    } else {
+      if (this.faseReady == true && this.histReady == true && this.sintReady == true) {
+        for (let i = 2; i < this.fases.length; i++) {
+          this.fases[i]['disabled'] = true;
+        }
+      }
+    }
+  }
+
+  enableOpt() {
+    for (let i = 0; i < this.fases.length; i++) {
+      if (this.fases[i].disabled == true) {
+        this.fases[i].disabled = false;
+      }
+    }
+  }
+
+  getHistorico() {
+   this.historicoService.getHistorico(this.cadInfo.codcadastro).subscribe(data => {
      this.historicoAnalises = this.historicoLogicaService.receberHistorico(data);
+     this.histReady = true;
+     this.disabledOpt();
    });
   }
 
@@ -132,6 +180,8 @@ export class HistoricoComponent implements OnInit {
           let evento: any = event.body['data'];
           evento = this.historicoLogicaService.receberData(evento);
           this.historicoAnalises.unshift(evento);
+          this.enableOpt();
+          this.disabledOpt();
           formHistorico.reset();
           this.disabledSintese = true;
           this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Adicionado com sucesso!'});

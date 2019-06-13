@@ -65,4 +65,10 @@ export class HistoricoService {
     }));
   }
 
+  getAllSintese() {
+    return this.http.request(new HttpRequest('GET', environment.urlpath + '/api/sinteses', {
+      reportProgress: true
+    }));
+  }
+
 }
