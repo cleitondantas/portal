@@ -14,6 +14,7 @@ import { StatusSimulacao } from 'src/app/models/status-simulacao';
 import { Modalidades } from 'src/app/models/modalidades';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 import { NgForm, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-analise',
@@ -42,6 +43,7 @@ export class AnaliseComponent implements OnInit {
   controle: boolean = this.service.controle;
   msgs: Message[] = [];
   msgs2: Message[] = [];
+  subsVar: Subscription;
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
@@ -54,11 +56,14 @@ export class AnaliseComponent implements OnInit {
     private messageService: MessageService,
     private logicaService: AnaliseLogicaService,
     private sharedService: SharedService
-
   ) { }
     items: any[];
 
   ngOnDestroy() {
+    if (this.subsVar) {
+      this.subsVar.unsubscribe()
+    }
+    
     sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
     console.log('ngOnDestroy()');
   }
@@ -101,7 +106,7 @@ export class AnaliseComponent implements OnInit {
       SharedService.getInstance().temporario = null;
     }
 
-    this.service.buscarAnalise.subscribe(temporario => {
+    this.subsVar = this.service.buscarAnalise.subscribe(temporario => {
       if (SharedService.getInstance().temporario == null) {
         SharedService.getInstance().temporario = temporario;
       }
@@ -194,34 +199,39 @@ export class AnaliseComponent implements OnInit {
     this.analise = this.logicaService.salvarAnalise(this.analise, this.simulacaoLista, this.codcadastro, this.controle);
 
     if (this.controle == true) {
-
       console.log(this.analise);
       console.log(JSON.stringify(this.analise));
 
-      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
-      setTimeout(() => {
-        this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(data);
+      this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
+        console.log(data);
+        this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
 
-          this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
-          this.simulacaoLista = this.analise.simulacoes;
-        });
-      }, 500);
+        this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
+        this.simulacaoLista = this.analise.simulacoes;
+        
+        setTimeout(() => {
+          this.redirecionar();
+        }, 1000);
+      });
     } else {
       for (let _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].codcadastro = this.codcadastro;
       }
       this.analise.codcadastro = this.codcadastro;
       SharedService.emitirevento.emit(this.codcadastro);
-      setTimeout(() => {
-        this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(JSON.stringify(data));
-        });
-      }, 500);
-      console.log(JSON.stringify(this.analise));
-      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
-    }
+      this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
+        this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
+        console.log(JSON.stringify(data));
 
+        setTimeout(() => {
+          this.redirecionar();
+        }, 1000);
+      });
+      console.log(JSON.stringify(this.analise));
+    }
+  }
+
+  redirecionar() {
     if (this.verificarSelecionado() == true) {
       this.analiseCred.disabled = false;
       this.analiseCred.selected = 1;

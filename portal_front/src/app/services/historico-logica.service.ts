@@ -28,11 +28,11 @@ export class HistoricoLogicaService {
     const codUsuarios: any[] = [];
 
     for (let i = 0; i < dados.length; i++) {
-      if (codUsuarios.includes(dados[i].codusuario) == false) {
+      if (codUsuarios.findIndex(val => val == dados[i].codusuario) < 0) {
         codUsuarios.push(dados[i].codusuario);
       }
     }
-
+    
     for (let i = 0; i < codUsuarios.length; i++) {
       this.historicoService.getUsuario(codUsuarios[i]).subscribe(event => {
         if (event instanceof HttpResponse) {

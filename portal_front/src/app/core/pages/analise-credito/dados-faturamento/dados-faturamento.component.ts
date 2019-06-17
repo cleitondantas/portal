@@ -29,7 +29,8 @@ export class DadosFaturamentoComponent implements OnInit {
   constructor(private analiseChamadasService: AnaliseChamadasService,
               private sharedService: SharedService,
               private logicaService: AnaliseLogicaService,
-              private router: Router) { }
+              private router: Router,
+              private messageService: MessageService) { }
 
   dadosfaturamento: DadosFaturamento  = new DadosFaturamento();
 
@@ -75,9 +76,15 @@ export class DadosFaturamentoComponent implements OnInit {
     if (this.validaForm(formulario) == true) {
       this.dadosfaturamento.razaosocialspe = this.dadosfaturamento.razaosocialspe.descspe;
       this.dadosfaturamento.cpfcnpj = onlyNumbers(this.dadosfaturamento.cpfcnpj);
-         console.log(JSON.stringify(this.dadosfaturamento));
-      this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => (console.log(JSON.stringify(dados['data']))));
-      this.router.navigate(['/home']);
+      console.log(JSON.stringify(this.dadosfaturamento));
+      
+      this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => {
+        console.log(JSON.stringify(dados['data']));
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Dados salvos!'});
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 1000);
+      });
     } else {
       this.msgs = [];
       const camposInvalidos: any[] = [];

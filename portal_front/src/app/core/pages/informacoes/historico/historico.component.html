@@ -75,7 +75,7 @@
           <label class="ajusteLabel" for="numfase">Fases: </label>
         </div>
         <div class="p-col-3" id="fases">
-          <p-dropdown [options]="fases"  placeholder="Selecione..." optionLabel="fase" [autoWidth]="false" [style]="{'width': '100%'}"
+          <p-dropdown [options]="fases"  placeholder="Selecione..." [autoWidth]="false" [style]="{'width': '100%'}"
           [(ngModel)]="historicoAnalise.numfase" name="numfase" (onChange)="changeFases($event)" required></p-dropdown>
         </div>
       
