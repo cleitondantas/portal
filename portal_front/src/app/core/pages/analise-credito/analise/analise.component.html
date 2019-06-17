@@ -216,9 +216,9 @@
             class="ajusteInput" name="codinstituicaofinanceira" #codinstituicaofinanceira="ngModel" [(ngModel)]="simulacoes.codinstituicaofinanceira"></p-dropdown>
           </div>
           <div class="p-col-4">
-            <button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-secondary" [hidden]="!salvarAlteracoesButton"
+            <button pButton type="button" label="Adicionar" class="ui-button-raised ui-button-success" [hidden]="!salvarAlteracoesButton"
             [ngStyle]="{'width': '100%'}" (click)="adicionarSimulacao(simulacoes, formSimulacao)" icon="pi pi-plus" iconPos="right"></button>
-            <button pButton type="button" label="Salvar alterações" class="ui-button-raised ui-button-secondary" [hidden]="salvarAlteracoesButton"
+            <button pButton type="button" label="Salvar alterações" class="ui-button-raised ui-button-success" [hidden]="salvarAlteracoesButton"
             [ngStyle]="{'width': '100%'}" icon="pi pi-save" iconPos="right" (click)="salvarAlteracoes(formSimulacao)"></button>
           </div>
         </div>

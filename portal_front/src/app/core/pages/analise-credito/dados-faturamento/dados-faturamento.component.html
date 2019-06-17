@@ -1,5 +1,6 @@
-<form novalidate #formulario="ngForm" >
-<div class="p-grid">
+<form novalidate #formulario="ngForm">
+  <p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
+  <div class="p-grid">
     <div class="p-col-6">
       </div>
       <div class="p-col-6">
@@ -184,10 +185,10 @@
         <div class="p-col-10">
         </div> 
       <div class="p-col-1">
-          <button pButton type="button" label="Cancelar"  (click)="cancelar()" class="ui-button-danger" ></button>
+          <button pButton type="button" style="width: 100%" label="Cancelar" (click)="cancelar()" class="ui-button-danger"></button>
         </div>
         <div class="p-col-1">
-            <button pButton type="button" (click)="salvar(formulario)" label="Salvar" class="ui-button-success" ></button>
+          <button pButton type="button" style="width: 100%" (click)="salvar(formulario)" label="Salvar" class="ui-button-success" ></button>
         </div>
     </div>   
     <p-messages [(value)]="msgs"></p-messages>
