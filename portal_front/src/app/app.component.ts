@@ -20,8 +20,8 @@ ngOnInit() {
     console.log('👋 Development!');
     environment.urlpath  = window.location.origin;
     //environment.urlpath  = 'http://10.6.5.40:8100';
-    environment.urlpath  = 'http://10.6.5.99:8100';
-    // environment.urlpath  = 'http://localhost:8100';
+    //environment.urlpath  = 'http://10.6.5.99:8100';
+     environment.urlpath  = 'http://localhost:8100';
   } else {
     console.log('💪 Production!');
     environment.urlpath  = window.location.origin;
