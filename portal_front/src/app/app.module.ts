@@ -13,7 +13,6 @@ import { CadastroGuard } from './guards/cadastro.guard';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ConfirmationService } from 'primeng/api';
 import { CalendarUTCDirective } from './directive/calendar-utc.directive';
-import { CadastroModule } from './core/pages/cadastro/cadastro.module';
 
 @NgModule({
   declarations: [
@@ -26,8 +25,7 @@ import { CadastroModule } from './core/pages/cadastro/cadastro.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    TableModule,
-    CadastroModule
+    TableModule
 
   ],
   providers: [
