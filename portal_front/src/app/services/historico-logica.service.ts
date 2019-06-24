@@ -32,7 +32,7 @@ export class HistoricoLogicaService {
         codUsuarios.push(dados[i].codusuario);
       }
     }
-    
+
     for (let i = 0; i < codUsuarios.length; i++) {
       this.historicoService.getUsuario(codUsuarios[i]).subscribe(event => {
         if (event instanceof HttpResponse) {

@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       erro => this.mensagemErro = erro
     );
    }
-   
+
   ngOnInit() {
   }
 

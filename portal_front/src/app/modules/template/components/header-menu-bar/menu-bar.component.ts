@@ -91,7 +91,7 @@ export class MenuBarComponent implements OnInit {
             this.msgsNome.push({
                 severity: 'error',
                 summary: 'Erro ao buscar!',
-                detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + 
+                detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado +
                 `</strong>. Verifique e tente novamente.`
             });
             this.loadSpin = !this.loadSpin;
@@ -112,7 +112,7 @@ export class MenuBarComponent implements OnInit {
                         data.toUTCString();
                         this.dataNascimento = this.fixUTC(data);
 
-                        this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj = 
+                        this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj =
                         this.formatCpfCnpj(this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj);
 
                         this.clienteInformacao = [this.cadastrosTabelaBuscaInfo[i].clientes[item]];
@@ -129,7 +129,7 @@ export class MenuBarComponent implements OnInit {
             this.msgsNome.push({
                 severity: 'error',
                 summary: 'Erro ao buscar!',
-                detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado + 
+                detail: `Não foi encontrado nenhum cadastro com o nome: <strong>` + this.nomeclienteSelecionado +
                 `</strong>. Verifique e tente novamente.`
             });
             this.loadSpin = !this.loadSpin;
@@ -151,7 +151,7 @@ export class MenuBarComponent implements OnInit {
                         data.toUTCString();
                         this.dataNascimento = this.fixUTC(data);
 
-                        this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj = 
+                        this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj =
                         this.formatCpfCnpj(this.cadastrosTabelaBuscaInfo[i].clientes[item].cpfcnpj);
 
                         this.clienteInformacao = [this.cadastrosTabelaBuscaInfo[i].clientes[item]];
@@ -476,10 +476,10 @@ logOut() {
     this.authService.fazerLogout();
 }
 doIt() {
-    let tl = new TimelineMax();
-    let contain = this.contain.nativeElement;
-    let containLista = this.containLista.nativeElement;
-    let logo = this.logo.nativeElement;
+    const tl = new TimelineMax();
+    const contain = this.contain.nativeElement;
+    const containLista = this.containLista.nativeElement;
+    const logo = this.logo.nativeElement;
    if (this.conts) {
 
         this.conts = false;
