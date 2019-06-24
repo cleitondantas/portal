@@ -29,9 +29,9 @@ export class HistoricoComponent implements OnInit {
   disabledSintese = true;
   loadSpin = false;
   loadTable = false;
-  faseReady: boolean = false;
-  histReady: boolean = false;
-  sintReady: boolean = false;
+  faseReady = false;
+  histReady = false;
+  sintReady = false;
   fid: any;
   msgs: Message[] = [];
   fases: SelectItem[] = [];
@@ -52,7 +52,7 @@ export class HistoricoComponent implements OnInit {
 
    ngOnDestroy() {
     if (this.subsVar) {
-       this.subsVar.unsubscribe()
+       this.subsVar.unsubscribe();
      }
    }
 
@@ -67,7 +67,7 @@ export class HistoricoComponent implements OnInit {
 
     this.chamadaService.getDadosCadastrais('fases').subscribe(event => {
       if (event instanceof HttpResponse) {
-        let dadoCarregado: Fase[] = event.body['data'];
+        const dadoCarregado: Fase[] = event.body['data'];
         for (let i = 0; i < dadoCarregado.length; i++) {
           this.fases.push({label: dadoCarregado[i].fase, value: dadoCarregado[i]});
         }
@@ -136,7 +136,7 @@ export class HistoricoComponent implements OnInit {
               }
             }
           }
-        } 
+        }
 
         /* for (let i = 0; i < this.allSinteses.length; i++) {
           if (this.allSinteses[i].numfase == this.historicoAnalises[0].numfase) {

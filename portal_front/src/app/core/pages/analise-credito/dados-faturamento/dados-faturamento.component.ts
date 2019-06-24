@@ -77,7 +77,7 @@ export class DadosFaturamentoComponent implements OnInit {
       this.dadosfaturamento.razaosocialspe = this.dadosfaturamento.razaosocialspe.descspe;
       this.dadosfaturamento.cpfcnpj = onlyNumbers(this.dadosfaturamento.cpfcnpj);
       console.log(JSON.stringify(this.dadosfaturamento));
-      
+
       this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => {
         console.log(JSON.stringify(dados['data']));
         this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Dados salvos!'});

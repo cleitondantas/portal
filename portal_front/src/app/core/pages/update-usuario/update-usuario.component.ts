@@ -74,38 +74,38 @@ export class UpdateUsuarioComponent implements OnInit {
       if (this.nickname != undefined && this.nickname.length > 0) {
         this.formcadastro.getLogin(this.nickname).subscribe(event => {
           if (event instanceof HttpResponse) {
-            let dadosBaixados: Usuario = event.body['data'][0];
-    
+            const dadosBaixados: Usuario = event.body['data'][0];
+
             this.usuarioForm = dadosBaixados;
             this.usuarioForm.password = null;
-    
+
             setTimeout(() => {
               this.showLoad = false;
               this.showForm = true;
             }, 500);
           }
-        })
+        });
       } else {
         this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'O campo precisa estar preenchido!'});
         this.showLoad = false;
       }
     } else if (dado == true) {
       if (this.usuario != undefined && this.usuario.length > 0) {
-        let slice = this.usuario.indexOf(' ');
-    
+        const slice = this.usuario.indexOf(' ');
+
         this.formcadastro.getNome(this.usuario.slice(0, slice)).subscribe(event => {
           if (event instanceof HttpResponse) {
-            let dadosBaixados: Usuario = event.body['data'][0];
-  
+            const dadosBaixados: Usuario = event.body['data'][0];
+
             this.usuarioForm = dadosBaixados;
             this.usuarioForm.password = null;
-  
+
             setTimeout(() => {
               this.showLoad = false;
               this.showForm = true;
             }, 500);
           }
-        })
+        });
       } else {
         this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'O campo precisa estar preenchido!'});
         this.showLoad = false;
