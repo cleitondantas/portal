@@ -128,21 +128,11 @@ export class HistoricoComponent implements OnInit {
 
         for (let i = 0; i < this.allSinteses.length; i++) {
           if (this.allSinteses[i].numfase == this.historicoAnalises[0].numfase) {
-            if (this.historicoAnalises[0].numsintese == this.allSinteses[i].numsintese) {
-              if (i + 1 < this.allSinteses.length) {
-                if (this.historicoAnalises[0].numsintese > this.allSinteses[i + 1].numsintese) {
-                  this.fases[this.allSinteses[i].numfase]['disabled'] = false;
-                }
-              }
+            if (this.fases[this.allSinteses[i].numfase] !== undefined) {
+              this.fases[this.allSinteses[i].numfase]['disabled'] = false;
             }
           }
-        }
-
-        /* for (let i = 0; i < this.allSinteses.length; i++) {
-          if (this.allSinteses[i].numfase == this.historicoAnalises[0].numfase) {
-            this.fases[this.allSinteses[i].numfase]['disabled'] = false;
-          }
-        } */
+        } 
       }
     } else {
       if (this.faseReady == true && this.histReady == true && this.sintReady == true) {
