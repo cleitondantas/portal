@@ -32,7 +32,6 @@ public class CadastroControler {
 
 	@Autowired
 	private CasdastroRepository casdastroRepository;
-
 	
 	private List<Cadastro> cadastros;
 	
@@ -66,11 +65,12 @@ public class CadastroControler {
 				}
 			}
 			cadastro.setDtatividade(dtatividade);
-			Cadastro cs = (Cadastro) casdastroRepository.save(cadastro);
+			Cadastro cs = (Cadastro) casdastroRepository.save((Cadastro)cadastro);
+			//casdastroRepositoryHistorico.save((CadastroHistorico) cadastro);
 			response.setData(cs);
 			
 			//Atualiza lista de cadastros ao inserir um novo cadastro
-			cadastros = casdastroRepository.findTopCadastro();
+		//	cadastros = casdastroRepository.findTopCadastro();
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
 			return ResponseEntity.badRequest().body(response);
@@ -101,6 +101,7 @@ public class CadastroControler {
 				response.setData(cs);
 			}
 			cadastros = casdastroRepository.findTopCadastro();
+
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
 			return ResponseEntity.badRequest().body(response);

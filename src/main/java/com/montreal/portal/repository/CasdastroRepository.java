@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.montreal.portal.entity.Cadastro;
+import com.montreal.portal.entity.face.CadastroInterface;
+
 
 public interface CasdastroRepository extends JpaRepository<Cadastro,Integer>{
 	

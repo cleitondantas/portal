@@ -17,12 +17,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.montreal.portal.entity.face.CadastroInterface;
 
 
 
 @Entity
 @Table(name = "TB_CADASTRO")
-public class Cadastro implements Serializable{
+public class Cadastro implements CadastroInterface, Serializable{
 
 	/**
 	 * 
