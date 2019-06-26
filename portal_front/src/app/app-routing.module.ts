@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'updateusuario', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
   { path: 'deleteusuario', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
   { path: 'resetusuario', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
+  { path: 'trocarsenha', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
   { path: 'home',  canActivate: [AuthGuard],  component: HomeComponent},
   { path: 'grafic', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},
   { path: 'cadastro', canActivate: [AuthGuard], loadChildren: './core/core.module#CoreModule'},

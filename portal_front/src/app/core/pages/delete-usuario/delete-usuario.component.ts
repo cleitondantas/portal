@@ -22,8 +22,8 @@ export class DeleteUsuarioComponent implements OnInit {
   results = [];
   resultsLogin = [];
   confirmarNickName: string;
-  showForm: boolean = false;
-  showLoad: boolean = false;
+  showForm = false;
+  showLoad = false;
 
   constructor(private formcadastro: FormcadastroService,
               private messageService: MessageService,
@@ -34,14 +34,14 @@ export class DeleteUsuarioComponent implements OnInit {
   }
 
 
-  deleteUser(){
+  deleteUser() {
     this.formcadastro.deleteUpdate(this.usuarioForm).subscribe(data => {
       console.log(data);
-    })
+    });
   }
-  
+
   getRoles() {
-    let items = [];
+    const items = [];
     this.formcadastro.getRoles().subscribe(data => {
       for (let _i = 0; _i < data['data'].length; _i++) {
         this.item = new Role();
@@ -59,48 +59,58 @@ export class DeleteUsuarioComponent implements OnInit {
     this.showForm = false;
 
     if (dado == false) {
-      this.formcadastro.getLogin(this.nickname).subscribe(event => {
-        if (event instanceof HttpResponse) {
-          let dadosBaixados: Usuario = event.body['data'][0];
-  
-          this.usuarioForm = dadosBaixados;
-          this.usuarioForm.password = null;
-  
-          setTimeout(() => {
-            this.showLoad = false;
-            this.showForm = true;
-          }, 500);
-        }
-      })
-    } else if (dado == true) {
-      let slice = this.usuario.indexOf(' ');
+      if (this.nickname != undefined && this.nickname.length > 0) {
+        this.formcadastro.getLogin(this.nickname).subscribe(event => {
+          if (event instanceof HttpResponse) {
+            let dadosBaixados: Usuario = event.body['data'][0];
     
-      this.formcadastro.getNome(this.usuario.slice(0, slice)).subscribe(event => {
-        if (event instanceof HttpResponse) {
-          let dadosBaixados: Usuario = event.body['data'][0];
-
-          this.usuarioForm = dadosBaixados;
-          this.usuarioForm.password = null;
-
-          setTimeout(() => {
-            this.showLoad = false;
-            this.showForm = true;
-          }, 500);
-        }
-      })
+            this.usuarioForm = dadosBaixados;
+            this.usuarioForm.password = null;
+    
+            setTimeout(() => {
+              this.showLoad = false;
+              this.showForm = true;
+            }, 500);
+          }
+        })
+      } else {
+        this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'O campo precisa estar preenchido!'});
+        this.showLoad = false;
+      }
+    } else if (dado == true) {
+      if (this.usuario != undefined && this.usuario.length > 0) {
+        let slice = this.usuario.indexOf(' ');
+    
+        this.formcadastro.getNome(this.usuario.slice(0, slice)).subscribe(event => {
+          if (event instanceof HttpResponse) {
+            let dadosBaixados: Usuario = event.body['data'][0];
+  
+            this.usuarioForm = dadosBaixados;
+            this.usuarioForm.password = null;
+  
+            setTimeout(() => {
+              this.showLoad = false;
+              this.showForm = true;
+            }, 500);
+          }
+        })
+      } else {
+        this.messageService.add({key: 'popup', severity: 'error', summary: 'Erro!', detail: 'O campo precisa estar preenchido!'});
+        this.showLoad = false;
+      }
     }
   }
 
   searchNome(event) {
     this.formcadastro.getUsers(event.query).then(data => {
       this.results = this.formCadastroLogica.filtroClientePorNome(event.query, data['data']);
-    })
+    });
   }
 
   searchLogin(event) {
     this.formcadastro.getNick(event.query).then(data => {
       this.resultsLogin = this.formCadastroLogica.filtroClientePorLogin(event.query, data['data']);
-    })
+    });
   }
 
 }

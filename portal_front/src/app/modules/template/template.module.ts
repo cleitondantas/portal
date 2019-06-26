@@ -6,17 +6,15 @@ import { MenuBarComponent } from './components/header-menu-bar/menu-bar.componen
 import { FooterComponent } from './components/footer/footer.component';
 import { MainComponent } from './components/main/main.component';
 import { CoreModule } from '../../core/core.module';
-import {MessagesModule} from 'primeng/messages';
-import {MessageModule} from 'primeng/message';
-import {ToastModule} from 'primeng/toast';
-import {MenuModule} from 'primeng/menu';
-import {DialogModule} from 'primeng/dialog';
-import {PanelModule} from 'primeng/panel';
-import {ButtonModule} from 'primeng/button';
-import {AutoCompleteModule} from 'primeng/autocomplete';
-import {TableModule} from 'primeng/table';
-
-
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { MenuModule } from 'primeng/menu';
+import { DialogModule } from 'primeng/dialog';
+import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   imports: [

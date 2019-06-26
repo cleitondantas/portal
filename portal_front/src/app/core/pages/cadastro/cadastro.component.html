@@ -24,7 +24,7 @@
                     </div>
                     <div class="p-col-8">
                       <input type="text" class="ajusteInput" pInputText id="cpfcnpj" ngModel  name="cpfcnpj"  #cpfcnpj="ngModel" [(ngModel)]="comprador.cpfcnpj"
-                      pKeyFilter="pint" required>
+                      pKeyFilter="pint" required (blur)="blurCpf()">
                     </div>
                   </div>
 
@@ -254,7 +254,7 @@
                 </div>
 
                 <br><br>
-                <p><button pButton type="button" label="Adicionar contato" class="ui-button-raised ui-button-secondary" 
+                <p><button pButton type="button" label="Adicionar contato" class="ui-button-raised ui-button-success" 
                 [ngStyle]="{'float': 'right'}" (click)="adicionarContato(contatos)" icon="pi pi-plus-circle" iconPos="right"></button>
               </div>
 
@@ -281,11 +281,11 @@
             </div>
           </p-fieldset>
 
-          <button pButton type="button" label="Adicionar comprador" class="ui-button-raised ui-button-secondary" 
+          <button pButton type="button" label="Adicionar comprador" class="ui-button-raised ui-button-success" 
           [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}" (click)="adicionarCompradorLista(comprador, formCadInfo)"
           icon="pi pi-plus-circle" iconPos="right" [hidden]="!disabledButton"></button>
 
-          <button pButton type="button" label="Salvar alterações" class="ui-button-raised ui-button-secondary" 
+          <button pButton type="button" label="Salvar alterações" class="ui-button-raised ui-button-success" 
           [ngStyle]="{'float': 'right', 'width': '30%', 'margin': '5px'}"
           icon="pi pi-save" iconPos="right" [hidden]="disabledButton" (click)="atualizarComprador(formCadInfo)"></button>
 

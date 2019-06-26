@@ -1,25 +1,24 @@
 <p-menubar [model]="items" class="menubarstyle" >
-     <h6 #mushroom2 > {{nomeUsuario}}  
-        <button (click)="doIt()" class="buttoncss" >
-           <i class="fa fa-user"></i>
-        </button>
-     </h6>
-     <div  id="objeto" #mushroom style="background-color: brown; width: 100px">
+    <div class="p-grid p-justify-end contain">
+        <div class="p-grid p-align-center vertical-container p-justify-end menuitem" #contain>
+            <label style="color: white; margin: 2px; font-size: 13px;" #label>{{nomeUsuario}}</label>
+            <button class="buttoncss" (click)="doIt()">
+                <i class="fa fa-user"></i>
+            </button>
+        </div>
 
-      <nav #navmenuuser class="navbar navbar-default" role="navigation" style="display: none" >
-            <div #navmenuuser  id="sidebar-wrapper" class="sidebar-toggle">
-               <img #navmenuuser  src="../../../../../assets/imagens/montreal_logo_slin.png" height="100" width="300"  > 
-               <ul #navmenuuser  class="sidebar-nav">
-                   <li>
-                        <a (click)="trocarSenha()" ><i class="fa fa-user"></i> TROCAR SENHA</a>
-                   </li>
-                   <li>
-                        <a (click)="logOut()"> <i class="fa fa-times"></i> SAIR</a>
-                   </li>
-                 </ul>
-            </div>
-      </nav>
-     </div>
+        <div class="containLista" #containLista>
+            <img src="../../../../../assets/imagens/montreal_logo_slin.png" height="100" width="300" #logo>
+            <ul class="lista">
+                <li>
+                    <a (click)="trocarSenha()"><i class="fa fa-user"></i> TROCAR SENHA</a>
+                </li>
+                <li>
+                    <a (click)="logOut()"><i class="fa fa-times"></i> SAIR</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </p-menubar>
 
 <p-dialog header="Buscar Cadastro" [(visible)]="display" [draggable]="false" positionTop="100" width="750" [contentStyle]="{'height':'500px'}">

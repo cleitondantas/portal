@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.montreal.portal.entity.Role;
 import com.montreal.portal.entity.Usuario;
+import com.montreal.portal.repository.UsuarioRepository;
 import com.montreal.portal.response.Response;
 import com.montreal.portal.service.RoleService;
 import com.montreal.portal.service.UsuarioService;
@@ -35,7 +36,8 @@ public class Controler {
 		@Autowired
 		private UsuarioService usuarioService;
 		
-	
+		@Autowired
+		private UsuarioRepository usuarioRepository;
 		
 		@Autowired
 		private RoleService roleService;
@@ -60,7 +62,7 @@ public class Controler {
 				    user.setIsAtivo(true);
 				    user.setPassword(passwordEncoder.encode(user.getPassword()));
 				    
-				Usuario userPersisted = (Usuario) usuarioService.save(user);
+				Usuario userPersisted = (Usuario) usuarioRepository.save(user);
 				response.setData(userPersisted);
 			} catch (DuplicateKeyException dE) {
 				response.getErrors().add("E-mail already registered !");
@@ -90,7 +92,7 @@ public class Controler {
 					 user.setId(usuario.getId());
 					 user.setIsAtivo(true);
 					 user.setPassword(usuario.getPassword());
-					Usuario userPersisted = (Usuario) usuarioService.save(user);
+					Usuario userPersisted = (Usuario) usuarioRepository.save(user);
 					response.setData(userPersisted);
 				}
 			} catch (DuplicateKeyException dE) {
@@ -121,7 +123,36 @@ public class Controler {
 					 user.setId(usuario.getId());
 					 user.setIsAtivo(true);
 					 user.setPassword(passwordEncoder.encode(user.getPassword()));
-					Usuario userPersisted = (Usuario) usuarioService.save(user);
+					Usuario userPersisted = (Usuario) usuarioRepository.save(user);
+					response.setData(userPersisted);
+				}
+			} catch (DuplicateKeyException dE) {
+				response.getErrors().add("E-mail already registered !");
+				return ResponseEntity.badRequest().body(response);
+			} catch (Exception e) {
+				response.getErrors().add(e.getMessage());
+				return ResponseEntity.badRequest().body(response);
+			}
+			return ResponseEntity.ok(response);
+		}
+
+		@PutMapping(value = "/usuario/trocarsenha")
+		@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
+		public ResponseEntity<Response<Usuario>> trocarSenha(HttpServletRequest request, @RequestBody Usuario user,BindingResult result) {
+			Response<Usuario> response = new Response<Usuario>();
+		
+			try {
+				Usuario usuario = usuarioService.findByCodUsuario(user.getCodUsuario());
+				validateCreateUser(user, result);
+				if (result.hasErrors()) {
+					result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+					return ResponseEntity.badRequest().body(response);
+				}
+				if(usuario==null) {
+					result.addError(new ObjectError("User", "Usuario não encotrado"));
+				}else {
+					usuario.setPassword(passwordEncoder.encode(user.getPassword()));
+					Usuario userPersisted = (Usuario) usuarioRepository.save(usuario);
 					response.setData(userPersisted);
 				}
 			} catch (DuplicateKeyException dE) {
@@ -135,6 +166,9 @@ public class Controler {
 		}
 		
 		
+		
+		
+		
 		@DeleteMapping(value = "/usuario/{codUsuario}")
 		@PreAuthorize("hasAnyRole('ADMIN')")
 		public ResponseEntity<Response<Usuario>> delete(@PathVariable Integer codUsuario) {
@@ -145,7 +179,7 @@ public class Controler {
 			
 				}else {
 					usuario.setIsAtivo(false);
-					Usuario userPersisted = (Usuario) usuarioService.save(usuario);
+					Usuario userPersisted = (Usuario) usuarioRepository.save(usuario);
 					response.setData(userPersisted);
 				}
 			} catch (DuplicateKeyException dE) {

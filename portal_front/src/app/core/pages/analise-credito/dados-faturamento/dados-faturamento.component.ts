@@ -19,7 +19,7 @@ import formatCnpj from '@brazilian-utils/format-cnpj';
 })
 export class DadosFaturamentoComponent implements OnInit {
   @ViewChild('formulario', { read: NgForm }) form: any;
-  
+
   br: any;
   spe: SPE[];
   speTemp: SPE[];
@@ -29,7 +29,8 @@ export class DadosFaturamentoComponent implements OnInit {
   constructor(private analiseChamadasService: AnaliseChamadasService,
               private sharedService: SharedService,
               private logicaService: AnaliseLogicaService,
-              private router: Router) { }
+              private router: Router,
+              private messageService: MessageService) { }
 
   dadosfaturamento: DadosFaturamento  = new DadosFaturamento();
 
@@ -40,7 +41,7 @@ export class DadosFaturamentoComponent implements OnInit {
 }
 
   ngOnInit() {
-    console.log("-------------------------------ngOnInit----DadosFaturamentoComponent")
+    console.log('-------------------------------ngOnInit----DadosFaturamentoComponent');
 
     this.br = this.sharedService.calendarioBr();
     this.form.reset();
@@ -62,22 +63,28 @@ export class DadosFaturamentoComponent implements OnInit {
     const analiseSelecionada = sessionStorage.getItem('ANALISESELECIONADA');
     if (analiseSelecionada != 'undefined' && analiseSelecionada != null) {
       this.dadosfaturamento = this.logicaService.receberDadosFaturamento(analiseSelecionada, this.dadosfaturamento, this.speEvent);
-    }else{
+    } else {
       SharedService.emitirevento.subscribe(
         dados => (this.dadosfaturamento.codcadastro = dados)
-      )
+      );
     }
-    
-    
+
+
   }
 
   salvar(formulario) {
     if (this.validaForm(formulario) == true) {
       this.dadosfaturamento.razaosocialspe = this.dadosfaturamento.razaosocialspe.descspe;
       this.dadosfaturamento.cpfcnpj = onlyNumbers(this.dadosfaturamento.cpfcnpj);
-         console.log(JSON.stringify(this.dadosfaturamento));
-      this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados =>(console.log(JSON.stringify(dados['data']))));
-      this.router.navigate(['/home']);
+      console.log(JSON.stringify(this.dadosfaturamento));
+      
+      this.analiseChamadasService.postDadosFaturamento(this.dadosfaturamento).subscribe(dados => {
+        console.log(JSON.stringify(dados['data']));
+        this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Dados salvos!'});
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 1000);
+      });
     } else {
       this.msgs = [];
       const camposInvalidos: any[] = [];
@@ -93,7 +100,7 @@ export class DadosFaturamentoComponent implements OnInit {
             summary: 'Erro ao salvar!',
             detail: `Existem campos não preenchidos ou preenchidos incorretamente. <strong>Campos com erro:`
             + camposInvalidos + `</strong>.`
-          })
+          });
         }
       }
     }
@@ -109,7 +116,7 @@ export class DadosFaturamentoComponent implements OnInit {
     if (spe2.length > 11) {
       speRecebido.cnpjspe = formatCnpj(spe2);
     } else {
-      speRecebido.cnpjspe = formatCpf(spe2)
+      speRecebido.cnpjspe = formatCpf(spe2);
     }
     this.dadosfaturamento.cpfcnpj = speRecebido.cnpjspe;
   }

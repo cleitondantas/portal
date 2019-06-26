@@ -5,6 +5,7 @@ import { AnaliseChamadasService } from 'src/app/services/analise-chamadas.servic
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
 import { CadastroLogicaService } from 'src/app/services/cadastro-logica.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dados-cadastrais',
@@ -19,16 +20,23 @@ export class DadosCadastraisComponent implements OnInit {
   dataExpedicao: string;
   dataEnvioAoBanco: string;
   contatoDisplay: any[] = [];
+  subsVar: Subscription;
 
   constructor(private chamadaService: AnaliseChamadasService,
               private analiseLogicaService: AnaliseLogicaService,
               private cadastroLogicaService: CadastroLogicaService,
               private sharedService: SharedService) {}
 
+  ngOnDestroy() {
+    if (this.subsVar) {
+       this.subsVar.unsubscribe()
+     }
+  }
+
   ngOnInit() {
     this.visualizarDados();
 
-    this.chamadaService.buscarInformacoes.subscribe(dado => {
+    this.subsVar = this.chamadaService.buscarInformacoes.subscribe(dado => {
       if (dado == true) {
         this.analise = new Simulacoes();
         this.dataEnvioAoBanco = '';

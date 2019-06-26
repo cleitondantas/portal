@@ -1,0 +1,54 @@
+<div class="p-grid p-justify-center p-align-center">
+  <div class="main-container">
+    <p-panel>
+      <p-header>
+        Troca de senha
+      </p-header>
+
+      <p-toast [style]="{marginTop: '80px'}" key="popup"></p-toast>
+      
+      <div>
+        <form>
+          <div class="p-grid">
+            
+            <div class="p-col-6">
+              <label style="margin: 0">Nome: </label>
+              <input type="text" disabled="true" class="ajusteInput" pInputText name="nome" [(ngModel)]="usuario.nome"/>
+            </div>
+      
+            <div class="p-col-6">
+              <label style="margin: 0">Sobrenome: </label>
+              <input type="text" disabled="true" class="ajusteInput" pInputText name="sobrenome" [(ngModel)]="usuario.sobrenome"/>
+            </div>
+
+            <div class="p-col-12">
+              <label style="margin: 0">Login: </label>
+              <input type="text" disabled="true" class="ajusteInput" pInputText name="login" [(ngModel)]="usuario.login"/>
+            </div>
+            
+            <div class="p-col-6">
+              <label style="margin: 0">Nova senha: </label>
+              <input type="password" class="ajusteInput" pInputText name="senha" [(ngModel)]="senha"/>
+            </div>
+      
+            <div class="p-col-6">
+              <label style="margin: 0">Confirme a senha: </label>
+              <input type="password" class="ajusteInput" pInputText name="confirmarSenha" [(ngModel)]="confirmarSenha"/>
+            </div>
+
+            <div class="p-grid p-justify-end" [ngStyle]="{'width': '100%', 'height': '100%'}">
+              <button pButton type="submit" label="Cancelar" class="ui-button-danger ui-button-raised" (click)="cancelar()"
+              [ngStyle]="{'width': '20%', 'height': '40%', 'margin': '3px'}"  iconPos="right"></button>
+              <button pButton type="submit" label="Salvar" class="ui-button-success" (click)="trocarSenha()"
+              [ngStyle]="{'width': '20%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>
+            </div>
+
+          </div>
+        </form>
+        <p-messages [(value)]="msgs"></p-messages>
+      </div>
+      
+    </p-panel>    
+  </div>
+</div>
+  

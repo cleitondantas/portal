@@ -39,7 +39,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-import { NgBrazil } from 'ng-brazil' 
+import { NgBrazil } from 'ng-brazil';
 
 import { DadosCadastraisComponent } from './pages/informacoes/dados-cadastrais/dados-cadastrais.component';
 import { HistoricoComponent } from './pages/informacoes/historico/historico.component';
@@ -53,6 +53,7 @@ import { ChatComponent } from './pages/chat/chat.component';
 import { ResetUsuarioComponent } from './pages/reset-usuario/reset-usuario.component';
 import { UpdateUsuarioComponent } from './pages/update-usuario/update-usuario.component';
 import { DeleteUsuarioComponent } from './pages/delete-usuario/delete-usuario.component';
+import { TrocarSenhaComponent } from './pages/trocar-senha/trocar-senha.component';
 
 @NgModule({
   imports: [
@@ -110,7 +111,8 @@ import { DeleteUsuarioComponent } from './pages/delete-usuario/delete-usuario.co
     ChatComponent,
     ResetUsuarioComponent,
     UpdateUsuarioComponent,
-    DeleteUsuarioComponent
+    DeleteUsuarioComponent,
+    TrocarSenhaComponent
     ],
   exports: [
     CadastroComponent,

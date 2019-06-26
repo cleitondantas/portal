@@ -303,7 +303,7 @@ export class AnaliseLogicaService {
           if (dados['data'][_i].cpfcnpj.length > 11) {
             dadosfaturamento.cpfcnpj = formatCnpj(dados['data'][_i].cpfcnpj);
           } else {
-            dadosfaturamento.cpfcnpj = formatCpf(dados['data'][_i].cpfcnpj)
+            dadosfaturamento.cpfcnpj = formatCpf(dados['data'][_i].cpfcnpj);
           }
 
           dadosfaturamento.parcela1 = dados['data'][_i].parcela1;
@@ -323,18 +323,18 @@ export class AnaliseLogicaService {
 
           if (dados['data'][_i].mesfaturamento1 != null) {
             dadosfaturamento.mesfaturamento1 = new Date(dados['data'][_i].mesfaturamento1);
-          };
+          }
 
           dadosfaturamento.parcela2 = dados['data'][_i].parcela2;
           dadosfaturamento.notafiscal2 = dados['data'][_i].notafiscal2;
 
           if (dados['data'][_i].mesfaturamento2 != null) {
             dadosfaturamento.mesfaturamento2 = new Date(dados['data'][_i].mesfaturamento2);
-          };
+          }
 
           if (dados['data'][_i].mesfaturado != null) {
             dadosfaturamento.mesfaturado = new Date(dados['data'][_i].mesfaturado);
-          };
+          }
 
           dadosfaturamento.totalrecebimentoincorporadora = dados['data'][_i].totalrecebimentoincorporadora;
           dadosfaturamento.recebimentoteoricobanco = dados['data'][_i].recebimentoteoricobanco;
@@ -397,9 +397,9 @@ export class AnaliseLogicaService {
     });
 
     if (analise.codsicaq == 0) {
-      analise.codsicaq = 'Possui SICAQ';
-    } else if (analise.codsicaq == 1) {
       analise.codsicaq = 'Não possui SICAQ';
+    } else if (analise.codsicaq == 1) {
+      analise.codsicaq = 'Possui SICAQ';
     }
 
     analise.dataenviobanco = new Date(analise.dataenviobanco);

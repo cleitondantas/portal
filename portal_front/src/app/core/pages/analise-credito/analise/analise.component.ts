@@ -13,7 +13,8 @@ import { StatusSimulacao } from 'src/app/models/status-simulacao';
 
 import { Modalidades } from 'src/app/models/modalidades';
 import { AnaliseLogicaService } from 'src/app/services/analise-logica.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-analise',
@@ -42,6 +43,7 @@ export class AnaliseComponent implements OnInit {
   controle: boolean = this.service.controle;
   msgs: Message[] = [];
   msgs2: Message[] = [];
+  subsVar: Subscription;
 
   simulacoes: Simulacoes = new Simulacoes();
   analise: Analise  = new Analise();
@@ -54,17 +56,20 @@ export class AnaliseComponent implements OnInit {
     private messageService: MessageService,
     private logicaService: AnaliseLogicaService,
     private sharedService: SharedService
-
   ) { }
     items: any[];
 
   ngOnDestroy() {
+    if (this.subsVar) {
+      this.subsVar.unsubscribe()
+    }
+    
     sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
     console.log('ngOnDestroy()');
   }
 
   ngOnInit() {
-    console.log("-------------------------------ngOnInit----AnaliseComponent")
+    console.log('-------------------------------ngOnInit----AnaliseComponent');
     this.simulacaoLista = [];
     this.br = this.sharedService.calendarioBr();
     this.chamadasInit();
@@ -101,7 +106,7 @@ export class AnaliseComponent implements OnInit {
       SharedService.getInstance().temporario = null;
     }
 
-    this.service.buscarAnalise.subscribe(temporario => {
+    this.subsVar = this.service.buscarAnalise.subscribe(temporario => {
       if (SharedService.getInstance().temporario == null) {
         SharedService.getInstance().temporario = temporario;
       }
@@ -115,7 +120,7 @@ export class AnaliseComponent implements OnInit {
 
     this.simulacoes.correspondente = 'Montreal';
     this.simulacoes.simulacaoselecionado = false;
-    console.log(this.simulacoes)
+    console.log(this.simulacoes);
   }
 
   addItemStatusSimulacao(items: StatusSimulacao[]) {
@@ -194,34 +199,39 @@ export class AnaliseComponent implements OnInit {
     this.analise = this.logicaService.salvarAnalise(this.analise, this.simulacaoLista, this.codcadastro, this.controle);
 
     if (this.controle == true) {
-
       console.log(this.analise);
       console.log(JSON.stringify(this.analise));
 
-      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
-      setTimeout(() => {
-        this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(data);
+      this.service.putAnaliseSimulacaoContrato(this.analise).subscribe(data => {
+        console.log(data);
+        this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
 
-          this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
-          this.simulacaoLista = this.analise.simulacoes;
-        });
-      }, 500);
+        this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
+        this.simulacaoLista = this.analise.simulacoes;
+        
+        setTimeout(() => {
+          this.redirecionar();
+        }, 1000);
+      });
     } else {
       for (let _i = 0; _i < this.simulacaoLista.length; _i++) {
         this.analise.simulacoes[_i].codcadastro = this.codcadastro;
       }
       this.analise.codcadastro = this.codcadastro;
       SharedService.emitirevento.emit(this.codcadastro);
-      setTimeout(() => {
-        this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
-          console.log(JSON.stringify(data)); 
-        });
-      }, 500);
-      console.log(JSON.stringify(this.analise));
-      this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
-    }
+      this.service.postAnaliseSimulacaoContrato(this.analise).subscribe(data => {
+        this.messageService.add({key: 'popupAnalise', severity: 'success', summary: 'Sucesso!', detail: 'Análise adicionada!'});
+        console.log(JSON.stringify(data));
 
+        setTimeout(() => {
+          this.redirecionar();
+        }, 1000);
+      });
+      console.log(JSON.stringify(this.analise));
+    }
+  }
+
+  redirecionar() {
     if (this.verificarSelecionado() == true) {
       this.analiseCred.disabled = false;
       this.analiseCred.selected = 1;
@@ -234,30 +244,38 @@ export class AnaliseComponent implements OnInit {
     input.click();
   }
 
-  recursoProprio() {
+  recursoProprio(formSimulacao) {
     let calc;
-    if (this.simulacoes.valorfgts == undefined) {
-      calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito;
-    } else if (this.simulacoes.valorcredito == undefined) {
-      calc = this.simulacoes.valorfgts;
-    } else {
-      calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito - this.simulacoes.valorfgts;
+    const recursoProprio: FormControl = formSimulacao.controls['valorrecursosproprios'];
+
+    if (recursoProprio.pristine == true) {
+      if (this.simulacoes.valorfgts == undefined) {
+        calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito;
+      } else if (this.simulacoes.valorcredito == undefined) {
+        calc = this.simulacoes.valorfgts;
+      } else {
+        calc = this.simulacoes.valorcompravenda - this.simulacoes.valorcredito - this.simulacoes.valorfgts;
+      }
+      this.simulacoes.valorrecursosproprios = calc;
     }
-    this.simulacoes.valorrecursosproprios = calc;
   }
 
-  calcularValorCredito() {
+  calcularValorCredito(formSimulacao) {
     let calc;
-    if (this.simulacoes.valoravaliacao == undefined) {
-      calc = (80 * this.simulacoes.valorcompravenda) / 100;
-    } else if (this.simulacoes.valorcompravenda == undefined) {
-      calc = (80 * this.simulacoes.valoravaliacao) / 100;
-    } else if (this.simulacoes.valoravaliacao < this.simulacoes.valorcompravenda) {
-      calc = (80 * this.simulacoes.valoravaliacao) / 100;
-    } else {
-      calc = (80 * this.simulacoes.valorcompravenda) / 100;
+    const valorcredito: FormControl = formSimulacao.controls['valorcredito'];
+
+    if (valorcredito.pristine == true) {
+      if (this.simulacoes.valoravaliacao == undefined) {
+        calc = (80 * this.simulacoes.valorcompravenda) / 100;
+      } else if (this.simulacoes.valorcompravenda == undefined) {
+        calc = (80 * this.simulacoes.valoravaliacao) / 100;
+      } else if (this.simulacoes.valoravaliacao < this.simulacoes.valorcompravenda) {
+        calc = (80 * this.simulacoes.valoravaliacao) / 100;
+      } else {
+        calc = (80 * this.simulacoes.valorcompravenda) / 100;
+      }
+      this.simulacoes.valorcredito = calc;
     }
-    this.simulacoes.valorcredito = calc;
   }
 
   salvarAnalise(formDatasDoProcesso) {
@@ -393,5 +411,9 @@ export class AnaliseComponent implements OnInit {
       this.statusSimulEvent.emit(true);
      });
 
+  }
+
+  erro(form) {
+    console.log(form);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { CadastroInformacao } from 'src/app/models/cadastro-informacao';
 import { Compradores } from 'src/app/models/compradores';
 import { Contatos } from 'src/app/models/contatos';
@@ -14,6 +14,8 @@ import { CadastroLogicaService } from './../../../services/cadastro-logica.servi
 import { Originacao } from './../../../models/originacao';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import formatCpf from '@brazilian-utils/format-cpf';
+import formatCnpj from '@brazilian-utils/format-cnpj';
 import isValidCpf from '@brazilian-utils/is-valid-cpf';
 import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 import onlyNumbers from '@brazilian-utils/helper-only-numbers';
@@ -33,7 +35,7 @@ export class CadastroComponent implements OnInit {
   @ViewChild('formulario', { read: NgForm }) form: any;
   @ViewChild('formCadInfo', { read: NgForm }) formCadInfo: any;
   @ViewChild('desccontato') desccontato: ElementRef;
-  
+
   constructor(
     private confirmationService: ConfirmationService,
     private chamadasService: CadastroChamadasService,
@@ -51,7 +53,7 @@ export class CadastroComponent implements OnInit {
   selectedItem: any;
   getLoads = {getEmpreendimentos: false, getOriginacoes: false, getEstadoCivil: false, getTipoContato: false,
                getTipoCliente: false, getIncorporadoras: false};
-  load: boolean = false;
+  load = false;
 
   estadoCivil: EstadoCivil[];
   tipoContato: TipoContato[];
@@ -69,6 +71,7 @@ export class CadastroComponent implements OnInit {
   msgs: Message[] = [];
   msgs2: Message[] = [];
   controle = false;
+  subsVar: Subscription;
 
   comprador: Compradores = new Compradores();
   cadInfo: CadastroInformacao = new CadastroInformacao();
@@ -96,11 +99,14 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    if (this.subsVar) {
+      this.subsVar.unsubscribe()
+    }
+    
     sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
   }
 
   ngOnInit() {
-
     SharedService.getInstance().temporario = [];
     this.chamadasInit();
 
@@ -108,7 +114,7 @@ export class CadastroComponent implements OnInit {
 
     this.visualizarInfoImovel();
 
-    this.chamadasService.buscarCadastro.subscribe(dado => {
+    this.subsVar = this.chamadasService.buscarCadastro.subscribe(dado => {
       this.form.reset();
       this.formCadInfo.reset();
       this.msgs = [];
@@ -139,7 +145,7 @@ export class CadastroComponent implements OnInit {
   adicionarCompradorLista (comprador: Compradores, formCadInfo) {
     this.msgs = [];
     setTimeout(() => {
-      if (this.validaFormulario(formCadInfo) == true) {
+      if (this.validaFormulario(formCadInfo) === true) {
         const comprador2 = this.logicaService.adicionarComprador(comprador);
         comprador2.contatos = this.contato;
 
@@ -174,7 +180,7 @@ export class CadastroComponent implements OnInit {
           }
         }
 
-        if (this.contato.length == 0) {
+        if (this.contato.length === 0) {
           this.msgs.push({
             severity: 'error',
             summary: 'Erro ao adicionar comprador!',
@@ -212,16 +218,16 @@ export class CadastroComponent implements OnInit {
       },
       reject: () => {
       }
-    })
+    });
   }
 
   preencherEmpreendimento(event) {
     if (event.value.cep != null) {
       this.cadInfo.cep = event.value.cep;
-      let cep = event.value.cep;
+      const cep = event.value.cep;
       cep.replace('-', '');
       this.chamadasService.getCep(cep).subscribe(dados => {
-        let dadosRecebidos: any = dados;
+        const dadosRecebidos: any = dados;
         if (!('erro' in dados)) {
           this.cadInfo.numero = event.value.numemero;
           this.cadInfo.bairro = event.value.bairro;
@@ -229,7 +235,7 @@ export class CadastroComponent implements OnInit {
           this.cadInfo.endereco = event.value.rua;
           this.cadInfo.uf = {uf: dadosRecebidos.uf.toUpperCase()};
         }
-      })
+      });
     } else {
       this.cadInfo.cep = null;
       this.cadInfo.numero = null;
@@ -336,16 +342,16 @@ export class CadastroComponent implements OnInit {
     const rowData: Compradores = dados.data;
     for (let _i = 0; _i < this.compradores.length; _i++) {
       this.compradores[_i].principal = false;
-      if (rowData.cpfcnpj == this.compradores[_i].cpfcnpj) {
+      if (rowData.cpfcnpj === this.compradores[_i].cpfcnpj) {
         this.compradores[_i].principal = true;
       }
     }
   }
 
   verificarSelecionado() {
-    let principal: boolean = false;
+    let principal = false;
     for (let _i = 0; _i < this.compradores.length; _i++) {
-      if (this.compradores[_i].principal == true) {
+      if (this.compradores[_i].principal === true) {
         principal = true;
       }
     }
@@ -361,7 +367,7 @@ export class CadastroComponent implements OnInit {
 
   confirmacao(cadInfo: CadastroInformacao, formulario) {
     const principal = this.verificarSelecionado();
-    if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
+    if ((this.validaFormImovel(formulario) === true) && (principal === true)) {
       this.msgs = [];
       this.msgs2 = [];
 
@@ -400,7 +406,7 @@ export class CadastroComponent implements OnInit {
         }
       }
 
-      if (this.compradores.length == 0) {
+      if (this.compradores.length === 0) {
         this.msgs2.push({
           severity: 'error',
           summary: 'Erro ao avançar!',
@@ -408,7 +414,7 @@ export class CadastroComponent implements OnInit {
         });
       }
 
-      if (principal == false) {
+      if (principal === false) {
         this.msgs2.push({
           severity: 'error',
           summary: 'Erro ao avançar!',
@@ -421,7 +427,7 @@ export class CadastroComponent implements OnInit {
   atualizarCadastroInformacoes(cadInfo: CadastroInformacao, formulario: any) {
     const principal = this.verificarSelecionado();
 
-    if ((this.validaFormImovel(formulario) == true) && (principal == true)) {
+    if ((this.validaFormImovel(formulario) === true) && (principal === true)) {
       cadInfo = this.logicaService.atualizarCadInfo(cadInfo, this.compradores);
       this.compradores = [];
 
@@ -455,7 +461,7 @@ export class CadastroComponent implements OnInit {
         }
       }
 
-      if (this.compradores.length == 0) {
+      if (this.compradores.length === 0) {
         this.msgs2.push({
           severity: 'error',
           summary: 'Erro ao salvar alterações!',
@@ -463,7 +469,7 @@ export class CadastroComponent implements OnInit {
         });
       }
 
-      if (principal == false) {
+      if (principal === false) {
         this.msgs2.push({
           severity: 'error',
           summary: 'Erro ao avançar!',
@@ -477,7 +483,7 @@ export class CadastroComponent implements OnInit {
     const cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
     const cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
 
-    if ((cpf || cnpj == true) && (this.comprador.cpfcnpj !== null)) {
+    if ((cpf || cnpj === true) && (this.comprador.cpfcnpj !== null)) {
       return true;
     } else {
       formCadInfo.controls['cpfcnpj'].status = 'INVALID';
@@ -487,7 +493,7 @@ export class CadastroComponent implements OnInit {
 
   validaFormulario(formCadInfo) {
     const cpfcnpj = this.verificaCpfCnpj(formCadInfo);
-    if (formCadInfo.valid == false || this.contato.length == 0 || cpfcnpj == false) {
+    if (formCadInfo.valid == false || this.contato.length === 0 || cpfcnpj === false) {
       return false;
     } else {
       return true;
@@ -495,7 +501,7 @@ export class CadastroComponent implements OnInit {
   }
 
   validaFormImovel(formulario) {
-    if (formulario.valid == false || this.compradores.length == 0) {
+    if (formulario.valid == false || this.compradores.length === 0) {
       return false;
     } else {
       return true;
@@ -626,9 +632,9 @@ export class CadastroComponent implements OnInit {
   }
 
   hiddenLoader() {
-    if ((this.getLoads.getEmpreendimentos == true) && (this.getLoads.getEstadoCivil == true) && 
-        (this.getLoads.getIncorporadoras == true) && (this.getLoads.getOriginacoes == true) && 
-        (this.getLoads.getTipoCliente == true) && (this.getLoads.getTipoContato == true)) {
+    if ((this.getLoads.getEmpreendimentos === true) && (this.getLoads.getEstadoCivil === true) &&
+        (this.getLoads.getIncorporadoras === true) && (this.getLoads.getOriginacoes === true) &&
+        (this.getLoads.getTipoCliente === true) && (this.getLoads.getTipoContato === true)) {
           setTimeout(() => {
             this.getLoads.getEmpreendimentos = false;
             this.getLoads.getIncorporadoras = false;
@@ -646,6 +652,17 @@ export class CadastroComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate(['/home']);
     }, 1000);
+  }
+
+  blurCpf() {
+    const cpf: boolean = isValidCpf(this.comprador.cpfcnpj);
+    const cnpj: boolean = isValidCnpj(this.comprador.cpfcnpj);
+
+    if (cpf === true) {
+      this.comprador.cpfcnpj = formatCpf(this.comprador.cpfcnpj);
+    } else if (cnpj === true) {
+      this.comprador.cpfcnpj = formatCnpj(this.comprador.cpfcnpj);
+    }
   }
 
   chamadasInit() {
@@ -666,7 +683,7 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getOriginacoes = true;
         this.hiddenLoader();
       }
-    })
+    });
     this.chamadasService.getDadosCadastrais('estadocivil').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];
@@ -674,7 +691,7 @@ export class CadastroComponent implements OnInit {
         this.getLoads.getEstadoCivil = true;
         this.hiddenLoader();
       }
-    })
+    });
     this.chamadasService.getDadosCadastrais('tipocontatos').subscribe(event => {
       if (event instanceof HttpResponse) {
         const dadosBaixados = event.body['data'];

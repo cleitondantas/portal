@@ -26,10 +26,11 @@ public class UsuarioControler {
 	
 	
 	@GetMapping(value = "/usuario/{codUsuario}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Usuario>> findByCodUsuario(@PathVariable Integer codUsuario) {
 		Response<Usuario> response = new Response<Usuario>();
 		Usuario users = usuarioRepository.findByCodUsuario(codUsuario);
+			
 		if (users == null) {
 			response.getErrors().add("Not Fund:");
 			return ResponseEntity.badRequest().body(response);
@@ -71,7 +72,7 @@ public class UsuarioControler {
 	 * @return
 	 */
 	@GetMapping(value = "/usuario/login/{login}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN','ANALISTA','TECNICO')")
     public ResponseEntity<Response<Iterable<Usuario>>> findUsuarioLogin(@PathVariable String login) {
 		Response<Iterable<Usuario>> response = new Response<Iterable<Usuario>>();
 		Iterable<Usuario> users = usuarioRepository.findUsuariosWithPartOfLoginAllParans(login);
