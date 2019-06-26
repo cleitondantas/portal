@@ -15,11 +15,11 @@
               </div>
               <div class="p-col-10">
                 <div class="ui-inputgroup">
-                  <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0px 0px 15px'}">
+                  <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0 0 15px'}">
                     <i class="pi pi-search"></i>
                   </span>
                   <p-autoComplete [(ngModel)]="usuario" [suggestions]="results" (completeMethod)="searchNome($event)"></p-autoComplete>
-                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0px 15px 15px 0px'}"
+                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0 15px 15px 0'}"
                   (click)="getUser(true)" ></button>
                 </div>
               </div>
@@ -34,11 +34,11 @@
               </div>
               <div class="p-col-10">
                 <div class="ui-inputgroup">
-                  <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0px 0px 15px'}">
+                  <span class="ui-inputgroup-addon" [ngStyle]="{'background-color': 'transparent', 'border-radius': '15px 0 0 15px'}">
                     <i class="pi pi-search"></i>
                   </span>
                   <p-autoComplete [(ngModel)]="nickname" [suggestions]="resultsLogin" (completeMethod)="searchLogin($event)"></p-autoComplete>
-                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0px 15px 15px 0px'}"
+                  <button pButton type="button" label="Buscar" class="ui-button-rounded ui-button-success" [ngStyle]="{'border-radius': '0 15px 15px 0'}"
                   (click)="getUser(false)"></button>
                 </div>
               </div>

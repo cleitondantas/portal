@@ -40,7 +40,9 @@ export class TrocarSenhaComponent implements OnInit {
       this.formCadastroService.salvarTrocarSenha(this.usuario).subscribe(data => {
         console.log(data);
         this.messageService.add({key: 'popup', severity: 'success', summary: 'Sucesso!', detail: 'Alterações salvas!'});
-        this.router.navigate(['/home']);
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 1000);
       });
     } else {
       if (this.senha == undefined || this.confirmarSenha == undefined) {
