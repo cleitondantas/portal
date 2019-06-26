@@ -100,9 +100,9 @@ export class CadastroComponent implements OnInit {
 
   ngOnDestroy() {
     if (this.subsVar) {
-      this.subsVar.unsubscribe()
+      this.subsVar.unsubscribe();
     }
-    
+
     sessionStorage.removeItem('CADASTROSELECIONADO'); // Remove a variavel  para nao ocorre problema posterior
   }
 

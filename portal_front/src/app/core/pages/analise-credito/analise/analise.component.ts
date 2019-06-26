@@ -61,9 +61,9 @@ export class AnaliseComponent implements OnInit {
 
   ngOnDestroy() {
     if (this.subsVar) {
-      this.subsVar.unsubscribe()
+      this.subsVar.unsubscribe();
     }
-    
+
     sessionStorage.removeItem('ANALISESELECIONADA'); // Remove a variavel  para nao ocorre problema posterior
     console.log('ngOnDestroy()');
   }
@@ -208,7 +208,7 @@ export class AnaliseComponent implements OnInit {
 
         this.analise = this.logicaService.formatandoAnalise(this.analise, this.simulacaoLista, this.statussimulacao, this.instFinan);
         this.simulacaoLista = this.analise.simulacoes;
-        
+
         setTimeout(() => {
           this.redirecionar();
         }, 1000);

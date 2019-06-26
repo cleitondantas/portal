@@ -18,7 +18,7 @@ constructor() {
 ngOnInit() {
   if (isDevMode()) {
     console.log('👋 Development!');
-    //environment.urlpath  = window.location.origin;
+    // environment.urlpath  = window.location.origin;
      environment.urlpath  = 'http://localhost:8100';
   } else {
     console.log('💪 Production!');
