@@ -380,7 +380,8 @@
         <div class="p-col-9">
         </div> 
         <div class="p-col-1">
-          <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-refresh" iconPos="right"></button>
+          <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-refresh" iconPos="right" 
+          [routerLink]="['/home']"></button>
         </div>
         <div class="p-col-2">
           <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvarAnalise(formDatasDoProcesso)" icon="pi pi-save" iconPos="right"

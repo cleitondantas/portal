@@ -132,7 +132,7 @@ export class HistoricoComponent implements OnInit {
               this.fases[this.allSinteses[i].numfase]['disabled'] = false;
             }
           }
-        } 
+        }
       }
     } else {
       if (this.faseReady == true && this.histReady == true && this.sintReady == true) {
