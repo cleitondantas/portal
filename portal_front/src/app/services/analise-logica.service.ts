@@ -156,9 +156,9 @@ export class AnaliseLogicaService {
         simulacaoLista[_i].codtipoamortizacao = item.codtipoamortizacao.codtipoamortizacao ? item.codtipoamortizacao.codtipoamortizacao : item.codtipoamortizacao;
       }
 
-      if (simulacaoLista[_i].codsicaq == true) {
+      if (simulacaoLista[_i].codsicaq == false) {
         simulacaoLista[_i].codsicaq = 0;
-      } else if (simulacaoLista[_i].codsicaq == false) {
+      } else if (simulacaoLista[_i].codsicaq == true) {
         simulacaoLista[_i].codsicaq = 1;
       }
     }

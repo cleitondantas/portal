@@ -178,17 +178,12 @@ export class CadastrousuarioComponent implements OnInit {
     }
   }
 
-  mouseDown() {
+  showPass() {
     this.eye.nativeElement.setAttribute('class', 'pi pi-eye-slash eye');
     this.inputSenha.nativeElement.setAttribute('type', 'text');
   }
 
-  mouseUp() {
-    this.eye.nativeElement.setAttribute('class', 'pi pi-eye eye');
-    this.inputSenha.nativeElement.setAttribute('type', 'password');
-  }
-
-  mouseOut() {
+  hidePass() {
     this.eye.nativeElement.setAttribute('class', 'pi pi-eye eye');
     this.inputSenha.nativeElement.setAttribute('type', 'password');
   }

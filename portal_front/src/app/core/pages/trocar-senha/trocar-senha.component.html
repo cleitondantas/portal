@@ -30,7 +30,7 @@
               <label style="margin: 0">Nova senha: </label>
               <div class="ui-inputgroup">
                 <input type="password" class="ajusteInput" pInputText name="senha" [(ngModel)]="senha" #password/>
-                <i class="pi pi-eye eye" #olho (mousedown)="mouseDown()" (mouseup)="mouseUp()" (mouseout)="mouseOut()"></i>
+                <i class="pi pi-eye eye" #olho (mousedown)="showPass()" (mouseup)="hidePass()" (mouseout)="hidePass()"></i>
               </div>
             </div>
       

@@ -17,7 +17,7 @@
                         <div class="ui-inputgroup">
                             <input type="password" class="ajusteInput" pInputText id="senha" ngModel name="senha"  #senha="ngModel" [(ngModel)]="usuario.password" 
                             tabindex="7" #password/>
-                            <i class="pi pi-eye eye" #olho (mousedown)="mouseDown()" (mouseup)="mouseUp()" (mouseout)="mouseOut()"></i>
+                            <i class="pi pi-eye eye" #olho (mousedown)="showPass()" (mouseup)="hidePass()" (mouseout)="hidePass()"></i>
                         </div>
                     </div>
 
