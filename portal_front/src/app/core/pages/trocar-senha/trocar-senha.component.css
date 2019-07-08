@@ -8,9 +8,20 @@
 
 .ajusteInput {
     width: 100%;
-    margin: 0vw 0vw 1vw 0vw;
+    margin: 0 0 1vw 0;
 }
 
 .ajusteLabel {
   float: right;
+}
+
+.eye {
+    margin-bottom: 1vw;
+    padding: 0.429em 0 0.429em 0;
+    border: 1px solid #a6a6a6;
+    background-color: white;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left: transparent;
+    cursor: pointer
 }

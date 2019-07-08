@@ -29,7 +29,7 @@ export class DadosCadastraisComponent implements OnInit {
 
   ngOnDestroy() {
     if (this.subsVar) {
-       this.subsVar.unsubscribe()
+       this.subsVar.unsubscribe();
      }
   }
 

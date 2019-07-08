@@ -1,5 +1,5 @@
 import { Message } from 'primeng/api';
-import { Component, OnInit , isDevMode } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Usuario } from '../../../models/usuario';
 import { NgForm } from '@angular/forms';
@@ -11,14 +11,18 @@ import { SharedService } from '../../../services/shared.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('olho') eye: ElementRef;
+  @ViewChild('inputSenha') inputSenha: ElementRef;
 
-private usuario: Usuario = new Usuario();
-shared: SharedService;
-mensagemErro = '';
-msgs: Message[] = [];
-hidden = true;
+  private usuario: Usuario = new Usuario();
+  shared: SharedService;
+  mensagemErro = '';
+  msgs: Message[] = [];
+  hidden = true;
+  esqueciSenha = true;
 
-user = new Usuario();
+  user = new Usuario();
+
   constructor(private authService: AuthService) {
     this.shared = SharedService.getInstance();
     this.shared.showError.subscribe(
@@ -51,5 +55,15 @@ user = new Usuario();
         }
       }, 301);
     });
+  }
+
+  showPass() {
+    this.eye.nativeElement.setAttribute('class', 'pi pi-eye-slash eye');
+    this.inputSenha.nativeElement.setAttribute('type', 'text');
+  }
+
+  hidePass() {
+    this.eye.nativeElement.setAttribute('class', 'pi pi-eye eye');
+    this.inputSenha.nativeElement.setAttribute('type', 'password');
   }
 }

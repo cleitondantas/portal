@@ -20,8 +20,9 @@
                         <i class="pi pi-lock" style="font-size: 1.5em"></i>
                     </span>
                     <input pInputText [ngStyle]="{'width': '90%'}" type="password" id="psw" name="password" 
-                    placeholder="Digite a senha..."  title="A senha deve conter no mínimo 6 caractéres sendo no mínimo um caractér especial, uma letra maiúscula, uma letra minúscula e um número." 
-                    [(ngModel)]="user.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required>         
+                    placeholder="Digite a senha..." title="A senha deve conter no mínimo 6 caractéres sendo no mínimo um caractér especial, uma letra maiúscula, uma letra minúscula e um número." 
+                    [(ngModel)]="user.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required #inputSenha>
+                    <i class="pi pi-eye eye" #olho (mousedown)="showPass()" (mouseup)="hidePass()" (mouseout)="hidePass()"></i>
                 </div>
             </div>
 
@@ -30,7 +31,6 @@
 
             <button pButton type="submit" label="Login" class="ui-button-rounded ui-button-success"
             [ngStyle]="{'width': '90%'}"></button>
-
         </div>
     </form>
 </div>
