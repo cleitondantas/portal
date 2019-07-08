@@ -1,10 +1,10 @@
-#!/bin/bash
+﻿#!/bin/bash
 
 
 if [ "$1" == "prod" ]; then
 	echo "Iniciado instalação em modo prod"
 	rm -rf portal
-	git clone https://github.com/cleitondantas/portal.git
+	git clone https://github.com/cleitondantas/portal/tree/branche_c
 	cd portal        
 	mvn clean install -P10.6.5.40
 	docker stop $(docker ps -q --filter ancestor=mci/portal)
@@ -16,7 +16,7 @@ else
         if [ "$1" == "dev" ]; then
         	echo "Iniciado instalação em modo dev"
         	rm -rf portal
-        	git clone https://github.com/cleitondantas/portal.git
+        	git clone https://github.com/cleitondantas/portal/tree/branche_c
 			cd portal        
 			mvn clean install -P10.6.5.99
 			docker stop $(docker ps -q --filter ancestor=mci/portal)
@@ -29,7 +29,7 @@ else
 			varip=$(hostname -I | awk '{print $1}')
         	echo "$varip"
         	rm -rf portal
-        	git clone https://github.com/cleitondantas/portal.git
+        	git clone https://github.com/cleitondantas/portal/tree/branche_c
 			cd portal        
 			mvn clean install -P$varip
 			docker stop $(docker ps -q --filter ancestor=mci/portal)
