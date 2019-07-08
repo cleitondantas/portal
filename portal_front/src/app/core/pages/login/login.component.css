@@ -51,6 +51,14 @@
     margin-top: 10px;
   }*/
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+}
+
 .main-container{
   width: 432px;
   height: 490px; 
@@ -65,4 +73,13 @@
   background-size: 100% 100% 100% 100%;
   margin: 0;
 }
-  
+
+.eye {
+    padding: 0.429em 0 0.429em 0;
+    border: 1px solid #a6a6a6;
+    background-color: white;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left: transparent;
+    cursor: pointer
+}

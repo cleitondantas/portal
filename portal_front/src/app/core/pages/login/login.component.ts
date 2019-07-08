@@ -1,5 +1,5 @@
 import { Message } from 'primeng/api';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Usuario } from '../../../models/usuario';
 import { NgForm } from '@angular/forms';
@@ -11,6 +11,8 @@ import { SharedService } from '../../../services/shared.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('olho') eye: ElementRef;
+  @ViewChild('inputSenha') inputSenha: ElementRef;
 
   private usuario: Usuario = new Usuario();
   shared: SharedService;
@@ -53,5 +55,15 @@ export class LoginComponent implements OnInit {
         }
       }, 301);
     });
+  }
+
+  showPass() {
+    this.eye.nativeElement.setAttribute('class', 'pi pi-eye-slash eye');
+    this.inputSenha.nativeElement.setAttribute('type', 'text');
+  }
+
+  hidePass() {
+    this.eye.nativeElement.setAttribute('class', 'pi pi-eye eye');
+    this.inputSenha.nativeElement.setAttribute('type', 'password');
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MessageService, Message } from 'primeng/api';
 import { SharedService } from 'src/app/services/shared.service';
 import { Usuario } from 'src/app/models/usuario';
@@ -13,6 +13,9 @@ import { HttpResponse } from '@angular/common/http';
   providers: [MessageService]
 })
 export class TrocarSenhaComponent implements OnInit {
+  @ViewChild('olho') eye: ElementRef;
+  @ViewChild('password') inputSenha: ElementRef;
+
   usuario: Usuario = new Usuario();
   senha: string;
   confirmarSenha: string;
@@ -69,5 +72,15 @@ export class TrocarSenhaComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  showPass() {
+    this.eye.nativeElement.setAttribute('class', 'pi pi-eye-slash eye');
+    this.inputSenha.nativeElement.setAttribute('type', 'text');
+  }
+
+  hidePass() {
+    this.eye.nativeElement.setAttribute('class', 'pi pi-eye eye');
+    this.inputSenha.nativeElement.setAttribute('type', 'password');
   }
 }

@@ -13,22 +13,25 @@
             
             <div class="p-col-6">
               <label style="margin: 0">Nome: </label>
-              <input type="text" disabled="true" class="ajusteInput" pInputText name="nome" [(ngModel)]="usuario.nome"/>
+              <input type="text" [disabled]="true" class="ajusteInput" pInputText name="nome" [(ngModel)]="usuario.nome"/>
             </div>
       
             <div class="p-col-6">
               <label style="margin: 0">Sobrenome: </label>
-              <input type="text" disabled="true" class="ajusteInput" pInputText name="sobrenome" [(ngModel)]="usuario.sobrenome"/>
+              <input type="text" [disabled]="true" class="ajusteInput" pInputText name="sobrenome" [(ngModel)]="usuario.sobrenome"/>
             </div>
 
             <div class="p-col-12">
               <label style="margin: 0">Login: </label>
-              <input type="text" disabled="true" class="ajusteInput" pInputText name="login" [(ngModel)]="usuario.login"/>
+              <input type="text" [disabled]="true" class="ajusteInput" pInputText name="login" [(ngModel)]="usuario.login"/>
             </div>
             
             <div class="p-col-6">
               <label style="margin: 0">Nova senha: </label>
-              <input type="password" class="ajusteInput" pInputText name="senha" [(ngModel)]="senha"/>
+              <div class="ui-inputgroup">
+                <input type="password" class="ajusteInput" pInputText name="senha" [(ngModel)]="senha" #password/>
+                <i class="pi pi-eye eye" #olho (mousedown)="showPass()" (mouseup)="hidePass()" (mouseout)="hidePass()"></i>
+              </div>
             </div>
       
             <div class="p-col-6">
@@ -37,7 +40,7 @@
             </div>
 
             <div class="p-grid p-justify-end" [ngStyle]="{'width': '100%', 'height': '100%'}">
-              <button pButton type="submit" label="Cancelar" class="ui-button-danger ui-button-raised" (click)="cancelar()"
+              <button pButton type="button" label="Cancelar" class="ui-button-danger ui-button-raised" (click)="cancelar()"
               [ngStyle]="{'width': '20%', 'height': '40%', 'margin': '3px'}"  iconPos="right"></button>
               <button pButton type="submit" label="Salvar" class="ui-button-success" (click)="trocarSenha()"
               [ngStyle]="{'width': '20%', 'height': '40%', 'margin': '3px'}" icon="pi pi-save" iconPos="right"></button>

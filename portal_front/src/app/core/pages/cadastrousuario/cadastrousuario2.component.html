@@ -14,7 +14,11 @@
                         <input type="text" class="ajusteInput" pInputText id="nickname" name="login" ngModel  #login="ngModel" [(ngModel)]="usuario.login" tabindex="5"/>
                         
                         <label style="margin: 0">Senha:</label>
-                        <input type="password" class="ajusteInput" pInputText id="senha" ngModel name="senha"  #senha="ngModel" [(ngModel)]="usuario.password" tabindex="7"/>
+                        <div class="ui-inputgroup">
+                            <input type="password" class="ajusteInput" pInputText id="senha" ngModel name="senha"  #senha="ngModel" [(ngModel)]="usuario.password" 
+                            tabindex="7" #password/>
+                            <i class="pi pi-eye eye" #olho (mousedown)="showPass()" (mouseup)="hidePass()" (mouseout)="hidePass()"></i>
+                        </div>
                     </div>
 
                     <div class="p-col-6">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Usuario } from '../../../models/usuario';
 import { FormBuilder, NgForm } from '@angular/forms';
 import { FormcadastroService } from 'src/app/services/formcadastro.service';
@@ -17,6 +17,8 @@ import isValidCnpj from '@brazilian-utils/is-valid-cnpj';
 
 export class CadastrousuarioComponent implements OnInit {
   @ViewChild('form', { read: NgForm }) form: any;
+  @ViewChild('olho') eye: ElementRef;
+  @ViewChild('password') inputSenha: ElementRef;
 
   roles: SelectItem[];
   selectRoles: Role[];
@@ -174,5 +176,15 @@ export class CadastrousuarioComponent implements OnInit {
         detail: `O campo de CPF está em branco.`
       });
     }
+  }
+
+  showPass() {
+    this.eye.nativeElement.setAttribute('class', 'pi pi-eye-slash eye');
+    this.inputSenha.nativeElement.setAttribute('type', 'text');
+  }
+
+  hidePass() {
+    this.eye.nativeElement.setAttribute('class', 'pi pi-eye eye');
+    this.inputSenha.nativeElement.setAttribute('type', 'password');
   }
 }
